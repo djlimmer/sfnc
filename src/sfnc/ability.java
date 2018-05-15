@@ -9,14 +9,8 @@ package sfnc;
  *
  * @author Doug
  */
-enum Location {
-    SENSES, AURA, 
-    DEFENSIVE_ABILITIES,
-    IMMUNITIES,
-    RESISTANCES,
-    WEAKNESSES,
-    OFFENSIVE_ABILITIES,
-    FEATS,
-    LANGUAGES,
-    OTHER_ABILITIES
+public class Ability {
+    String name;
+    Location location;
+    Source source;
 }
