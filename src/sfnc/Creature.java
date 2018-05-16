@@ -38,4 +38,8 @@ public class Creature {
     public Integer getXP() {
         return CR.XP();
     }
+    
+    public void setName(String n) {
+        this.name = n;
+    }
 }

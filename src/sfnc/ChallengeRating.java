@@ -10,7 +10,7 @@ package sfnc;
  * @author Doug
  */
 public enum ChallengeRating {
-    NONE        (    "",        0 ),
+    NONE        (    "\u2013",        0 ),
     THIRD       ( "1/3",      135 
     /*             EAC KAC F   R   W   HP  AbilDC  SplDC   ASM      SAs MSkls   GSkls   HAt LAt RDamE   RDamK   MDamS   MDam3   MDam4
        Combatant:   10, 12, 1,  1,  0,  6,      8,     8,  3, 1, 0, 1,  7, 1,    3, 2,    4,  1,  1d4,    1d4,    1d6,      0,      0

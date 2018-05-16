@@ -7,10 +7,12 @@ package sfnc;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 /**
  *
@@ -18,18 +20,38 @@ import javafx.scene.control.Label;
  */
 public class sfncFXMLController implements Initializable {
     
-    @FXML
-    private Label label;
+    // the creature
+    Creature creature = new Creature();
     
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
+    // Step 0 controls
+    @FXML    private TextField creatureNameInput = new TextField();
+    
+    // stat block controls
+    @FXML    private Label creatureNameDisplay = new Label();
+    @FXML    private Label creatureCRDisplay = new Label();
+    
+    public void updateStatBlock() {
+
+        // update name/CR line
+        creatureNameDisplay.setText(creature.getName().toUpperCase());
+        creatureCRDisplay.setText(creature.getCR().displayString());
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        // step 0 controls
+        creatureNameInput.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    creature.setName(newValue);
+                    updateStatBlock();
+                }
+            }
+        );
+    
     }    
     
 }
