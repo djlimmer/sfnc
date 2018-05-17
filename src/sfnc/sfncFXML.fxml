@@ -50,9 +50,9 @@
                                        </rowConstraints>
                                        <children>
                                           <Label layoutX="32.0" layoutY="40.0" text="CR:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                          <ChoiceBox layoutX="55.0" layoutY="36.0" prefHeight="25.0" prefWidth="135.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                           <Label layoutX="14.0" layoutY="14.0" text="Name:" GridPane.halignment="RIGHT" />
-                                          <TextField fx:id="creatureNameInput" layoutX="55.0" layoutY="10.0" prefHeight="25.0" prefWidth="135.0" GridPane.columnIndex="1" />
+                                          <TextField fx:id="creatureNameInput" layoutX="55.0" layoutY="10.0" prefHeight="25.0" prefWidth="130.0" GridPane.columnIndex="1" />
+                                          <ComboBox fx:id="creatureCRInput" prefWidth="145.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                        </children>
                                     </GridPane>
                                  </children>
@@ -70,22 +70,34 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: black;">
                            <children>
-                              <Label fx:id="creatureNameDisplay" prefWidth="500.0" text="Label" textFill="WHITE">
+                              <Label fx:id="creatureNameDisplay" prefWidth="485.0" style="-fx-font-weight: bold;" text="Label" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label text="CR " textFill="WHITE" />
-                              <Label fx:id="creatureCRDisplay" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Label" textAlignment="RIGHT" textFill="WHITE">
+                              <Label style="-fx-font-weight: bold;" text="CR " textFill="WHITE" />
+                              <Label fx:id="creatureCRDisplay" alignment="CENTER_RIGHT" contentDisplay="RIGHT" style="-fx-font-weight: bold;" text="Label" textAlignment="RIGHT" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin>
                               </Label>
                            </children>
                         </HBox>
+                        <HBox>
+                           <children>
+                              <Label style="-fx-font-weight: bold;" text="XP " />
+                              <Label fx:id="creatureXPDisplay" style="-fx-font-weight: bold;" text="Label" />
+                           </children>
+                        </HBox>
                      </children>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
                   </VBox>
                </children>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
             </AnchorPane>
         </items>
       </SplitPane>

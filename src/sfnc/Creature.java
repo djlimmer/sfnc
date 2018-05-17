@@ -5,6 +5,9 @@
  */
 package sfnc;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  *
  * @author Doug
@@ -39,7 +42,20 @@ public class Creature {
         return CR.XP();
     }
     
+    public String getXPString() {
+        return CR.XP()==0 ? "\u2013" : NumberFormat.getNumberInstance(Locale.getDefault()).format(CR.XP());
+    }
+    
     public void setName(String n) {
         this.name = n;
+    }
+    
+    public void setCR(ChallengeRating c) {
+        this.CR = c;
+    }
+    
+    public void setCRFromComboBox(Integer i) {
+        // check for legal bounds here
+        this.CR = ChallengeRating.values()[i];
     }
 }
