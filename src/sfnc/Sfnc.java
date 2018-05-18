@@ -17,14 +17,27 @@ import javafx.stage.Stage;
  */
 public class Sfnc extends Application {
     
+    private static Sfnc instance;
+    public static Sfnc getInstance() {
+        return instance;
+    }
+
+    private Stage myStage;
+    
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("sfncFXML.fxml"));
+        instance = this;
+        myStage = stage;
         
+        Parent root = FXMLLoader.load(getClass().getResource("sfncFXML.fxml"));
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
         stage.show();
+    }
+    
+    public void updateTitle(String title) {
+        myStage.setTitle(title);
     }
 
     /**

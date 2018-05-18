@@ -8,25 +8,26 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sfnc.sfncFXMLController">
+<VBox fx:id="top" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sfnc.sfncFXMLController">
    <children>
       <MenuBar>
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+                  <MenuItem fx:id="newMenuItem" mnemonicParsing="false" text="New" />
+                  <MenuItem fx:id="openMenuItem" mnemonicParsing="false" onAction="#openAction" text="Open" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" text="Save" />
+                  <MenuItem fx:id="saveAsMenuItem" mnemonicParsing="false" onAction="#saveAsAction" text="Save As" />
+                  <MenuItem fx:id="exportTextMenuItem" mnemonicParsing="false" onAction="#exportTextAction" text="Export as Text" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" text="Quit" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
+               <items>
+                  <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" text="About" />
+               </items></Menu>
         </menus>
       </MenuBar>
       <SplitPane dividerPositions="0.29797979797979796" prefHeight="575.0" prefWidth="800.0">
