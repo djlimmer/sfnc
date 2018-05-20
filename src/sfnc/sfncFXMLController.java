@@ -5,7 +5,10 @@
  */
 package sfnc;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
@@ -21,6 +24,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -35,10 +39,19 @@ import javafx.stage.StageStyle;
  * @author Doug
  */
 public class sfncFXMLController implements Initializable {
-    
+
+    // not sure how to make this more dynamic; not sure I need to
+    static final int NUMBER_OF_ARRAYS = 3;
+    MainArray[][] mainArrays = new MainArray[NUMBER_OF_ARRAYS][ChallengeRating.values().length];
+    String[] arrayNames = new String[NUMBER_OF_ARRAYS];
+    Integer chosenArray;
+        
     // the creature
     Creature creature = new Creature();
     
+    // workspaces for creature
+    MainArray array;
+            
     // where-to-save info
     File currentExportDirectory = new File(".");
     File currentSaveDirectory = new File(".");
@@ -72,6 +85,7 @@ public class sfncFXMLController implements Initializable {
             currentSaveFile = file;
             switch (creature.openCreature(file)) {
                 case 0:
+                    chosenArray = Arrays.asList(arrayNames).indexOf(creature.getArray());
                     setControls();
                     updateStatBlock();
                     creature.clearChange();
@@ -116,13 +130,13 @@ public class sfncFXMLController implements Initializable {
         
         // create the output lines
         String nameLine = creature.getName();
-        String CROutput = "CR " + creature.CR.displayString();
+        String CROutput = "CR " + creature.CR;
         // Needs Java 11, I think:  nameLine += " ".repeat(EXPORTLINEWIDTH - nameLine.length() - CROutput.length());
         for (int i=0; i < EXPORTLINEWIDTH - nameLine.length() - CROutput.length(); i++) {
             nameLine += " ";
         }
         nameLine += CROutput;
-        String xpLine = "XP " + creature.getXPString();
+        String xpLine = "XP " + creature.getXPString() + " (" + creature.getArray() + ")";
 
         // get the file
         FileChooser fileChooser = new FileChooser();
@@ -150,6 +164,9 @@ public class sfncFXMLController implements Initializable {
     @FXML    private TextField creatureNameInput = new TextField();
     @FXML    private ComboBox creatureCRInput = new ComboBox();
 
+    // Step 1 controls
+    @FXML    private ChoiceBox creatureArrayInput = new ChoiceBox();
+    
     // stat block controls
     @FXML    private Label creatureNameDisplay = new Label();
     @FXML    private Label creatureCRDisplay = new Label();
@@ -158,14 +175,17 @@ public class sfncFXMLController implements Initializable {
     public void setControls() {
         creatureNameInput.setText(creature.getName());
         creatureCRInput.setValue(creature.getCRDisplayString());
+        creatureArrayInput.setValue(creature.getArray());
     }
     
     public void updateStatBlock() {
         // update name/CR line
         creatureNameDisplay.setText(creature.getName().toUpperCase());
-        creatureCRDisplay.setText(creature.getCR().displayString());
+        creatureCRDisplay.setText(creature.getCR().toString());
         // update XP line
-        creatureXPDisplay.setText(creature.getXPString());
+        creatureXPDisplay.setText(creature.getXPString() + " (" + creature.getArray() + ")");
+        if (chosenArray != null)
+            array = mainArrays[chosenArray][creature.getCR().ordinal()];
     }
     
     public void updateWindowTitle() {
@@ -177,6 +197,11 @@ public class sfncFXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        if (loadArrays() != 0) {
+            System.err.println("Error in loading arrays!");
+            return;
+        }
         
         updateStatBlock();
   
@@ -222,7 +247,7 @@ public class sfncFXMLController implements Initializable {
         // set up about dialog box
         aboutDialog.initStyle(StageStyle.UTILITY);
         aboutDialog.setTitle("About sfnc");
-        aboutDialog.setContentText("Starfinder NPC/Alien Creator\nversion 1.0.0");
+        aboutDialog.setContentText("Starfinder NPC/Alien Creator\nversion 1.1.0");
         aboutDialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
         
         // step 0 controls
@@ -241,7 +266,7 @@ public class sfncFXMLController implements Initializable {
         
         creatureCRInput.setItems(FXCollections.observableArrayList(
                 Arrays.stream(ChallengeRating.values())
-                        .map(ChallengeRating::displayString)
+                        .map(ChallengeRating::toString)
                         .collect(Collectors.toList())  
         ));
 
@@ -255,7 +280,59 @@ public class sfncFXMLController implements Initializable {
                 }
             }
         );
+        
+        creatureArrayInput.setItems(FXCollections.observableArrayList(
+                arrayNames));
+        
+        creatureArrayInput.getSelectionModel().selectedIndexProperty().addListener(
+            new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue observable,
+                        Number oldValue, Number newValue) {
+                    creature.setArray(arrayNames[newValue.intValue()]);
+                    chosenArray = newValue.intValue();
+                    updateStatBlock();
+                }
+            }
+        );
     
+    }
+
+    private int loadArrays() {
+        try {
+            FileReader fileReader = new FileReader("arrays.txt");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            
+            String statString;
+            String[] stats;
+            Integer[] intArray = new Integer[MainArray.NUMBER_OF_STATS];
+            Dice[] diceArray = new Dice[MainArray.NUMBER_OF_DAMAGES];
+            
+            for (int i = 0; i < NUMBER_OF_ARRAYS; i++) {
+                arrayNames[i] = bufferedReader.readLine();
+                for (int j=1; j < ChallengeRating.values().length; j++) {
+                    statString = bufferedReader.readLine();
+                    stats = statString.split(" +");
+                    for (int k=0; k < MainArray.NUMBER_OF_STATS; k++) {
+                        intArray[k] = Integer.valueOf(stats[k]);
+                    }
+                    for (int k=0; k < MainArray.NUMBER_OF_DAMAGES; k++) {
+                        diceArray[k] = new Dice(stats[k+MainArray.NUMBER_OF_STATS]);
+                    }
+                    mainArrays[i][j] = new MainArray(intArray,diceArray); 
+                }
+            }
+            
+            bufferedReader.close();
+            return 0;
+        }
+        catch(FileNotFoundException ex) {
+            System.err.println("arrays.txt not found!");
+        }
+        catch(IOException ex) {
+            System.err.println("Error reading arrays.txt!");
+        }
+        return 1;
     }
     
 }

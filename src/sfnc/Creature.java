@@ -20,6 +20,7 @@ import java.util.Locale;
 public class Creature {
     String name;
     ChallengeRating CR;
+    String array;
     
     // temporary status variables
     Boolean hasChanged;
@@ -27,12 +28,14 @@ public class Creature {
     Creature() {
         this.name = "";
         this.CR = ChallengeRating.NONE;
+        this.array = "";
         this.hasChanged = true;
     }
     
     Creature(String n, ChallengeRating c) {
         this.name = n;
         this.CR = c;
+        this.array = "";
         this.hasChanged = true;
     }
 
@@ -45,15 +48,15 @@ public class Creature {
     }
     
     public String getCRDisplayString() {
-        return CR.displayString();
+        return CR.toString();
     }
     
     public Integer getXP() {
-        return CR.XP();
+        return CR.getXP();
     }
     
     public String getXPString() {
-        return CR.XP()==0 ? "\u2013" : NumberFormat.getNumberInstance(Locale.getDefault()).format(CR.XP());
+        return CR.getXP()==0 ? "\u2013" : NumberFormat.getNumberInstance(Locale.getDefault()).format(CR.getXP());
     }
 
     public Boolean hasChanged() {
@@ -62,15 +65,18 @@ public class Creature {
     
     public void setName(String n) {
         this.name = n;
+        this.hasChanged = true;
     }
     
     public void setCR(ChallengeRating c) {
         this.CR = c;
+        this.hasChanged = true;
     }
     
     public void setCRFromComboBox(Integer i) {
         // check for legal bounds here
         this.CR = ChallengeRating.values()[i];
+        this.hasChanged = true;
     }
     
     public void setChange() {
@@ -89,9 +95,14 @@ public class Creature {
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
-            if (!reader.readLine().matches("sfnc file")) return 1;
+            if (!reader.readLine().matches("sfnc file")) {
+                reader.close();
+                return 1;
+            }
             this.name = reader.readLine();
             this.CR = ChallengeRating.valueOf(reader.readLine());
+            this.array = reader.readLine();
+            reader.close();
         } catch (IOException e) {
             System.err.println("Something went wrong (opening sfnc file)");
             return -1;
@@ -105,11 +116,21 @@ public class Creature {
             PrintWriter writer = new PrintWriter(file.getPath(),"UTF-8");
             writer.println("sfnc file");
             writer.println(name);
-            writer.println(CR.toString());
+            writer.println(CR.name());
+            writer.println(array);
             writer.close();
         } catch (IOException e) {
             System.err.println("Something went wrong (exporting to text)");
         }
         hasChanged = false;
+    }
+
+    void setArray(String a) {
+           this.array = a;
+           this.hasChanged = true;
+    }
+
+    String getArray() {
+        return array;
     }
 }

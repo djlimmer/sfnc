@@ -15,6 +15,7 @@ import javafx.stage.Stage;
  *
  * @author Doug
  */
+
 public class Sfnc extends Application {
     
     private static Sfnc instance;

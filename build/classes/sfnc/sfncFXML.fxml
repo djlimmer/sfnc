@@ -60,7 +60,20 @@
                               </AnchorPane>
                         </content>
                       </Tab>
-                      <Tab disable="true" text="1. ..." />
+                      <Tab text="1. Array">
+                           <content>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <Label layoutX="13.0" layoutY="42.0" text="Array: " />
+                                    <ChoiceBox fx:id="creatureArrayInput" layoutX="49.0" layoutY="40.0" prefWidth="150.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content></Tab>
+                        <Tab disable="true" text="2. ...">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </Tab>
                     </tabs>
                   </TabPane>
                </children>
