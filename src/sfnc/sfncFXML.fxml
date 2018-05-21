@@ -89,18 +89,54 @@
                                     <Insets left="5.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label style="-fx-font-weight: bold;" text="CR " textFill="WHITE" />
-                              <Label fx:id="creatureCRDisplay" alignment="CENTER_RIGHT" contentDisplay="RIGHT" style="-fx-font-weight: bold;" text="Label" textAlignment="RIGHT" textFill="WHITE">
-                                 <HBox.margin>
-                                    <Insets right="5.0" />
-                                 </HBox.margin>
-                              </Label>
+                              <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="327.0">
+                                 <children>
+                                    <Label style="-fx-font-weight: bold;" text="CR " textFill="WHITE" />
+                                    <Label fx:id="creatureCRDisplay" alignment="CENTER_RIGHT" contentDisplay="RIGHT" style="-fx-font-weight: bold;" text="Label" textFill="WHITE">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
                            </children>
                         </HBox>
                         <HBox>
                            <children>
                               <Label style="-fx-font-weight: bold;" text="XP " />
                               <Label fx:id="creatureXPDisplay" style="-fx-font-weight: bold;" text="Label" />
+                           </children>
+                        </HBox>
+                        <HBox prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="25.0" style="-fx-font-weight: bold;" text="DEFENSE" />
+                              <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="495.0">
+                                 <children>
+                                    <Label style="-fx-font-weight: bold;" text="HP " />
+                                    <Label fx:id="creatureHPDisplay" text="Label" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label style="-fx-font-weight: bold;" text="EAC " />
+                              <Label fx:id="creatureEACDisplay" text="Label" />
+                              <Label text="; " />
+                              <Label style="-fx-font-weight: bold;" text="KAC " />
+                              <Label fx:id="creatureKACDisplay" text="Label" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label style="-fx-font-weight: bold;" text="Fort " />
+                              <Label fx:id="creatureFortDisplay" text="Label" />
+                              <Label text="; " />
+                              <Label style="-fx-font-weight: bold;" text="Ref " />
+                              <Label fx:id="creatureRefDisplay" text="Label" />
+                              <Label text="; " />
+                              <Label style="-fx-font-weight: bold;" text="Will " />
+                              <Label fx:id="creatureWillDisplay" text="Label" />
                            </children>
                         </HBox>
                      </children>

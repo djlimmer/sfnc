@@ -5,11 +5,14 @@
         <group>
             <file>file:/C:/Users/Doug/git/sfnc/src/sfnc/Creature.java</file>
             <file>file:/C:/Users/Doug/git/sfnc/src/sfnc/sfncFXML.fxml</file>
+            <file>file:/C:/Users/Doug/git/sfnc/src/sfnc/MainArray.java</file>
             <file>file:/C:/Users/Doug/git/sfnc/src/sfnc/Location.java</file>
             <file>file:/C:/Users/Doug/git/sfnc/src/sfnc/Sfnc.java</file>
             <file>file:/C:/Users/Doug/git/sfnc/src/sfnc/ChallengeRating.java</file>
             <file>file:/C:/Users/Doug/git/sfnc/src/sfnc/sfncFXMLController.java</file>
             <file>file:/C:/Users/Doug/git/sfnc/src/sfnc/Source.java</file>
+            <file>file:/C:/Users/Doug/git/sfnc/src/sfnc/Dice.java</file>
+            <file>file:/C:/Users/Doug/git/sfnc/arrays.txt</file>
         </group>
     </open-files>
 </project-private>

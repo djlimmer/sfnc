@@ -132,11 +132,25 @@ public class sfncFXMLController implements Initializable {
         String nameLine = creature.getName();
         String CROutput = "CR " + creature.CR;
         // Needs Java 11, I think:  nameLine += " ".repeat(EXPORTLINEWIDTH - nameLine.length() - CROutput.length());
-        for (int i=0; i < EXPORTLINEWIDTH - nameLine.length() - CROutput.length(); i++) {
+        int numSpaces = EXPORTLINEWIDTH - nameLine.length() - CROutput.length();
+        for (int i=0; i < numSpaces; i++) {
             nameLine += " ";
         }
         nameLine += CROutput;
+
         String xpLine = "XP " + creature.getXPString() + " (" + creature.getArray() + ")";
+        String HPOutput = (array == null) ? "" : "HP " + array.hitPoints.toString();
+        
+        String defenseLine = "DEFENSE";
+        numSpaces = EXPORTLINEWIDTH - defenseLine.length() - HPOutput.length();
+        for (int i=0; i < numSpaces; i++) {
+            defenseLine += " ";
+        }
+        defenseLine += HPOutput;
+        
+        String ACLine = (array == null) ? "" : "EAC " + array.EAC.toString() + "; KAC" + array.KAC.toString();
+        String SaveLine = (array == null) ? "" : "Fort " + bonusString(array.fort) + "; Ref " + bonusString(array.ref)
+                + "; Will " + bonusString(array.will);
 
         // get the file
         FileChooser fileChooser = new FileChooser();
@@ -154,6 +168,9 @@ public class sfncFXMLController implements Initializable {
             PrintWriter writer = new PrintWriter(file.getPath(),"UTF-8");
             writer.println(nameLine);
             writer.println(xpLine);
+            writer.println(defenseLine);
+            writer.println(ACLine);
+            writer.println(SaveLine);
             writer.close();
         } catch (IOException e) {
             System.err.println("Something went wrong (exporting to text)");
@@ -161,16 +178,23 @@ public class sfncFXMLController implements Initializable {
      }
 
     // Step 0 controls
-    @FXML    private TextField creatureNameInput = new TextField();
-    @FXML    private ComboBox creatureCRInput = new ComboBox();
+    @FXML   private TextField creatureNameInput = new TextField();
+    @FXML   private ComboBox creatureCRInput = new ComboBox();
 
     // Step 1 controls
-    @FXML    private ChoiceBox creatureArrayInput = new ChoiceBox();
+    @FXML   private ChoiceBox creatureArrayInput = new ChoiceBox();
     
     // stat block controls
-    @FXML    private Label creatureNameDisplay = new Label();
-    @FXML    private Label creatureCRDisplay = new Label();
-    @FXML    private Label creatureXPDisplay = new Label();
+    @FXML   private Label creatureNameDisplay = new Label();
+    @FXML   private Label creatureCRDisplay = new Label();
+    @FXML   private Label creatureXPDisplay = new Label();
+    @FXML   private Label creatureHPDisplay = new Label();
+    @FXML   private Label creatureEACDisplay = new Label();
+    @FXML   private Label creatureKACDisplay = new Label();
+    @FXML   private Label creatureFortDisplay = new Label();
+    @FXML   private Label creatureRefDisplay = new Label();
+    @FXML   private Label creatureWillDisplay = new Label();
+    
     
     public void setControls() {
         creatureNameInput.setText(creature.getName());
@@ -184,8 +208,22 @@ public class sfncFXMLController implements Initializable {
         creatureCRDisplay.setText(creature.getCR().toString());
         // update XP line
         creatureXPDisplay.setText(creature.getXPString() + " (" + creature.getArray() + ")");
-        if (chosenArray != null)
+        if (chosenArray != null) {
             array = mainArrays[chosenArray][creature.getCR().ordinal()];
+            creatureHPDisplay.setText(array.hitPoints.toString());
+            creatureEACDisplay.setText(array.EAC.toString());
+            creatureKACDisplay.setText(array.KAC.toString());
+            creatureFortDisplay.setText(bonusString(array.fort));
+            creatureRefDisplay.setText(bonusString(array.ref));
+            creatureWillDisplay.setText(bonusString(array.will));
+        } else {
+            creatureHPDisplay.setText("");
+            creatureEACDisplay.setText("");
+            creatureKACDisplay.setText("");
+            creatureFortDisplay.setText("");
+            creatureRefDisplay.setText("");
+            creatureWillDisplay.setText("");
+        }
     }
     
     public void updateWindowTitle() {
@@ -333,6 +371,10 @@ public class sfncFXMLController implements Initializable {
             System.err.println("Error reading arrays.txt!");
         }
         return 1;
+    }
+
+    private String bonusString(Integer n) {
+        return ((n >= 0) ? "+" : "") + n.toString();
     }
     
 }
