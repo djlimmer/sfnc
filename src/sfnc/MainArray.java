@@ -63,6 +63,32 @@ public class MainArray {
         fourAttackMeleeDamage = new Dice();
     }
     
+    MainArray(MainArray m) {
+        EAC = m.EAC;
+        KAC = m.KAC;
+        fort = m.fort;
+        ref = m.ref;
+        will = m.will;
+        hitPoints = m.hitPoints;
+        abilityDC = m.abilityDC;
+        baseSpellDC = m.baseSpellDC;
+        abilityScoreModifier1 = m.abilityScoreModifier1;
+        abilityScoreModifier2 = m.abilityScoreModifier2;
+        abilityScoreModifier3 = m.abilityScoreModifier3;
+        specialAbilities = m.specialAbilities;
+        masterSkillBonus = m.masterSkillBonus;
+        masterSkillNumber = m.masterSkillNumber;
+        goodSkillBonus = m.goodSkillBonus;
+        goodSkillNumber = m.goodSkillNumber;
+        highAttackBonus = m.highAttackBonus;
+        lowAttackBonus = m.lowAttackBonus;
+        energyRangedDamage = new Dice(m.energyRangedDamage);
+        kineticRangedDamage = new Dice(m.kineticRangedDamage);
+        standardMeleeDamage = new Dice(m.standardMeleeDamage);
+        threeAttackMeleeDamage = new Dice(m.threeAttackMeleeDamage);
+        fourAttackMeleeDamage = new Dice(m.fourAttackMeleeDamage);
+    }
+    
     MainArray(Integer[] s, Dice[] d) {
         EAC = s[0];
         KAC = s[1];

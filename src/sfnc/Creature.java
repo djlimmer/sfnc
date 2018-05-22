@@ -21,6 +21,8 @@ public class Creature {
     String name;
     ChallengeRating CR;
     String array;
+    String type;
+    Boolean useTypeAdjustments;
     
     // temporary status variables
     Boolean hasChanged;
@@ -29,6 +31,8 @@ public class Creature {
         this.name = "";
         this.CR = ChallengeRating.NONE;
         this.array = "";
+        this.type = "";
+        this.useTypeAdjustments = true;
         this.hasChanged = true;
     }
     
@@ -36,6 +40,8 @@ public class Creature {
         this.name = n;
         this.CR = c;
         this.array = "";
+        this.type = "";
+        this.useTypeAdjustments = true;
         this.hasChanged = true;
     }
 
@@ -58,6 +64,18 @@ public class Creature {
     public String getXPString() {
         return CR.getXP()==0 ? "\u2013" : NumberFormat.getNumberInstance(Locale.getDefault()).format(CR.getXP());
     }
+    
+      String getArray() {
+        return array;
+    }
+    
+    String getType() {
+        return type;
+    }
+    
+    public Boolean useTypeAdjustments() {
+        return useTypeAdjustments;
+    }
 
     public Boolean hasChanged() {
         return hasChanged;
@@ -76,6 +94,21 @@ public class Creature {
     public void setCRFromComboBox(Integer i) {
         // check for legal bounds here
         this.CR = ChallengeRating.values()[i];
+        this.hasChanged = true;
+    }
+
+    void setArray(String a) {
+        this.array = a;
+        this.hasChanged = true;
+    }
+
+    void setType(String t) {
+        this.type = t;
+        this.hasChanged = true;
+    }
+    
+    public void setUseTypeAdjustments(Boolean u) {
+        this.useTypeAdjustments = u;
         this.hasChanged = true;
     }
     
@@ -102,12 +135,15 @@ public class Creature {
             this.name = reader.readLine();
             this.CR = ChallengeRating.valueOf(reader.readLine());
             this.array = reader.readLine();
+            this.type = reader.readLine();
+            this.useTypeAdjustments = !("false".equals(reader.readLine()));
             reader.close();
         } catch (IOException e) {
             System.err.println("Something went wrong (opening sfnc file)");
             return -1;
         }
 
+        this.hasChanged = false;
         return 0;
     }
     
@@ -118,19 +154,13 @@ public class Creature {
             writer.println(name);
             writer.println(CR.name());
             writer.println(array);
+            writer.println(type);
+            writer.println(useTypeAdjustments);
             writer.close();
         } catch (IOException e) {
-            System.err.println("Something went wrong (exporting to text)");
+            System.err.println("Something went wrong (saving to file)");
         }
         hasChanged = false;
     }
 
-    void setArray(String a) {
-           this.array = a;
-           this.hasChanged = true;
-    }
-
-    String getArray() {
-        return array;
-    }
 }

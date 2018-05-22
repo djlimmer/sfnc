@@ -24,6 +24,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
@@ -51,6 +52,8 @@ public class sfncFXMLController implements Initializable {
     
     // workspaces for creature
     MainArray array;
+    Boolean useTypeAdjustments = true;
+    Boolean useClassAdjustments = false;
             
     // where-to-save info
     File currentExportDirectory = new File(".");
@@ -124,10 +127,9 @@ public class sfncFXMLController implements Initializable {
     
     @FXML public void exportTextAction(ActionEvent actionEvent) {
         
-        //creature.calculateInternals();
-        
         final int EXPORTLINEWIDTH = 70;
         
+        updateArray();
         // create the output lines
         String nameLine = creature.getName();
         String CROutput = "CR " + creature.CR;
@@ -148,7 +150,7 @@ public class sfncFXMLController implements Initializable {
         }
         defenseLine += HPOutput;
         
-        String ACLine = (array == null) ? "" : "EAC " + array.EAC.toString() + "; KAC" + array.KAC.toString();
+        String ACLine = (array == null) ? "" : "EAC " + array.EAC.toString() + "; KAC " + array.KAC.toString();
         String SaveLine = (array == null) ? "" : "Fort " + bonusString(array.fort) + "; Ref " + bonusString(array.ref)
                 + "; Will " + bonusString(array.will);
 
@@ -184,6 +186,10 @@ public class sfncFXMLController implements Initializable {
     // Step 1 controls
     @FXML   private ChoiceBox creatureArrayInput = new ChoiceBox();
     
+    // Step 2 controls
+    @FXML   private ComboBox creatureTypeInput = new ComboBox();
+    @FXML   private CheckBox creatureTypeAdjustmentUse = new CheckBox();
+    
     // stat block controls
     @FXML   private Label creatureNameDisplay = new Label();
     @FXML   private Label creatureCRDisplay = new Label();
@@ -200,30 +206,161 @@ public class sfncFXMLController implements Initializable {
         creatureNameInput.setText(creature.getName());
         creatureCRInput.setValue(creature.getCRDisplayString());
         creatureArrayInput.setValue(creature.getArray());
+        creatureTypeInput.setValue(creature.getType());
     }
     
+    private void updateArray() {
+        if (chosenArray == null) {
+            array = null;
+        } else 
+            array = new MainArray(mainArrays[chosenArray][creature.getCR().ordinal()]);
+            switch(creature.getType()) {
+                case "Aberration":
+                    // give it darkvision 60
+                    if (useTypeAdjustments) {
+                        array.will += 2;
+                    }
+                    break;
+                case "Animal":
+                    // give it low-light vision
+                    // set intelligence to -4 or -5 (put choice in UI)
+                    if (useTypeAdjustments) {
+                        array.fort += 2;
+                        array.ref += 2;
+                    }
+                    break;
+                case "Construct":
+                    // give it darkvision 60
+                    // give it low-light vision
+                    // give it construct immunities
+                    // set Constitution to -
+                    // add subtype magical or technological (put choice in UI)
+                    // if mindless set Intelligence to - and add mindless
+                    //      (put choice in UI)
+                    if (useTypeAdjustments) {
+                        array.fort -= 2;
+                        array.ref -= 2;
+                        array.will -= 2;
+                        array.highAttackBonus += 1;
+                        array.lowAttackBonus += 1;
+                    }
+                    break;
+                case "Dragon":
+                    // give it darkvision 60
+                    // give it low-light vision
+                    // give it immunity to paralysis
+                    // give it immunity to sleep
+                    if (useTypeAdjustments) {
+                        array.fort += 2;
+                        array.ref += 2;
+                        array.will += 2;
+                        array.highAttackBonus += 1;
+                        array.lowAttackBonus += 1;
+                    }
+                    break;
+                case "Fey":
+                    // give it low-light vision
+                    if (useTypeAdjustments) {
+                        array.fort += 2;
+                        array.ref += 2;
+                        array.highAttackBonus -= 1;
+                        array.lowAttackBonus -= 1;
+                    }
+                    break;
+                case "Humanoid":
+                    // requires a subtype
+                    if (useTypeAdjustments) {
+                        // give it +2 to one save (put choice in UI)
+                    }
+                    break;
+                case "Magical Beast":
+                    // give it darkvision 60
+                    // give it low-light vision
+                    if (useTypeAdjustments) {
+                        array.fort += 2;
+                        array.ref += 2;
+                        array.highAttackBonus += 1;
+                        array.lowAttackBonus += 1;
+                    }
+                    break;
+                case "Monstrous Humanoid":
+                    // give it darkvision 60
+                    if (useTypeAdjustments) {
+                        array.ref += 2;
+                        array.will += 2;
+                        array.highAttackBonus += 1;
+                        array.lowAttackBonus += 1;
+                    }
+                    break;
+                case "Ooze":
+                    // give it blindsight
+                    // give it mindless
+                    // give it ooze immunities
+                    // give it sightless
+                    // set Intelligence to - (option to turn off?)
+                    if (useTypeAdjustments) {
+                        array.fort += 2;
+                        array.ref -= 2;
+                        array.will -= 2;
+                        // no master or good skills unless natural
+                    }
+                    break;
+                case "Outsider":
+                    // give it darkvision 60
+                    // must have subtype if member of a race
+                    if (useTypeAdjustments) {
+                        // give it +2 to one save (put choice in UI)
+                        array.highAttackBonus += 1;
+                        array.lowAttackBonus += 1;
+                    }
+                    break;
+                case "Plant":
+                    // give it low-light vision
+                    // give it plant immunities
+                    if (useTypeAdjustments) {
+                            array.fort += 2;
+                    }
+                    break;
+                case "Undead":
+                    // give it darkvision 60
+                    // give it undead immunities
+                    // give it unliving
+                    // set Constitution to -
+                    if (useTypeAdjustments) {
+                        array.will += 2;
+                    }
+                    break;
+                case "Vermin":
+                    // give it darkvision 60
+                    // give it mindless
+                    // set Intelligence to -
+                    if (useTypeAdjustments) {
+                        array.fort += 2;
+                    }
+                    break;
+            }
+        }
+    
     public void updateStatBlock() {
+        updateArray();
         // update name/CR line
         creatureNameDisplay.setText(creature.getName().toUpperCase());
         creatureCRDisplay.setText(creature.getCR().toString());
         // update XP line
-        creatureXPDisplay.setText(creature.getXPString() + " (" + creature.getArray() + ")");
-        if (chosenArray != null) {
-            array = mainArrays[chosenArray][creature.getCR().ordinal()];
-            creatureHPDisplay.setText(array.hitPoints.toString());
-            creatureEACDisplay.setText(array.EAC.toString());
-            creatureKACDisplay.setText(array.KAC.toString());
-            creatureFortDisplay.setText(bonusString(array.fort));
-            creatureRefDisplay.setText(bonusString(array.ref));
-            creatureWillDisplay.setText(bonusString(array.will));
-        } else {
-            creatureHPDisplay.setText("");
-            creatureEACDisplay.setText("");
-            creatureKACDisplay.setText("");
-            creatureFortDisplay.setText("");
-            creatureRefDisplay.setText("");
-            creatureWillDisplay.setText("");
-        }
+        creatureXPDisplay.setText(creature.getXPString() 
+                + " (" + creature.getArray() + ")");
+        creatureHPDisplay.setText(
+                (array == null) ? "" : array.hitPoints.toString());
+        creatureEACDisplay.setText(
+                (array == null) ? "" : array.EAC.toString());
+        creatureKACDisplay.setText(
+                (array == null) ? "" : array.KAC.toString());
+        creatureFortDisplay.setText(
+                (array == null) ? "" : bonusString(array.fort));
+        creatureRefDisplay.setText(
+                (array == null) ? "" : bonusString(array.ref));
+        creatureWillDisplay.setText(
+                (array == null) ? "" : bonusString(array.will));
     }
     
     public void updateWindowTitle() {
@@ -285,7 +422,7 @@ public class sfncFXMLController implements Initializable {
         // set up about dialog box
         aboutDialog.initStyle(StageStyle.UTILITY);
         aboutDialog.setTitle("About sfnc");
-        aboutDialog.setContentText("Starfinder NPC/Alien Creator\nversion 1.1.0");
+        aboutDialog.setContentText("Starfinder NPC/Alien Creator\nversion 1.1.1");
         aboutDialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
         
         // step 0 controls
@@ -296,7 +433,6 @@ public class sfncFXMLController implements Initializable {
                         String oldValue, String newValue) {
                     creature.setName(newValue);
                     updateStatBlock();
-                    creature.setChange();
                     updateWindowTitle();
                 }
             }
@@ -315,10 +451,12 @@ public class sfncFXMLController implements Initializable {
                         Number oldValue, Number newValue) {
                     creature.setCRFromComboBox(newValue.intValue());
                     updateStatBlock();
+                    updateWindowTitle();
                 }
             }
         );
         
+        // step 1 controls
         creatureArrayInput.setItems(FXCollections.observableArrayList(
                 arrayNames));
         
@@ -330,6 +468,28 @@ public class sfncFXMLController implements Initializable {
                     creature.setArray(arrayNames[newValue.intValue()]);
                     chosenArray = newValue.intValue();
                     updateStatBlock();
+                    updateWindowTitle();
+                }
+            }
+        );
+        
+        // step 2 controls
+        String[] typeNames = {
+            "Aberration", "Animal", "Construct", "Dragon", "Fey", "Humanoid",
+            "Magical Beast", "Monstrous Humanoid", "Ooze", "Outsider", "Plant",
+            "Undead", "Vermin"
+        };
+        creatureTypeInput.setItems(FXCollections.observableArrayList(
+                typeNames));
+        
+        creatureTypeInput.getSelectionModel().selectedIndexProperty().addListener(
+            new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue observable,
+                        Number oldValue, Number newValue) {
+                    creature.setType(typeNames[newValue.intValue()]);
+                    updateStatBlock();
+                    updateWindowTitle();
                 }
             }
         );

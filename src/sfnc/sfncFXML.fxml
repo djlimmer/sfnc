@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="top" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sfnc.sfncFXMLController">
+<VBox fx:id="top" prefHeight="745.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sfnc.sfncFXMLController">
    <children>
       <MenuBar>
         <menus>
@@ -30,7 +30,7 @@
                </items></Menu>
         </menus>
       </MenuBar>
-      <SplitPane dividerPositions="0.29797979797979796" prefHeight="575.0" prefWidth="800.0">
+      <SplitPane dividerPositions="0.29797979797979796" prefHeight="785.0" prefWidth="800.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
@@ -69,7 +69,47 @@
                                  </children>
                               </AnchorPane>
                            </content></Tab>
-                        <Tab disable="true" text="2. ...">
+                        <Tab text="2. Type">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ComboBox fx:id="creatureTypeInput" layoutX="49.0" layoutY="40.0" prefWidth="150.0" />
+                                    <Label layoutX="14.0" layoutY="44.0" text="Type:" />
+                                    <CheckBox fx:id="creatureTypeAdjustmentUse" layoutX="14.0" layoutY="76.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Use Type Adjustments" />
+                                 </children></AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab disable="true" text="3. Subtypes">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </Tab>
+                        <Tab disable="true" text="4. Class">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </Tab>
+                        <Tab disable="true" text="5. Templates">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </Tab>
+                        <Tab disable="true" text="6. Special Abilities">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </Tab>
+                        <Tab disable="true" text="7. Skills">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </Tab>
+                        <Tab disable="true" text="8. Spells">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </Tab>
+                        <Tab disable="true" text="9. Final Check">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                           </content>
