@@ -1,0 +1,6 @@
+george                                                            CR 6
+XP 2,400 (Combatant)
+Senses darkvision 60 ft., low-light vision
+DEFENSE                                                          HP 90
+EAC 18; KAC 20
+Fort +10; Ref +10; Will +7

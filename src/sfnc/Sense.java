@@ -10,15 +10,30 @@ public class Sense extends Ability {
     Integer range;
     
     Sense() {
+        this.name = "";
         this.location = Location.SENSES;
         this.range = 0;
     }
     
-    Integer getRange() {
+    Sense(String n, Integer r) {
+        this.name = n;
+        this.range = r;
+        this.location = Location.SENSES;
+    }
+    
+    public Integer getRange() {
         return range;
     }
     
-    void setRange(Integer r) {
+    public void setRange(Integer r) {
         this.range = r;
+    }
+    
+    @Override
+    public String toString() {
+        if (range==0)
+            return name;
+        else
+            return name + " " + range.toString() + " ft.";
     }
 }

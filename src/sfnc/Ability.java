@@ -17,4 +17,25 @@ public class Ability {
         name = "";
         location = Location.UNDETERMINED;
     }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public Location getLocation() {
+        return location;
+    }
+    
+    public void setName(String n) {
+        name = n;
+    }
+    
+    public void setLocation(Location l) {
+        location = l;
+    }
+    
+    @Override
+    public String toString() {
+        return name;
+    }
 }

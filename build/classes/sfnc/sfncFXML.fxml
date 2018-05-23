@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
@@ -147,6 +148,12 @@
                               <Label fx:id="creatureXPDisplay" style="-fx-font-weight: bold;" text="Label" />
                            </children>
                         </HBox>
+                        <TextFlow fx:id="creatureSenseBlock">
+                           <children>
+                              <Label style="-fx-font-weight: bold;" text="Senses " />
+                              <Label fx:id="creatureSensesDisplay" text="Label" />
+                           </children>
+                        </TextFlow>
                         <HBox prefWidth="200.0">
                            <children>
                               <Label prefHeight="25.0" style="-fx-font-weight: bold;" text="DEFENSE" />

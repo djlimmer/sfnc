@@ -12,7 +12,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import javafx.application.Platform;
@@ -32,6 +34,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.StageStyle;
 
@@ -54,6 +57,8 @@ public class sfncFXMLController implements Initializable {
     MainArray array;
     Boolean useTypeAdjustments = true;
     Boolean useClassAdjustments = false;
+    Integer initiative;
+    List<Ability> abilityList;
             
     // where-to-save info
     File currentExportDirectory = new File(".");
@@ -141,6 +146,7 @@ public class sfncFXMLController implements Initializable {
         nameLine += CROutput;
 
         String xpLine = "XP " + creature.getXPString() + " (" + creature.getArray() + ")";
+        String sensesOutput = "Senses " + makeSensesString();
         String HPOutput = (array == null) ? "" : "HP " + array.hitPoints.toString();
         
         String defenseLine = "DEFENSE";
@@ -170,6 +176,7 @@ public class sfncFXMLController implements Initializable {
             PrintWriter writer = new PrintWriter(file.getPath(),"UTF-8");
             writer.println(nameLine);
             writer.println(xpLine);
+            writer.println(sensesOutput);
             writer.println(defenseLine);
             writer.println(ACLine);
             writer.println(SaveLine);
@@ -194,6 +201,8 @@ public class sfncFXMLController implements Initializable {
     @FXML   private Label creatureNameDisplay = new Label();
     @FXML   private Label creatureCRDisplay = new Label();
     @FXML   private Label creatureXPDisplay = new Label();
+    @FXML   private TextFlow creatureSenseBlock = new TextFlow();
+    @FXML   private Label creatureSensesDisplay = new Label();
     @FXML   private Label creatureHPDisplay = new Label();
     @FXML   private Label creatureEACDisplay = new Label();
     @FXML   private Label creatureKACDisplay = new Label();
@@ -212,17 +221,18 @@ public class sfncFXMLController implements Initializable {
     private void updateArray() {
         if (chosenArray == null) {
             array = null;
-        } else 
+        } else  {
             array = new MainArray(mainArrays[chosenArray][creature.getCR().ordinal()]);
+            abilityList = new ArrayList();
             switch(creature.getType()) {
                 case "Aberration":
-                    // give it darkvision 60
+                    abilityList.add(new Sense("darkvision",60));
                     if (useTypeAdjustments) {
                         array.will += 2;
                     }
                     break;
                 case "Animal":
-                    // give it low-light vision
+                    abilityList.add(new Sense("low-light vision",0));
                     // set intelligence to -4 or -5 (put choice in UI)
                     if (useTypeAdjustments) {
                         array.fort += 2;
@@ -230,8 +240,8 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Construct":
-                    // give it darkvision 60
-                    // give it low-light vision
+                    abilityList.add(new Sense("darkvision",60));
+                    abilityList.add(new Sense("low-light vision",0));
                     // give it construct immunities
                     // set Constitution to -
                     // add subtype magical or technological (put choice in UI)
@@ -246,8 +256,8 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Dragon":
-                    // give it darkvision 60
-                    // give it low-light vision
+                    abilityList.add(new Sense("darkvision",60));
+                    abilityList.add(new Sense("low-light vision",0));
                     // give it immunity to paralysis
                     // give it immunity to sleep
                     if (useTypeAdjustments) {
@@ -259,7 +269,7 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Fey":
-                    // give it low-light vision
+                    abilityList.add(new Sense("low-light vision",0));
                     if (useTypeAdjustments) {
                         array.fort += 2;
                         array.ref += 2;
@@ -274,8 +284,8 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Magical Beast":
-                    // give it darkvision 60
-                    // give it low-light vision
+                    abilityList.add(new Sense("darkvision",60));
+                    abilityList.add(new Sense("low-light vision",0));
                     if (useTypeAdjustments) {
                         array.fort += 2;
                         array.ref += 2;
@@ -284,7 +294,7 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Monstrous Humanoid":
-                    // give it darkvision 60
+                    abilityList.add(new Sense("darkvision",60));
                     if (useTypeAdjustments) {
                         array.ref += 2;
                         array.will += 2;
@@ -293,10 +303,10 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Ooze":
-                    // give it blindsight
+                    abilityList.add(new Sense("blindsight",60));
+                    abilityList.add(new Sense("sightless",0));
                     // give it mindless
                     // give it ooze immunities
-                    // give it sightless
                     // set Intelligence to - (option to turn off?)
                     if (useTypeAdjustments) {
                         array.fort += 2;
@@ -306,7 +316,7 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Outsider":
-                    // give it darkvision 60
+                    abilityList.add(new Sense("darkvision",60));
                     // must have subtype if member of a race
                     if (useTypeAdjustments) {
                         // give it +2 to one save (put choice in UI)
@@ -315,14 +325,14 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Plant":
-                    // give it low-light vision
+                    abilityList.add(new Sense("low-light vision",0));
                     // give it plant immunities
                     if (useTypeAdjustments) {
                             array.fort += 2;
                     }
                     break;
                 case "Undead":
-                    // give it darkvision 60
+                    abilityList.add(new Sense("darkvision",60));
                     // give it undead immunities
                     // give it unliving
                     // set Constitution to -
@@ -331,7 +341,7 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Vermin":
-                    // give it darkvision 60
+                    abilityList.add(new Sense("darkvision",60));
                     // give it mindless
                     // set Intelligence to -
                     if (useTypeAdjustments) {
@@ -340,6 +350,19 @@ public class sfncFXMLController implements Initializable {
                     break;
             }
         }
+    }
+    
+    public String makeSensesString() {       
+        List<String> senseList = new ArrayList();
+        if (abilityList == null)
+            return "";
+        abilityList.stream().filter((a) -> (a instanceof Sense)).forEachOrdered((a) -> {
+            senseList.add(a.toString());
+        });
+        java.util.Collections.sort(senseList);
+
+        return String.join(", ", senseList);
+    }
     
     public void updateStatBlock() {
         updateArray();
@@ -348,7 +371,11 @@ public class sfncFXMLController implements Initializable {
         creatureCRDisplay.setText(creature.getCR().toString());
         // update XP line
         creatureXPDisplay.setText(creature.getXPString() 
-                + " (" + creature.getArray() + ")");
+                + " (" + creature.getArray() + ")");    
+        // update init/senses/perception line
+        creatureSensesDisplay.setText(makeSensesString());
+        
+        // update defenses block
         creatureHPDisplay.setText(
                 (array == null) ? "" : array.hitPoints.toString());
         creatureEACDisplay.setText(
