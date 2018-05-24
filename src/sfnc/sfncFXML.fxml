@@ -186,6 +186,7 @@
                               <Label fx:id="creatureWillDisplay" text="Label" />
                            </children>
                         </HBox>
+                        <TextFlow fx:id="creatureDefensiveAbilitiesBlock" prefHeight="200.0" prefWidth="200.0" />
                      </children>
                      <padding>
                         <Insets top="5.0" />

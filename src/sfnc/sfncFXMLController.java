@@ -34,6 +34,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.StageStyle;
@@ -159,7 +160,11 @@ public class sfncFXMLController implements Initializable {
         String ACLine = (array == null) ? "" : "EAC " + array.EAC.toString() + "; KAC " + array.KAC.toString();
         String SaveLine = (array == null) ? "" : "Fort " + bonusString(array.fort) + "; Ref " + bonusString(array.ref)
                 + "; Will " + bonusString(array.will);
-
+        String defensiveAbilitiesLine = "";
+        String immunitiesOutput = makeImmunitiesString();
+        if (!"".equals(immunitiesOutput))
+            defensiveAbilitiesLine += "Immunities " + immunitiesOutput;
+        
         // get the file
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
@@ -209,6 +214,9 @@ public class sfncFXMLController implements Initializable {
     @FXML   private Label creatureFortDisplay = new Label();
     @FXML   private Label creatureRefDisplay = new Label();
     @FXML   private Label creatureWillDisplay = new Label();
+    @FXML   private TextFlow creatureDefensiveAbilitiesBlock = new TextFlow();
+    private Text creatureImmunitiesLabel = new Text("Immunities ");
+    private Text creatureImmunitiesDisplay = new Text();
     
     
     public void setControls() {
@@ -242,7 +250,7 @@ public class sfncFXMLController implements Initializable {
                 case "Construct":
                     abilityList.add(new Sense("darkvision",60));
                     abilityList.add(new Sense("low-light vision",0));
-                    // give it construct immunities
+                    abilityList.add(new Immunity("construct immunities"));
                     // set Constitution to -
                     // add subtype magical or technological (put choice in UI)
                     // if mindless set Intelligence to - and add mindless
@@ -258,8 +266,8 @@ public class sfncFXMLController implements Initializable {
                 case "Dragon":
                     abilityList.add(new Sense("darkvision",60));
                     abilityList.add(new Sense("low-light vision",0));
-                    // give it immunity to paralysis
-                    // give it immunity to sleep
+                    abilityList.add(new Immunity("paralysis"));
+                    abilityList.add(new Immunity("sleep"));
                     if (useTypeAdjustments) {
                         array.fort += 2;
                         array.ref += 2;
@@ -306,7 +314,7 @@ public class sfncFXMLController implements Initializable {
                     abilityList.add(new Sense("blindsight",60));
                     abilityList.add(new Sense("sightless",0));
                     // give it mindless
-                    // give it ooze immunities
+                    abilityList.add(new Immunity("ooze immunities"));
                     // set Intelligence to - (option to turn off?)
                     if (useTypeAdjustments) {
                         array.fort += 2;
@@ -326,14 +334,14 @@ public class sfncFXMLController implements Initializable {
                     break;
                 case "Plant":
                     abilityList.add(new Sense("low-light vision",0));
-                    // give it plant immunities
+                    abilityList.add(new Immunity("plant immunities"));
                     if (useTypeAdjustments) {
                             array.fort += 2;
                     }
                     break;
                 case "Undead":
                     abilityList.add(new Sense("darkvision",60));
-                    // give it undead immunities
+                    abilityList.add(new Immunity("undead immunities"));
                     // give it unliving
                     // set Constitution to -
                     if (useTypeAdjustments) {
@@ -356,12 +364,30 @@ public class sfncFXMLController implements Initializable {
         List<String> senseList = new ArrayList();
         if (abilityList == null)
             return "";
-        abilityList.stream().filter((a) -> (a instanceof Sense)).forEachOrdered((a) -> {
+        abilityList.stream().filter((a) -> (a.getLocation() == Location.SENSES)).forEachOrdered((a) -> {
             senseList.add(a.toString());
         });
         java.util.Collections.sort(senseList);
 
         return String.join(", ", senseList);
+    }
+    
+    public Boolean hasImmunities() {
+        if (abilityList == null)
+            return false;
+        return abilityList.stream().anyMatch((a) -> (a.getLocation() == Location.IMMUNITIES));
+    }
+    
+    public String makeImmunitiesString() {
+        if (!hasImmunities()) return "";
+        
+        List<String> immunityList = new ArrayList();
+        abilityList.stream().filter((a) -> (a.getLocation() == Location.IMMUNITIES)).forEachOrdered((a) -> {
+            immunityList.add(a.toString());
+        });
+        java.util.Collections.sort(immunityList);
+
+        return String.join(", ", immunityList);
     }
     
     public void updateStatBlock() {
@@ -388,6 +414,17 @@ public class sfncFXMLController implements Initializable {
                 (array == null) ? "" : bonusString(array.ref));
         creatureWillDisplay.setText(
                 (array == null) ? "" : bonusString(array.will));
+        //update defensive abilities line
+        creatureDefensiveAbilitiesBlock.getChildren().clear();
+        if (hasImmunities()) {
+            // TODO: immunity display not resetting when switching from a type with immunities to another
+            //  (but OK when switching from no immunity to immunity, or vice versa)
+            //  Apparently, TextFlow interferes with this somehow?
+            creatureImmunitiesDisplay.setText(makeImmunitiesString());
+            creatureDefensiveAbilitiesBlock.getChildren().addAll(creatureImmunitiesLabel,creatureImmunitiesDisplay);
+        }
+
+        
     }
     
     public void updateWindowTitle() {
@@ -452,6 +489,9 @@ public class sfncFXMLController implements Initializable {
         aboutDialog.setContentText("Starfinder NPC/Alien Creator\nversion 1.1.1");
         aboutDialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
         
+        // set up Text and TextFlows
+        creatureImmunitiesLabel.setStyle("-fx-font-weight: bold");
+
         // step 0 controls
         creatureNameInput.textProperty().addListener(
             new ChangeListener<String>() {
