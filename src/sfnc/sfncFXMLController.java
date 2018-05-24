@@ -33,6 +33,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -147,7 +148,9 @@ public class sfncFXMLController implements Initializable {
         nameLine += CROutput;
 
         String xpLine = "XP " + creature.getXPString() + " (" + creature.getArray() + ")";
-        String sensesOutput = "Senses " + makeSensesString();
+        String sensesLine = "";
+        if (hasSenses())
+            sensesLine += "Senses " + makeSensesString();
         String HPOutput = (array == null) ? "" : "HP " + array.hitPoints.toString();
         
         String defenseLine = "DEFENSE";
@@ -161,9 +164,8 @@ public class sfncFXMLController implements Initializable {
         String SaveLine = (array == null) ? "" : "Fort " + bonusString(array.fort) + "; Ref " + bonusString(array.ref)
                 + "; Will " + bonusString(array.will);
         String defensiveAbilitiesLine = "";
-        String immunitiesOutput = makeImmunitiesString();
-        if (!"".equals(immunitiesOutput))
-            defensiveAbilitiesLine += "Immunities " + immunitiesOutput;
+        if (hasImmunities())
+            defensiveAbilitiesLine += "Immunities " + makeImmunitiesString();
         
         // get the file
         FileChooser fileChooser = new FileChooser();
@@ -181,10 +183,13 @@ public class sfncFXMLController implements Initializable {
             PrintWriter writer = new PrintWriter(file.getPath(),"UTF-8");
             writer.println(nameLine);
             writer.println(xpLine);
-            writer.println(sensesOutput);
+            if (!"".equals(sensesLine))
+                writer.println(sensesLine);
             writer.println(defenseLine);
             writer.println(ACLine);
             writer.println(SaveLine);
+            if (!"".equals(defensiveAbilitiesLine))
+                writer.println(defensiveAbilitiesLine);
             writer.close();
         } catch (IOException e) {
             System.err.println("Something went wrong (exporting to text)");
@@ -206,8 +211,10 @@ public class sfncFXMLController implements Initializable {
     @FXML   private Label creatureNameDisplay = new Label();
     @FXML   private Label creatureCRDisplay = new Label();
     @FXML   private Label creatureXPDisplay = new Label();
-    @FXML   private TextFlow creatureSenseBlock = new TextFlow();
-    @FXML   private Label creatureSensesDisplay = new Label();
+    @FXML   private TextFlow creatureSensesBlock = new TextFlow();
+    private Text creatureTypeDisplay = new Text();
+    private Label creatureSensesLabel = new Label("Senses ");
+    private Text creatureSensesDisplay = new Text();
     @FXML   private Label creatureHPDisplay = new Label();
     @FXML   private Label creatureEACDisplay = new Label();
     @FXML   private Label creatureKACDisplay = new Label();
@@ -215,7 +222,7 @@ public class sfncFXMLController implements Initializable {
     @FXML   private Label creatureRefDisplay = new Label();
     @FXML   private Label creatureWillDisplay = new Label();
     @FXML   private TextFlow creatureDefensiveAbilitiesBlock = new TextFlow();
-    private Text creatureImmunitiesLabel = new Text("Immunities ");
+    private Label creatureImmunitiesLabel = new Label("Immunities ");
     private Text creatureImmunitiesDisplay = new Text();
     
     
@@ -224,12 +231,14 @@ public class sfncFXMLController implements Initializable {
         creatureCRInput.setValue(creature.getCRDisplayString());
         creatureArrayInput.setValue(creature.getArray());
         creatureTypeInput.setValue(creature.getType());
+        creatureTypeAdjustmentUse.setSelected(creature.useTypeAdjustments());
     }
     
     private void updateArray() {
         if (chosenArray == null) {
             array = null;
         } else  {
+            useTypeAdjustments = creature.useTypeAdjustments();
             array = new MainArray(mainArrays[chosenArray][creature.getCR().ordinal()]);
             abilityList = new ArrayList();
             switch(creature.getType()) {
@@ -360,10 +369,16 @@ public class sfncFXMLController implements Initializable {
         }
     }
     
-    public String makeSensesString() {       
-        List<String> senseList = new ArrayList();
+    public Boolean hasSenses() {
         if (abilityList == null)
-            return "";
+            return false;
+        return abilityList.stream().anyMatch((a) -> (a.getLocation() == Location.SENSES));
+    }
+
+    public String makeSensesString() {    
+        if (!hasSenses()) return "";
+        
+        List<String> senseList = new ArrayList();
         abilityList.stream().filter((a) -> (a.getLocation() == Location.SENSES)).forEachOrdered((a) -> {
             senseList.add(a.toString());
         });
@@ -399,6 +414,17 @@ public class sfncFXMLController implements Initializable {
         creatureXPDisplay.setText(creature.getXPString() 
                 + " (" + creature.getArray() + ")");    
         // update init/senses/perception line
+        creatureSensesBlock.getChildren().clear();
+        if (!"".equals(creature.getType())) {
+            creatureTypeDisplay.setText(creature.getType());   
+            creatureSensesBlock.getChildren().add(creatureTypeDisplay);
+        }
+        if (hasSenses()) {
+            // adding a "\n" is a stopgap until all the Init display is in
+            creatureSensesBlock.getChildren().add(new Text("\n"));
+            creatureSensesDisplay.setText(makeSensesString());
+            creatureSensesBlock.getChildren().addAll(creatureSensesLabel,creatureSensesDisplay);
+        }
         creatureSensesDisplay.setText(makeSensesString());
         
         // update defenses block
@@ -417,14 +443,9 @@ public class sfncFXMLController implements Initializable {
         //update defensive abilities line
         creatureDefensiveAbilitiesBlock.getChildren().clear();
         if (hasImmunities()) {
-            // TODO: immunity display not resetting when switching from a type with immunities to another
-            //  (but OK when switching from no immunity to immunity, or vice versa)
-            //  Apparently, TextFlow interferes with this somehow?
             creatureImmunitiesDisplay.setText(makeImmunitiesString());
             creatureDefensiveAbilitiesBlock.getChildren().addAll(creatureImmunitiesLabel,creatureImmunitiesDisplay);
         }
-
-        
     }
     
     public void updateWindowTitle() {
@@ -490,6 +511,7 @@ public class sfncFXMLController implements Initializable {
         aboutDialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
         
         // set up Text and TextFlows
+        creatureSensesLabel.setStyle("-fx-font-weight: bold");
         creatureImmunitiesLabel.setStyle("-fx-font-weight: bold");
 
         // step 0 controls
@@ -560,6 +582,20 @@ public class sfncFXMLController implements Initializable {
                 }
             }
         );
+
+        creatureTypeAdjustmentUse.selectedProperty().addListener(
+            new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue observable,
+                        Boolean oldValue, Boolean newValue) {
+                    useTypeAdjustments = newValue;
+                    creature.setUseTypeAdjustments(newValue);
+                    updateStatBlock();
+                    updateWindowTitle();
+                }
+            }
+        );
+        creatureTypeAdjustmentUse.setSelected(true);
     
     }
 

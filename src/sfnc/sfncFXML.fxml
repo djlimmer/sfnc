@@ -148,12 +148,7 @@
                               <Label fx:id="creatureXPDisplay" style="-fx-font-weight: bold;" text="Label" />
                            </children>
                         </HBox>
-                        <TextFlow fx:id="creatureSenseBlock">
-                           <children>
-                              <Label style="-fx-font-weight: bold;" text="Senses " />
-                              <Label fx:id="creatureSensesDisplay" text="Label" />
-                           </children>
-                        </TextFlow>
+                        <TextFlow fx:id="creatureSensesBlock" />
                         <HBox prefWidth="200.0">
                            <children>
                               <Label prefHeight="25.0" style="-fx-font-weight: bold;" text="DEFENSE" />
@@ -186,7 +181,7 @@
                               <Label fx:id="creatureWillDisplay" text="Label" />
                            </children>
                         </HBox>
-                        <TextFlow fx:id="creatureDefensiveAbilitiesBlock" prefHeight="200.0" prefWidth="200.0" />
+                        <TextFlow fx:id="creatureDefensiveAbilitiesBlock" />
                      </children>
                      <padding>
                         <Insets top="5.0" />
