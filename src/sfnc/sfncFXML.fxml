@@ -149,7 +149,7 @@
                            </children>
                         </HBox>
                         <TextFlow fx:id="creatureSensesBlock" />
-                        <HBox prefWidth="200.0">
+                        <HBox prefWidth="200.0" style="-fx-border-style: none none solid none;">
                            <children>
                               <Label prefHeight="25.0" style="-fx-font-weight: bold;" text="DEFENSE" />
                               <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="495.0">
@@ -182,6 +182,18 @@
                            </children>
                         </HBox>
                         <TextFlow fx:id="creatureDefensiveAbilitiesBlock" />
+                        <HBox prefHeight="25.0" style="-fx-border-style: none none solid none;">
+                           <children>
+                              <Label prefHeight="25.0" style="-fx-font-weight: bold;" text="OFFENSE" />
+                           </children>
+                        </HBox>
+                        <TextFlow fx:id="creatureOffensiveAbilitiesBlock" />
+                        <HBox prefHeight="25.0" style="-fx-border-style: none none solid none;">
+                           <children>
+                              <Label prefHeight="25.0" style="-fx-font-weight: bold;" text="STATISTICS" />
+                           </children>
+                        </HBox>
+                        <TextFlow fx:id="creatureStatisticsBlock" />
                      </children>
                      <padding>
                         <Insets top="5.0" />

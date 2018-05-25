@@ -33,7 +33,6 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -61,12 +60,17 @@ public class sfncFXMLController implements Initializable {
     Boolean useClassAdjustments = false;
     Integer initiative;
     List<Ability> abilityList;
-            
+    
     // where-to-save info
     File currentExportDirectory = new File(".");
     File currentSaveDirectory = new File(".");
     File currentSaveFile;
 
+    // some basic abilities - read these in from a file eventually?
+    Ability noConScore = new Ability();
+    Ability mindless = new Ability();
+    Ability unliving = new Ability();
+    
     // main AnchorPane
     @FXML private VBox top;
     
@@ -224,6 +228,12 @@ public class sfncFXMLController implements Initializable {
     @FXML   private TextFlow creatureDefensiveAbilitiesBlock = new TextFlow();
     private Label creatureImmunitiesLabel = new Label("Immunities ");
     private Text creatureImmunitiesDisplay = new Text();
+    @FXML   private TextFlow creatureOffensiveAbilitiesBlock = new TextFlow();
+    private Label creatureOffensiveAbilitiesLabel = new Label("Offensive Abilities ");
+    private Text creatureOffensiveAbilitiesDisplay = new Text();
+    @FXML   private TextFlow creatureStatisticsBlock = new TextFlow();
+    private Label creatureOtherAbilitiesLabel = new Label("Other Abilities ");
+    private Text creatureOtherAbilitiesDisplay = new Text();
     
     
     public void setControls() {
@@ -260,10 +270,8 @@ public class sfncFXMLController implements Initializable {
                     abilityList.add(new Sense("darkvision",60));
                     abilityList.add(new Sense("low-light vision",0));
                     abilityList.add(new Immunity("construct immunities"));
-                    // set Constitution to -
+                    abilityList.add(noConScore);
                     // add subtype magical or technological (put choice in UI)
-                    // if mindless set Intelligence to - and add mindless
-                    //      (put choice in UI)
                     if (useTypeAdjustments) {
                         array.fort -= 2;
                         array.ref -= 2;
@@ -322,9 +330,8 @@ public class sfncFXMLController implements Initializable {
                 case "Ooze":
                     abilityList.add(new Sense("blindsight",60));
                     abilityList.add(new Sense("sightless",0));
-                    // give it mindless
+                    abilityList.add(mindless);
                     abilityList.add(new Immunity("ooze immunities"));
-                    // set Intelligence to - (option to turn off?)
                     if (useTypeAdjustments) {
                         array.fort += 2;
                         array.ref -= 2;
@@ -351,16 +358,15 @@ public class sfncFXMLController implements Initializable {
                 case "Undead":
                     abilityList.add(new Sense("darkvision",60));
                     abilityList.add(new Immunity("undead immunities"));
-                    // give it unliving
-                    // set Constitution to -
+                    abilityList.add(unliving);
+                    abilityList.add(noConScore);
                     if (useTypeAdjustments) {
                         array.will += 2;
                     }
                     break;
                 case "Vermin":
                     abilityList.add(new Sense("darkvision",60));
-                    // give it mindless
-                    // set Intelligence to -
+                    abilityList.add(mindless);
                     if (useTypeAdjustments) {
                         array.fort += 2;
                     }
@@ -405,6 +411,42 @@ public class sfncFXMLController implements Initializable {
         return String.join(", ", immunityList);
     }
     
+    public Boolean hasOffensiveAbilities() {
+        if (abilityList == null)
+            return false;
+        return abilityList.stream().anyMatch((a) -> (a.getLocation() == Location.OFFENSIVE_ABILITIES));
+    }
+    
+    public String makeOffensiveAbilitiesString() {
+        if (!hasOffensiveAbilities()) return "";
+        
+        List<String> offensiveAbilityList = new ArrayList();
+        abilityList.stream().filter((a) -> (a.getLocation() == Location.OFFENSIVE_ABILITIES)).forEachOrdered((a) -> {
+            offensiveAbilityList.add(a.toString());
+        });
+        java.util.Collections.sort(offensiveAbilityList);
+
+        return String.join(", ", offensiveAbilityList);
+    }
+
+    public Boolean hasOtherAbilities() {
+        if (abilityList == null)
+            return false;
+        return abilityList.stream().anyMatch((a) -> (a.getLocation() == Location.OTHER_ABILITIES));
+    }
+    
+    public String makeOtherAbilitiesString() {
+        if (!hasOtherAbilities()) return "";
+        
+        List<String> otherAbilityList = new ArrayList();
+        abilityList.stream().filter((a) -> (a.getLocation() == Location.OTHER_ABILITIES)).forEachOrdered((a) -> {
+            otherAbilityList.add(a.toString());
+        });
+        java.util.Collections.sort(otherAbilityList);
+
+        return String.join(", ", otherAbilityList);
+    }
+    
     public void updateStatBlock() {
         updateArray();
         // update name/CR line
@@ -446,6 +488,14 @@ public class sfncFXMLController implements Initializable {
             creatureImmunitiesDisplay.setText(makeImmunitiesString());
             creatureDefensiveAbilitiesBlock.getChildren().addAll(creatureImmunitiesLabel,creatureImmunitiesDisplay);
         }
+        if (hasOffensiveAbilities()) {
+            creatureOffensiveAbilitiesDisplay.setText(makeOffensiveAbilitiesString());
+            creatureOffensiveAbilitiesBlock.getChildren().addAll(creatureOffensiveAbilitiesLabel,creatureOffensiveAbilitiesDisplay);
+        }
+        if (hasOtherAbilities()) {
+            creatureOtherAbilitiesDisplay.setText(makeOtherAbilitiesString());
+            creatureStatisticsBlock.getChildren().addAll(creatureOtherAbilitiesLabel,creatureOtherAbilitiesDisplay);
+        }
     }
     
     public void updateWindowTitle() {
@@ -462,6 +512,12 @@ public class sfncFXMLController implements Initializable {
             System.err.println("Error in loading arrays!");
             return;
         }
+        
+        // make some basic abilities - read these from a file eventually?
+        mindless.setName("mindless");
+        mindless.setLocation(Location.OTHER_ABILITIES);
+        unliving.setName("unliving");
+        unliving.setLocation(Location.OTHER_ABILITIES);
         
         updateStatBlock();
   
@@ -513,6 +569,8 @@ public class sfncFXMLController implements Initializable {
         // set up Text and TextFlows
         creatureSensesLabel.setStyle("-fx-font-weight: bold");
         creatureImmunitiesLabel.setStyle("-fx-font-weight: bold");
+        creatureOffensiveAbilitiesLabel.setStyle("-fx-font-weight: bold");
+        creatureOtherAbilitiesLabel.setStyle("-fx-font-weight: bold");
 
         // step 0 controls
         creatureNameInput.textProperty().addListener(
