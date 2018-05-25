@@ -5,6 +5,9 @@
  */
 package sfnc;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  *
  * @author Doug
@@ -12,10 +15,20 @@ package sfnc;
 public class Ability {
     String name;
     Location location;
+    String outputFormat;
     
+    public static Set<Ability> setOfAbilities = new HashSet<Ability>();
+
     Ability() {
         name = "";
         location = Location.UNDETERMINED;
+        outputFormat = "~n~";
+    }
+    
+    Ability(String n, Location l, String o) {
+        this.name = n;
+        this.location = l;
+        this.outputFormat = o;
     }
     
     public String getName() {
@@ -26,6 +39,10 @@ public class Ability {
         return location;
     }
     
+    public String getOutputFormat() {
+        return outputFormat;
+    }
+    
     public void setName(String n) {
         name = n;
     }
@@ -34,8 +51,20 @@ public class Ability {
         location = l;
     }
     
+    public void setOutputFormat(String o) {
+        this.outputFormat = o;
+    }
+    
     @Override
     public String toString() {
-        return name;
+        String outputString = outputFormat;
+        outputString = outputString.replace("~n~", name);
+        return outputString;
+    }
+    
+    public static Ability getAbility(String n) {
+        return setOfAbilities.stream()
+                .filter(a -> a.name.equals(n))
+                .findAny().get();
     }
 }

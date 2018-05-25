@@ -1,0 +1,4 @@
+noConScore  ~n~ NONE
+mindless    ~n~ OTHER_ABILITIES
+unliving    ~n~ OTHER_ABILITIES
+EOF

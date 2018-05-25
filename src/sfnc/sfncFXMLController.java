@@ -14,8 +14,10 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -59,17 +61,12 @@ public class sfncFXMLController implements Initializable {
     Boolean useTypeAdjustments = true;
     Boolean useClassAdjustments = false;
     Integer initiative;
-    List<Ability> abilityList;
+    Set<Ability> abilitySet;
     
     // where-to-save info
     File currentExportDirectory = new File(".");
     File currentSaveDirectory = new File(".");
     File currentSaveFile;
-
-    // some basic abilities - read these in from a file eventually?
-    Ability noConScore = new Ability();
-    Ability mindless = new Ability();
-    Ability unliving = new Ability();
     
     // main AnchorPane
     @FXML private VBox top;
@@ -154,7 +151,7 @@ public class sfncFXMLController implements Initializable {
         String xpLine = "XP " + creature.getXPString() + " (" + creature.getArray() + ")";
         String sensesLine = "";
         if (hasSenses())
-            sensesLine += "Senses " + makeSensesString();
+            sensesLine += "Senses " + makeAbilityStringByLocation(Location.SENSES);
         String HPOutput = (array == null) ? "" : "HP " + array.hitPoints.toString();
         
         String defenseLine = "DEFENSE";
@@ -169,7 +166,7 @@ public class sfncFXMLController implements Initializable {
                 + "; Will " + bonusString(array.will);
         String defensiveAbilitiesLine = "";
         if (hasImmunities())
-            defensiveAbilitiesLine += "Immunities " + makeImmunitiesString();
+            defensiveAbilitiesLine += "Immunities " + makeAbilityStringByLocation(Location.IMMUNITIES);
         
         // get the file
         FileChooser fileChooser = new FileChooser();
@@ -250,16 +247,16 @@ public class sfncFXMLController implements Initializable {
         } else  {
             useTypeAdjustments = creature.useTypeAdjustments();
             array = new MainArray(mainArrays[chosenArray][creature.getCR().ordinal()]);
-            abilityList = new ArrayList();
+            abilitySet = new HashSet();
             switch(creature.getType()) {
                 case "Aberration":
-                    abilityList.add(new Sense("darkvision",60));
+                    abilitySet.add(new Sense("darkvision",60));
                     if (useTypeAdjustments) {
                         array.will += 2;
                     }
                     break;
                 case "Animal":
-                    abilityList.add(new Sense("low-light vision",0));
+                    abilitySet.add(new Sense("low-light vision",0));
                     // set intelligence to -4 or -5 (put choice in UI)
                     if (useTypeAdjustments) {
                         array.fort += 2;
@@ -267,10 +264,10 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Construct":
-                    abilityList.add(new Sense("darkvision",60));
-                    abilityList.add(new Sense("low-light vision",0));
-                    abilityList.add(new Immunity("construct immunities"));
-                    abilityList.add(noConScore);
+                    abilitySet.add(new Sense("darkvision",60));
+                    abilitySet.add(new Sense("low-light vision",0));
+                    abilitySet.add(new Immunity("construct immunities"));
+                    abilitySet.add(Ability.getAbility("noConScore"));
                     // add subtype magical or technological (put choice in UI)
                     if (useTypeAdjustments) {
                         array.fort -= 2;
@@ -281,10 +278,10 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Dragon":
-                    abilityList.add(new Sense("darkvision",60));
-                    abilityList.add(new Sense("low-light vision",0));
-                    abilityList.add(new Immunity("paralysis"));
-                    abilityList.add(new Immunity("sleep"));
+                    abilitySet.add(new Sense("darkvision",60));
+                    abilitySet.add(new Sense("low-light vision",0));
+                    abilitySet.add(new Immunity("paralysis"));
+                    abilitySet.add(new Immunity("sleep"));
                     if (useTypeAdjustments) {
                         array.fort += 2;
                         array.ref += 2;
@@ -294,7 +291,7 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Fey":
-                    abilityList.add(new Sense("low-light vision",0));
+                    abilitySet.add(new Sense("low-light vision",0));
                     if (useTypeAdjustments) {
                         array.fort += 2;
                         array.ref += 2;
@@ -309,8 +306,8 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Magical Beast":
-                    abilityList.add(new Sense("darkvision",60));
-                    abilityList.add(new Sense("low-light vision",0));
+                    abilitySet.add(new Sense("darkvision",60));
+                    abilitySet.add(new Sense("low-light vision",0));
                     if (useTypeAdjustments) {
                         array.fort += 2;
                         array.ref += 2;
@@ -319,7 +316,7 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Monstrous Humanoid":
-                    abilityList.add(new Sense("darkvision",60));
+                    abilitySet.add(new Sense("darkvision",60));
                     if (useTypeAdjustments) {
                         array.ref += 2;
                         array.will += 2;
@@ -328,10 +325,10 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Ooze":
-                    abilityList.add(new Sense("blindsight",60));
-                    abilityList.add(new Sense("sightless",0));
-                    abilityList.add(mindless);
-                    abilityList.add(new Immunity("ooze immunities"));
+                    abilitySet.add(new Sense("blindsight",60));
+                    abilitySet.add(new Sense("sightless",0));
+                    abilitySet.add(Ability.getAbility("mindless"));
+                    abilitySet.add(new Immunity("ooze immunities"));
                     if (useTypeAdjustments) {
                         array.fort += 2;
                         array.ref -= 2;
@@ -340,7 +337,7 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Outsider":
-                    abilityList.add(new Sense("darkvision",60));
+                    abilitySet.add(new Sense("darkvision",60));
                     // must have subtype if member of a race
                     if (useTypeAdjustments) {
                         // give it +2 to one save (put choice in UI)
@@ -349,24 +346,24 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Plant":
-                    abilityList.add(new Sense("low-light vision",0));
-                    abilityList.add(new Immunity("plant immunities"));
+                    abilitySet.add(new Sense("low-light vision",0));
+                    abilitySet.add(new Immunity("plant immunities"));
                     if (useTypeAdjustments) {
                             array.fort += 2;
                     }
                     break;
                 case "Undead":
-                    abilityList.add(new Sense("darkvision",60));
-                    abilityList.add(new Immunity("undead immunities"));
-                    abilityList.add(unliving);
-                    abilityList.add(noConScore);
+                    abilitySet.add(new Sense("darkvision",60));
+                    abilitySet.add(new Immunity("undead immunities"));
+                    abilitySet.add(Ability.getAbility("unliving"));
+                    abilitySet.add(Ability.getAbility("noConScore"));
                     if (useTypeAdjustments) {
                         array.will += 2;
                     }
                     break;
                 case "Vermin":
-                    abilityList.add(new Sense("darkvision",60));
-                    abilityList.add(mindless);
+                    abilitySet.add(new Sense("darkvision",60));
+                    abilitySet.add(Ability.getAbility("mindless"));
                     if (useTypeAdjustments) {
                         array.fort += 2;
                     }
@@ -376,75 +373,35 @@ public class sfncFXMLController implements Initializable {
     }
     
     public Boolean hasSenses() {
-        if (abilityList == null)
+        if (abilitySet == null)
             return false;
-        return abilityList.stream().anyMatch((a) -> (a.getLocation() == Location.SENSES));
-    }
-
-    public String makeSensesString() {    
-        if (!hasSenses()) return "";
-        
-        List<String> senseList = new ArrayList();
-        abilityList.stream().filter((a) -> (a.getLocation() == Location.SENSES)).forEachOrdered((a) -> {
-            senseList.add(a.toString());
-        });
-        java.util.Collections.sort(senseList);
-
-        return String.join(", ", senseList);
+        return abilitySet.stream().anyMatch((a) -> (a.getLocation() == Location.SENSES));
     }
     
     public Boolean hasImmunities() {
-        if (abilityList == null)
+        if (abilitySet == null)
             return false;
-        return abilityList.stream().anyMatch((a) -> (a.getLocation() == Location.IMMUNITIES));
-    }
-    
-    public String makeImmunitiesString() {
-        if (!hasImmunities()) return "";
-        
-        List<String> immunityList = new ArrayList();
-        abilityList.stream().filter((a) -> (a.getLocation() == Location.IMMUNITIES)).forEachOrdered((a) -> {
-            immunityList.add(a.toString());
-        });
-        java.util.Collections.sort(immunityList);
-
-        return String.join(", ", immunityList);
+        return abilitySet.stream().anyMatch((a) -> (a.getLocation() == Location.IMMUNITIES));
     }
     
     public Boolean hasOffensiveAbilities() {
-        if (abilityList == null)
+        if (abilitySet == null)
             return false;
-        return abilityList.stream().anyMatch((a) -> (a.getLocation() == Location.OFFENSIVE_ABILITIES));
+        return abilitySet.stream().anyMatch((a) -> (a.getLocation() == Location.OFFENSIVE_ABILITIES));
     }
     
-    public String makeOffensiveAbilitiesString() {
-        if (!hasOffensiveAbilities()) return "";
-        
-        List<String> offensiveAbilityList = new ArrayList();
-        abilityList.stream().filter((a) -> (a.getLocation() == Location.OFFENSIVE_ABILITIES)).forEachOrdered((a) -> {
-            offensiveAbilityList.add(a.toString());
-        });
-        java.util.Collections.sort(offensiveAbilityList);
-
-        return String.join(", ", offensiveAbilityList);
-    }
-
     public Boolean hasOtherAbilities() {
-        if (abilityList == null)
+        if (abilitySet == null)
             return false;
-        return abilityList.stream().anyMatch((a) -> (a.getLocation() == Location.OTHER_ABILITIES));
+        return abilitySet.stream().anyMatch((a) -> (a.getLocation() == Location.OTHER_ABILITIES));
     }
-    
-    public String makeOtherAbilitiesString() {
-        if (!hasOtherAbilities()) return "";
         
-        List<String> otherAbilityList = new ArrayList();
-        abilityList.stream().filter((a) -> (a.getLocation() == Location.OTHER_ABILITIES)).forEachOrdered((a) -> {
-            otherAbilityList.add(a.toString());
-        });
-        java.util.Collections.sort(otherAbilityList);
-
-        return String.join(", ", otherAbilityList);
+    public String makeAbilityStringByLocation(Location l) {
+        List<String> abilitiesAtLocation = new ArrayList();
+        abilitySet.stream().filter(a -> (a.getLocation() == l)).forEachOrdered(a -> abilitiesAtLocation.add(a.toString()));
+        java.util.Collections.sort(abilitiesAtLocation);
+        
+        return String.join(", ", abilitiesAtLocation);
     }
     
     public void updateStatBlock() {
@@ -464,10 +421,9 @@ public class sfncFXMLController implements Initializable {
         if (hasSenses()) {
             // adding a "\n" is a stopgap until all the Init display is in
             creatureSensesBlock.getChildren().add(new Text("\n"));
-            creatureSensesDisplay.setText(makeSensesString());
+            creatureSensesDisplay.setText(makeAbilityStringByLocation(Location.SENSES));
             creatureSensesBlock.getChildren().addAll(creatureSensesLabel,creatureSensesDisplay);
         }
-        creatureSensesDisplay.setText(makeSensesString());
         
         // update defenses block
         creatureHPDisplay.setText(
@@ -484,16 +440,18 @@ public class sfncFXMLController implements Initializable {
                 (array == null) ? "" : bonusString(array.will));
         //update defensive abilities line
         creatureDefensiveAbilitiesBlock.getChildren().clear();
+        creatureOffensiveAbilitiesBlock.getChildren().clear();
+        creatureStatisticsBlock.getChildren().clear();
         if (hasImmunities()) {
-            creatureImmunitiesDisplay.setText(makeImmunitiesString());
+            creatureImmunitiesDisplay.setText(makeAbilityStringByLocation(Location.IMMUNITIES));
             creatureDefensiveAbilitiesBlock.getChildren().addAll(creatureImmunitiesLabel,creatureImmunitiesDisplay);
         }
         if (hasOffensiveAbilities()) {
-            creatureOffensiveAbilitiesDisplay.setText(makeOffensiveAbilitiesString());
+            creatureOffensiveAbilitiesDisplay.setText(makeAbilityStringByLocation(Location.OFFENSIVE_ABILITIES));
             creatureOffensiveAbilitiesBlock.getChildren().addAll(creatureOffensiveAbilitiesLabel,creatureOffensiveAbilitiesDisplay);
         }
         if (hasOtherAbilities()) {
-            creatureOtherAbilitiesDisplay.setText(makeOtherAbilitiesString());
+            creatureOtherAbilitiesDisplay.setText(makeAbilityStringByLocation(Location.OTHER_ABILITIES));
             creatureStatisticsBlock.getChildren().addAll(creatureOtherAbilitiesLabel,creatureOtherAbilitiesDisplay);
         }
     }
@@ -513,12 +471,11 @@ public class sfncFXMLController implements Initializable {
             return;
         }
         
-        // make some basic abilities - read these from a file eventually?
-        mindless.setName("mindless");
-        mindless.setLocation(Location.OTHER_ABILITIES);
-        unliving.setName("unliving");
-        unliving.setLocation(Location.OTHER_ABILITIES);
-        
+        if (loadAbilities() != 0) {
+            System.err.println("Error in loading arrays!");
+            return;
+        }
+
         updateStatBlock();
   
         // set up window
@@ -690,6 +647,36 @@ public class sfncFXMLController implements Initializable {
         }
         catch(IOException ex) {
             System.err.println("Error reading arrays.txt!");
+        }
+        return 1;
+    }
+
+    private int loadAbilities() {
+        try {
+            FileReader fileReader = new FileReader("abilities.txt");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            
+            String abilityLine;
+            String[] abilityParts;
+            
+            // abilityLine: name first, outputFormat second, location third
+            
+            while (!"EOF".equals(abilityLine = bufferedReader.readLine())) {
+                abilityParts = abilityLine.split(" +");
+                Ability.setOfAbilities.add(
+                        new Ability(abilityParts[0],
+                                Location.valueOf(abilityParts[2]),
+                                abilityParts[1]));
+            }
+           
+            bufferedReader.close();
+            return 0;
+        }
+        catch(FileNotFoundException ex) {
+            System.err.println("abilities.txt not found!");
+        }
+        catch(IOException ex) {
+            System.err.println("Error reading abilities.txt!");
         }
         return 1;
     }

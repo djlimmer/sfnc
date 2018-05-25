@@ -10,7 +10,8 @@ package sfnc;
  * @author Doug
  */
 enum Location {
-    SENSES, AURA, 
+    SENSES, 
+    AURA, 
     DEFENSIVE_ABILITIES,
     IMMUNITIES,
     RESISTANCES,
@@ -19,5 +20,6 @@ enum Location {
     FEATS,
     LANGUAGES,
     OTHER_ABILITIES,
-    UNDETERMINED
+    UNDETERMINED,
+    NONE
 }
