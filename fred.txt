@@ -1,5 +1,0 @@
-fred                                                              CR 3
-XP 800 (Combatant)
-DEFENSE                                                          HP 40
-EAC 14; KAC16
-Fort +5; Ref +5; Will +2

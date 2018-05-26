@@ -34,7 +34,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -207,7 +210,11 @@ public class sfncFXMLController implements Initializable {
     // Step 2 controls
     @FXML   private ComboBox creatureTypeInput = new ComboBox();
     @FXML   private CheckBox creatureTypeAdjustmentUse = new CheckBox();
-    
+    private ToggleGroup typeOptionsGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureTypeOption1 = new RadioButton();
+    @FXML   private RadioButton creatureTypeOption2 = new RadioButton();
+    @FXML   private RadioButton creatureTypeOption3 = new RadioButton();
+
     // stat block controls
     @FXML   private Label creatureNameDisplay = new Label();
     @FXML   private Label creatureCRDisplay = new Label();
@@ -239,6 +246,47 @@ public class sfncFXMLController implements Initializable {
         creatureArrayInput.setValue(creature.getArray());
         creatureTypeInput.setValue(creature.getType());
         creatureTypeAdjustmentUse.setSelected(creature.useTypeAdjustments());
+        if (creature.getType().equals("Animal")) {
+            showAnimalTypeOptions();
+        }
+        else if (creature.getType().equals("Humanoid") || creature.getType().equals("Outsider")) {
+            showSaveBonusTypeOptions();
+        }
+        else {
+            hideTypeOptions();
+        }
+    }
+    
+    private void showAnimalTypeOptions() {
+        creatureTypeOption1.setVisible(true);
+        creatureTypeOption1.setText("Intelligence -4");
+        creatureTypeOption2.setVisible(true);
+        creatureTypeOption2.setText("Intelligence -5");
+        creatureTypeOption3.setVisible(false);
+
+        Integer currentOption = creature.getTypeOption();
+        creatureTypeOption1.setSelected((currentOption == 1));
+        creatureTypeOption2.setSelected((currentOption == 2));
+    }
+
+    private void showSaveBonusTypeOptions() {
+        creatureTypeOption1.setVisible(true);
+        creatureTypeOption1.setText("+2 fort");
+        creatureTypeOption2.setVisible(true);
+        creatureTypeOption2.setText("+2 ref");
+        creatureTypeOption3.setVisible(true);
+        creatureTypeOption3.setText("+2 will");
+
+        Integer currentOption = creature.getTypeOption();
+        creatureTypeOption1.setSelected((currentOption == 1));
+        creatureTypeOption2.setSelected((currentOption == 2));
+        creatureTypeOption3.setSelected((currentOption == 3));
+    }
+    
+    private void hideTypeOptions() {
+        creatureTypeOption1.setVisible(false);
+        creatureTypeOption2.setVisible(false);
+        creatureTypeOption3.setVisible(false);     
     }
     
     private void updateArray() {
@@ -257,7 +305,6 @@ public class sfncFXMLController implements Initializable {
                     break;
                 case "Animal":
                     abilitySet.add(new Sense("low-light vision",0));
-                    // set intelligence to -4 or -5 (put choice in UI)
                     if (useTypeAdjustments) {
                         array.fort += 2;
                         array.ref += 2;
@@ -268,7 +315,7 @@ public class sfncFXMLController implements Initializable {
                     abilitySet.add(new Sense("low-light vision",0));
                     abilitySet.add(new Immunity("construct immunities"));
                     abilitySet.add(Ability.getAbility("noConScore"));
-                    // add subtype magical or technological (put choice in UI)
+                    // add subtype magical or technological (put choice in UI) - defer to subtype handling warning message
                     if (useTypeAdjustments) {
                         array.fort -= 2;
                         array.ref -= 2;
@@ -300,9 +347,13 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Humanoid":
-                    // requires a subtype
+                    // requires a subtype - defer to subtype handling warning message
                     if (useTypeAdjustments) {
-                        // give it +2 to one save (put choice in UI)
+                        switch(creature.getTypeOption()) {
+                            case 1: array.fort += 2; break;
+                            case 2: array.ref += 2; break;
+                            case 3: array.will += 2; break;
+                        }
                     }
                     break;
                 case "Magical Beast":
@@ -338,9 +389,13 @@ public class sfncFXMLController implements Initializable {
                     break;
                 case "Outsider":
                     abilitySet.add(new Sense("darkvision",60));
-                    // must have subtype if member of a race
+                    // must have subtype if member of a race - defer to subtype handling warning message
                     if (useTypeAdjustments) {
-                        // give it +2 to one save (put choice in UI)
+                        switch(creature.getTypeOption()) {
+                            case 1: array.fort += 2; break;
+                            case 2: array.ref += 2; break;
+                            case 3: array.will += 2; break;
+                        }
                         array.highAttackBonus += 1;
                         array.lowAttackBonus += 1;
                     }
@@ -419,7 +474,7 @@ public class sfncFXMLController implements Initializable {
             creatureSensesBlock.getChildren().add(creatureTypeDisplay);
         }
         if (hasSenses()) {
-            // adding a "\n" is a stopgap until all the Init display is in
+            // adding a "\n" is a stopgap until the Init display is in
             creatureSensesBlock.getChildren().add(new Text("\n"));
             creatureSensesDisplay.setText(makeAbilityStringByLocation(Location.SENSES));
             creatureSensesBlock.getChildren().addAll(creatureSensesLabel,creatureSensesDisplay);
@@ -586,12 +641,22 @@ public class sfncFXMLController implements Initializable {
         creatureTypeInput.setItems(FXCollections.observableArrayList(
                 typeNames));
         
-        creatureTypeInput.getSelectionModel().selectedIndexProperty().addListener(
-            new ChangeListener<Number>() {
+        creatureTypeInput.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue observable,
                         Number oldValue, Number newValue) {
                     creature.setType(typeNames[newValue.intValue()]);
+                    switch(creature.getType()) {
+                        case "Animal": 
+                            showAnimalTypeOptions(); 
+                            break;
+                        case "Humanoid":
+                        case "Outsider":
+                            showSaveBonusTypeOptions();
+                            break;
+                        default:
+                            hideTypeOptions();
+                    }
                     updateStatBlock();
                     updateWindowTitle();
                 }
@@ -611,7 +676,27 @@ public class sfncFXMLController implements Initializable {
             }
         );
         creatureTypeAdjustmentUse.setSelected(true);
-    
+        
+        creatureTypeOption1.setToggleGroup(typeOptionsGroup);
+        creatureTypeOption2.setToggleGroup(typeOptionsGroup);
+        creatureTypeOption3.setToggleGroup(typeOptionsGroup);    
+        
+        typeOptionsGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (typeOptionsGroup.getSelectedToggle() != null) {
+                    if (creatureTypeOption1.isSelected())
+                        creature.setTypeOption(1);
+                    else if (creatureTypeOption2.isSelected())
+                        creature.setTypeOption(2);
+                    else if (creatureTypeOption3.isSelected())
+                        creature.setTypeOption(3);
+                }
+                updateStatBlock();
+                updateWindowTitle();
+            }
+        });
     }
 
     private int loadArrays() {

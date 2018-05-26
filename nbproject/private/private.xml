@@ -4,13 +4,15 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Doug/git/sfnc/src/sfnc/Ability.java</file>
-            <file>file:/C:/Users/Doug/git/sfnc/nbproject/build-impl.xml</file>
             <file>file:/C:/Users/Doug/git/sfnc/src/sfnc/Creature.java</file>
             <file>file:/C:/Users/Doug/git/sfnc/src/sfnc/Sense.java</file>
             <file>file:/C:/Users/Doug/git/sfnc/src/sfnc/MainArray.java</file>
+            <file>file:/C:/Users/Doug/git/sfnc/src/sfnc/Location.java</file>
             <file>file:/C:/Users/Doug/git/sfnc/src/sfnc/Immunity.java</file>
+            <file>file:/C:/Users/Doug/git/sfnc/john.txt</file>
             <file>file:/C:/Users/Doug/git/sfnc/src/sfnc/sfncFXMLController.java</file>
             <file>file:/C:/Users/Doug/git/sfnc/src/sfnc/Dice.java</file>
+            <file>file:/C:/Users/Doug/git/sfnc/john.sfnc</file>
         </group>
     </open-files>
 </project-private>

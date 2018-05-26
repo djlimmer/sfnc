@@ -1,5 +1,0 @@
-fred2                                                             CR 1
-XP 400 (Spellcaster)
-DEFENSE                                                          HP 16
-EAC 10; KAC 11
-Fort +3; Ref +3; Will +4

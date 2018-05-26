@@ -23,6 +23,9 @@ public class Creature {
     String array;
     String type;
     Boolean useTypeAdjustments;
+    Integer typeOption;
+    // typeOption: 0 - no choice, 1 - first choice, 2 - second choice, 3 - third choice
+    // int for Animals, save bonus for Humanoid and Outsider.
     
     // temporary status variables
     Boolean hasChanged;
@@ -33,6 +36,7 @@ public class Creature {
         this.array = "";
         this.type = "";
         this.useTypeAdjustments = true;
+        this.typeOption = 0;
         this.hasChanged = true;
     }
     
@@ -42,6 +46,7 @@ public class Creature {
         this.array = "";
         this.type = "";
         this.useTypeAdjustments = true;
+        this.typeOption = 0;
         this.hasChanged = true;
     }
 
@@ -77,6 +82,10 @@ public class Creature {
         return useTypeAdjustments;
     }
 
+    public Integer getTypeOption() {
+        return typeOption;
+    }
+    
     public Boolean hasChanged() {
         return hasChanged;
     }
@@ -112,6 +121,13 @@ public class Creature {
         this.hasChanged = true;
     }
     
+    public void setTypeOption(Integer i) {
+        if ((i == 0) || (i > 3))
+            typeOption = 0;
+        else
+            typeOption = i;
+    }
+    
     public void setChange() {
         this.hasChanged = true;
     }
@@ -137,6 +153,7 @@ public class Creature {
             this.array = reader.readLine();
             this.type = reader.readLine();
             this.useTypeAdjustments = !("false".equals(reader.readLine()));
+            this.typeOption = Integer.parseInt(reader.readLine());
             reader.close();
         } catch (IOException e) {
             System.err.println("Something went wrong (opening sfnc file)");
@@ -156,6 +173,7 @@ public class Creature {
             writer.println(array);
             writer.println(type);
             writer.println(useTypeAdjustments);
+            writer.println(typeOption);
             writer.close();
         } catch (IOException e) {
             System.err.println("Something went wrong (saving to file)");

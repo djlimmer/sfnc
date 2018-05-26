@@ -77,6 +77,9 @@
                                     <ComboBox fx:id="creatureTypeInput" layoutX="49.0" layoutY="40.0" prefWidth="150.0" />
                                     <Label layoutX="14.0" layoutY="44.0" text="Type:" />
                                     <CheckBox fx:id="creatureTypeAdjustmentUse" layoutX="14.0" layoutY="76.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Use Type Adjustments" />
+                                    <RadioButton fx:id="creatureTypeOption1" layoutX="49.0" layoutY="137.0" mnemonicParsing="false" text="RadioButton" visible="false" />
+                                    <RadioButton fx:id="creatureTypeOption2" layoutX="49.0" layoutY="160.0" mnemonicParsing="false" text="RadioButton" visible="false" />
+                                    <RadioButton fx:id="creatureTypeOption3" layoutX="49.0" layoutY="183.0" mnemonicParsing="false" text="RadioButton" visible="false" />
                                  </children></AnchorPane>
                           </content>
                         </Tab>
