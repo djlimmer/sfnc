@@ -1,7 +1,5 @@
-john                                                              CR 3
-XP 800 (Combatant)
-Senses darkvision 60 ft., low-light vision
-DEFENSE                                                          HP 40
-EAC 14; KAC 16
-Fort +7; Ref +7; Will +4
-Immunities paralysis, sleep
+john                                                              CR 4
+XP 1,200 (Combatant)
+DEFENSE                                                          HP 50
+EAC 16; KAC 18
+Fort +6; Ref +8; Will +3

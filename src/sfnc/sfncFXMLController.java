@@ -89,6 +89,10 @@ public class sfncFXMLController implements Initializable {
     Alert openErrorAlert = new Alert(Alert.AlertType.ERROR);
     
     @FXML public void openAction(ActionEvent actionEvent) {
+        if (creature.hasChanged() &&
+                (fileChangeAlert.showAndWait().get() != ButtonType.OK))
+            return;
+
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("sfnc files (*.sfnc)", "*.sfnc"));
         fileChooser.setTitle("Open ...");
@@ -290,10 +294,11 @@ public class sfncFXMLController implements Initializable {
     }
     
     private void updateArray() {
-        if (chosenArray == null) {
+        if (chosenArray == null || creature.getCR().ordinal()==0) {
             array = null;
         } else  {
             useTypeAdjustments = creature.useTypeAdjustments();
+            System.out.println("chosenArray: " + chosenArray + "CR: " + creature.getCR().ordinal());
             array = new MainArray(mainArrays[chosenArray][creature.getCR().ordinal()]);
             abilitySet = new HashSet();
             switch(creature.getType()) {

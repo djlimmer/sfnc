@@ -64,6 +64,8 @@ public class MainArray {
     }
     
     MainArray(MainArray m) {
+        if (m == null)
+            System.out.println("m is null!");
         EAC = m.EAC;
         KAC = m.KAC;
         fort = m.fort;
