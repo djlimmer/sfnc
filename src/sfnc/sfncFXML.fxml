@@ -83,9 +83,20 @@
                                  </children></AnchorPane>
                           </content>
                         </Tab>
-                        <Tab disable="true" text="3. Subtypes">
+                        <Tab text="3. Subtypes">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ListView fx:id="creatureGeneralSubtypesInput" layoutX="3.0" layoutY="47.0" prefHeight="180.0" prefWidth="200.0" />
+                                    <Label fx:id="creatureSubtypeWarning" style="-fx-font-weight: bold;" text="Label" textFill="RED" />
+                                    <Label layoutY="31.0" style="-fx-font-weight: bold;" text="General Subtypes" />
+                                    <Label layoutY="241.0" style="-fx-font-weight: bold;" text="Humanoid Subtypes" />
+                                    <ListView fx:id="creatureHumanoidSubtypesInput" layoutX="3.0" layoutY="257.0" prefHeight="180.0" prefWidth="200.0" />
+                                    <Label layoutY="451.0" style="-fx-font-weight: bold;" text="Outsider Subtypes" />
+                                    <ListView fx:id="creatureOutsiderSubtypesInput" layoutX="3.0" layoutY="467.0" prefHeight="180.0" prefWidth="200.0" />
+                                    <TextField fx:id="creatureFreeformSubtypesInput" layoutX="3.0" layoutY="677.0" prefHeight="25.0" prefWidth="200.0" />
+                                    <Label layoutX="3.0" layoutY="661.0" style="-fx-font-weight: bold;" text="Freeform Subtypes" />
+                                 </children></AnchorPane>
                           </content>
                         </Tab>
                         <Tab disable="true" text="4. Class">

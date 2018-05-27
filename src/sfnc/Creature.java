@@ -11,6 +11,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -26,6 +29,10 @@ public class Creature {
     Integer typeOption;
     // typeOption: 0 - no choice, 1 - first choice, 2 - second choice, 3 - third choice
     // int for Animals, save bonus for Humanoid and Outsider.
+    List<String> generalSubtypes;
+    List<String> humanoidSubtypes;
+    List<String> outsiderSubtypes;
+    List<String> freeformSubtypes;
     
     // temporary status variables
     Boolean hasChanged;
@@ -38,6 +45,10 @@ public class Creature {
         this.useTypeAdjustments = true;
         this.typeOption = 0;
         this.hasChanged = true;
+        this.generalSubtypes = new ArrayList<String>();
+        this.humanoidSubtypes = new ArrayList<String>();
+        this.outsiderSubtypes = new ArrayList<String>();
+        this.freeformSubtypes = new ArrayList<String>();
     }
     
     Creature(String n, ChallengeRating c) {
@@ -48,6 +59,10 @@ public class Creature {
         this.useTypeAdjustments = true;
         this.typeOption = 0;
         this.hasChanged = true;
+        this.generalSubtypes = new ArrayList<String>();
+        this.humanoidSubtypes = new ArrayList<String>();
+        this.outsiderSubtypes = new ArrayList<String>();
+        this.freeformSubtypes = new ArrayList<String>();
     }
 
     public String getName() {
@@ -84,6 +99,36 @@ public class Creature {
 
     public Integer getTypeOption() {
         return typeOption;
+    }
+    
+    public List<String> getGeneralSubtypes() {
+        return generalSubtypes;
+    }
+    
+    public List<String> getHumanoidSubtypes() {
+        return humanoidSubtypes;
+    }
+    
+    public List<String> getOutsiderSubtypes() {
+        return outsiderSubtypes;
+    }
+    
+    public List<String> getFreeformSubtypes() {
+        return freeformSubtypes;
+    }
+    
+    public List<String> getAllSubtypes() {
+        List<String> s = new ArrayList<>();
+        if (generalSubtypes != null)
+            s.addAll(generalSubtypes);
+        if (humanoidSubtypes != null)
+            s.addAll(humanoidSubtypes);
+        if (outsiderSubtypes != null)
+            s.addAll(outsiderSubtypes);
+        if (freeformSubtypes != null)
+            s.addAll(freeformSubtypes);
+        
+        return s;
     }
     
     public Boolean hasChanged() {
@@ -126,6 +171,31 @@ public class Creature {
             typeOption = 0;
         else
             typeOption = i;
+        this.hasChanged = true;
+    }
+    
+    public void setGeneralSubtypes(List<String> s) {
+        this.generalSubtypes = new ArrayList<>();
+        this.generalSubtypes.addAll(s);
+        this.hasChanged = true;
+    }
+    
+    public void setHumanoidSubtypes(List<String> s) {
+        this.humanoidSubtypes = new ArrayList<>();
+        this.humanoidSubtypes.addAll(s);
+        this.hasChanged = true;
+    }
+    
+    public void setOutsiderSubtypes(List<String> s) {
+        this.outsiderSubtypes = new ArrayList<>();
+        this.outsiderSubtypes.addAll(s);
+        this.hasChanged = true;
+    }
+    
+    public void setFreeformSubtypes(List<String> s) {
+        this.freeformSubtypes = new ArrayList<>();
+        this.freeformSubtypes.addAll(s);
+        this.hasChanged = true;
     }
     
     public void setChange() {
@@ -154,6 +224,10 @@ public class Creature {
             this.type = reader.readLine();
             this.useTypeAdjustments = !("false".equals(reader.readLine()));
             this.typeOption = Integer.parseInt(reader.readLine());
+            this.generalSubtypes = new ArrayList<>(Arrays.asList(reader.readLine().split(",")));
+            this.humanoidSubtypes = new ArrayList<>(Arrays.asList(reader.readLine().split(",")));
+            this.outsiderSubtypes = new ArrayList<>(Arrays.asList(reader.readLine().split(",")));
+            this.freeformSubtypes = new ArrayList<>(Arrays.asList(reader.readLine().split(",")));
             reader.close();
         } catch (IOException e) {
             System.err.println("Something went wrong (opening sfnc file)");
@@ -174,6 +248,10 @@ public class Creature {
             writer.println(type);
             writer.println(useTypeAdjustments);
             writer.println(typeOption);
+            writer.println(String.join(",",generalSubtypes));
+            writer.println(String.join(",",humanoidSubtypes));
+            writer.println(String.join(",",outsiderSubtypes));
+            writer.println(String.join(",",freeformSubtypes));
             writer.close();
         } catch (IOException e) {
             System.err.println("Something went wrong (saving to file)");

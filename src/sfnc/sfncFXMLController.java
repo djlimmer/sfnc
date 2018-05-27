@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -23,6 +24,8 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -33,8 +36,10 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
@@ -55,6 +60,10 @@ public class sfncFXMLController implements Initializable {
     MainArray[][] mainArrays = new MainArray[NUMBER_OF_ARRAYS][ChallengeRating.values().length];
     String[] arrayNames = new String[NUMBER_OF_ARRAYS];
     Integer chosenArray;
+    
+    List<String> generalSubtypes = new ArrayList<String>();
+    List<String> humanoidSubtypes = new ArrayList<String>();
+    List<String> outsiderSubtypes = new ArrayList<String>();
         
     // the creature
     Creature creature = new Creature();
@@ -218,15 +227,22 @@ public class sfncFXMLController implements Initializable {
     @FXML   private RadioButton creatureTypeOption1 = new RadioButton();
     @FXML   private RadioButton creatureTypeOption2 = new RadioButton();
     @FXML   private RadioButton creatureTypeOption3 = new RadioButton();
+    
+    // Step 3 controls
+    @FXML   private Label creatureSubtypeWarning = new Label();
+    @FXML   private ListView<String> creatureGeneralSubtypesInput = new ListView<String>();
+    @FXML   private ListView<String> creatureHumanoidSubtypesInput = new ListView<String>();
+    @FXML   private ListView<String> creatureOutsiderSubtypesInput = new ListView<String>();
+    @FXML   private TextField creatureFreeformSubtypesInput = new TextField();
 
     // stat block controls
     @FXML   private Label creatureNameDisplay = new Label();
     @FXML   private Label creatureCRDisplay = new Label();
     @FXML   private Label creatureXPDisplay = new Label();
     @FXML   private TextFlow creatureSensesBlock = new TextFlow();
-    private Text creatureTypeDisplay = new Text();
+    private Label creatureTypeDisplay = new Label();
     private Label creatureSensesLabel = new Label("Senses ");
-    private Text creatureSensesDisplay = new Text();
+    private Label creatureSensesDisplay = new Label();
     @FXML   private Label creatureHPDisplay = new Label();
     @FXML   private Label creatureEACDisplay = new Label();
     @FXML   private Label creatureKACDisplay = new Label();
@@ -235,13 +251,13 @@ public class sfncFXMLController implements Initializable {
     @FXML   private Label creatureWillDisplay = new Label();
     @FXML   private TextFlow creatureDefensiveAbilitiesBlock = new TextFlow();
     private Label creatureImmunitiesLabel = new Label("Immunities ");
-    private Text creatureImmunitiesDisplay = new Text();
+    private Label creatureImmunitiesDisplay = new Label();
     @FXML   private TextFlow creatureOffensiveAbilitiesBlock = new TextFlow();
     private Label creatureOffensiveAbilitiesLabel = new Label("Offensive Abilities ");
-    private Text creatureOffensiveAbilitiesDisplay = new Text();
+    private Label creatureOffensiveAbilitiesDisplay = new Label();
     @FXML   private TextFlow creatureStatisticsBlock = new TextFlow();
     private Label creatureOtherAbilitiesLabel = new Label("Other Abilities ");
-    private Text creatureOtherAbilitiesDisplay = new Text();
+    private Label creatureOtherAbilitiesDisplay = new Label();
     
     
     public void setControls() {
@@ -259,6 +275,7 @@ public class sfncFXMLController implements Initializable {
         else {
             hideTypeOptions();
         }
+        setSubtypeWarning();
     }
     
     private void showAnimalTypeOptions() {
@@ -293,12 +310,27 @@ public class sfncFXMLController implements Initializable {
         creatureTypeOption3.setVisible(false);     
     }
     
+    private void setSubtypeWarning() {
+                switch(creature.getType()) {
+            case "Construct":
+                creatureSubtypeWarning.setText("Use 'magical' or 'technological'");
+                break;
+            case "Humanoid":
+                creatureSubtypeWarning.setText("Must have a humanoid subtype");
+                break;
+            case "Outsider":
+                creatureSubtypeWarning.setText("May need an outsider subtype");
+                break;
+            default:
+                creatureSubtypeWarning.setText("");
+        }
+    }
+    
     private void updateArray() {
         if (chosenArray == null || creature.getCR().ordinal()==0) {
             array = null;
         } else  {
             useTypeAdjustments = creature.useTypeAdjustments();
-            System.out.println("chosenArray: " + chosenArray + "CR: " + creature.getCR().ordinal());
             array = new MainArray(mainArrays[chosenArray][creature.getCR().ordinal()]);
             abilitySet = new HashSet();
             switch(creature.getType()) {
@@ -320,7 +352,6 @@ public class sfncFXMLController implements Initializable {
                     abilitySet.add(new Sense("low-light vision",0));
                     abilitySet.add(new Immunity("construct immunities"));
                     abilitySet.add(Ability.getAbility("noConScore"));
-                    // add subtype magical or technological (put choice in UI) - defer to subtype handling warning message
                     if (useTypeAdjustments) {
                         array.fort -= 2;
                         array.ref -= 2;
@@ -352,7 +383,6 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Humanoid":
-                    // requires a subtype - defer to subtype handling warning message
                     if (useTypeAdjustments) {
                         switch(creature.getTypeOption()) {
                             case 1: array.fort += 2; break;
@@ -394,7 +424,6 @@ public class sfncFXMLController implements Initializable {
                     break;
                 case "Outsider":
                     abilitySet.add(new Sense("darkvision",60));
-                    // must have subtype if member of a race - defer to subtype handling warning message
                     if (useTypeAdjustments) {
                         switch(creature.getTypeOption()) {
                             case 1: array.fort += 2; break;
@@ -428,6 +457,137 @@ public class sfncFXMLController implements Initializable {
                         array.fort += 2;
                     }
                     break;
+            }
+            // handle subtypes
+            List<String> subtypes = creature.getAllSubtypes();
+            if (subtypes.contains("aeon")) {
+                // put handling here
+            }
+            if (subtypes.contains("agathion")) {
+                // put handling here
+            }
+            if (subtypes.contains("air")) {
+                // put handling here
+            }
+            if (subtypes.contains("android")) {
+                // put handling here
+            }
+            if (subtypes.contains("angel")) {
+                // put handling here
+            }
+            if (subtypes.contains("aquatic")) {
+                // put handling here
+            }
+            if (subtypes.contains("archon")) {
+                // put handling here
+            }
+            if (subtypes.contains("azata")) {
+                // put handling here
+            }
+            if (subtypes.contains("cold")) {
+                // put handling here
+            }
+            if (subtypes.contains("daemon")) {
+                // put handling here
+            }
+            if (subtypes.contains("demon")) {
+                // put handling here
+            }
+            if (subtypes.contains("devil")) {
+                // put handling here
+            }
+            if (subtypes.contains("dwarf")) {
+                // put handling here
+            }
+            if (subtypes.contains("earth")) {
+                // put handling here
+            }
+            if (subtypes.contains("elemental")) {
+                // put handling here
+            }
+            if (subtypes.contains("elf")) {
+                // put handling here
+            }
+            if (subtypes.contains("fire")) {
+                // put handling here
+            }
+            if (subtypes.contains("giant")) {
+                // put handling here
+            }
+            if (subtypes.contains("gnome")) {
+                // put handling here
+            }
+            if (subtypes.contains("goblinoid")) {
+                // put handling here
+            }
+            if (subtypes.contains("gray")) {
+                // put handling here
+            }
+            if (subtypes.contains("halfling")) {
+                // put handling here
+            }
+            if (subtypes.contains("human")) {
+                // put handling here
+            }
+            if (subtypes.contains("ikeshti")) {
+                // put handling here
+            }
+            if (subtypes.contains("incorporeal")) {
+                // put handling here
+            }
+            if (subtypes.contains("inevitable")) {
+                // put handling here
+            }
+            if (subtypes.contains("kasatha")) {
+                // put handling here
+            }
+            if (subtypes.contains("lashunta")) {
+                // put handling here
+            }
+            if (subtypes.contains("maraquoi")) {
+                // put handling here
+            }
+            if (subtypes.contains("orc")) {
+                // put handling here
+            }
+            if (subtypes.contains("plantlike")) {
+                // put handling here
+            }
+            if (subtypes.contains("protean")) {
+                // put handling here
+            }
+            if (subtypes.contains("reptoid")) {
+                // put handling here
+            }
+            if (subtypes.contains("ryphorian")) {
+                // put handling here
+            }
+            if (subtypes.contains("sarcesian")) {
+                // put handling here
+            }
+            if (subtypes.contains("shapechanger")) {
+                // put handling here
+            }
+            if (subtypes.contains("shirren")) {
+                // put handling here
+            }
+            if (subtypes.contains("skittermander")) {
+                // put handling here
+            }
+            if (subtypes.contains("swarm")) {
+                // put handling here
+            }
+            if (subtypes.contains("verthani")) {
+                // put handling here
+            }
+            if (subtypes.contains("vesk")) {
+                // put handling here
+            }
+            if (subtypes.contains("water")) {
+                // put handling here
+            }
+            if (subtypes.contains("ysoki")) {
+                // put handling here
             }
         }
     }
@@ -472,12 +632,24 @@ public class sfncFXMLController implements Initializable {
         // update XP line
         creatureXPDisplay.setText(creature.getXPString() 
                 + " (" + creature.getArray() + ")");    
-        // update init/senses/perception line
+        // update type/senses/etc block
         creatureSensesBlock.getChildren().clear();
+        // set up type & subtype display
         if (!"".equals(creature.getType())) {
-            creatureTypeDisplay.setText(creature.getType());   
+            String typeDisplayString = creature.getType();
+            List<String> subtypes = creature.getAllSubtypes();
+            if (subtypes != null) {
+                Collections.sort(subtypes);
+                String subtypeDisplayString = String.join(", ", subtypes);
+                if (!"".equals(subtypeDisplayString))
+                    typeDisplayString += " (" + subtypeDisplayString + ")";
+            }
+            creatureTypeDisplay.setText(typeDisplayString);  
             creatureSensesBlock.getChildren().add(creatureTypeDisplay);
+            // TODO: for some unknownreason, Humanoid type doesn't update the creatureTypeDisplay.
+            // is it because it doesn't have senses??
         }
+        // update init/senses/perception line
         if (hasSenses()) {
             // adding a "\n" is a stopgap until the Init display is in
             creatureSensesBlock.getChildren().add(new Text("\n"));
@@ -536,6 +708,11 @@ public class sfncFXMLController implements Initializable {
             return;
         }
 
+        if (loadSubtypes() != 0) {
+            System.err.println("Error in loading subtypes!");
+            return;
+        }
+        
         updateStatBlock();
   
         // set up window
@@ -580,10 +757,10 @@ public class sfncFXMLController implements Initializable {
         // set up about dialog box
         aboutDialog.initStyle(StageStyle.UTILITY);
         aboutDialog.setTitle("About sfnc");
-        aboutDialog.setContentText("Starfinder NPC/Alien Creator\nversion 1.1.1");
+        aboutDialog.setContentText("Starfinder NPC/Alien Creator\nversion 1.2.1");
         aboutDialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
         
-        // set up Text and TextFlows
+        // set up Labels and TextFlows
         creatureSensesLabel.setStyle("-fx-font-weight: bold");
         creatureImmunitiesLabel.setStyle("-fx-font-weight: bold");
         creatureOffensiveAbilitiesLabel.setStyle("-fx-font-weight: bold");
@@ -664,6 +841,7 @@ public class sfncFXMLController implements Initializable {
                     }
                     updateStatBlock();
                     updateWindowTitle();
+                    setSubtypeWarning();
                 }
             }
         );
@@ -702,6 +880,65 @@ public class sfncFXMLController implements Initializable {
                 updateWindowTitle();
             }
         });
+        
+        // step 3 controls
+        creatureGeneralSubtypesInput.setItems(FXCollections.observableArrayList(generalSubtypes));
+        creatureGeneralSubtypesInput.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        creatureGeneralSubtypesInput.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<String>() {
+            @Override
+            public void onChanged(Change<? extends String> c) {
+                creature.setGeneralSubtypes(creatureGeneralSubtypesInput.getSelectionModel().getSelectedItems());
+                updateStatBlock();
+                updateWindowTitle();
+            }
+        });
+        creatureHumanoidSubtypesInput.setItems(FXCollections.observableArrayList(humanoidSubtypes));
+        creatureHumanoidSubtypesInput.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        creatureHumanoidSubtypesInput.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<String>() {
+            @Override
+            public void onChanged(Change<? extends String> c) {
+                creature.setHumanoidSubtypes(creatureHumanoidSubtypesInput.getSelectionModel().getSelectedItems());
+                updateStatBlock();
+                updateWindowTitle();
+            }
+        });
+        creatureOutsiderSubtypesInput.setItems(FXCollections.observableArrayList(outsiderSubtypes));
+        creatureOutsiderSubtypesInput.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        creatureOutsiderSubtypesInput.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<String>() {
+            @Override
+            public void onChanged(Change<? extends String> c) {
+                creature.setOutsiderSubtypes(creatureOutsiderSubtypesInput.getSelectionModel().getSelectedItems());
+                updateStatBlock();
+                updateWindowTitle();
+            }
+        });
+        creatureFreeformSubtypesInput.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue))
+                        creature.setFreeformSubtypes(new ArrayList<>());
+                    else
+                        creature.setFreeformSubtypes(new ArrayList<>(Arrays.asList(newValue.split(","))));
+                    updateStatBlock();
+                    updateWindowTitle();
+                }
+            }
+        );
+        
+        // step 4 controls
+        
+        // step 5 controls
+        
+        // step 6 controls
+        
+        // step 7 controls
+        
+        // step 8 controls
+        
+        // step 9 controls
+
     }
 
     private int loadArrays() {
@@ -764,6 +1001,43 @@ public class sfncFXMLController implements Initializable {
         }
         catch(FileNotFoundException ex) {
             System.err.println("abilities.txt not found!");
+        }
+        catch(IOException ex) {
+            System.err.println("Error reading abilities.txt!");
+        }
+        return 1;
+    }
+
+    private int loadSubtypes() {
+        try {
+            FileReader fileReader = new FileReader("subtypes.txt");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            
+            String subtypeLine;
+            String[] subtypeParts;
+            
+            while (!"EOF".equals(subtypeLine = bufferedReader.readLine())) {
+                subtypeParts = subtypeLine.split(" +");
+                switch(subtypeParts[1]) {
+                    case "humanoid":
+                        humanoidSubtypes.add(subtypeParts[0]);
+                        break;
+                    case "outsider":
+                        outsiderSubtypes.add(subtypeParts[0]);
+                        break;
+                    default:
+                        generalSubtypes.add(subtypeParts[0]);
+                }
+            }
+           
+            bufferedReader.close();
+            java.util.Collections.sort(humanoidSubtypes);
+            java.util.Collections.sort(outsiderSubtypes);
+            java.util.Collections.sort(generalSubtypes);
+            return 0;
+        }
+        catch(FileNotFoundException ex) {
+            System.err.println("subtypes.txt not found!");
         }
         catch(IOException ex) {
             System.err.println("Error reading abilities.txt!");
