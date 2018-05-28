@@ -461,133 +461,233 @@ public class sfncFXMLController implements Initializable {
             // handle subtypes
             List<String> subtypes = creature.getAllSubtypes();
             if (subtypes.contains("aeon")) {
-                // put handling here
+                abilitySet.add(new Immunity("cold"));
+                abilitySet.add(new Immunity("critical hits"));
+                abilitySet.add(new Immunity("poison"));
+                abilitySet.add(new Resistance("electricity",10));
+                abilitySet.add(new Resistance("fire",10));
+                abilitySet.add(new Ability("extension of all",Location.LANGUAGES,"~n~"));
+                abilitySet.add(new Ability("telepathy 100 ft. (non-verbal)",Location.LANGUAGES,"~n~"));
+                abilitySet.add(new Ability("bonus to recall knowledge",Location.OTHER_ABILITIES,"~n~ +~c~"));
             }
             if (subtypes.contains("agathion")) {
-                // put handling here
+                abilitySet.add(new Sense("low-light vision",0));
+                abilitySet.add(new Ability("+4 vs. poison",Location.SAVES,"~n~"));
+                abilitySet.add(new Immunity("petrifiation"));
+                abilitySet.add(new Immunity("electricity"));
+                abilitySet.add(new Resistance("cold",10));
+                abilitySet.add(new Resistance("sonic",10));
+                abilitySet.add(new Ability("healing channel",Location.OTHER_ABILITIES,"~n~"));
+                abilitySet.add(new Ability("truespeech",Location.LANGUAGES,"~n~"));
+                abilitySet.add(new Ability("speak with animals",Location.LANGUAGES,"~n~"));
             }
             if (subtypes.contains("air")) {
-                // put handling here
+                // supernatural fly speed, usually with perfect maneuverability
+                // Acrobatics as master or good skill
             }
             if (subtypes.contains("android")) {
-                // put handling here
+                // most gain darkvision 60 ft. and low-light vision
+                // if android race, get constructed, flat affect, upgrade slot
             }
             if (subtypes.contains("angel")) {
-                // put handling here
+                abilitySet.add(new Sense("darkvision",60));
+                abilitySet.add(new Sense("low-light vision",0));
+                abilitySet.add(new Ability("protective aura",Location.AURA,"~n~"));
+                abilitySet.add(new Ability("+4 vs. poison",Location.SAVES,"~n~"));
+                abilitySet.add(new Immunity("acid"));
+                abilitySet.add(new Immunity("cold"));
+                abilitySet.add(new Immunity("petrification"));
+                abilitySet.add(new Resistance("electricity",10));
+                abilitySet.add(new Resistance("fire",10));
+                abilitySet.add(new Ability("truespeech",Location.LANGUAGES,"~n~"));
             }
             if (subtypes.contains("aquatic")) {
-                // put handling here
+                // swim speed
+                abilitySet.add(new Ability("water breathing",Location.OTHER_ABILITIES,"~n~"));
+                // Athletics as a master or good skill
+                // optionally, amphibious
             }
             if (subtypes.contains("archon")) {
-                // put handling here
+                abilitySet.add(new Sense("darkvision",60));
+                abilitySet.add(new Sense("low-light vision",0));
+                abilitySet.add(new Ability("aura of menace",Location.AURA,"~n~"));
+                abilitySet.add(new Ability("+4 vs. poison",Location.SAVES,"~n~"));
+                abilitySet.add(new Immunity("electricity"));
+                abilitySet.add(new Immunity("petrification"));
+                abilitySet.add(new Ability("truespeech",Location.LANGUAGES,"~n~"));
+                // many get teleport as an at-will SLA (CL = CR)
             }
             if (subtypes.contains("azata")) {
-                // put handling here
+                abilitySet.add(new Sense("darkvision",60));
+                abilitySet.add(new Sense("low-light vision",0));
+                abilitySet.add(new Immunity("electricity"));
+                abilitySet.add(new Immunity("petrification"));
+                abilitySet.add(new Resistance("cold",10));
+                abilitySet.add(new Resistance("fire",10));
+                abilitySet.add(new Ability("truespeech",Location.LANGUAGES,"~n~"));
             }
             if (subtypes.contains("cold")) {
-                // put handling here
+                abilitySet.add(new Immunity("cold"));
+                abilitySet.add(new Ability("vulnerable to fire",Location.WEAKNESSES,"~n~"));
             }
             if (subtypes.contains("daemon")) {
-                // put handling here
+                abilitySet.add(new Immunity("acid"));
+                abilitySet.add(new Immunity("death effects"));
+                abilitySet.add(new Immunity("disease"));
+                abilitySet.add(new Immunity("poison"));
+                abilitySet.add(new Resistance("cold",10));
+                abilitySet.add(new Resistance("electricity",10));
+                abilitySet.add(new Resistance("fire",10));
+                abilitySet.add(new Ability("summon allies",Location.OTHER_ABILITIES,"~n~"));
+                abilitySet.add(new Ability("telepathy",Location.LANGUAGES,"~n~"));
             }
             if (subtypes.contains("demon")) {
-                // put handling here
+                abilitySet.add(new Immunity("electricity"));
+                abilitySet.add(new Immunity("poison"));
+                abilitySet.add(new Resistance("cold",10));
+                abilitySet.add(new Resistance("acid",10));
+                abilitySet.add(new Resistance("fire",10));
+                abilitySet.add(new Ability("summon allies",Location.OTHER_ABILITIES,"~n~"));
+                abilitySet.add(new Ability("telepathy",Location.LANGUAGES,"~n~"));
             }
             if (subtypes.contains("devil")) {
-                // put handling here
+                abilitySet.add(new Sense("see in darkness",0));
+                abilitySet.add(new Immunity("fire"));
+                abilitySet.add(new Immunity("poison"));
+                abilitySet.add(new Resistance("cold",10));
+                abilitySet.add(new Resistance("acid",10));
+                abilitySet.add(new Ability("summon allies",Location.OTHER_ABILITIES,"~n~"));
+                abilitySet.add(new Ability("telepathy",Location.LANGUAGES,"~n~"));
             }
             if (subtypes.contains("dwarf")) {
-                // put handling here
+                // most gain darkvision 60 ft.
+                // dwarf race gains slow but steady, stonecunning, traditional enemies, weapon familiarity
             }
             if (subtypes.contains("earth")) {
-                // put handling here
+                // burrow speed
+                // blindsense (vibration) or blindsight (vibration) with varied range
             }
             if (subtypes.contains("elemental")) {
-                // put handling here
+                abilitySet.add(new Immunity("elemental immunities"));
             }
             if (subtypes.contains("elf")) {
-                // put handling here
+                // most gain low-light vision
+                // most gain Perception as additional master skill
+                // drow get darkvision 60 ft. instead of low-light vision, drow immunities, drow magic, light blindness
+                // elf race gets elven immunities, elven magic, Mysticism as master skill
+                // half-elf race gets elven blood, extra good skill
             }
             if (subtypes.contains("fire")) {
-                // put handling here
+                abilitySet.add(new Immunity("fire"));
+                abilitySet.add(new Ability("vulnerable to fire",Location.WEAKNESSES,"~n~"));
             }
             if (subtypes.contains("giant")) {
-                // put handling here
+                abilitySet.add(new Sense("low-light vision",0));
+                // many gain Intimidate and Perception as master skills
             }
             if (subtypes.contains("gnome")) {
-                // put handling here
+                abilitySet.add(new Sense("low-light vision",0));
+                // gnome race gets eternal hope, gnome magic, Culture as master skill
             }
             if (subtypes.contains("goblinoid")) {
-                // put handling here
+                abilitySet.add(new Sense("darkvision",60));
+                // space goblin race gets fast, tinker, Engineering and Stealth as master skills, Survival as good skill
             }
             if (subtypes.contains("gray")) {
-                // put handling here
+                abilitySet.add(new Sense("darkvision",60));
+                // gray race gets phase, telepathy 100 ft.
             }
             if (subtypes.contains("halfling")) {
-                // put handling here
+                // halfling race gets halfling luck, sneaky, Perception and Stealth as master skills, Athletics and Acrobatics as good skills
             }
             if (subtypes.contains("human")) {
-                // put handling here
+                // human race gets additional special ability and additional good skill
             }
             if (subtypes.contains("ikeshti")) {
-                // put handling here
+                // most gain climb speed
+                // ikeshti race gets desert survivor, shed skin, squirt blood
             }
             if (subtypes.contains("incorporeal")) {
-                // put handling here
+                abilitySet.add(new Ability("incorporeal",Location.OTHER_ABILITIES,"~n~"));
             }
             if (subtypes.contains("inevitable")) {
-                // put handling here
+                abilitySet.add(new Sense("darkvision",60));
+                abilitySet.add(new Sense("low-light vision",0));
+                abilitySet.add(new Ability("constructed",Location.OTHER_ABILITIES,"~n~"));
+                abilitySet.add(new Ability("regeneration (suppressed by chaotic-aligned attacks)",Location.DEFENSIVE_ABILITIES,"~n~"));
+                abilitySet.add(new Ability("truespeech",Location.LANGUAGES,"~n~"));                
             }
             if (subtypes.contains("kasatha")) {
-                // put handling here
+                // kasatha race gets desert stride, four-armed, Acrobatics and Athletics as master skills, Culture as good skill
             }
             if (subtypes.contains("lashunta")) {
-                // put handling here
+                // lashunta race gets limited telepathy, SLAs: 1/day detect thoughs, at will daze, psychokinetic hand
             }
             if (subtypes.contains("maraquoi")) {
-                // put handling here
+                abilitySet.add(new Sense("low-light vision",0));
+                // maraquoi race gets blindsense (sound) 30 ft., climb 20 ft., prehensile tail, Survival as master skill
             }
             if (subtypes.contains("orc")) {
-                // put handling here
+                // most gain darkvision 60 ft. and ferocity
+                // half-orc race also gets Intimidate and Survival as master skills
             }
             if (subtypes.contains("plantlike")) {
-                // put handling here
+                // most gain plantlike
             }
             if (subtypes.contains("protean")) {
-                // put handling here
+                // blindsense (type and distance vary)
+                abilitySet.add(new Immunity("acid"));
+                abilitySet.add(new Resistance("electricity",10));
+                abilitySet.add(new Resistance("sonic",10));
+                // supernatural flight speed
+                abilitySet.add(new Ability("amorphous",Location.OTHER_ABILITIES,"~n~"));
+                abilitySet.add(new Ability("change shape",Location.OTHER_ABILITIES,"~n~"));
+                abilitySet.add(new Ability("grab",Location.OFFENSIVE_ABILITIES,"~n~"));
             }
             if (subtypes.contains("reptoid")) {
-                // put handling here
+                abilitySet.add(new Sense("low-light vision",0));
+                // reptoid race gets change shape, cold-blooded, natural weapons
             }
             if (subtypes.contains("ryphorian")) {
-                // put handling here
+                abilitySet.add(new Sense("low-light vision",0));
+                // ryphorian race gets trimorphic, additional special ability, Perception as master skill
             }
             if (subtypes.contains("sarcesian")) {
-                // put handling here
+                abilitySet.add(new Sense("low-light vision",0));
+                // sarcesian race gets void flyer, additional good skill
             }
             if (subtypes.contains("shapechanger")) {
-                // put handling here
+                abilitySet.add(new Ability("change shape",Location.OTHER_ABILITIES,"~n~"));
             }
             if (subtypes.contains("shirren")) {
-                // put handling here
+                abilitySet.add(new Sense("blindsense (vibration)",30));
+                // shirren race gets communalism, limited telepathy, Culture and Diplomacy as good skills
             }
             if (subtypes.contains("skittermander")) {
-                // put handling here
+                abilitySet.add(new Sense("low-light vision",0));
+                // skittermander race gets grappler, hyper, six-armed
             }
             if (subtypes.contains("swarm")) {
-                // put handling here
+                abilitySet.add(new Ability("swarm defenses",Location.DEFENSIVE_ABILITIES,"~n~"));
+                abilitySet.add(new Immunity("swarm immunities"));
+                abilitySet.add(new Ability("distraction",Location.OFFENSIVE_ABILITIES,"~n~"));
+                abilitySet.add(new Ability("swarm attack",Location.OFFENSIVE_ABILITIES,"~n~"));
             }
             if (subtypes.contains("verthani")) {
-                // put handling here
+                abilitySet.add(new Sense("low-light vision",0));
+                // verthani race gets easily augmented, skin mimic, additional good skill
             }
             if (subtypes.contains("vesk")) {
-                // put handling here
+                abilitySet.add(new Sense("low-light vision",0));
+                // vesk race gets armor savant, fearless, natural weapons
             }
             if (subtypes.contains("water")) {
-                // put handling here
+                // swim speed
+                // Athletics as master or good skill
             }
             if (subtypes.contains("ysoki")) {
-                // put handling here
+                abilitySet.add(new Sense("darkvision",60));
+                // ysoki race gets cheek pouches, moxie, Engineering and Stealth as master skills, Survival as good skill
             }
         }
     }
@@ -757,7 +857,7 @@ public class sfncFXMLController implements Initializable {
         // set up about dialog box
         aboutDialog.initStyle(StageStyle.UTILITY);
         aboutDialog.setTitle("About sfnc");
-        aboutDialog.setContentText("Starfinder NPC/Alien Creator\nversion 1.2.1");
+        aboutDialog.setContentText("Starfinder NPC/Alien Creator\nversion 1.3.0");
         aboutDialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
         
         // set up Labels and TextFlows

@@ -12,6 +12,7 @@ package sfnc;
 enum Location {
     SENSES, 
     AURA, 
+    SAVES,
     DEFENSIVE_ABILITIES,
     IMMUNITIES,
     RESISTANCES,
