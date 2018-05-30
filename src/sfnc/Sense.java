@@ -5,18 +5,21 @@
  */
 package sfnc;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class Sense extends Ability {
     Integer range;
     
     Sense() {
-        this.name = "";
+        this.id = "";
         this.location = Location.SENSES;
         this.range = 0;
     }
     
     Sense(String n, Integer r) {
-        this.name = n;
+        this.id = n;
         this.range = r;
         this.location = Location.SENSES;
     }
@@ -32,8 +35,8 @@ public class Sense extends Ability {
     @Override
     public String toString() {
         if (range==0)
-            return name;
+            return id;
         else
-            return name + " " + range.toString() + " ft.";
+            return id + " " + range.toString() + " ft.";
     }
 }

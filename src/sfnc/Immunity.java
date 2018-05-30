@@ -5,18 +5,24 @@
  */
 package sfnc;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  *
  * @author Doug
  */
 public class Immunity extends Ability {
+    
+    public static Set<String> listOfSenses = new HashSet<String>();
+
     Immunity() {
-        name = "";
+        id = "";
         location = Location.IMMUNITIES;
     }
     
     Immunity (String n) {
-        name = n;
+        id = n;
         location = Location.IMMUNITIES;
     }
 }

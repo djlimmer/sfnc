@@ -1,4 +1,27 @@
-noConScore  ~n~ NONE
-mindless    ~n~ OTHER_ABILITIES
-unliving    ~n~ OTHER_ABILITIES
++4 vs. poison|~n~|SAVES|1
+amorphous|~n~|OTHER_ABILITIES|1
+aura of menace|~n~|AURA|1
+bonus to recall knowledge|~n~ +~c~|OTHER_ABILITIES|1
+change shape|~n~|OTHER_ABILITIES|1
+constructed|~n~|OTHER_ABILITIES|1
+distraction|~n~|OFFENSIVE_ABILITIES|1
+extension of all|~n~|LANGUAGES|1
+grab|~n~|OFFENSIVE_ABILITIES|1
+healing channel|~n~|OTHER_ABILITIES|1
+incorporeal|~n~|OTHER_ABILITIES|1
+mindless|~n~|OTHER_ABILITIES|0
+noConScore||NONE|0
+protective aura|~n~|AURA|1
+regeneration (suppressed by chaotic-aligned attacks)|~n~|DEFENSIVE_ABILITIES|1
+speak with animals|~n~|LANGUAGES|1
+summon allies|~n~|OTHER_ABILITIES|1
+swarm attack|~n~|OFFENSIVE_ABILITIES|1
+swarm defenses|~n~|DEFENSIVE_ABILITIES|1
+telepathy|~n~|LANGUAGES|1
+telepathy 100 ft. (non-verbal)|~n~|LANGUAGES|1
+truespeech|~n~|LANGUAGES|1
+unliving|~n~|OTHER_ABILITIES|1
+vulnerable to cold|~n~|WEAKNESSES|0
+vulnerable to fire|~n~|WEAKNESSES|0
+water breathing|~n~|OTHER_ABILITIES|1
 EOF

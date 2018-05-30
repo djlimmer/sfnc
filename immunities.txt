@@ -1,0 +1,18 @@
+acid
+cold
+construct immunities
+critical hits
+death effects
+disease
+electricity
+elemental immunities
+fire
+ooze immunities
+paralysis
+petrification
+plant immunities
+poison
+sleep
+swarm immunities
+undead immunities
+EOF

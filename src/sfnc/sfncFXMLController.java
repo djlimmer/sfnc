@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -48,6 +49,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.StageStyle;
+import static sfnc.Ability.setOfAbilities;
 
 /**
  *
@@ -326,6 +328,42 @@ public class sfncFXMLController implements Initializable {
         }
     }
     
+    private void addSenseToAbilitySet(String senseName,Integer range) {
+        Optional<Ability> optionalSense = setOfAbilities.stream()
+                .filter((Ability a) -> a.getId().equals(senseName))
+                .findAny();
+        if (!optionalSense.isPresent())
+            abilitySet.add(new Sense(senseName,range));
+        else {
+            Ability sense = optionalSense.get();
+            if (sense instanceof Sense)
+                if (((Sense) sense).range < range)
+                    ((Sense) sense).range = range;
+        }
+    }
+    
+    private void addImmunityToAbilitySet(String name) {
+        Optional<Ability> optionalImmunity = setOfAbilities.stream()
+                .filter((Ability a) -> a.getId().equals(name))
+                .findAny();
+        if (!optionalImmunity.isPresent())
+            abilitySet.add(new Immunity(name));
+    }
+    
+    private void addResistanceToAbilitySet(String resistanceName,Integer value) {
+        Optional<Ability> optionalResistance = setOfAbilities.stream()
+                .filter((Ability a) -> a.getId().equals(resistanceName))
+                .findAny();
+        if (!optionalResistance.isPresent())
+            abilitySet.add(new Resistance(resistanceName,value));
+        else {
+            Ability resistance = optionalResistance.get();
+            if (resistance instanceof Resistance)
+                if (((Resistance) resistance).getAmount() < value)
+                    ((Resistance) resistance).setAmount(value);
+        }
+    }
+    
     private void updateArray() {
         if (chosenArray == null || creature.getCR().ordinal()==0) {
             array = null;
@@ -335,22 +373,22 @@ public class sfncFXMLController implements Initializable {
             abilitySet = new HashSet();
             switch(creature.getType()) {
                 case "Aberration":
-                    abilitySet.add(new Sense("darkvision",60));
+                    addSenseToAbilitySet("darkvision",60);
                     if (useTypeAdjustments) {
                         array.will += 2;
                     }
                     break;
                 case "Animal":
-                    abilitySet.add(new Sense("low-light vision",0));
+                    addSenseToAbilitySet("low-light vision",0);
                     if (useTypeAdjustments) {
                         array.fort += 2;
                         array.ref += 2;
                     }
                     break;
                 case "Construct":
-                    abilitySet.add(new Sense("darkvision",60));
-                    abilitySet.add(new Sense("low-light vision",0));
-                    abilitySet.add(new Immunity("construct immunities"));
+                    addSenseToAbilitySet("darkvision",60);
+                    addSenseToAbilitySet("low-light vision",0);
+                    addImmunityToAbilitySet("construct immunities");
                     abilitySet.add(Ability.getAbility("noConScore"));
                     if (useTypeAdjustments) {
                         array.fort -= 2;
@@ -361,10 +399,10 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Dragon":
-                    abilitySet.add(new Sense("darkvision",60));
-                    abilitySet.add(new Sense("low-light vision",0));
-                    abilitySet.add(new Immunity("paralysis"));
-                    abilitySet.add(new Immunity("sleep"));
+                    addSenseToAbilitySet("darkvision",60);
+                    addSenseToAbilitySet("low-light vision",0);
+                    addImmunityToAbilitySet("paralysis");
+                    addImmunityToAbilitySet("sleep");
                     if (useTypeAdjustments) {
                         array.fort += 2;
                         array.ref += 2;
@@ -374,7 +412,7 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Fey":
-                    abilitySet.add(new Sense("low-light vision",0));
+                    addSenseToAbilitySet("low-light vision",0);
                     if (useTypeAdjustments) {
                         array.fort += 2;
                         array.ref += 2;
@@ -392,8 +430,8 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Magical Beast":
-                    abilitySet.add(new Sense("darkvision",60));
-                    abilitySet.add(new Sense("low-light vision",0));
+                    addSenseToAbilitySet("darkvision",60);
+                    addSenseToAbilitySet("low-light vision",0);
                     if (useTypeAdjustments) {
                         array.fort += 2;
                         array.ref += 2;
@@ -402,7 +440,7 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Monstrous Humanoid":
-                    abilitySet.add(new Sense("darkvision",60));
+                    addSenseToAbilitySet("darkvision",60);
                     if (useTypeAdjustments) {
                         array.ref += 2;
                         array.will += 2;
@@ -411,10 +449,10 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Ooze":
-                    abilitySet.add(new Sense("blindsight",60));
-                    abilitySet.add(new Sense("sightless",0));
+                    addSenseToAbilitySet("blindsight (unspecified)",60);
+                    addSenseToAbilitySet("sightless",0);
                     abilitySet.add(Ability.getAbility("mindless"));
-                    abilitySet.add(new Immunity("ooze immunities"));
+                    addImmunityToAbilitySet("ooze immunities");
                     if (useTypeAdjustments) {
                         array.fort += 2;
                         array.ref -= 2;
@@ -423,7 +461,7 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Outsider":
-                    abilitySet.add(new Sense("darkvision",60));
+                    addSenseToAbilitySet("darkvision",60);
                     if (useTypeAdjustments) {
                         switch(creature.getTypeOption()) {
                             case 1: array.fort += 2; break;
@@ -435,15 +473,15 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Plant":
-                    abilitySet.add(new Sense("low-light vision",0));
-                    abilitySet.add(new Immunity("plant immunities"));
+                    addSenseToAbilitySet("low-light vision",0);
+                    addImmunityToAbilitySet("plant immunities");
                     if (useTypeAdjustments) {
                             array.fort += 2;
                     }
                     break;
                 case "Undead":
-                    abilitySet.add(new Sense("darkvision",60));
-                    abilitySet.add(new Immunity("undead immunities"));
+                    addSenseToAbilitySet("darkvision",60);
+                    addImmunityToAbilitySet("undead immunities");
                     abilitySet.add(Ability.getAbility("unliving"));
                     abilitySet.add(Ability.getAbility("noConScore"));
                     if (useTypeAdjustments) {
@@ -451,7 +489,7 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Vermin":
-                    abilitySet.add(new Sense("darkvision",60));
+                    addSenseToAbilitySet("darkvision",60);
                     abilitySet.add(Ability.getAbility("mindless"));
                     if (useTypeAdjustments) {
                         array.fort += 2;
@@ -461,25 +499,25 @@ public class sfncFXMLController implements Initializable {
             // handle subtypes
             List<String> subtypes = creature.getAllSubtypes();
             if (subtypes.contains("aeon")) {
-                abilitySet.add(new Immunity("cold"));
-                abilitySet.add(new Immunity("critical hits"));
-                abilitySet.add(new Immunity("poison"));
-                abilitySet.add(new Resistance("electricity",10));
-                abilitySet.add(new Resistance("fire",10));
-                abilitySet.add(new Ability("extension of all",Location.LANGUAGES,"~n~"));
-                abilitySet.add(new Ability("telepathy 100 ft. (non-verbal)",Location.LANGUAGES,"~n~"));
-                abilitySet.add(new Ability("bonus to recall knowledge",Location.OTHER_ABILITIES,"~n~ +~c~"));
+                addImmunityToAbilitySet("cold");
+                addImmunityToAbilitySet("critical hits");
+                addImmunityToAbilitySet("poison");
+                addResistanceToAbilitySet("electricity",10);
+                addResistanceToAbilitySet("fire",10);
+                abilitySet.add(Ability.getAbility("extension of all"));
+                abilitySet.add(Ability.getAbility("telepathy 100 ft. (non-verbal)"));
+                abilitySet.add(Ability.getAbility("bonus to recall knowledge"));
             }
             if (subtypes.contains("agathion")) {
-                abilitySet.add(new Sense("low-light vision",0));
-                abilitySet.add(new Ability("+4 vs. poison",Location.SAVES,"~n~"));
-                abilitySet.add(new Immunity("petrifiation"));
-                abilitySet.add(new Immunity("electricity"));
-                abilitySet.add(new Resistance("cold",10));
-                abilitySet.add(new Resistance("sonic",10));
-                abilitySet.add(new Ability("healing channel",Location.OTHER_ABILITIES,"~n~"));
-                abilitySet.add(new Ability("truespeech",Location.LANGUAGES,"~n~"));
-                abilitySet.add(new Ability("speak with animals",Location.LANGUAGES,"~n~"));
+                addSenseToAbilitySet("low-light vision",0);
+                abilitySet.add(Ability.getAbility("+4 vs. poison"));
+                addImmunityToAbilitySet("petrification");
+                addImmunityToAbilitySet("electricity");
+                addResistanceToAbilitySet("cold",10);
+                addResistanceToAbilitySet("sonic",10);
+                abilitySet.add(Ability.getAbility("healing channel"));
+                abilitySet.add(Ability.getAbility("truespeech"));
+                abilitySet.add(Ability.getAbility("speak with animals"));
             }
             if (subtypes.contains("air")) {
                 // supernatural fly speed, usually with perfect maneuverability
@@ -490,74 +528,74 @@ public class sfncFXMLController implements Initializable {
                 // if android race, get constructed, flat affect, upgrade slot
             }
             if (subtypes.contains("angel")) {
-                abilitySet.add(new Sense("darkvision",60));
-                abilitySet.add(new Sense("low-light vision",0));
-                abilitySet.add(new Ability("protective aura",Location.AURA,"~n~"));
-                abilitySet.add(new Ability("+4 vs. poison",Location.SAVES,"~n~"));
-                abilitySet.add(new Immunity("acid"));
-                abilitySet.add(new Immunity("cold"));
-                abilitySet.add(new Immunity("petrification"));
-                abilitySet.add(new Resistance("electricity",10));
-                abilitySet.add(new Resistance("fire",10));
-                abilitySet.add(new Ability("truespeech",Location.LANGUAGES,"~n~"));
+                addSenseToAbilitySet("darkvision",60);
+                addSenseToAbilitySet("low-light vision",0);
+                abilitySet.add(Ability.getAbility("protective aura"));
+                abilitySet.add(Ability.getAbility("+4 vs. poison"));
+                addImmunityToAbilitySet("acid");
+                addImmunityToAbilitySet("cold");
+                addImmunityToAbilitySet("petrification");
+                addResistanceToAbilitySet("electricity",10);
+                addResistanceToAbilitySet("fire",10);
+                abilitySet.add(Ability.getAbility("truespeech"));
             }
             if (subtypes.contains("aquatic")) {
                 // swim speed
-                abilitySet.add(new Ability("water breathing",Location.OTHER_ABILITIES,"~n~"));
+                abilitySet.add(Ability.getAbility("water breathing"));
                 // Athletics as a master or good skill
                 // optionally, amphibious
             }
             if (subtypes.contains("archon")) {
-                abilitySet.add(new Sense("darkvision",60));
-                abilitySet.add(new Sense("low-light vision",0));
-                abilitySet.add(new Ability("aura of menace",Location.AURA,"~n~"));
-                abilitySet.add(new Ability("+4 vs. poison",Location.SAVES,"~n~"));
-                abilitySet.add(new Immunity("electricity"));
-                abilitySet.add(new Immunity("petrification"));
-                abilitySet.add(new Ability("truespeech",Location.LANGUAGES,"~n~"));
+                addSenseToAbilitySet("darkvision",60);
+                addSenseToAbilitySet("low-light vision",0);
+                abilitySet.add(Ability.getAbility("aura of menace"));
+                abilitySet.add(Ability.getAbility("+4 vs. poison"));
+                addImmunityToAbilitySet("electricity");
+                addImmunityToAbilitySet("petrification");
+                abilitySet.add(Ability.getAbility("truespeech"));
                 // many get teleport as an at-will SLA (CL = CR)
             }
             if (subtypes.contains("azata")) {
-                abilitySet.add(new Sense("darkvision",60));
-                abilitySet.add(new Sense("low-light vision",0));
-                abilitySet.add(new Immunity("electricity"));
-                abilitySet.add(new Immunity("petrification"));
-                abilitySet.add(new Resistance("cold",10));
-                abilitySet.add(new Resistance("fire",10));
-                abilitySet.add(new Ability("truespeech",Location.LANGUAGES,"~n~"));
+                addSenseToAbilitySet("darkvision",60);
+                addSenseToAbilitySet("low-light vision",0);
+                addImmunityToAbilitySet("electricity");
+                addImmunityToAbilitySet("petrification");
+                addResistanceToAbilitySet("cold",10);
+                addResistanceToAbilitySet("fire",10);
+                abilitySet.add(Ability.getAbility("truespeech"));
             }
             if (subtypes.contains("cold")) {
-                abilitySet.add(new Immunity("cold"));
-                abilitySet.add(new Ability("vulnerable to fire",Location.WEAKNESSES,"~n~"));
+                addImmunityToAbilitySet("cold");
+                abilitySet.add(Ability.getAbility("vulnerable to fire"));
             }
             if (subtypes.contains("daemon")) {
-                abilitySet.add(new Immunity("acid"));
-                abilitySet.add(new Immunity("death effects"));
-                abilitySet.add(new Immunity("disease"));
-                abilitySet.add(new Immunity("poison"));
-                abilitySet.add(new Resistance("cold",10));
-                abilitySet.add(new Resistance("electricity",10));
-                abilitySet.add(new Resistance("fire",10));
-                abilitySet.add(new Ability("summon allies",Location.OTHER_ABILITIES,"~n~"));
-                abilitySet.add(new Ability("telepathy",Location.LANGUAGES,"~n~"));
+                addImmunityToAbilitySet("acid");
+                addImmunityToAbilitySet("death effects");
+                addImmunityToAbilitySet("disease");
+                addImmunityToAbilitySet("poison");
+                addResistanceToAbilitySet("cold",10);
+                addResistanceToAbilitySet("electricity",10);
+                addResistanceToAbilitySet("fire",10);
+                abilitySet.add(Ability.getAbility("summon allies"));
+                abilitySet.add(Ability.getAbility("telepathy"));
             }
             if (subtypes.contains("demon")) {
-                abilitySet.add(new Immunity("electricity"));
-                abilitySet.add(new Immunity("poison"));
-                abilitySet.add(new Resistance("cold",10));
-                abilitySet.add(new Resistance("acid",10));
-                abilitySet.add(new Resistance("fire",10));
-                abilitySet.add(new Ability("summon allies",Location.OTHER_ABILITIES,"~n~"));
-                abilitySet.add(new Ability("telepathy",Location.LANGUAGES,"~n~"));
+                addImmunityToAbilitySet("electricity");
+                addImmunityToAbilitySet("poison");
+                addResistanceToAbilitySet("acid",10);
+                addResistanceToAbilitySet("cold",10);
+                addResistanceToAbilitySet("fire",10);
+                abilitySet.add(Ability.getAbility("summon allies"));
+                abilitySet.add(Ability.getAbility("telepathy"));
             }
             if (subtypes.contains("devil")) {
-                abilitySet.add(new Sense("see in darkness",0));
-                abilitySet.add(new Immunity("fire"));
-                abilitySet.add(new Immunity("poison"));
-                abilitySet.add(new Resistance("cold",10));
-                abilitySet.add(new Resistance("acid",10));
-                abilitySet.add(new Ability("summon allies",Location.OTHER_ABILITIES,"~n~"));
-                abilitySet.add(new Ability("telepathy",Location.LANGUAGES,"~n~"));
+                addSenseToAbilitySet("see in darkness",0);
+                addImmunityToAbilitySet("fire");
+                addImmunityToAbilitySet("poison");
+                addResistanceToAbilitySet("acid",10);
+                addResistanceToAbilitySet("cold",10);
+                abilitySet.add(Ability.getAbility("summon allies"));
+                abilitySet.add(Ability.getAbility("telepathy"));
             }
             if (subtypes.contains("dwarf")) {
                 // most gain darkvision 60 ft.
@@ -568,7 +606,7 @@ public class sfncFXMLController implements Initializable {
                 // blindsense (vibration) or blindsight (vibration) with varied range
             }
             if (subtypes.contains("elemental")) {
-                abilitySet.add(new Immunity("elemental immunities"));
+                addImmunityToAbilitySet("elemental immunities");
             }
             if (subtypes.contains("elf")) {
                 // most gain low-light vision
@@ -578,23 +616,23 @@ public class sfncFXMLController implements Initializable {
                 // half-elf race gets elven blood, extra good skill
             }
             if (subtypes.contains("fire")) {
-                abilitySet.add(new Immunity("fire"));
-                abilitySet.add(new Ability("vulnerable to fire",Location.WEAKNESSES,"~n~"));
+                addImmunityToAbilitySet("fire");
+                abilitySet.add(Ability.getAbility("vulnerable to cold"));
             }
             if (subtypes.contains("giant")) {
-                abilitySet.add(new Sense("low-light vision",0));
+                addSenseToAbilitySet("low-light vision",0);
                 // many gain Intimidate and Perception as master skills
             }
             if (subtypes.contains("gnome")) {
-                abilitySet.add(new Sense("low-light vision",0));
+                addSenseToAbilitySet("low-light vision",0);
                 // gnome race gets eternal hope, gnome magic, Culture as master skill
             }
             if (subtypes.contains("goblinoid")) {
-                abilitySet.add(new Sense("darkvision",60));
+                addSenseToAbilitySet("darkvision",60);
                 // space goblin race gets fast, tinker, Engineering and Stealth as master skills, Survival as good skill
             }
             if (subtypes.contains("gray")) {
-                abilitySet.add(new Sense("darkvision",60));
+                addSenseToAbilitySet("darkvision",60);
                 // gray race gets phase, telepathy 100 ft.
             }
             if (subtypes.contains("halfling")) {
@@ -608,14 +646,14 @@ public class sfncFXMLController implements Initializable {
                 // ikeshti race gets desert survivor, shed skin, squirt blood
             }
             if (subtypes.contains("incorporeal")) {
-                abilitySet.add(new Ability("incorporeal",Location.OTHER_ABILITIES,"~n~"));
+                abilitySet.add(Ability.getAbility("incorporeal"));
             }
             if (subtypes.contains("inevitable")) {
-                abilitySet.add(new Sense("darkvision",60));
-                abilitySet.add(new Sense("low-light vision",0));
-                abilitySet.add(new Ability("constructed",Location.OTHER_ABILITIES,"~n~"));
-                abilitySet.add(new Ability("regeneration (suppressed by chaotic-aligned attacks)",Location.DEFENSIVE_ABILITIES,"~n~"));
-                abilitySet.add(new Ability("truespeech",Location.LANGUAGES,"~n~"));                
+                addSenseToAbilitySet("darkvision",60);
+                addSenseToAbilitySet("low-light vision",0);
+                abilitySet.add(Ability.getAbility("constructed"));
+                abilitySet.add(Ability.getAbility("regeneration (suppressed by chaotic-aligned attacks)"));
+                abilitySet.add(Ability.getAbility("truespeech"));
             }
             if (subtypes.contains("kasatha")) {
                 // kasatha race gets desert stride, four-armed, Acrobatics and Athletics as master skills, Culture as good skill
@@ -624,7 +662,7 @@ public class sfncFXMLController implements Initializable {
                 // lashunta race gets limited telepathy, SLAs: 1/day detect thoughs, at will daze, psychokinetic hand
             }
             if (subtypes.contains("maraquoi")) {
-                abilitySet.add(new Sense("low-light vision",0));
+                addSenseToAbilitySet("low-light vision",0);
                 // maraquoi race gets blindsense (sound) 30 ft., climb 20 ft., prehensile tail, Survival as master skill
             }
             if (subtypes.contains("orc")) {
@@ -636,49 +674,49 @@ public class sfncFXMLController implements Initializable {
             }
             if (subtypes.contains("protean")) {
                 // blindsense (type and distance vary)
-                abilitySet.add(new Immunity("acid"));
-                abilitySet.add(new Resistance("electricity",10));
-                abilitySet.add(new Resistance("sonic",10));
+                addImmunityToAbilitySet("acid");
+                addResistanceToAbilitySet("electricity",10);
+                addResistanceToAbilitySet("sonic",10);
                 // supernatural flight speed
-                abilitySet.add(new Ability("amorphous",Location.OTHER_ABILITIES,"~n~"));
-                abilitySet.add(new Ability("change shape",Location.OTHER_ABILITIES,"~n~"));
-                abilitySet.add(new Ability("grab",Location.OFFENSIVE_ABILITIES,"~n~"));
+                abilitySet.add(Ability.getAbility("amorphous"));
+                abilitySet.add(Ability.getAbility("change shape"));
+                abilitySet.add(Ability.getAbility("grab"));
             }
             if (subtypes.contains("reptoid")) {
-                abilitySet.add(new Sense("low-light vision",0));
+                addSenseToAbilitySet("low-light vision",0);
                 // reptoid race gets change shape, cold-blooded, natural weapons
             }
             if (subtypes.contains("ryphorian")) {
-                abilitySet.add(new Sense("low-light vision",0));
+                addSenseToAbilitySet("low-light vision",0);
                 // ryphorian race gets trimorphic, additional special ability, Perception as master skill
             }
             if (subtypes.contains("sarcesian")) {
-                abilitySet.add(new Sense("low-light vision",0));
+                addSenseToAbilitySet("low-light vision",0);
                 // sarcesian race gets void flyer, additional good skill
             }
             if (subtypes.contains("shapechanger")) {
-                abilitySet.add(new Ability("change shape",Location.OTHER_ABILITIES,"~n~"));
+                abilitySet.add(Ability.getAbility("change shape"));
             }
             if (subtypes.contains("shirren")) {
-                abilitySet.add(new Sense("blindsense (vibration)",30));
+                addSenseToAbilitySet("blindsense (vibration)",30);
                 // shirren race gets communalism, limited telepathy, Culture and Diplomacy as good skills
             }
             if (subtypes.contains("skittermander")) {
-                abilitySet.add(new Sense("low-light vision",0));
+                addSenseToAbilitySet("low-light vision",0);
                 // skittermander race gets grappler, hyper, six-armed
             }
             if (subtypes.contains("swarm")) {
-                abilitySet.add(new Ability("swarm defenses",Location.DEFENSIVE_ABILITIES,"~n~"));
-                abilitySet.add(new Immunity("swarm immunities"));
-                abilitySet.add(new Ability("distraction",Location.OFFENSIVE_ABILITIES,"~n~"));
-                abilitySet.add(new Ability("swarm attack",Location.OFFENSIVE_ABILITIES,"~n~"));
+                abilitySet.add(Ability.getAbility("swarm defenses"));
+                addImmunityToAbilitySet("swarm immunities");
+                abilitySet.add(Ability.getAbility("distraction"));
+                abilitySet.add(Ability.getAbility("swarm attack"));
             }
             if (subtypes.contains("verthani")) {
-                abilitySet.add(new Sense("low-light vision",0));
+                addSenseToAbilitySet("low-light vision",0);
                 // verthani race gets easily augmented, skin mimic, additional good skill
             }
             if (subtypes.contains("vesk")) {
-                abilitySet.add(new Sense("low-light vision",0));
+                addSenseToAbilitySet("low-light vision",0);
                 // vesk race gets armor savant, fearless, natural weapons
             }
             if (subtypes.contains("water")) {
@@ -686,7 +724,7 @@ public class sfncFXMLController implements Initializable {
                 // Athletics as master or good skill
             }
             if (subtypes.contains("ysoki")) {
-                abilitySet.add(new Sense("darkvision",60));
+                addSenseToAbilitySet("darkvision",60);
                 // ysoki race gets cheek pouches, moxie, Engineering and Stealth as master skills, Survival as good skill
             }
         }
@@ -726,7 +764,7 @@ public class sfncFXMLController implements Initializable {
     
     public void updateStatBlock() {
         updateArray();
-        // update name/CR line
+        // update id/CR line
         creatureNameDisplay.setText(creature.getName().toUpperCase());
         creatureCRDisplay.setText(creature.getCR().toString());
         // update XP line
@@ -1086,14 +1124,15 @@ public class sfncFXMLController implements Initializable {
             String abilityLine;
             String[] abilityParts;
             
-            // abilityLine: name first, outputFormat second, location third
+            // abilityLine: id|output format|location|cost
             
             while (!"EOF".equals(abilityLine = bufferedReader.readLine())) {
-                abilityParts = abilityLine.split(" +");
+                abilityParts = abilityLine.split("\\|",4);
                 Ability.setOfAbilities.add(
                         new Ability(abilityParts[0],
                                 Location.valueOf(abilityParts[2]),
-                                abilityParts[1]));
+                                abilityParts[1], 
+                                Integer.valueOf(abilityParts[3])));
             }
            
             bufferedReader.close();

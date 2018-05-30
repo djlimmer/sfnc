@@ -13,26 +13,34 @@ import java.util.Set;
  * @author Doug
  */
 public class Ability {
-    String name;
+    String id;
     Location location;
     String outputFormat;
+    Integer cost;
     
     public static Set<Ability> setOfAbilities = new HashSet<Ability>();
 
     Ability() {
-        name = "";
-        location = Location.UNDETERMINED;
-        outputFormat = "~n~";
+        this("",Location.UNDETERMINED,"~n~",1);
     }
     
+    Ability(String n, Location l) {
+        this(n,l,"~n~",1);
+    }
+
     Ability(String n, Location l, String o) {
-        this.name = n;
+        this(n,l,o,1);
+    }
+
+    Ability(String n, Location l, String o, Integer c) {
+        this.id = n;
         this.location = l;
         this.outputFormat = o;
+        this.cost = c;
     }
     
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
     
     public Location getLocation() {
@@ -43,8 +51,12 @@ public class Ability {
         return outputFormat;
     }
     
-    public void setName(String n) {
-        name = n;
+    public Integer getCost() {
+        return cost;
+    }
+    
+    public void setId(String n) {
+        id = n;
     }
     
     public void setLocation(Location l) {
@@ -55,16 +67,20 @@ public class Ability {
         this.outputFormat = o;
     }
     
+    public void setCost(Integer c) {
+        this.cost = c;
+    }
+    
     @Override
     public String toString() {
         String outputString = outputFormat;
-        outputString = outputString.replace("~n~", name);
+        outputString = outputString.replace("~n~", id);
         return outputString;
     }
     
     public static Ability getAbility(String n) {
         return setOfAbilities.stream()
-                .filter(a -> a.name.equals(n))
+                .filter(a -> a.id.equals(n))
                 .findAny().get();
     }
 }

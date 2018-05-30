@@ -1,0 +1,7 @@
+blindsense (vibration)
+blindsight (unspecified)
+low-light vision
+darkvision
+see in darkness
+sightless
+EOF
