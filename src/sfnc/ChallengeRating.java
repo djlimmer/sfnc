@@ -51,4 +51,6 @@ public enum ChallengeRating {
     public String toString() { return displayString; }
     
     public Integer getXP() { return XP; }
+    
+    public Integer getCRValue() { return this.ordinal()-2; }
 }

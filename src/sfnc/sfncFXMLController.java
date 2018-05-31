@@ -168,7 +168,7 @@ public class sfncFXMLController implements Initializable {
 
         String xpLine = "XP " + creature.getXPString() + " (" + creature.getArray() + ")";
         String sensesLine = "";
-        if (hasSenses())
+        if (hasAbilitiesByLocation(Location.SENSES))
             sensesLine += "Senses " + makeAbilityStringByLocation(Location.SENSES);
         String HPOutput = (array == null) ? "" : "HP " + array.hitPoints.toString();
         
@@ -183,7 +183,7 @@ public class sfncFXMLController implements Initializable {
         String SaveLine = (array == null) ? "" : "Fort " + bonusString(array.fort) + "; Ref " + bonusString(array.ref)
                 + "; Will " + bonusString(array.will);
         String defensiveAbilitiesLine = "";
-        if (hasImmunities())
+        if (hasAbilitiesByLocation(Location.IMMUNITIES))
             defensiveAbilitiesLine += "Immunities " + makeAbilityStringByLocation(Location.IMMUNITIES);
         
         // get the file
@@ -242,25 +242,59 @@ public class sfncFXMLController implements Initializable {
     @FXML   private Label creatureCRDisplay = new Label();
     @FXML   private Label creatureXPDisplay = new Label();
     @FXML   private TextFlow creatureSensesBlock = new TextFlow();
+    private Label creatureAlignmentDisplay = new Label();
+    private Label creatureSizeDisplay = new Label();
     private Label creatureTypeDisplay = new Label();
+    private Label creatureInitLabel = new Label("Init ");
+    private Label creatureInitDisplay = new Label();
     private Label creatureSensesLabel = new Label("Senses ");
     private Label creatureSensesDisplay = new Label();
+    private Label creaturePerceptionLabel = new Label("Perception ");
+    private Label creaturePerceptionDisplay = new Label();
+    private Label creatureAuraLabel = new Label("Aura ");
+    private Label creatureAuraDisplay = new Label();
     @FXML   private Label creatureHPDisplay = new Label();
+    private Label creatureRPLabel = new Label("RP ");
+    private Label creatureRPDisplay = new Label();
     @FXML   private Label creatureEACDisplay = new Label();
     @FXML   private Label creatureKACDisplay = new Label();
     @FXML   private Label creatureFortDisplay = new Label();
     @FXML   private Label creatureRefDisplay = new Label();
     @FXML   private Label creatureWillDisplay = new Label();
     @FXML   private TextFlow creatureDefensiveAbilitiesBlock = new TextFlow();
+    private Label creatureDefensiveAbilitiesLabel = new Label("Defensive Abilities ");
+    private Label creatureDefensiveAbilitiesDisplay = new Label();
+    private Label creatureDRLabel = new Label("DR ");
+    private Label creatureDRDisplay = new Label();
     private Label creatureImmunitiesLabel = new Label("Immunities ");
     private Label creatureImmunitiesDisplay = new Label();
+    private Label creatureResistancesLabel = new Label("Resistances: ");
+    private Label creatureResistancesDisplay = new Label();
+    private Label creatureSRLabel = new Label("SR ");
+    private Label creatureSRDisplay = new Label();
+    private Label creatureWeaknessesLabel = new Label("Weaknesses ");
+    private Label creatureWeaknessesDisplay = new Label();
     @FXML   private TextFlow creatureOffensiveAbilitiesBlock = new TextFlow();
+    private Label creatureSpeedLabel = new Label("Speed ");
+    private Label creatureSpeedDisplay = new Label();
+    // melee
+    // multiattack
+    // ranged
+    // space and reach
     private Label creatureOffensiveAbilitiesLabel = new Label("Offensive Abilities ");
     private Label creatureOffensiveAbilitiesDisplay = new Label();
+    // spell-like abilities
+    // spells known
     @FXML   private TextFlow creatureStatisticsBlock = new TextFlow();
+    // ability score modifiers
+    // feats
+    // skills
+    private Label creatureLanguagesLabel = new Label("Languages ");
+    private Label creatureLanguagesDisplay = new Label();
     private Label creatureOtherAbilitiesLabel = new Label("Other Abilities ");
     private Label creatureOtherAbilitiesDisplay = new Label();
-    
+    // gear and augmentations
+
     
     public void setControls() {
         creatureNameInput.setText(creature.getName());
@@ -729,29 +763,11 @@ public class sfncFXMLController implements Initializable {
             }
         }
     }
-    
-    public Boolean hasSenses() {
+
+    public Boolean hasAbilitiesByLocation(Location loc) {
         if (abilitySet == null)
             return false;
-        return abilitySet.stream().anyMatch((a) -> (a.getLocation() == Location.SENSES));
-    }
-    
-    public Boolean hasImmunities() {
-        if (abilitySet == null)
-            return false;
-        return abilitySet.stream().anyMatch((a) -> (a.getLocation() == Location.IMMUNITIES));
-    }
-    
-    public Boolean hasOffensiveAbilities() {
-        if (abilitySet == null)
-            return false;
-        return abilitySet.stream().anyMatch((a) -> (a.getLocation() == Location.OFFENSIVE_ABILITIES));
-    }
-    
-    public Boolean hasOtherAbilities() {
-        if (abilitySet == null)
-            return false;
-        return abilitySet.stream().anyMatch((a) -> (a.getLocation() == Location.OTHER_ABILITIES));
+        return abilitySet.stream().anyMatch(a -> (a.getLocation() == loc));
     }
         
     public String makeAbilityStringByLocation(Location l) {
@@ -759,10 +775,17 @@ public class sfncFXMLController implements Initializable {
         abilitySet.stream().filter(a -> (a.getLocation() == l)).forEachOrdered(a -> abilitiesAtLocation.add(a.toString()));
         java.util.Collections.sort(abilitiesAtLocation);
         
-        return String.join(", ", abilitiesAtLocation);
+        String abilityString = String.join(", ",abilitiesAtLocation);
+        // replace ~c~
+        //System.out.println("next line should handle ~c~");
+        abilityString = abilityString.replace("~c~", Integer.toString(Integer.max(0, creature.getCR().getCRValue())));
+        
+        return abilityString;
     }
     
     public void updateStatBlock() {
+        Boolean addSemicolon = false;
+        
         updateArray();
         // update id/CR line
         creatureNameDisplay.setText(creature.getName().toUpperCase());
@@ -784,18 +807,27 @@ public class sfncFXMLController implements Initializable {
             }
             creatureTypeDisplay.setText(typeDisplayString);  
             creatureSensesBlock.getChildren().add(creatureTypeDisplay);
-            // TODO: for some unknownreason, Humanoid type doesn't update the creatureTypeDisplay.
-            // is it because it doesn't have senses??
         }
         // update init/senses/perception line
-        if (hasSenses()) {
-            // adding a "\n" is a stopgap until the Init display is in
-            creatureSensesBlock.getChildren().add(new Text("\n"));
+        creatureSensesBlock.getChildren().add(new Text("\n"));
+        creatureInitDisplay.setText("+0");
+        creatureSensesBlock.getChildren().addAll(creatureInitLabel,creatureInitDisplay);
+        creatureSensesBlock.getChildren().add(new Text("; "));
+        if (hasAbilitiesByLocation(Location.SENSES)) {
             creatureSensesDisplay.setText(makeAbilityStringByLocation(Location.SENSES));
             creatureSensesBlock.getChildren().addAll(creatureSensesLabel,creatureSensesDisplay);
+            creatureSensesBlock.getChildren().add(new Text("; "));
         }
-        
+        creaturePerceptionDisplay.setText(bonusString((array == null) ? 0 : array.goodSkillBonus));
+        creatureSensesBlock.getChildren().addAll(creaturePerceptionLabel,creaturePerceptionDisplay);
+        if (hasAbilitiesByLocation(Location.AURA)) {
+            creatureSensesBlock.getChildren().add(new Text("\n"));
+            creatureAuraDisplay.setText(makeAbilityStringByLocation(Location.AURA));
+            creatureSensesBlock.getChildren().addAll(creatureAuraLabel,creatureAuraDisplay);
+        }
+
         // update defenses block
+        // RP goes here, sort of
         creatureHPDisplay.setText(
                 (array == null) ? "" : array.hitPoints.toString());
         creatureEACDisplay.setText(
@@ -810,20 +842,68 @@ public class sfncFXMLController implements Initializable {
                 (array == null) ? "" : bonusString(array.will));
         //update defensive abilities line
         creatureDefensiveAbilitiesBlock.getChildren().clear();
-        creatureOffensiveAbilitiesBlock.getChildren().clear();
-        creatureStatisticsBlock.getChildren().clear();
-        if (hasImmunities()) {
+        if (hasAbilitiesByLocation(Location.DEFENSIVE_ABILITIES)) {
+            creatureDefensiveAbilitiesDisplay.setText(makeAbilityStringByLocation(Location.DEFENSIVE_ABILITIES));
+            creatureDefensiveAbilitiesBlock.getChildren().addAll(creatureDefensiveAbilitiesLabel,creatureDefensiveAbilitiesDisplay);
+            addSemicolon = true;
+        }
+        // DR goes here
+        if (hasAbilitiesByLocation(Location.IMMUNITIES)) {
+            if (addSemicolon)
+                creatureDefensiveAbilitiesBlock.getChildren().add(new Text("; "));
             creatureImmunitiesDisplay.setText(makeAbilityStringByLocation(Location.IMMUNITIES));
             creatureDefensiveAbilitiesBlock.getChildren().addAll(creatureImmunitiesLabel,creatureImmunitiesDisplay);
+            addSemicolon = true;
         }
-        if (hasOffensiveAbilities()) {
+        if (hasAbilitiesByLocation(Location.RESISTANCES)) {
+            if (addSemicolon)
+                creatureDefensiveAbilitiesBlock.getChildren().add(new Text("; "));
+            creatureResistancesDisplay.setText(makeAbilityStringByLocation(Location.RESISTANCES));
+            creatureDefensiveAbilitiesBlock.getChildren().addAll(creatureResistancesLabel,creatureResistancesDisplay);
+            addSemicolon = true;
+        }
+        // SR goes here
+        if (hasAbilitiesByLocation(Location.WEAKNESSES)) {
+            if (addSemicolon)
+                creatureDefensiveAbilitiesBlock.getChildren().add(new Text("; "));
+            creatureWeaknessesDisplay.setText(makeAbilityStringByLocation(Location.WEAKNESSES));
+            creatureDefensiveAbilitiesBlock.getChildren().addAll(creatureWeaknessesLabel,creatureWeaknessesDisplay);
+        }
+        
+        //update offensive abilities block
+        creatureOffensiveAbilitiesBlock.getChildren().clear();
+        addSemicolon = false;
+        // speed goes here
+        // melee goes here
+        // multiattack goes here
+        // ranged goes here
+        // space and reach go here
+        if (hasAbilitiesByLocation(Location.OFFENSIVE_ABILITIES)) {
+            // remove comment line after speed is in
+            // creatureOffensiveAbilitiesBlock.getChildren().addAll(new Text("\n"));
             creatureOffensiveAbilitiesDisplay.setText(makeAbilityStringByLocation(Location.OFFENSIVE_ABILITIES));
             creatureOffensiveAbilitiesBlock.getChildren().addAll(creatureOffensiveAbilitiesLabel,creatureOffensiveAbilitiesDisplay);
         }
-        if (hasOtherAbilities()) {
+        // SLAs go here
+        // spells known goes here
+
+        //update statistics block
+        creatureStatisticsBlock.getChildren().clear();
+        // ability score modifiers go here
+        // feats go here
+        // skills go here
+        if (hasAbilitiesByLocation(Location.LANGUAGES)) {
+            // remove comment line after ability scores are in
+            // creatureStatisticsBlock.getChildren().addAll(new Text("\n"));
+            creatureLanguagesDisplay.setText(makeAbilityStringByLocation(Location.LANGUAGES));
+            creatureStatisticsBlock.getChildren().addAll(creatureLanguagesLabel,creatureLanguagesDisplay);
+        }
+        if (hasAbilitiesByLocation(Location.OTHER_ABILITIES)) {
+            creatureStatisticsBlock.getChildren().addAll(new Text("\n"));
             creatureOtherAbilitiesDisplay.setText(makeAbilityStringByLocation(Location.OTHER_ABILITIES));
             creatureStatisticsBlock.getChildren().addAll(creatureOtherAbilitiesLabel,creatureOtherAbilitiesDisplay);
         }
+        // gear and augmentations go here
     }
     
     public void updateWindowTitle() {
@@ -899,9 +979,20 @@ public class sfncFXMLController implements Initializable {
         aboutDialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
         
         // set up Labels and TextFlows
+        creatureInitLabel.setStyle("-fx-font-weight: bold");
         creatureSensesLabel.setStyle("-fx-font-weight: bold");
+        creaturePerceptionLabel.setStyle("-fx-font-weight: bold");
+        creatureRPLabel.setStyle("-fx-font-weight: bold");
+        creatureAuraLabel.setStyle("-fx-font-weight: bold");
+        creatureDefensiveAbilitiesLabel.setStyle("-fx-font-weight: bold");
+        creatureDRLabel.setStyle("-fx-font-weight: bold");
         creatureImmunitiesLabel.setStyle("-fx-font-weight: bold");
+        creatureResistancesLabel.setStyle("-fx-font-weight: bold");
+        creatureSRLabel.setStyle("-fx-font-weight: bold");
+        creatureWeaknessesLabel.setStyle("-fx-font-weight: bold");
+        creatureSpeedLabel.setStyle("-fx-font-weight: bold");
         creatureOffensiveAbilitiesLabel.setStyle("-fx-font-weight: bold");
+        creatureLanguagesLabel.setStyle("-fx-font-weight: bold");
         creatureOtherAbilitiesLabel.setStyle("-fx-font-weight: bold");
 
         // step 0 controls
