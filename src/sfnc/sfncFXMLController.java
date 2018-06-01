@@ -31,6 +31,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -236,7 +237,21 @@ public class sfncFXMLController implements Initializable {
     @FXML   private ListView<String> creatureHumanoidSubtypesInput = new ListView<String>();
     @FXML   private ListView<String> creatureOutsiderSubtypesInput = new ListView<String>();
     @FXML   private TextField creatureFreeformSubtypesInput = new TextField();
+    
+    // Step 4 controls
+    
+    // Step 5 controls
+    
+    // Step 6 controls
+    @FXML   private Label creatureAbilityChoicesAvailable = new Label();
+    @FXML   private Label creatureAbilityChoicesMade = new Label();
+    @FXML   private ListView<String> creatureAbilityInput = new ListView<String>();
+    @FXML   private ListView<String> creatureAbilitiesChosen = new ListView<String>();
+    @FXML   private TextField creatureCustomAbilityNameInput = new TextField();
+    @FXML   private ComboBox creatureCustomAbilityLocationInput = new ComboBox();
+    @FXML   private Button creatureAddCustomAbilityButton = new Button();
 
+    
     // stat block controls
     @FXML   private Label creatureNameDisplay = new Label();
     @FXML   private Label creatureCRDisplay = new Label();
@@ -312,6 +327,7 @@ public class sfncFXMLController implements Initializable {
             hideTypeOptions();
         }
         setSubtypeWarning();
+        setAbilityControls();
     }
     
     private void showAnimalTypeOptions() {
@@ -360,6 +376,19 @@ public class sfncFXMLController implements Initializable {
             default:
                 creatureSubtypeWarning.setText("");
         }
+    }
+    
+    private void setAbilityControls() {
+        creatureAbilityChoicesAvailable.setText(Integer.toString(array.specialAbilities));
+        creatureAbilityChoicesMade.setText(Integer.toString(creature.getChosenAbilities().size()));
+        List<String> chosenAbilitiesDisplay = new ArrayList<>();
+        creature.getChosenAbilities().stream().forEach((a) -> {
+            chosenAbilitiesDisplay.add(a.getId());
+        });
+        creatureAbilitiesChosen.setItems(FXCollections.observableArrayList(chosenAbilitiesDisplay));
+
+        // needs to handle ability lists, etc.
+
     }
     
     private void addSenseToAbilitySet(String senseName,Integer range) {
@@ -1071,6 +1100,7 @@ public class sfncFXMLController implements Initializable {
                     updateStatBlock();
                     updateWindowTitle();
                     setSubtypeWarning();
+                    setAbilityControls();
                 }
             }
         );
@@ -1161,6 +1191,13 @@ public class sfncFXMLController implements Initializable {
         // step 5 controls
         
         // step 6 controls
+        List<String> availableAbilitiesDisplay = new ArrayList<>();
+        Ability.setOfAbilities.stream().forEach((a) -> {
+            availableAbilitiesDisplay.add(a.getId());
+        });
+        java.util.Collections.sort(availableAbilitiesDisplay);
+        creatureAbilityInput.setItems(FXCollections.observableArrayList(
+                availableAbilitiesDisplay));
         
         // step 7 controls
         

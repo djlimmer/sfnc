@@ -39,6 +39,10 @@ public class Ability {
         this.cost = c;
     }
     
+    Ability(Ability a) {
+        this(a.id, a.location, a.outputFormat, a.cost);
+    }
+    
     public String getId() {
         return id;
     }

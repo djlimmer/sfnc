@@ -33,6 +33,7 @@ public class Creature {
     List<String> humanoidSubtypes;
     List<String> outsiderSubtypes;
     List<String> freeformSubtypes;
+    List<Ability> chosenAbilities;
     
     // temporary status variables
     Boolean hasChanged;
@@ -49,20 +50,13 @@ public class Creature {
         this.humanoidSubtypes = new ArrayList<String>();
         this.outsiderSubtypes = new ArrayList<String>();
         this.freeformSubtypes = new ArrayList<String>();
+        this.chosenAbilities = new ArrayList<Ability>();
     }
     
     Creature(String n, ChallengeRating c) {
+        this();
         this.name = n;
         this.CR = c;
-        this.array = "";
-        this.type = "";
-        this.useTypeAdjustments = true;
-        this.typeOption = 0;
-        this.hasChanged = true;
-        this.generalSubtypes = new ArrayList<String>();
-        this.humanoidSubtypes = new ArrayList<String>();
-        this.outsiderSubtypes = new ArrayList<String>();
-        this.freeformSubtypes = new ArrayList<String>();
     }
 
     public String getName() {
@@ -91,6 +85,10 @@ public class Creature {
     
     String getType() {
         return type;
+    }
+    
+    List<Ability> getChosenAbilities() {
+        return chosenAbilities;
     }
     
     public Boolean useTypeAdjustments() {
@@ -198,6 +196,22 @@ public class Creature {
         this.hasChanged = true;
     }
     
+    public void setChosenAbilities(List<Ability> a) {
+        this.chosenAbilities = new ArrayList<>();
+        this.chosenAbilities.addAll(a);
+        this.hasChanged = true;
+    }
+    
+    public void addAbility(Ability a) {
+        Ability aa = new Ability(a);
+        this.chosenAbilities.add(aa);
+        this.hasChanged = true;
+    }
+    
+    public void dropAbility(Ability a) {
+        this.hasChanged = this.chosenAbilities.remove(a);
+    }
+    
     public void setChange() {
         this.hasChanged = true;
     }
@@ -228,6 +242,7 @@ public class Creature {
             this.humanoidSubtypes = new ArrayList<>(Arrays.asList(reader.readLine().split(",")));
             this.outsiderSubtypes = new ArrayList<>(Arrays.asList(reader.readLine().split(",")));
             this.freeformSubtypes = new ArrayList<>(Arrays.asList(reader.readLine().split(",")));
+            // need to read chosen abilities
             reader.close();
         } catch (IOException e) {
             System.err.println("Something went wrong (opening sfnc file)");
@@ -252,6 +267,7 @@ public class Creature {
             writer.println(String.join(",",humanoidSubtypes));
             writer.println(String.join(",",outsiderSubtypes));
             writer.println(String.join(",",freeformSubtypes));
+            // need to save chosen abilities
             writer.close();
         } catch (IOException e) {
             System.err.println("Something went wrong (saving to file)");
