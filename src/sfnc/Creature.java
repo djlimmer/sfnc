@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Consumer;
 
 /**
  *
@@ -196,9 +197,12 @@ public class Creature {
         this.hasChanged = true;
     }
     
-    public void setChosenAbilities(List<Ability> a) {
+    public void setChosenAbilities(List<String> a) {
         this.chosenAbilities = new ArrayList<>();
-        this.chosenAbilities.addAll(a);
+        a.stream().forEach((String s) -> {
+            if (Ability.getAbility(s)!=null)
+                this.chosenAbilities.add(new Ability(Ability.getAbility(s)));
+        });
         this.hasChanged = true;
     }
     

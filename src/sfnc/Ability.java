@@ -6,6 +6,7 @@
 package sfnc;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -81,10 +82,15 @@ public class Ability {
         outputString = outputString.replace("~n~", id);
         return outputString;
     }
-    
+        
     public static Ability getAbility(String n) {
-        return setOfAbilities.stream()
-                .filter(a -> a.id.equals(n))
-                .findAny().get();
+        Optional<Ability> optionalAbility = setOfAbilities.stream()
+                .filter((Ability a) -> a.id.equals(n))
+                .findAny();
+        
+        if (!optionalAbility.isPresent())
+            return null;
+        
+        return optionalAbility.get();
     }
 }

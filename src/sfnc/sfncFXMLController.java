@@ -385,7 +385,8 @@ public class sfncFXMLController implements Initializable {
         creature.getChosenAbilities().stream().forEach((a) -> {
             chosenAbilitiesDisplay.add(a.getId());
         });
-        creatureAbilitiesChosen.setItems(FXCollections.observableArrayList(chosenAbilitiesDisplay));
+        creatureAbilitiesChosen.setItems(FXCollections.observableArrayList(
+                chosenAbilitiesDisplay));
 
         // needs to handle ability lists, etc.
 
@@ -790,6 +791,7 @@ public class sfncFXMLController implements Initializable {
                 addSenseToAbilitySet("darkvision",60);
                 // ysoki race gets cheek pouches, moxie, Engineering and Stealth as master skills, Survival as good skill
             }
+            abilitySet.addAll(creature.getChosenAbilities());
         }
     }
 
@@ -1198,6 +1200,16 @@ public class sfncFXMLController implements Initializable {
         java.util.Collections.sort(availableAbilitiesDisplay);
         creatureAbilityInput.setItems(FXCollections.observableArrayList(
                 availableAbilitiesDisplay));
+        creatureAbilityInput.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        creatureAbilityInput.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<String>() {
+            @Override
+            public void onChanged(Change<? extends String> c) {
+                creature.setChosenAbilities(creatureAbilityInput.getSelectionModel().getSelectedItems());
+                updateStatBlock();
+                updateWindowTitle();
+                setAbilityControls();
+            }
+        });
         
         // step 7 controls
         
