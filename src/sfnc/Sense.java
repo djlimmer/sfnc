@@ -8,35 +8,28 @@ package sfnc;
 import java.util.HashSet;
 import java.util.Set;
 
-
 public class Sense extends Ability {
-    Integer range;
+
+    public static Set<String> listOfSenses = new HashSet<>();
     
     Sense() {
         this.id = "";
         this.location = Location.SENSES;
+        this.outputFormat = "~n~ ~r~ ft.";
         this.range = 0;
     }
     
+    Sense(String n) {
+        this.id = n;
+        this.location = Location.SENSES;
+        this.outputFormat = "~n~";
+        this.range = 0;
+    }
+
     Sense(String n, Integer r) {
         this.id = n;
-        this.range = r;
         this.location = Location.SENSES;
-    }
-    
-    public Integer getRange() {
-        return range;
-    }
-    
-    public void setRange(Integer r) {
+        this.outputFormat = "~n~ ~r~ ft.";
         this.range = r;
-    }
-    
-    @Override
-    public String toString() {
-        if (range==0)
-            return id;
-        else
-            return id + " " + range.toString() + " ft.";
     }
 }

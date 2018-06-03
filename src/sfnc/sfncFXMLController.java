@@ -393,7 +393,7 @@ public class sfncFXMLController implements Initializable {
     }
     
     private void addSenseToAbilitySet(String senseName,Integer range) {
-        Optional<Ability> optionalSense = setOfAbilities.stream()
+        Optional<Ability> optionalSense = abilitySet.stream()
                 .filter((Ability a) -> a.getId().equals(senseName))
                 .findAny();
         if (!optionalSense.isPresent())
@@ -405,9 +405,17 @@ public class sfncFXMLController implements Initializable {
                     ((Sense) sense).range = range;
         }
     }
+
+    private void addSenseToAbilitySet(String senseName) {
+        Optional<Ability> optionalSense = abilitySet.stream()
+                .filter((Ability a) -> a.getId().equals(senseName))
+                .findAny();
+        if (!optionalSense.isPresent())
+            abilitySet.add(new Sense(senseName));
+    }
     
     private void addImmunityToAbilitySet(String name) {
-        Optional<Ability> optionalImmunity = setOfAbilities.stream()
+        Optional<Ability> optionalImmunity = abilitySet.stream()
                 .filter((Ability a) -> a.getId().equals(name))
                 .findAny();
         if (!optionalImmunity.isPresent())
@@ -415,7 +423,7 @@ public class sfncFXMLController implements Initializable {
     }
     
     private void addResistanceToAbilitySet(String resistanceName,Integer value) {
-        Optional<Ability> optionalResistance = setOfAbilities.stream()
+        Optional<Ability> optionalResistance = abilitySet.stream()
                 .filter((Ability a) -> a.getId().equals(resistanceName))
                 .findAny();
         if (!optionalResistance.isPresent())
@@ -443,7 +451,7 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Animal":
-                    addSenseToAbilitySet("low-light vision",0);
+                    addSenseToAbilitySet("low-light vision");
                     if (useTypeAdjustments) {
                         array.fort += 2;
                         array.ref += 2;
@@ -451,7 +459,7 @@ public class sfncFXMLController implements Initializable {
                     break;
                 case "Construct":
                     addSenseToAbilitySet("darkvision",60);
-                    addSenseToAbilitySet("low-light vision",0);
+                    addSenseToAbilitySet("low-light vision");
                     addImmunityToAbilitySet("construct immunities");
                     abilitySet.add(Ability.getAbility("noConScore"));
                     if (useTypeAdjustments) {
@@ -464,7 +472,7 @@ public class sfncFXMLController implements Initializable {
                     break;
                 case "Dragon":
                     addSenseToAbilitySet("darkvision",60);
-                    addSenseToAbilitySet("low-light vision",0);
+                    addSenseToAbilitySet("low-light vision");
                     addImmunityToAbilitySet("paralysis");
                     addImmunityToAbilitySet("sleep");
                     if (useTypeAdjustments) {
@@ -476,7 +484,7 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Fey":
-                    addSenseToAbilitySet("low-light vision",0);
+                    addSenseToAbilitySet("low-light vision");
                     if (useTypeAdjustments) {
                         array.fort += 2;
                         array.ref += 2;
@@ -495,7 +503,7 @@ public class sfncFXMLController implements Initializable {
                     break;
                 case "Magical Beast":
                     addSenseToAbilitySet("darkvision",60);
-                    addSenseToAbilitySet("low-light vision",0);
+                    addSenseToAbilitySet("low-light vision");
                     if (useTypeAdjustments) {
                         array.fort += 2;
                         array.ref += 2;
@@ -514,7 +522,7 @@ public class sfncFXMLController implements Initializable {
                     break;
                 case "Ooze":
                     addSenseToAbilitySet("blindsight (unspecified)",60);
-                    addSenseToAbilitySet("sightless",0);
+                    addSenseToAbilitySet("sightless");
                     abilitySet.add(Ability.getAbility("mindless"));
                     addImmunityToAbilitySet("ooze immunities");
                     if (useTypeAdjustments) {
@@ -537,7 +545,7 @@ public class sfncFXMLController implements Initializable {
                     }
                     break;
                 case "Plant":
-                    addSenseToAbilitySet("low-light vision",0);
+                    addSenseToAbilitySet("low-light vision");
                     addImmunityToAbilitySet("plant immunities");
                     if (useTypeAdjustments) {
                             array.fort += 2;
@@ -573,7 +581,7 @@ public class sfncFXMLController implements Initializable {
                 abilitySet.add(Ability.getAbility("bonus to recall knowledge"));
             }
             if (subtypes.contains("agathion")) {
-                addSenseToAbilitySet("low-light vision",0);
+                addSenseToAbilitySet("low-light vision");
                 abilitySet.add(Ability.getAbility("+4 vs. poison"));
                 addImmunityToAbilitySet("petrification");
                 addImmunityToAbilitySet("electricity");
@@ -593,7 +601,7 @@ public class sfncFXMLController implements Initializable {
             }
             if (subtypes.contains("angel")) {
                 addSenseToAbilitySet("darkvision",60);
-                addSenseToAbilitySet("low-light vision",0);
+                addSenseToAbilitySet("low-light vision");
                 abilitySet.add(Ability.getAbility("protective aura"));
                 abilitySet.add(Ability.getAbility("+4 vs. poison"));
                 addImmunityToAbilitySet("acid");
@@ -611,7 +619,7 @@ public class sfncFXMLController implements Initializable {
             }
             if (subtypes.contains("archon")) {
                 addSenseToAbilitySet("darkvision",60);
-                addSenseToAbilitySet("low-light vision",0);
+                addSenseToAbilitySet("low-light vision");
                 abilitySet.add(Ability.getAbility("aura of menace"));
                 abilitySet.add(Ability.getAbility("+4 vs. poison"));
                 addImmunityToAbilitySet("electricity");
@@ -621,7 +629,7 @@ public class sfncFXMLController implements Initializable {
             }
             if (subtypes.contains("azata")) {
                 addSenseToAbilitySet("darkvision",60);
-                addSenseToAbilitySet("low-light vision",0);
+                addSenseToAbilitySet("low-light vision");
                 addImmunityToAbilitySet("electricity");
                 addImmunityToAbilitySet("petrification");
                 addResistanceToAbilitySet("cold",10);
@@ -653,7 +661,7 @@ public class sfncFXMLController implements Initializable {
                 abilitySet.add(Ability.getAbility("telepathy"));
             }
             if (subtypes.contains("devil")) {
-                addSenseToAbilitySet("see in darkness",0);
+                addSenseToAbilitySet("see in darkness");
                 addImmunityToAbilitySet("fire");
                 addImmunityToAbilitySet("poison");
                 addResistanceToAbilitySet("acid",10);
@@ -684,11 +692,11 @@ public class sfncFXMLController implements Initializable {
                 abilitySet.add(Ability.getAbility("vulnerable to cold"));
             }
             if (subtypes.contains("giant")) {
-                addSenseToAbilitySet("low-light vision",0);
+                addSenseToAbilitySet("low-light vision");
                 // many gain Intimidate and Perception as master skills
             }
             if (subtypes.contains("gnome")) {
-                addSenseToAbilitySet("low-light vision",0);
+                addSenseToAbilitySet("low-light vision");
                 // gnome race gets eternal hope, gnome magic, Culture as master skill
             }
             if (subtypes.contains("goblinoid")) {
@@ -714,7 +722,7 @@ public class sfncFXMLController implements Initializable {
             }
             if (subtypes.contains("inevitable")) {
                 addSenseToAbilitySet("darkvision",60);
-                addSenseToAbilitySet("low-light vision",0);
+                addSenseToAbilitySet("low-light vision");
                 abilitySet.add(Ability.getAbility("constructed"));
                 abilitySet.add(Ability.getAbility("regeneration (suppressed by chaotic-aligned attacks)"));
                 abilitySet.add(Ability.getAbility("truespeech"));
@@ -726,7 +734,7 @@ public class sfncFXMLController implements Initializable {
                 // lashunta race gets limited telepathy, SLAs: 1/day detect thoughs, at will daze, psychokinetic hand
             }
             if (subtypes.contains("maraquoi")) {
-                addSenseToAbilitySet("low-light vision",0);
+                addSenseToAbilitySet("low-light vision");
                 // maraquoi race gets blindsense (sound) 30 ft., climb 20 ft., prehensile tail, Survival as master skill
             }
             if (subtypes.contains("orc")) {
@@ -747,15 +755,15 @@ public class sfncFXMLController implements Initializable {
                 abilitySet.add(Ability.getAbility("grab"));
             }
             if (subtypes.contains("reptoid")) {
-                addSenseToAbilitySet("low-light vision",0);
+                addSenseToAbilitySet("low-light vision");
                 // reptoid race gets change shape, cold-blooded, natural weapons
             }
             if (subtypes.contains("ryphorian")) {
-                addSenseToAbilitySet("low-light vision",0);
+                addSenseToAbilitySet("low-light vision");
                 // ryphorian race gets trimorphic, additional special ability, Perception as master skill
             }
             if (subtypes.contains("sarcesian")) {
-                addSenseToAbilitySet("low-light vision",0);
+                addSenseToAbilitySet("low-light vision");
                 // sarcesian race gets void flyer, additional good skill
             }
             if (subtypes.contains("shapechanger")) {
@@ -766,7 +774,7 @@ public class sfncFXMLController implements Initializable {
                 // shirren race gets communalism, limited telepathy, Culture and Diplomacy as good skills
             }
             if (subtypes.contains("skittermander")) {
-                addSenseToAbilitySet("low-light vision",0);
+                addSenseToAbilitySet("low-light vision");
                 // skittermander race gets grappler, hyper, six-armed
             }
             if (subtypes.contains("swarm")) {
@@ -776,11 +784,11 @@ public class sfncFXMLController implements Initializable {
                 abilitySet.add(Ability.getAbility("swarm attack"));
             }
             if (subtypes.contains("verthani")) {
-                addSenseToAbilitySet("low-light vision",0);
+                addSenseToAbilitySet("low-light vision");
                 // verthani race gets easily augmented, skin mimic, additional good skill
             }
             if (subtypes.contains("vesk")) {
-                addSenseToAbilitySet("low-light vision",0);
+                addSenseToAbilitySet("low-light vision");
                 // vesk race gets armor savant, fearless, natural weapons
             }
             if (subtypes.contains("water")) {
@@ -808,7 +816,6 @@ public class sfncFXMLController implements Initializable {
         
         String abilityString = String.join(", ",abilitiesAtLocation);
         // replace ~c~
-        //System.out.println("next line should handle ~c~");
         abilityString = abilityString.replace("~c~", Integer.toString(Integer.max(0, creature.getCR().getCRValue())));
         
         return abilityString;

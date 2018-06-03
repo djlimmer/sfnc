@@ -35,8 +35,11 @@ public class Dice {
     }
     
     Dice(Dice d) {
-        this.numberOfDice = d.numberOfDice;
-        this.sidesOfDie = d.sidesOfDie;
+        this();
+        if (d != null) {
+            this.numberOfDice = d.numberOfDice;
+            this.sidesOfDie = d.sidesOfDie;
+        }
     }
     
     @Override

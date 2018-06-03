@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public class Immunity extends Ability {
     
-    public static Set<String> listOfSenses = new HashSet<String>();
+    public static Set<String> listOfImmunities = new HashSet<>();
 
     Immunity() {
         id = "";
