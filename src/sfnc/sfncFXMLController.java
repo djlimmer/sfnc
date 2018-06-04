@@ -64,10 +64,10 @@ public class sfncFXMLController implements Initializable {
     String[] arrayNames = new String[NUMBER_OF_ARRAYS];
     Integer chosenArray;
     
-    List<String> generalSubtypes = new ArrayList<String>();
-    List<String> humanoidSubtypes = new ArrayList<String>();
-    List<String> outsiderSubtypes = new ArrayList<String>();
-        
+    List<String> generalSubtypes = new ArrayList<>();
+    List<String> humanoidSubtypes = new ArrayList<>();
+    List<String> outsiderSubtypes = new ArrayList<>();
+
     // the creature
     Creature creature = new Creature();
     
@@ -251,6 +251,135 @@ public class sfncFXMLController implements Initializable {
     @FXML   private ComboBox creatureCustomAbilityLocationInput = new ComboBox();
     @FXML   private Button creatureAddCustomAbilityButton = new Button();
 
+    // Step 7 controls
+    @FXML   private Label creatureMasterSkillsAvailable = new Label();
+    @FXML   private Label creatureMasterSkillsTaken = new Label();
+    @FXML   private Label creatureGoodSkillsAvailable = new Label();
+    @FXML   private Label creatureGoodSkillsTaken = new Label();
+    private ToggleGroup creatureAcrobaticsGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureAcrobaticsMaster = new RadioButton();
+    @FXML   private RadioButton creatureAcrobaticsGood = new RadioButton();
+    @FXML   private RadioButton creatureAcrobaticsNone = new RadioButton();
+    @FXML   private RadioButton creatureAcrobaticsCustom = new RadioButton();
+    @FXML   private TextField creatureAcrobaticsCustomValue = new TextField();
+    private ToggleGroup creatureAthleticsGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureAthleticsMaster = new RadioButton();
+    @FXML   private RadioButton creatureAthleticsGood = new RadioButton();
+    @FXML   private RadioButton creatureAthleticsNone = new RadioButton();
+    @FXML   private RadioButton creatureAthleticsCustom = new RadioButton();
+    @FXML   private TextField creatureAthleticsCustomValue = new TextField();
+    private ToggleGroup creatureBluffGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureBluffMaster = new RadioButton();
+    @FXML   private RadioButton creatureBluffGood = new RadioButton();
+    @FXML   private RadioButton creatureBluffNone = new RadioButton();
+    @FXML   private RadioButton creatureBluffCustom = new RadioButton();
+    @FXML   private TextField creatureBluffCustomValue = new TextField();
+    private ToggleGroup creatureComputersGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureComputersMaster = new RadioButton();
+    @FXML   private RadioButton creatureComputersGood = new RadioButton();
+    @FXML   private RadioButton creatureComputersNone = new RadioButton();
+    @FXML   private RadioButton creatureComputersCustom = new RadioButton();
+    @FXML   private TextField creatureComputersCustomValue = new TextField();
+    private ToggleGroup creatureCultureGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureCultureMaster = new RadioButton();
+    @FXML   private RadioButton creatureCultureGood = new RadioButton();
+    @FXML   private RadioButton creatureCultureNone = new RadioButton();
+    @FXML   private RadioButton creatureCultureCustom = new RadioButton();
+    @FXML   private TextField creatureCultureCustomValue = new TextField();
+    private ToggleGroup creatureDiplomacyGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureDiplomacyMaster = new RadioButton();
+    @FXML   private RadioButton creatureDiplomacyGood = new RadioButton();
+    @FXML   private RadioButton creatureDiplomacyNone = new RadioButton();
+    @FXML   private RadioButton creatureDiplomacyCustom = new RadioButton();
+    @FXML   private TextField creatureDiplomacyCustomValue = new TextField();
+    private ToggleGroup creatureDisguiseGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureDisguiseMaster = new RadioButton();
+    @FXML   private RadioButton creatureDisguiseGood = new RadioButton();
+    @FXML   private RadioButton creatureDisguiseNone = new RadioButton();
+    @FXML   private RadioButton creatureDisguiseCustom = new RadioButton();
+    @FXML   private TextField creatureDisguiseCustomValue = new TextField();
+    private ToggleGroup creatureEngineeringGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureEngineeringMaster = new RadioButton();
+    @FXML   private RadioButton creatureEngineeringGood = new RadioButton();
+    @FXML   private RadioButton creatureEngineeringNone = new RadioButton();
+    @FXML   private RadioButton creatureEngineeringCustom = new RadioButton();
+    @FXML   private TextField creatureEngineeringCustomValue = new TextField();
+    private ToggleGroup creatureIntimidateGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureIntimidateMaster = new RadioButton();
+    @FXML   private RadioButton creatureIntimidateGood = new RadioButton();
+    @FXML   private RadioButton creatureIntimidateNone = new RadioButton();
+    @FXML   private RadioButton creatureIntimidateCustom = new RadioButton();
+    @FXML   private TextField creatureIntimidateCustomValue = new TextField();
+    private ToggleGroup creatureLifeScienceGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureLifeScienceMaster = new RadioButton();
+    @FXML   private RadioButton creatureLifeScienceGood = new RadioButton();
+    @FXML   private RadioButton creatureLifeScienceNone = new RadioButton();
+    @FXML   private RadioButton creatureLifeScienceCustom = new RadioButton();
+    @FXML   private TextField creatureLifeScienceCustomValue = new TextField();
+    private ToggleGroup creatureMedicineGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureMedicineMaster = new RadioButton();
+    @FXML   private RadioButton creatureMedicineGood = new RadioButton();
+    @FXML   private RadioButton creatureMedicineNone = new RadioButton();
+    @FXML   private RadioButton creatureMedicineCustom = new RadioButton();
+    @FXML   private TextField creatureMedicineCustomValue = new TextField();
+    private ToggleGroup creatureMysticismGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureMysticismMaster = new RadioButton();
+    @FXML   private RadioButton creatureMysticismGood = new RadioButton();
+    @FXML   private RadioButton creatureMysticismNone = new RadioButton();
+    @FXML   private RadioButton creatureMysticismCustom = new RadioButton();
+    @FXML   private TextField creatureMysticismCustomValue = new TextField();
+    private ToggleGroup creaturePerceptionGroup = new ToggleGroup();
+    @FXML   private RadioButton creaturePerceptionMaster = new RadioButton();
+    @FXML   private RadioButton creaturePerceptionGood = new RadioButton();
+    @FXML   private RadioButton creaturePerceptionNone = new RadioButton();
+    @FXML   private RadioButton creaturePerceptionCustom = new RadioButton();
+    @FXML   private TextField creaturePerceptionCustomValue = new TextField();
+    private ToggleGroup creaturePhysicalScienceGroup = new ToggleGroup();
+    @FXML   private RadioButton creaturePhysicalScienceMaster = new RadioButton();
+    @FXML   private RadioButton creaturePhysicalScienceGood = new RadioButton();
+    @FXML   private RadioButton creaturePhysicalScienceNone = new RadioButton();
+    @FXML   private RadioButton creaturePhysicalScienceCustom = new RadioButton();
+    @FXML   private TextField creaturePhysicalScienceCustomValue = new TextField();
+    private ToggleGroup creaturePilotingGroup = new ToggleGroup();
+    @FXML   private RadioButton creaturePilotingMaster = new RadioButton();
+    @FXML   private RadioButton creaturePilotingGood = new RadioButton();
+    @FXML   private RadioButton creaturePilotingNone = new RadioButton();
+    @FXML   private RadioButton creaturePilotingCustom = new RadioButton();
+    @FXML   private TextField creaturePilotingCustomValue = new TextField();
+    private ToggleGroup creatureProfessionGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureProfessionMaster = new RadioButton();
+    @FXML   private RadioButton creatureProfessionGood = new RadioButton();
+    @FXML   private RadioButton creatureProfessionNone = new RadioButton();
+    @FXML   private RadioButton creatureProfessionCustom = new RadioButton();
+    @FXML   private TextField creatureProfessionCustomValue = new TextField();
+    private ToggleGroup creatureSenseMotiveGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureSenseMotiveMaster = new RadioButton();
+    @FXML   private RadioButton creatureSenseMotiveGood = new RadioButton();
+    @FXML   private RadioButton creatureSenseMotiveNone = new RadioButton();
+    @FXML   private RadioButton creatureSenseMotiveCustom = new RadioButton();
+    @FXML   private TextField creatureSenseMotiveCustomValue = new TextField();
+    private ToggleGroup creatureSleightOfHandGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureSleightOfHandMaster = new RadioButton();
+    @FXML   private RadioButton creatureSleightOfHandGood = new RadioButton();
+    @FXML   private RadioButton creatureSleightOfHandNone = new RadioButton();
+    @FXML   private RadioButton creatureSleightOfHandCustom = new RadioButton();
+    @FXML   private TextField creatureSleightOfHandCustomValue = new TextField();
+    private ToggleGroup creatureStealthGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureStealthMaster = new RadioButton();
+    @FXML   private RadioButton creatureStealthGood = new RadioButton();
+    @FXML   private RadioButton creatureStealthNone = new RadioButton();
+    @FXML   private RadioButton creatureStealthCustom = new RadioButton();
+    @FXML   private TextField creatureStealthCustomValue = new TextField();
+    private ToggleGroup creatureSurvivalGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureSurvivalMaster = new RadioButton();
+    @FXML   private RadioButton creatureSurvivalGood = new RadioButton();
+    @FXML   private RadioButton creatureSurvivalNone = new RadioButton();
+    @FXML   private RadioButton creatureSurvivalCustom = new RadioButton();
+    @FXML   private TextField creatureSurvivalCustomValue = new TextField();
+
+    // Step 8 controls
+    
+    // Step 9 controls
     
     // stat block controls
     @FXML   private Label creatureNameDisplay = new Label();
@@ -303,7 +432,8 @@ public class sfncFXMLController implements Initializable {
     @FXML   private TextFlow creatureStatisticsBlock = new TextFlow();
     // ability score modifiers
     // feats
-    // skills
+    private Label creatureSkillsLabel = new Label("Skills ");
+    private Label creatureSkillsDisplay = new Label();
     private Label creatureLanguagesLabel = new Label("Languages ");
     private Label creatureLanguagesDisplay = new Label();
     private Label creatureOtherAbilitiesLabel = new Label("Other Abilities ");
@@ -328,6 +458,7 @@ public class sfncFXMLController implements Initializable {
         }
         setSubtypeWarning();
         setAbilityControls();
+        setSkillControls();
     }
     
     private void showAnimalTypeOptions() {
@@ -390,6 +521,66 @@ public class sfncFXMLController implements Initializable {
 
         // needs to handle ability lists, etc.
 
+    }
+
+    private Integer countMasterSkills() {
+        Integer masterSkillCount = 0;
+        
+        masterSkillCount += (creature.acrobatics.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        masterSkillCount += (creature.athletics.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        masterSkillCount += (creature.bluff.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        masterSkillCount += (creature.computers.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        masterSkillCount += (creature.culture.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        masterSkillCount += (creature.diplomacy.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        masterSkillCount += (creature.disguise.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        masterSkillCount += (creature.engineering.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        masterSkillCount += (creature.intimidate.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        masterSkillCount += (creature.lifeScience.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        masterSkillCount += (creature.medicine.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        masterSkillCount += (creature.mysticism.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        masterSkillCount += (creature.perception.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        masterSkillCount += (creature.physicalScience.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        masterSkillCount += (creature.piloting.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        masterSkillCount += (creature.profession.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        masterSkillCount += (creature.senseMotive.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        masterSkillCount += (creature.sleightOfHand.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        masterSkillCount += (creature.stealth.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        masterSkillCount += (creature.survival.getSkillChoice() == SkillChoice.MASTER) ? 1 : 0;
+        
+        return masterSkillCount;
+    }
+    
+    private Integer countGoodSkills() {
+        Integer goodSkillCount = 0;
+        
+        goodSkillCount += (creature.acrobatics.getSkillChoice() == SkillChoice.GOOD) ? 1 : 0;
+        goodSkillCount += (creature.athletics.getSkillChoice() == SkillChoice.GOOD) ? 1 : 0;
+        goodSkillCount += (creature.bluff.getSkillChoice() == SkillChoice.GOOD) ? 1 : 0;
+        goodSkillCount += (creature.computers.getSkillChoice() == SkillChoice.GOOD) ? 1 : 0;
+        goodSkillCount += (creature.culture.getSkillChoice() == SkillChoice.GOOD) ? 1 : 0;
+        goodSkillCount += (creature.diplomacy.getSkillChoice() == SkillChoice.GOOD) ? 1 : 0;
+        goodSkillCount += (creature.disguise.getSkillChoice() == SkillChoice.GOOD) ? 1 : 0;
+        goodSkillCount += (creature.engineering.getSkillChoice() == SkillChoice.GOOD) ? 1 : 0;
+        goodSkillCount += (creature.intimidate.getSkillChoice() == SkillChoice.GOOD) ? 1 : 0;
+        goodSkillCount += (creature.lifeScience.getSkillChoice() == SkillChoice.GOOD) ? 1 : 0;
+        goodSkillCount += (creature.medicine.getSkillChoice() == SkillChoice.GOOD) ? 1 : 0;
+        goodSkillCount += (creature.mysticism.getSkillChoice() == SkillChoice.GOOD) ? 1 : 0;
+        goodSkillCount += (creature.physicalScience.getSkillChoice() == SkillChoice.GOOD) ? 1 : 0;
+        goodSkillCount += (creature.piloting.getSkillChoice() == SkillChoice.GOOD) ? 1 : 0;
+        goodSkillCount += (creature.profession.getSkillChoice() == SkillChoice.GOOD) ? 1 : 0;
+        goodSkillCount += (creature.senseMotive.getSkillChoice() == SkillChoice.GOOD) ? 1 : 0;
+        goodSkillCount += (creature.sleightOfHand.getSkillChoice() == SkillChoice.GOOD) ? 1 : 0;
+        goodSkillCount += (creature.stealth.getSkillChoice() == SkillChoice.GOOD) ? 1 : 0;
+        goodSkillCount += (creature.survival.getSkillChoice() == SkillChoice.GOOD) ? 1 : 0;
+        
+        return goodSkillCount;
+    }
+    
+    private void setSkillControls() {
+        creatureMasterSkillsAvailable.setText(Integer.toString(array.masterSkillNumber));
+        creatureGoodSkillsAvailable.setText(Integer.toString(array.goodSkillNumber));
+        creatureMasterSkillsTaken.setText(Integer.toString(countMasterSkills()));
+        creatureGoodSkillsTaken.setText(Integer.toString(countGoodSkills()));
     }
     
     private void addSenseToAbilitySet(String senseName,Integer range) {
@@ -821,6 +1012,152 @@ public class sfncFXMLController implements Initializable {
         return abilityString;
     }
     
+    public Boolean isSkillVisible(Skill s) {
+        return(s.getSkillChoice() != SkillChoice.NONE);
+    }
+    
+    private Integer getSkillValue(Skill s) {
+        if(array == null)
+            return 0;
+        if(s.skillChoice == SkillChoice.MASTER)
+            return array.masterSkillBonus;
+        if (s.skillChoice == SkillChoice.GOOD)
+            return array.goodSkillBonus;
+        if (s.skillChoice == SkillChoice.CUSTOM)
+            return s.getCustomValue();
+        
+        return 0;
+    }
+    
+    public String makeSkillBonusString(Skill s) {
+        return bonusString(getSkillValue(s));
+    }
+    
+    public Boolean hasSkills() {
+        return ((isSkillVisible(creature.acrobatics))
+                || (isSkillVisible(creature.athletics))
+                || (isSkillVisible(creature.bluff))
+                || (isSkillVisible(creature.computers))
+                || (isSkillVisible(creature.culture))
+                || (isSkillVisible(creature.diplomacy))
+                || (isSkillVisible(creature.disguise))
+                || (isSkillVisible(creature.engineering))
+                || (isSkillVisible(creature.intimidate))
+                || (isSkillVisible(creature.lifeScience))
+                || (isSkillVisible(creature.medicine))
+                || (isSkillVisible(creature.mysticism))
+                || (isSkillVisible(creature.physicalScience))
+                || (isSkillVisible(creature.piloting))
+                || (isSkillVisible(creature.profession))
+                || (isSkillVisible(creature.senseMotive))
+                || (isSkillVisible(creature.sleightOfHand))
+                || (isSkillVisible(creature.stealth))
+                || (isSkillVisible(creature.survival))
+                );
+    }
+    
+    public String makeSkillsString() {
+        String skillsString = "";
+        Boolean addComma = false;
+        
+        if (isSkillVisible(creature.acrobatics)) {
+            skillsString += "Acrobatics " + makeSkillBonusString(creature.acrobatics);
+            addComma = true;
+        }
+        if (isSkillVisible(creature.athletics)) {
+            if (addComma) skillsString += ", ";
+            skillsString += "Athletics " + makeSkillBonusString(creature.athletics);
+            addComma = true;
+        }
+        if (isSkillVisible(creature.bluff)) {
+            if (addComma) skillsString += ", ";
+            skillsString += "Bluff " + makeSkillBonusString(creature.bluff);
+            addComma = true;
+        }
+        if (isSkillVisible(creature.computers)) {
+            if (addComma) skillsString += ", ";
+            skillsString += "Computers " + makeSkillBonusString(creature.computers);
+            addComma = true;
+        }
+        if (isSkillVisible(creature.culture)) {
+            if (addComma) skillsString += ", ";
+            skillsString += "Culture " + makeSkillBonusString(creature.culture);
+            addComma = true;
+        }
+        if (isSkillVisible(creature.diplomacy)) {
+            if (addComma) skillsString += ", ";
+            skillsString += "Diplomacy " + makeSkillBonusString(creature.diplomacy);
+            addComma = true;
+        }
+        if (isSkillVisible(creature.disguise)) {
+            if (addComma) skillsString += ", ";
+            skillsString += "Disguise " + makeSkillBonusString(creature.disguise);
+            addComma = true;
+        }
+        if (isSkillVisible(creature.engineering)) {
+            if (addComma) skillsString += ", ";
+            skillsString += "Engineering " + makeSkillBonusString(creature.engineering);
+            addComma = true;
+        }
+        if (isSkillVisible(creature.intimidate)) {
+            if (addComma) skillsString += ", ";
+            skillsString += "Intimidate " + makeSkillBonusString(creature.intimidate);
+            addComma = true;
+        }
+        if (isSkillVisible(creature.lifeScience)) {
+            if (addComma) skillsString += ", ";
+            skillsString += "Life Science " + makeSkillBonusString(creature.lifeScience);
+            addComma = true;
+        }
+        if (isSkillVisible(creature.medicine)) {
+            if (addComma) skillsString += ", ";
+            skillsString += "Medicine " + makeSkillBonusString(creature.medicine);
+            addComma = true;
+        }
+        if (isSkillVisible(creature.mysticism)) {
+            if (addComma) skillsString += ", ";
+            skillsString += "Mysticism " + makeSkillBonusString(creature.mysticism);
+            addComma = true;
+        }
+        if (isSkillVisible(creature.physicalScience)) {
+            if (addComma) skillsString += ", ";
+            skillsString += "Physical Science " + makeSkillBonusString(creature.physicalScience);
+            addComma = true;
+        }
+        if (isSkillVisible(creature.piloting)) {
+            if (addComma) skillsString += ", ";
+            skillsString += "Piloting " + makeSkillBonusString(creature.piloting);
+            addComma = true;
+        }
+        if (isSkillVisible(creature.profession)) {
+            if (addComma) skillsString += ", ";
+            skillsString += "Profession " + makeSkillBonusString(creature.profession);
+            addComma = true;
+        }
+        if (isSkillVisible(creature.senseMotive)) {
+            if (addComma) skillsString += ", ";
+            skillsString += "Sense Motive " + makeSkillBonusString(creature.senseMotive);
+            addComma = true;
+        }
+        if (isSkillVisible(creature.sleightOfHand)) {
+            if (addComma) skillsString += ", ";
+            skillsString += "Sleight of Hand " + makeSkillBonusString(creature.sleightOfHand);
+            addComma = true;
+        }
+        if (isSkillVisible(creature.stealth)) {
+            if (addComma) skillsString += ", ";
+            skillsString += "Stealth " + makeSkillBonusString(creature.stealth);
+            addComma = true;
+        }
+        if (isSkillVisible(creature.survival)) {
+            if (addComma) skillsString += ", ";
+            skillsString += "Survival " + makeSkillBonusString(creature.survival);
+            addComma = true;
+        }
+        
+        return skillsString;
+    }
+    
     public void updateStatBlock() {
         Boolean addSemicolon = false;
         
@@ -856,7 +1193,7 @@ public class sfncFXMLController implements Initializable {
             creatureSensesBlock.getChildren().addAll(creatureSensesLabel,creatureSensesDisplay);
             creatureSensesBlock.getChildren().add(new Text("; "));
         }
-        creaturePerceptionDisplay.setText(bonusString((array == null) ? 0 : array.goodSkillBonus));
+        creaturePerceptionDisplay.setText(makeSkillBonusString(creature.perception));
         creatureSensesBlock.getChildren().addAll(creaturePerceptionLabel,creaturePerceptionDisplay);
         if (hasAbilitiesByLocation(Location.AURA)) {
             creatureSensesBlock.getChildren().add(new Text("\n"));
@@ -929,10 +1266,14 @@ public class sfncFXMLController implements Initializable {
         creatureStatisticsBlock.getChildren().clear();
         // ability score modifiers go here
         // feats go here
-        // skills go here
-        if (hasAbilitiesByLocation(Location.LANGUAGES)) {
+        if (hasSkills()) {
             // remove comment line after ability scores are in
             // creatureStatisticsBlock.getChildren().addAll(new Text("\n"));
+            creatureSkillsDisplay.setText(makeSkillsString());
+            creatureStatisticsBlock.getChildren().addAll(creatureSkillsLabel,creatureSkillsDisplay);
+        }
+        if (hasAbilitiesByLocation(Location.LANGUAGES)) {
+            creatureStatisticsBlock.getChildren().addAll(new Text("\n"));
             creatureLanguagesDisplay.setText(makeAbilityStringByLocation(Location.LANGUAGES));
             creatureStatisticsBlock.getChildren().addAll(creatureLanguagesLabel,creatureLanguagesDisplay);
         }
@@ -1030,6 +1371,7 @@ public class sfncFXMLController implements Initializable {
         creatureWeaknessesLabel.setStyle("-fx-font-weight: bold");
         creatureSpeedLabel.setStyle("-fx-font-weight: bold");
         creatureOffensiveAbilitiesLabel.setStyle("-fx-font-weight: bold");
+        creatureSkillsLabel.setStyle("-fx-font-weight: bold");
         creatureLanguagesLabel.setStyle("-fx-font-weight: bold");
         creatureOtherAbilitiesLabel.setStyle("-fx-font-weight: bold");
 
@@ -1077,6 +1419,8 @@ public class sfncFXMLController implements Initializable {
                     chosenArray = newValue.intValue();
                     updateStatBlock();
                     updateWindowTitle();
+                    setAbilityControls();
+                    setSkillControls();
                 }
             }
         );
@@ -1109,7 +1453,6 @@ public class sfncFXMLController implements Initializable {
                     updateStatBlock();
                     updateWindowTitle();
                     setSubtypeWarning();
-                    setAbilityControls();
                 }
             }
         );
@@ -1219,7 +1562,1066 @@ public class sfncFXMLController implements Initializable {
         });
         
         // step 7 controls
+        creatureAcrobaticsMaster.setToggleGroup(creatureAcrobaticsGroup);
+        creatureAcrobaticsGood.setToggleGroup(creatureAcrobaticsGroup);
+        creatureAcrobaticsNone.setToggleGroup(creatureAcrobaticsGroup);    
+        creatureAcrobaticsCustom.setToggleGroup(creatureAcrobaticsGroup);   
+        creatureAcrobaticsGroup.selectToggle(creatureAcrobaticsNone);
         
+        creatureAcrobaticsGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creatureAcrobaticsGroup.getSelectedToggle() != null) {
+                    if (creatureAcrobaticsMaster.isSelected())
+                        creature.acrobatics.setSkillChoice(SkillChoice.MASTER);
+                    else if (creatureAcrobaticsGood.isSelected())
+                        creature.acrobatics.setSkillChoice(SkillChoice.GOOD);
+                    else if (creatureAcrobaticsNone.isSelected())
+                        creature.acrobatics.setSkillChoice(SkillChoice.NONE);
+                    else if (creatureAcrobaticsCustom.isSelected())
+                        creature.acrobatics.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.acrobatics.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creatureAcrobaticsCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.acrobatics.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    }
+                    else try {
+                        creature.acrobatics.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+
+        creatureAthleticsMaster.setToggleGroup(creatureAthleticsGroup);
+        creatureAthleticsGood.setToggleGroup(creatureAthleticsGroup);
+        creatureAthleticsNone.setToggleGroup(creatureAthleticsGroup);    
+        creatureAthleticsCustom.setToggleGroup(creatureAthleticsGroup);   
+        creatureAthleticsGroup.selectToggle(creatureAthleticsNone);
+        
+        creatureAthleticsGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creatureAthleticsGroup.getSelectedToggle() != null) {
+                    if (creatureAthleticsMaster.isSelected())
+                        creature.athletics.setSkillChoice(SkillChoice.MASTER);
+                    else if (creatureAthleticsGood.isSelected())
+                        creature.athletics.setSkillChoice(SkillChoice.GOOD);
+                    else if (creatureAthleticsNone.isSelected())
+                        creature.athletics.setSkillChoice(SkillChoice.NONE);
+                    else if (creatureAthleticsCustom.isSelected())
+                        creature.athletics.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.athletics.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creatureAthleticsCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.athletics.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    }
+                    else try {
+                        creature.athletics.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+        
+        creatureBluffMaster.setToggleGroup(creatureBluffGroup);
+        creatureBluffGood.setToggleGroup(creatureBluffGroup);
+        creatureBluffNone.setToggleGroup(creatureBluffGroup);    
+        creatureBluffCustom.setToggleGroup(creatureBluffGroup);   
+        creatureBluffGroup.selectToggle(creatureBluffNone);
+        
+        creatureBluffGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creatureBluffGroup.getSelectedToggle() != null) {
+                    if (creatureBluffMaster.isSelected())
+                        creature.bluff.setSkillChoice(SkillChoice.MASTER);
+                    else if (creatureBluffGood.isSelected())
+                        creature.bluff.setSkillChoice(SkillChoice.GOOD);
+                    else if (creatureBluffNone.isSelected())
+                        creature.bluff.setSkillChoice(SkillChoice.NONE);
+                    else if (creatureBluffCustom.isSelected())
+                        creature.bluff.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.bluff.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creatureBluffCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.bluff.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+            }
+                    else try {
+                        creature.bluff.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+
+        creatureComputersMaster.setToggleGroup(creatureComputersGroup);
+        creatureComputersGood.setToggleGroup(creatureComputersGroup);
+        creatureComputersNone.setToggleGroup(creatureComputersGroup);    
+        creatureComputersCustom.setToggleGroup(creatureComputersGroup);   
+        creatureComputersGroup.selectToggle(creatureComputersNone);
+        
+        creatureComputersGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creatureComputersGroup.getSelectedToggle() != null) {
+                    if (creatureComputersMaster.isSelected())
+                        creature.computers.setSkillChoice(SkillChoice.MASTER);
+                    else if (creatureComputersGood.isSelected())
+                        creature.computers.setSkillChoice(SkillChoice.GOOD);
+                    else if (creatureComputersNone.isSelected())
+                        creature.computers.setSkillChoice(SkillChoice.NONE);
+                    else if (creatureComputersCustom.isSelected())
+                        creature.computers.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.computers.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creatureComputersCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.computers.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    }
+                    else try {
+                        creature.computers.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+
+        creatureCultureMaster.setToggleGroup(creatureCultureGroup);
+        creatureCultureGood.setToggleGroup(creatureCultureGroup);
+        creatureCultureNone.setToggleGroup(creatureCultureGroup);    
+        creatureCultureCustom.setToggleGroup(creatureCultureGroup);   
+        creatureCultureGroup.selectToggle(creatureCultureNone);
+        
+        creatureCultureGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creatureCultureGroup.getSelectedToggle() != null) {
+                    if (creatureCultureMaster.isSelected())
+                        creature.culture.setSkillChoice(SkillChoice.MASTER);
+                    else if (creatureCultureGood.isSelected())
+                        creature.culture.setSkillChoice(SkillChoice.GOOD);
+                    else if (creatureCultureNone.isSelected())
+                        creature.culture.setSkillChoice(SkillChoice.NONE);
+                    else if (creatureCultureCustom.isSelected())
+                        creature.culture.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.culture.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creatureCultureCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.culture.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    }
+                    else try {
+                        creature.culture.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+
+        creatureDiplomacyMaster.setToggleGroup(creatureDiplomacyGroup);
+        creatureDiplomacyGood.setToggleGroup(creatureDiplomacyGroup);
+        creatureDiplomacyNone.setToggleGroup(creatureDiplomacyGroup);    
+        creatureDiplomacyCustom.setToggleGroup(creatureDiplomacyGroup);   
+        creatureDiplomacyGroup.selectToggle(creatureDiplomacyNone);
+        
+        creatureDiplomacyGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creatureDiplomacyGroup.getSelectedToggle() != null) {
+                    if (creatureDiplomacyMaster.isSelected())
+                        creature.diplomacy.setSkillChoice(SkillChoice.MASTER);
+                    else if (creatureDiplomacyGood.isSelected())
+                        creature.diplomacy.setSkillChoice(SkillChoice.GOOD);
+                    else if (creatureDiplomacyNone.isSelected())
+                        creature.diplomacy.setSkillChoice(SkillChoice.NONE);
+                    else if (creatureDiplomacyCustom.isSelected())
+                        creature.diplomacy.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.diplomacy.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creatureDiplomacyCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.diplomacy.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    }
+                    else try {
+                        creature.diplomacy.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+
+        creatureDisguiseMaster.setToggleGroup(creatureDisguiseGroup);
+        creatureDisguiseGood.setToggleGroup(creatureDisguiseGroup);
+        creatureDisguiseNone.setToggleGroup(creatureDisguiseGroup);    
+        creatureDisguiseCustom.setToggleGroup(creatureDisguiseGroup);   
+        creatureDisguiseGroup.selectToggle(creatureDisguiseNone);
+        
+        creatureDisguiseGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creatureDisguiseGroup.getSelectedToggle() != null) {
+                    if (creatureDisguiseMaster.isSelected())
+                        creature.disguise.setSkillChoice(SkillChoice.MASTER);
+                    else if (creatureDisguiseGood.isSelected())
+                        creature.disguise.setSkillChoice(SkillChoice.GOOD);
+                    else if (creatureDisguiseNone.isSelected())
+                        creature.disguise.setSkillChoice(SkillChoice.NONE);
+                    else if (creatureDisguiseCustom.isSelected())
+                        creature.disguise.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.disguise.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creatureDisguiseCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.disguise.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    }
+                    else try {
+                        creature.disguise.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+
+        creatureEngineeringMaster.setToggleGroup(creatureEngineeringGroup);
+        creatureEngineeringGood.setToggleGroup(creatureEngineeringGroup);
+        creatureEngineeringNone.setToggleGroup(creatureEngineeringGroup);    
+        creatureEngineeringCustom.setToggleGroup(creatureEngineeringGroup);   
+        creatureEngineeringGroup.selectToggle(creatureEngineeringNone);
+        
+        creatureEngineeringGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creatureEngineeringGroup.getSelectedToggle() != null) {
+                    if (creatureEngineeringMaster.isSelected())
+                        creature.engineering.setSkillChoice(SkillChoice.MASTER);
+                    else if (creatureEngineeringGood.isSelected())
+                        creature.engineering.setSkillChoice(SkillChoice.GOOD);
+                    else if (creatureEngineeringNone.isSelected())
+                        creature.engineering.setSkillChoice(SkillChoice.NONE);
+                    else if (creatureEngineeringCustom.isSelected())
+                        creature.engineering.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.engineering.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creatureEngineeringCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.engineering.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    }
+                    else try {
+                        creature.engineering.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+
+        creatureIntimidateMaster.setToggleGroup(creatureIntimidateGroup);
+        creatureIntimidateGood.setToggleGroup(creatureIntimidateGroup);
+        creatureIntimidateNone.setToggleGroup(creatureIntimidateGroup);    
+        creatureIntimidateCustom.setToggleGroup(creatureIntimidateGroup);   
+        creatureIntimidateGroup.selectToggle(creatureIntimidateNone);
+        
+        creatureIntimidateGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creatureIntimidateGroup.getSelectedToggle() != null) {
+                    if (creatureIntimidateMaster.isSelected())
+                        creature.intimidate.setSkillChoice(SkillChoice.MASTER);
+                    else if (creatureIntimidateGood.isSelected())
+                        creature.intimidate.setSkillChoice(SkillChoice.GOOD);
+                    else if (creatureIntimidateNone.isSelected())
+                        creature.intimidate.setSkillChoice(SkillChoice.NONE);
+                    else if (creatureIntimidateCustom.isSelected())
+                        creature.intimidate.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.intimidate.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creatureIntimidateCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.intimidate.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    }
+                    else try {
+                        creature.intimidate.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+
+        creatureLifeScienceMaster.setToggleGroup(creatureLifeScienceGroup);
+        creatureLifeScienceGood.setToggleGroup(creatureLifeScienceGroup);
+        creatureLifeScienceNone.setToggleGroup(creatureLifeScienceGroup);    
+        creatureLifeScienceCustom.setToggleGroup(creatureLifeScienceGroup);   
+        creatureLifeScienceGroup.selectToggle(creatureLifeScienceNone);
+        
+        creatureLifeScienceGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creatureLifeScienceGroup.getSelectedToggle() != null) {
+                    if (creatureLifeScienceMaster.isSelected())
+                        creature.lifeScience.setSkillChoice(SkillChoice.MASTER);
+                    else if (creatureLifeScienceGood.isSelected())
+                        creature.lifeScience.setSkillChoice(SkillChoice.GOOD);
+                    else if (creatureLifeScienceNone.isSelected())
+                        creature.lifeScience.setSkillChoice(SkillChoice.NONE);
+                    else if (creatureLifeScienceCustom.isSelected())
+                        creature.lifeScience.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.lifeScience.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creatureLifeScienceCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.lifeScience.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    }
+                    else try {
+                        creature.lifeScience.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+
+        creatureMedicineMaster.setToggleGroup(creatureMedicineGroup);
+        creatureMedicineGood.setToggleGroup(creatureMedicineGroup);
+        creatureMedicineNone.setToggleGroup(creatureMedicineGroup);    
+        creatureMedicineCustom.setToggleGroup(creatureMedicineGroup);   
+        creatureMedicineGroup.selectToggle(creatureMedicineNone);
+        
+        creatureMedicineGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creatureMedicineGroup.getSelectedToggle() != null) {
+                    if (creatureMedicineMaster.isSelected())
+                        creature.medicine.setSkillChoice(SkillChoice.MASTER);
+                    else if (creatureMedicineGood.isSelected())
+                        creature.medicine.setSkillChoice(SkillChoice.GOOD);
+                    else if (creatureMedicineNone.isSelected())
+                        creature.medicine.setSkillChoice(SkillChoice.NONE);
+                    else if (creatureMedicineCustom.isSelected())
+                        creature.medicine.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.medicine.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creatureMedicineCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.medicine.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    }
+                    else try {
+                        creature.medicine.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+
+        creatureMysticismMaster.setToggleGroup(creatureMysticismGroup);
+        creatureMysticismGood.setToggleGroup(creatureMysticismGroup);
+        creatureMysticismNone.setToggleGroup(creatureMysticismGroup);    
+        creatureMysticismCustom.setToggleGroup(creatureMysticismGroup);   
+        creatureMysticismGroup.selectToggle(creatureMysticismNone);
+        
+        creatureMysticismGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creatureMysticismGroup.getSelectedToggle() != null) {
+                    if (creatureMysticismMaster.isSelected())
+                        creature.mysticism.setSkillChoice(SkillChoice.MASTER);
+                    else if (creatureMysticismGood.isSelected())
+                        creature.mysticism.setSkillChoice(SkillChoice.GOOD);
+                    else if (creatureMysticismNone.isSelected())
+                        creature.mysticism.setSkillChoice(SkillChoice.NONE);
+                    else if (creatureMysticismCustom.isSelected())
+                        creature.mysticism.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.mysticism.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creatureMysticismCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.mysticism.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    }
+                    else try {
+                        creature.mysticism.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+
+        creaturePerceptionMaster.setToggleGroup(creaturePerceptionGroup);
+        creaturePerceptionGood.setToggleGroup(creaturePerceptionGroup);
+        creaturePerceptionNone.setToggleGroup(creaturePerceptionGroup);    
+        creaturePerceptionCustom.setToggleGroup(creaturePerceptionGroup);   
+        creaturePerceptionGroup.selectToggle(creaturePerceptionGood);
+        
+        creaturePerceptionGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creaturePerceptionGroup.getSelectedToggle() != null) {
+                    if (creaturePerceptionMaster.isSelected())
+                        creature.perception.setSkillChoice(SkillChoice.MASTER);
+                    else if (creaturePerceptionGood.isSelected())
+                        creature.perception.setSkillChoice(SkillChoice.GOOD);
+                    else if (creaturePerceptionNone.isSelected())
+                        creature.perception.setSkillChoice(SkillChoice.NONE);
+                    else if (creaturePerceptionCustom.isSelected())
+                        creature.perception.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.perception.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creaturePerceptionCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.perception.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    }
+                    else try {
+                        creature.perception.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+
+        creaturePhysicalScienceMaster.setToggleGroup(creaturePhysicalScienceGroup);
+        creaturePhysicalScienceGood.setToggleGroup(creaturePhysicalScienceGroup);
+        creaturePhysicalScienceNone.setToggleGroup(creaturePhysicalScienceGroup);    
+        creaturePhysicalScienceCustom.setToggleGroup(creaturePhysicalScienceGroup);   
+        creaturePhysicalScienceGroup.selectToggle(creaturePhysicalScienceNone);
+        
+        creaturePhysicalScienceGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creaturePhysicalScienceGroup.getSelectedToggle() != null) {
+                    if (creaturePhysicalScienceMaster.isSelected())
+                        creature.physicalScience.setSkillChoice(SkillChoice.MASTER);
+                    else if (creaturePhysicalScienceGood.isSelected())
+                        creature.physicalScience.setSkillChoice(SkillChoice.GOOD);
+                    else if (creaturePhysicalScienceNone.isSelected())
+                        creature.physicalScience.setSkillChoice(SkillChoice.NONE);
+                    else if (creaturePhysicalScienceCustom.isSelected())
+                        creature.physicalScience.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.physicalScience.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creaturePhysicalScienceCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.physicalScience.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    }
+                    else try {
+                        creature.physicalScience.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+
+        creaturePilotingMaster.setToggleGroup(creaturePilotingGroup);
+        creaturePilotingGood.setToggleGroup(creaturePilotingGroup);
+        creaturePilotingNone.setToggleGroup(creaturePilotingGroup);    
+        creaturePilotingCustom.setToggleGroup(creaturePilotingGroup);   
+        creaturePilotingGroup.selectToggle(creaturePilotingNone);
+        
+        creaturePilotingGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creaturePilotingGroup.getSelectedToggle() != null) {
+                    if (creaturePilotingMaster.isSelected())
+                        creature.piloting.setSkillChoice(SkillChoice.MASTER);
+                    else if (creaturePilotingGood.isSelected())
+                        creature.piloting.setSkillChoice(SkillChoice.GOOD);
+                    else if (creaturePilotingNone.isSelected())
+                        creature.piloting.setSkillChoice(SkillChoice.NONE);
+                    else if (creaturePilotingCustom.isSelected())
+                        creature.piloting.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.piloting.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creaturePilotingCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.piloting.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    }
+                    else try {
+                        creature.piloting.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+
+        creatureProfessionMaster.setToggleGroup(creatureProfessionGroup);
+        creatureProfessionGood.setToggleGroup(creatureProfessionGroup);
+        creatureProfessionNone.setToggleGroup(creatureProfessionGroup);    
+        creatureProfessionCustom.setToggleGroup(creatureProfessionGroup);   
+        creatureProfessionGroup.selectToggle(creatureProfessionNone);
+        
+        creatureProfessionGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creatureProfessionGroup.getSelectedToggle() != null) {
+                    if (creatureProfessionMaster.isSelected())
+                        creature.profession.setSkillChoice(SkillChoice.MASTER);
+                    else if (creatureProfessionGood.isSelected())
+                        creature.profession.setSkillChoice(SkillChoice.GOOD);
+                    else if (creatureProfessionNone.isSelected())
+                        creature.profession.setSkillChoice(SkillChoice.NONE);
+                    else if (creatureProfessionCustom.isSelected())
+                        creature.profession.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.profession.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creatureProfessionCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.profession.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    }
+                    else try {
+                        creature.profession.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+
+        creatureSenseMotiveMaster.setToggleGroup(creatureSenseMotiveGroup);
+        creatureSenseMotiveGood.setToggleGroup(creatureSenseMotiveGroup);
+        creatureSenseMotiveNone.setToggleGroup(creatureSenseMotiveGroup);    
+        creatureSenseMotiveCustom.setToggleGroup(creatureSenseMotiveGroup);   
+        creatureSenseMotiveGroup.selectToggle(creatureSenseMotiveNone);
+        
+        creatureSenseMotiveGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creatureSenseMotiveGroup.getSelectedToggle() != null) {
+                    if (creatureSenseMotiveMaster.isSelected())
+                        creature.senseMotive.setSkillChoice(SkillChoice.MASTER);
+                    else if (creatureSenseMotiveGood.isSelected())
+                        creature.senseMotive.setSkillChoice(SkillChoice.GOOD);
+                    else if (creatureSenseMotiveNone.isSelected())
+                        creature.senseMotive.setSkillChoice(SkillChoice.NONE);
+                    else if (creatureSenseMotiveCustom.isSelected())
+                        creature.senseMotive.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.senseMotive.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creatureSenseMotiveCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.senseMotive.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    }
+                    else try {
+                        creature.senseMotive.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+
+        creatureSleightOfHandMaster.setToggleGroup(creatureSleightOfHandGroup);
+        creatureSleightOfHandGood.setToggleGroup(creatureSleightOfHandGroup);
+        creatureSleightOfHandNone.setToggleGroup(creatureSleightOfHandGroup);    
+        creatureSleightOfHandCustom.setToggleGroup(creatureSleightOfHandGroup);   
+        creatureSleightOfHandGroup.selectToggle(creatureSleightOfHandNone);
+        
+        creatureSleightOfHandGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creatureSleightOfHandGroup.getSelectedToggle() != null) {
+                    if (creatureSleightOfHandMaster.isSelected())
+                        creature.sleightOfHand.setSkillChoice(SkillChoice.MASTER);
+                    else if (creatureSleightOfHandGood.isSelected())
+                        creature.sleightOfHand.setSkillChoice(SkillChoice.GOOD);
+                    else if (creatureSleightOfHandNone.isSelected())
+                        creature.sleightOfHand.setSkillChoice(SkillChoice.NONE);
+                    else if (creatureSleightOfHandCustom.isSelected())
+                        creature.sleightOfHand.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.sleightOfHand.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creatureSleightOfHandCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.sleightOfHand.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    }
+                    else try {
+                        creature.sleightOfHand.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+
+        creatureStealthMaster.setToggleGroup(creatureStealthGroup);
+        creatureStealthGood.setToggleGroup(creatureStealthGroup);
+        creatureStealthNone.setToggleGroup(creatureStealthGroup);    
+        creatureStealthCustom.setToggleGroup(creatureStealthGroup);   
+        creatureStealthGroup.selectToggle(creatureStealthNone);
+        
+        creatureStealthGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creatureStealthGroup.getSelectedToggle() != null) {
+                    if (creatureStealthMaster.isSelected())
+                        creature.stealth.setSkillChoice(SkillChoice.MASTER);
+                    else if (creatureStealthGood.isSelected())
+                        creature.stealth.setSkillChoice(SkillChoice.GOOD);
+                    else if (creatureStealthNone.isSelected())
+                        creature.stealth.setSkillChoice(SkillChoice.NONE);
+                    else if (creatureStealthCustom.isSelected())
+                        creature.stealth.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.stealth.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creatureStealthCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.stealth.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    }
+                    else try {
+                        creature.stealth.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+
+        creatureSurvivalMaster.setToggleGroup(creatureSurvivalGroup);
+        creatureSurvivalGood.setToggleGroup(creatureSurvivalGroup);
+        creatureSurvivalNone.setToggleGroup(creatureSurvivalGroup);    
+        creatureSurvivalCustom.setToggleGroup(creatureSurvivalGroup);   
+        creatureSurvivalGroup.selectToggle(creatureSurvivalNone);
+        
+        creatureSurvivalGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (creatureSurvivalGroup.getSelectedToggle() != null) {
+                    if (creatureSurvivalMaster.isSelected())
+                        creature.survival.setSkillChoice(SkillChoice.MASTER);
+                    else if (creatureSurvivalGood.isSelected())
+                        creature.survival.setSkillChoice(SkillChoice.GOOD);
+                    else if (creatureSurvivalNone.isSelected())
+                        creature.survival.setSkillChoice(SkillChoice.NONE);
+                    else if (creatureSurvivalCustom.isSelected())
+                        creature.survival.setSkillChoice(SkillChoice.CUSTOM);
+                }
+                else
+                        creature.survival.setSkillChoice(SkillChoice.NONE);
+                    ;
+                updateStatBlock();
+                updateWindowTitle();
+                setSkillControls();
+            }
+        });
+        creatureSurvivalCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.survival.setCustomValue(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    }
+                    else try {
+                        creature.survival.setCustomValue(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                        setSkillControls();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }
+                }
+            }
+        );
+
         // step 8 controls
         
         // step 9 controls

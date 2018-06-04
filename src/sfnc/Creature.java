@@ -35,6 +35,26 @@ public class Creature {
     List<String> outsiderSubtypes;
     List<String> freeformSubtypes;
     List<Ability> chosenAbilities;
+    public Skill acrobatics;
+    public Skill athletics;
+    public Skill bluff;
+    public Skill computers;
+    public Skill culture;
+    public Skill diplomacy;
+    public Skill disguise;
+    public Skill engineering;
+    public Skill intimidate;
+    public Skill lifeScience;
+    public Skill medicine;
+    public Skill mysticism;
+    public Skill perception;
+    public Skill physicalScience;
+    public Skill piloting;
+    public Skill profession;
+    public Skill senseMotive;
+    public Skill sleightOfHand;
+    public Skill stealth;
+    public Skill survival;
     
     // temporary status variables
     Boolean hasChanged;
@@ -52,6 +72,26 @@ public class Creature {
         this.outsiderSubtypes = new ArrayList<String>();
         this.freeformSubtypes = new ArrayList<String>();
         this.chosenAbilities = new ArrayList<Ability>();
+        this.acrobatics = new Skill();
+        this.athletics = new Skill();
+        this.bluff = new Skill();
+        this.computers = new Skill();
+        this.culture = new Skill();
+        this.diplomacy = new Skill();
+        this.disguise = new Skill();
+        this.engineering = new Skill();
+        this.intimidate = new Skill();
+        this.lifeScience = new Skill();
+        this.medicine = new Skill();
+        this.mysticism = new Skill();
+        this.perception = new Skill(SkillChoice.GOOD);
+        this.physicalScience = new Skill();
+        this.piloting = new Skill();
+        this.profession = new Skill();
+        this.senseMotive = new Skill();
+        this.sleightOfHand = new Skill();
+        this.stealth = new Skill();
+        this.survival = new Skill();
     }
     
     Creature(String n, ChallengeRating c) {
