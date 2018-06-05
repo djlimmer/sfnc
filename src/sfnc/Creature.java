@@ -286,7 +286,55 @@ public class Creature {
             this.humanoidSubtypes = new ArrayList<>(Arrays.asList(reader.readLine().split(",")));
             this.outsiderSubtypes = new ArrayList<>(Arrays.asList(reader.readLine().split(",")));
             this.freeformSubtypes = new ArrayList<>(Arrays.asList(reader.readLine().split(",")));
-            // need to read chosen abilities
+            this.chosenAbilities = new ArrayList<>();
+            Integer n = Integer.parseInt(reader.readLine());
+            for (Integer i = 0; i < n; i++) {
+                Ability a = new Ability();
+                a.loadString(reader.readLine());
+                chosenAbilities.add(a);
+            }
+            String[] skillString;
+            skillString = reader.readLine().split("\\|");
+            acrobatics = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            skillString = reader.readLine().split("\\|");
+            athletics = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            skillString = reader.readLine().split("\\|");
+            bluff = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            skillString = reader.readLine().split("\\|");
+            computers = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            skillString = reader.readLine().split("\\|");
+            culture = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            skillString = reader.readLine().split("\\|");
+            diplomacy = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            skillString = reader.readLine().split("\\|");
+            disguise = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            skillString = reader.readLine().split("\\|");
+            engineering = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            skillString = reader.readLine().split("\\|");
+            intimidate = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            skillString = reader.readLine().split("\\|");
+            lifeScience = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            skillString = reader.readLine().split("\\|");
+            medicine = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            skillString = reader.readLine().split("\\|");
+            mysticism = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            skillString = reader.readLine().split("\\|");
+            perception = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            skillString = reader.readLine().split("\\|");
+            physicalScience = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            skillString = reader.readLine().split("\\|");
+            piloting = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            skillString = reader.readLine().split("\\|");
+            profession = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            skillString = reader.readLine().split("\\|");
+            senseMotive = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            skillString = reader.readLine().split("\\|");
+            sleightOfHand = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            skillString = reader.readLine().split("\\|");
+            stealth = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            skillString = reader.readLine().split("\\|");
+            survival = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+
             reader.close();
         } catch (IOException e) {
             System.err.println("Something went wrong (opening sfnc file)");
@@ -311,7 +359,30 @@ public class Creature {
             writer.println(String.join(",",humanoidSubtypes));
             writer.println(String.join(",",outsiderSubtypes));
             writer.println(String.join(",",freeformSubtypes));
-            // need to save chosen abilities
+            writer.println(chosenAbilities.size());
+            for (Ability a : chosenAbilities) {
+                writer.println(a.saveString());
+            }
+            writer.println(acrobatics.getSkillChoice()+"|"+acrobatics.getCustomValue());
+            writer.println(athletics.getSkillChoice()+"|"+athletics.getCustomValue());
+            writer.println(bluff.getSkillChoice()+"|"+bluff.getCustomValue());
+            writer.println(computers.getSkillChoice()+"|"+computers.getCustomValue());
+            writer.println(culture.getSkillChoice()+"|"+culture.getCustomValue());
+            writer.println(diplomacy.getSkillChoice()+"|"+diplomacy.getCustomValue());
+            writer.println(disguise.getSkillChoice()+"|"+disguise.getCustomValue());
+            writer.println(engineering.getSkillChoice()+"|"+engineering.getCustomValue());
+            writer.println(intimidate.getSkillChoice()+"|"+intimidate.getCustomValue());
+            writer.println(lifeScience.getSkillChoice()+"|"+lifeScience.getCustomValue());
+            writer.println(medicine.getSkillChoice()+"|"+medicine.getCustomValue());
+            writer.println(mysticism.getSkillChoice()+"|"+mysticism.getCustomValue());
+            writer.println(perception.getSkillChoice()+"|"+perception.getCustomValue());
+            writer.println(physicalScience.getSkillChoice()+"|"+physicalScience.getCustomValue());
+            writer.println(piloting.getSkillChoice()+"|"+piloting.getCustomValue());
+            writer.println(profession.getSkillChoice()+"|"+profession.getCustomValue());
+            writer.println(senseMotive.getSkillChoice()+"|"+senseMotive.getCustomValue());
+            writer.println(sleightOfHand.getSkillChoice()+"|"+sleightOfHand.getCustomValue());
+            writer.println(stealth.getSkillChoice()+"|"+stealth.getCustomValue());
+            writer.println(survival.getSkillChoice()+"|"+survival.getCustomValue());
             writer.close();
         } catch (IOException e) {
             System.err.println("Something went wrong (saving to file)");

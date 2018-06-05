@@ -5,7 +5,10 @@
  */
 package sfnc;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -135,19 +138,55 @@ public class Ability {
     public String toString() {
         String outputString = outputFormat;
         outputString = outputString.replace("~n~", id);
-        outputString = outputString.replace("~r~", Integer.toString(range));
-        outputString = outputString.replace("~dc~", Integer.toString(DC));
-        outputString = outputString.replace("~a~", Integer.toString(amount));
-        if (diceBonus < 0) 
-            outputString = outputString.replace("~droll~",dice.toString()+Integer.toString(diceBonus));
-        else if (diceBonus == 0)
-            outputString = outputString.replace("~droll~",dice.toString());
-        else
-            outputString = outputString.replace("~droll~",dice.toString()+"+"+Integer.toString(diceBonus));
+        outputString = outputString.replace("~r~", (range == null) ? "0" : Integer.toString(range));
+        outputString = outputString.replace("~dc~", (DC == null) ? "0" : Integer.toString(DC));
+        outputString = outputString.replace("~a~", (amount == null) ? "0" : Integer.toString(amount));
+        String drollReplace = "";
+        if (diceBonus != null && dice != null) {
+            drollReplace += dice.toString();
+            if (diceBonus < 0)
+                drollReplace += Integer.toString(diceBonus);
+            else if (diceBonus > 0)
+                drollReplace += "+" + Integer.toString(diceBonus);
+        }
+        outputString = outputString.replace("~droll~",drollReplace);
         
         return outputString;
     }
+
+    public String saveString() {
+        String outputString = new String(id);
         
+        outputString += "|" + location;
+        outputString += "|" + outputFormat;
+        outputString += "|" + cost;
+        outputString += "|" + range;
+        outputString += "|" + DC;
+        outputString += "|" + amount;
+        outputString += "|" + dice;
+        outputString += "|" + diceBonus;
+        
+        return outputString;
+    }
+
+    public void loadString(String s) {
+        List<String> abilityParts = new ArrayList<>(Arrays.asList(s.split("\\|")));
+        
+        // this assumes the correct format; I should probably do error checking here
+        if (abilityParts.size() != 9)
+            System.out.println("abilityParts has " + abilityParts.size() + "elements.");
+
+        this.id = abilityParts.get(0);
+        this.location = Location.valueOf(abilityParts.get(1));
+        this.outputFormat = abilityParts.get(2);
+        this.cost = Integer.getInteger(abilityParts.get(3));
+        this.range = Integer.getInteger(abilityParts.get(4));
+        this.DC = Integer.getInteger(abilityParts.get(5));
+        this.amount = Integer.getInteger(abilityParts.get(6));
+        this.dice = new Dice(abilityParts.get(7));
+        this.diceBonus = Integer.getInteger(abilityParts.get(8));
+    }
+    
     public static Ability getAbility(String n) {
         Optional<Ability> optionalAbility = setOfAbilities.stream()
                 .filter((Ability a) -> a.id.equals(n))

@@ -518,9 +518,6 @@ public class sfncFXMLController implements Initializable {
         });
         creatureAbilitiesChosen.setItems(FXCollections.observableArrayList(
                 chosenAbilitiesDisplay));
-
-        // needs to handle ability lists, etc.
-
     }
 
     private Integer countMasterSkills() {
@@ -581,6 +578,407 @@ public class sfncFXMLController implements Initializable {
         creatureGoodSkillsAvailable.setText(Integer.toString(array.goodSkillNumber));
         creatureMasterSkillsTaken.setText(Integer.toString(countMasterSkills()));
         creatureGoodSkillsTaken.setText(Integer.toString(countGoodSkills()));
+        
+        if (creature.acrobatics == null) {
+            creatureAcrobaticsGroup.selectToggle(creatureAcrobaticsNone);
+            creatureAcrobaticsCustomValue.setText("");
+        }
+        else {
+            switch(creature.acrobatics.getSkillChoice()) {
+                case MASTER:
+                    creatureAcrobaticsGroup.selectToggle(creatureAcrobaticsMaster);
+                    break;
+                case GOOD:
+                    creatureAcrobaticsGroup.selectToggle(creatureAcrobaticsGood);
+                    break;
+                case NONE:
+                    creatureAcrobaticsGroup.selectToggle(creatureAcrobaticsNone);
+                    break;
+                case CUSTOM:
+                    creatureAcrobaticsGroup.selectToggle(creatureAcrobaticsMaster);
+                    break;
+            }
+        }
+        if (creature.athletics == null) {
+            creatureAthleticsGroup.selectToggle(creatureAthleticsNone);
+            creatureAthleticsCustomValue.setText("");
+        }
+        else {
+            switch(creature.athletics.getSkillChoice()) {
+                case MASTER:
+                    creatureAthleticsGroup.selectToggle(creatureAthleticsMaster);
+                    break;
+                case GOOD:
+                    creatureAthleticsGroup.selectToggle(creatureAthleticsGood);
+                    break;
+                case NONE:
+                    creatureAthleticsGroup.selectToggle(creatureAthleticsNone);
+                    break;
+                case CUSTOM:
+                    creatureAthleticsGroup.selectToggle(creatureAthleticsMaster);
+                    break;
+            }
+        }
+        if (creature.bluff == null) {
+            creatureBluffGroup.selectToggle(creatureBluffNone);
+            creatureBluffCustomValue.setText("");
+        }
+        else {
+            switch(creature.bluff.getSkillChoice()) {
+                case MASTER:
+                    creatureBluffGroup.selectToggle(creatureBluffMaster);
+                    break;
+                case GOOD:
+                    creatureBluffGroup.selectToggle(creatureBluffGood);
+                    break;
+                case NONE:
+                    creatureBluffGroup.selectToggle(creatureBluffNone);
+                    break;
+                case CUSTOM:
+                    creatureBluffGroup.selectToggle(creatureBluffMaster);
+                    break;
+            }
+        }
+        if (creature.computers == null) {
+            creatureComputersGroup.selectToggle(creatureComputersNone);
+            creatureComputersCustomValue.setText("");
+        }
+        else {
+            switch(creature.computers.getSkillChoice()) {
+                case MASTER:
+                    creatureComputersGroup.selectToggle(creatureComputersMaster);
+                    break;
+                case GOOD:
+                    creatureComputersGroup.selectToggle(creatureComputersGood);
+                    break;
+                case NONE:
+                    creatureComputersGroup.selectToggle(creatureComputersNone);
+                    break;
+                case CUSTOM:
+                    creatureComputersGroup.selectToggle(creatureComputersMaster);
+                    break;
+            }
+        }
+        if (creature.culture == null) {
+            creatureCultureGroup.selectToggle(creatureCultureNone);
+            creatureCultureCustomValue.setText("");
+        }
+        else {
+            switch(creature.culture.getSkillChoice()) {
+                case MASTER:
+                    creatureCultureGroup.selectToggle(creatureCultureMaster);
+                    break;
+                case GOOD:
+                    creatureCultureGroup.selectToggle(creatureCultureGood);
+                    break;
+                case NONE:
+                    creatureCultureGroup.selectToggle(creatureCultureNone);
+                    break;
+                case CUSTOM:
+                    creatureCultureGroup.selectToggle(creatureCultureMaster);
+                    break;
+            }
+        }
+        if (creature.diplomacy == null) {
+            creatureDiplomacyGroup.selectToggle(creatureDiplomacyNone);
+            creatureDiplomacyCustomValue.setText("");
+        }
+        else {
+            switch(creature.diplomacy.getSkillChoice()) {
+                case MASTER:
+                    creatureDiplomacyGroup.selectToggle(creatureDiplomacyMaster);
+                    break;
+                case GOOD:
+                    creatureDiplomacyGroup.selectToggle(creatureDiplomacyGood);
+                    break;
+                case NONE:
+                    creatureDiplomacyGroup.selectToggle(creatureDiplomacyNone);
+                    break;
+                case CUSTOM:
+                    creatureDiplomacyGroup.selectToggle(creatureDiplomacyMaster);
+                    break;
+            }
+        }
+        if (creature.disguise == null) {
+            creatureDisguiseGroup.selectToggle(creatureDisguiseNone);
+            creatureDisguiseCustomValue.setText("");
+        }
+        else {
+            switch(creature.disguise.getSkillChoice()) {
+                case MASTER:
+                    creatureDisguiseGroup.selectToggle(creatureDisguiseMaster);
+                    break;
+                case GOOD:
+                    creatureDisguiseGroup.selectToggle(creatureDisguiseGood);
+                    break;
+                case NONE:
+                    creatureDisguiseGroup.selectToggle(creatureDisguiseNone);
+                    break;
+                case CUSTOM:
+                    creatureDisguiseGroup.selectToggle(creatureDisguiseMaster);
+                    break;
+            }
+        }
+        if (creature.engineering == null) {
+            creatureEngineeringGroup.selectToggle(creatureEngineeringNone);
+            creatureEngineeringCustomValue.setText("");
+        }
+        else {
+            switch(creature.engineering.getSkillChoice()) {
+                case MASTER:
+                    creatureEngineeringGroup.selectToggle(creatureEngineeringMaster);
+                    break;
+                case GOOD:
+                    creatureEngineeringGroup.selectToggle(creatureEngineeringGood);
+                    break;
+                case NONE:
+                    creatureEngineeringGroup.selectToggle(creatureEngineeringNone);
+                    break;
+                case CUSTOM:
+                    creatureEngineeringGroup.selectToggle(creatureEngineeringMaster);
+                    break;
+            }
+        }
+        if (creature.intimidate == null) {
+            creatureIntimidateGroup.selectToggle(creatureIntimidateNone);
+            creatureIntimidateCustomValue.setText("");
+        }
+        else {
+            switch(creature.intimidate.getSkillChoice()) {
+                case MASTER:
+                    creatureIntimidateGroup.selectToggle(creatureIntimidateMaster);
+                    break;
+                case GOOD:
+                    creatureIntimidateGroup.selectToggle(creatureIntimidateGood);
+                    break;
+                case NONE:
+                    creatureIntimidateGroup.selectToggle(creatureIntimidateNone);
+                    break;
+                case CUSTOM:
+                    creatureIntimidateGroup.selectToggle(creatureIntimidateMaster);
+                    break;
+            }
+        }
+        if (creature.lifeScience == null) {
+            creatureLifeScienceGroup.selectToggle(creatureLifeScienceNone);
+            creatureLifeScienceCustomValue.setText("");
+        }
+        else {
+            switch(creature.lifeScience.getSkillChoice()) {
+                case MASTER:
+                    creatureLifeScienceGroup.selectToggle(creatureLifeScienceMaster);
+                    break;
+                case GOOD:
+                    creatureLifeScienceGroup.selectToggle(creatureLifeScienceGood);
+                    break;
+                case NONE:
+                    creatureLifeScienceGroup.selectToggle(creatureLifeScienceNone);
+                    break;
+                case CUSTOM:
+                    creatureLifeScienceGroup.selectToggle(creatureLifeScienceMaster);
+                    break;
+            }
+        }
+        if (creature.medicine == null) {
+            creatureMedicineGroup.selectToggle(creatureMedicineNone);
+            creatureMedicineCustomValue.setText("");
+        }
+        else {
+            switch(creature.medicine.getSkillChoice()) {
+                case MASTER:
+                    creatureMedicineGroup.selectToggle(creatureMedicineMaster);
+                    break;
+                case GOOD:
+                    creatureMedicineGroup.selectToggle(creatureMedicineGood);
+                    break;
+                case NONE:
+                    creatureMedicineGroup.selectToggle(creatureMedicineNone);
+                    break;
+                case CUSTOM:
+                    creatureMedicineGroup.selectToggle(creatureMedicineMaster);
+                    break;
+            }
+        }
+        if (creature.mysticism == null) {
+            creatureMysticismGroup.selectToggle(creatureMysticismNone);
+            creatureMysticismCustomValue.setText("");
+        }
+        else {
+            switch(creature.mysticism.getSkillChoice()) {
+                case MASTER:
+                    creatureMysticismGroup.selectToggle(creatureMysticismMaster);
+                    break;
+                case GOOD:
+                    creatureMysticismGroup.selectToggle(creatureMysticismGood);
+                    break;
+                case NONE:
+                    creatureMysticismGroup.selectToggle(creatureMysticismNone);
+                    break;
+                case CUSTOM:
+                    creatureMysticismGroup.selectToggle(creatureMysticismMaster);
+                    break;
+            }
+        }
+        if (creature.perception == null) {
+            creaturePerceptionGroup.selectToggle(creaturePerceptionNone);
+            creaturePerceptionCustomValue.setText("");
+        }
+        else {
+            switch(creature.perception.getSkillChoice()) {
+                case MASTER:
+                    creaturePerceptionGroup.selectToggle(creaturePerceptionMaster);
+                    break;
+                case GOOD:
+                    creaturePerceptionGroup.selectToggle(creaturePerceptionGood);
+                    break;
+                case NONE:
+                    creaturePerceptionGroup.selectToggle(creaturePerceptionNone);
+                    break;
+                case CUSTOM:
+                    creaturePerceptionGroup.selectToggle(creaturePerceptionMaster);
+                    break;
+            }
+        }
+        if (creature.physicalScience == null) {
+            creaturePhysicalScienceGroup.selectToggle(creaturePhysicalScienceNone);
+            creaturePhysicalScienceCustomValue.setText("");
+        }
+        else {
+            switch(creature.physicalScience.getSkillChoice()) {
+                case MASTER:
+                    creaturePhysicalScienceGroup.selectToggle(creaturePhysicalScienceMaster);
+                    break;
+                case GOOD:
+                    creaturePhysicalScienceGroup.selectToggle(creaturePhysicalScienceGood);
+                    break;
+                case NONE:
+                    creaturePhysicalScienceGroup.selectToggle(creaturePhysicalScienceNone);
+                    break;
+                case CUSTOM:
+                    creaturePhysicalScienceGroup.selectToggle(creaturePhysicalScienceMaster);
+                    break;
+            }
+        }
+        if (creature.piloting == null) {
+            creaturePilotingGroup.selectToggle(creaturePilotingNone);
+            creaturePilotingCustomValue.setText("");
+        }
+        else {
+            switch(creature.piloting.getSkillChoice()) {
+                case MASTER:
+                    creaturePilotingGroup.selectToggle(creaturePilotingMaster);
+                    break;
+                case GOOD:
+                    creaturePilotingGroup.selectToggle(creaturePilotingGood);
+                    break;
+                case NONE:
+                    creaturePilotingGroup.selectToggle(creaturePilotingNone);
+                    break;
+                case CUSTOM:
+                    creaturePilotingGroup.selectToggle(creaturePilotingMaster);
+                    break;
+            }
+        }
+        if (creature.profession == null) {
+            creatureProfessionGroup.selectToggle(creatureProfessionNone);
+            creatureProfessionCustomValue.setText("");
+        }
+        else {
+            switch(creature.profession.getSkillChoice()) {
+                case MASTER:
+                    creatureProfessionGroup.selectToggle(creatureProfessionMaster);
+                    break;
+                case GOOD:
+                    creatureProfessionGroup.selectToggle(creatureProfessionGood);
+                    break;
+                case NONE:
+                    creatureProfessionGroup.selectToggle(creatureProfessionNone);
+                    break;
+                case CUSTOM:
+                    creatureProfessionGroup.selectToggle(creatureProfessionMaster);
+                    break;
+            }
+        }
+        if (creature.senseMotive == null) {
+            creatureSenseMotiveGroup.selectToggle(creatureSenseMotiveNone);
+            creatureSenseMotiveCustomValue.setText("");
+        }
+        else {
+            switch(creature.senseMotive.getSkillChoice()) {
+                case MASTER:
+                    creatureSenseMotiveGroup.selectToggle(creatureSenseMotiveMaster);
+                    break;
+                case GOOD:
+                    creatureSenseMotiveGroup.selectToggle(creatureSenseMotiveGood);
+                    break;
+                case NONE:
+                    creatureSenseMotiveGroup.selectToggle(creatureSenseMotiveNone);
+                    break;
+                case CUSTOM:
+                    creatureSenseMotiveGroup.selectToggle(creatureSenseMotiveMaster);
+                    break;
+            }
+        }
+        if (creature.sleightOfHand == null) {
+            creatureSleightOfHandGroup.selectToggle(creatureSleightOfHandNone);
+            creatureSleightOfHandCustomValue.setText("");
+        }
+        else {
+            switch(creature.sleightOfHand.getSkillChoice()) {
+                case MASTER:
+                    creatureSleightOfHandGroup.selectToggle(creatureSleightOfHandMaster);
+                    break;
+                case GOOD:
+                    creatureSleightOfHandGroup.selectToggle(creatureSleightOfHandGood);
+                    break;
+                case NONE:
+                    creatureSleightOfHandGroup.selectToggle(creatureSleightOfHandNone);
+                    break;
+                case CUSTOM:
+                    creatureSleightOfHandGroup.selectToggle(creatureSleightOfHandMaster);
+                    break;
+            }
+        }
+        if (creature.stealth == null) {
+            creatureStealthGroup.selectToggle(creatureStealthNone);
+            creatureStealthCustomValue.setText("");
+        }
+        else {
+            switch(creature.stealth.getSkillChoice()) {
+                case MASTER:
+                    creatureStealthGroup.selectToggle(creatureStealthMaster);
+                    break;
+                case GOOD:
+                    creatureStealthGroup.selectToggle(creatureStealthGood);
+                    break;
+                case NONE:
+                    creatureStealthGroup.selectToggle(creatureStealthNone);
+                    break;
+                case CUSTOM:
+                    creatureStealthGroup.selectToggle(creatureStealthMaster);
+                    break;
+            }
+        }
+        if (creature.survival == null) {
+            creatureSurvivalGroup.selectToggle(creatureSurvivalNone);
+            creatureSurvivalCustomValue.setText("");
+        }
+        else {
+            switch(creature.survival.getSkillChoice()) {
+                case MASTER:
+                    creatureSurvivalGroup.selectToggle(creatureSurvivalMaster);
+                    break;
+                case GOOD:
+                    creatureSurvivalGroup.selectToggle(creatureSurvivalGood);
+                    break;
+                case NONE:
+                    creatureSurvivalGroup.selectToggle(creatureSurvivalNone);
+                    break;
+                case CUSTOM:
+                    creatureSurvivalGroup.selectToggle(creatureSurvivalMaster);
+                    break;
+            }
+        }
     }
     
     private void addSenseToAbilitySet(String senseName,Integer range) {

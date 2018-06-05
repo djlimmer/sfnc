@@ -1,11 +1,34 @@
 sfnc file
 john
-THREE
-Combatant
+SIX
+Expert
 Humanoid
 true
-0
-colossus,earth
+2
+
 elebrian
 
 
+2
+create darkness|OFFENSIVE_ABILITIES|~n~|1|0|0|0|0|0
+discorporation|OTHER_ABILITIES|~n~|1|0|0|0|0|0
+NONE|0
+NONE|0
+GOOD|0
+NONE|0
+NONE|0
+GOOD|0
+NONE|0
+NONE|0
+NONE|0
+NONE|0
+NONE|0
+NONE|0
+MASTER|0
+NONE|0
+NONE|0
+NONE|0
+NONE|0
+MASTER|0
+MASTER|0
+NONE|0

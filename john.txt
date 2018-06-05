@@ -1,5 +1,5 @@
-john                                                              CR 3
-XP 800 (Combatant)
-DEFENSE                                                          HP 40
-EAC 14; KAC 16
-Fort +5; Ref +5; Will +2
+john                                                              CR 6
+XP 2,400 (Expert)
+DEFENSE                                                          HP 80
+EAC 18; KAC 19
+Fort +5; Ref +7; Will +9
