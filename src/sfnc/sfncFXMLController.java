@@ -42,6 +42,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
@@ -50,7 +51,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.StageStyle;
-import static sfnc.Ability.setOfAbilities;
 
 /**
  *
@@ -217,13 +217,16 @@ public class sfncFXMLController implements Initializable {
      }
 
     // Step 0 controls
+    @FXML   private Tab step0 = new Tab();
     @FXML   private TextField creatureNameInput = new TextField();
     @FXML   private ComboBox creatureCRInput = new ComboBox();
 
     // Step 1 controls
+    @FXML   private Tab step1 = new Tab();
     @FXML   private ChoiceBox creatureArrayInput = new ChoiceBox();
     
     // Step 2 controls
+    @FXML   private Tab step2 = new Tab();
     @FXML   private ComboBox creatureTypeInput = new ComboBox();
     @FXML   private CheckBox creatureTypeAdjustmentUse = new CheckBox();
     private ToggleGroup typeOptionsGroup = new ToggleGroup();
@@ -232,6 +235,7 @@ public class sfncFXMLController implements Initializable {
     @FXML   private RadioButton creatureTypeOption3 = new RadioButton();
     
     // Step 3 controls
+    @FXML   private Tab step3 = new Tab();
     @FXML   private Label creatureSubtypeWarning = new Label();
     @FXML   private ListView<String> creatureGeneralSubtypesInput = new ListView<String>();
     @FXML   private ListView<String> creatureHumanoidSubtypesInput = new ListView<String>();
@@ -239,10 +243,13 @@ public class sfncFXMLController implements Initializable {
     @FXML   private TextField creatureFreeformSubtypesInput = new TextField();
     
     // Step 4 controls
+    @FXML   private Tab step4 = new Tab();
     
     // Step 5 controls
+    @FXML   private Tab step5 = new Tab();
     
     // Step 6 controls
+    @FXML   private Tab step6 = new Tab();
     @FXML   private Label creatureAbilityChoicesAvailable = new Label();
     @FXML   private Label creatureAbilityChoicesMade = new Label();
     @FXML   private ListView<String> creatureAbilityInput = new ListView<String>();
@@ -252,6 +259,7 @@ public class sfncFXMLController implements Initializable {
     @FXML   private Button creatureAddCustomAbilityButton = new Button();
 
     // Step 7 controls
+    @FXML   private Tab step7 = new Tab();
     @FXML   private Label creatureMasterSkillsAvailable = new Label();
     @FXML   private Label creatureMasterSkillsTaken = new Label();
     @FXML   private Label creatureGoodSkillsAvailable = new Label();
@@ -378,8 +386,10 @@ public class sfncFXMLController implements Initializable {
     @FXML   private TextField creatureSurvivalCustomValue = new TextField();
 
     // Step 8 controls
+    @FXML   private Tab step8 = new Tab();
     
     // Step 9 controls
+    @FXML   private Tab step9 = new Tab();
     
     // stat block controls
     @FXML   private Label creatureNameDisplay = new Label();
@@ -442,9 +452,12 @@ public class sfncFXMLController implements Initializable {
 
     
     public void setControls() {
+        // step 0
         creatureNameInput.setText(creature.getName());
         creatureCRInput.setValue(creature.getCRDisplayString());
+        // step 1
         creatureArrayInput.setValue(creature.getArray());
+        // step 2
         creatureTypeInput.setValue(creature.getType());
         creatureTypeAdjustmentUse.setSelected(creature.useTypeAdjustments());
         if (creature.getType().equals("Animal")) {
@@ -456,9 +469,27 @@ public class sfncFXMLController implements Initializable {
         else {
             hideTypeOptions();
         }
+        // step 3
         setSubtypeWarning();
+        creature.getGeneralSubtypes().stream().forEach(creatureGeneralSubtypesInput.getSelectionModel()::select);
+        creature.getHumanoidSubtypes().stream().forEach(creatureHumanoidSubtypesInput.getSelectionModel()::select);
+        creature.getOutsiderSubtypes().stream().forEach(creatureOutsiderSubtypesInput.getSelectionModel()::select);
+        creatureFreeformSubtypesInput.setText(String.join(",",creature.getFreeformSubtypes()));
+        // step 4
+        // step 5
+        // step 6
         setAbilityControls();
+        // step 7
         setSkillControls();
+        updateTabStatus();
+    }
+    
+    private void updateTabStatus() {
+        step1.setDisable((creature.getCR()==ChallengeRating.NONE) || (creature.getCR()==null));
+        step2.setDisable((creature.getArray() == null) || (creature.getArray().equals("")) || step1.isDisable());
+        step3.setDisable((creature.getType() == null) || (creature.getType().equals("")) || step2.isDisable());
+        step6.setDisable((creature.getType() == null) || (creature.getType().equals("")) || step2.isDisable());
+        step7.setDisable((creature.getType() == null) || (creature.getType().equals("")) || step2.isDisable());
     }
     
     private void showAnimalTypeOptions() {
@@ -515,6 +546,7 @@ public class sfncFXMLController implements Initializable {
         List<String> chosenAbilitiesDisplay = new ArrayList<>();
         creature.getChosenAbilities().stream().forEach((a) -> {
             chosenAbilitiesDisplay.add(a.getId());
+            creatureAbilityInput.getSelectionModel().select(a.getId());
         });
         creatureAbilitiesChosen.setItems(FXCollections.observableArrayList(
                 chosenAbilitiesDisplay));
@@ -595,9 +627,10 @@ public class sfncFXMLController implements Initializable {
                     creatureAcrobaticsGroup.selectToggle(creatureAcrobaticsNone);
                     break;
                 case CUSTOM:
-                    creatureAcrobaticsGroup.selectToggle(creatureAcrobaticsMaster);
+                    creatureAcrobaticsGroup.selectToggle(creatureAcrobaticsCustom);
                     break;
             }
+            creatureAcrobaticsCustomValue.setText(Integer.toString(creature.acrobatics.getCustomValue()));
         }
         if (creature.athletics == null) {
             creatureAthleticsGroup.selectToggle(creatureAthleticsNone);
@@ -615,9 +648,10 @@ public class sfncFXMLController implements Initializable {
                     creatureAthleticsGroup.selectToggle(creatureAthleticsNone);
                     break;
                 case CUSTOM:
-                    creatureAthleticsGroup.selectToggle(creatureAthleticsMaster);
+                    creatureAthleticsGroup.selectToggle(creatureAthleticsCustom);
                     break;
             }
+            creatureAthleticsCustomValue.setText(Integer.toString(creature.athletics.getCustomValue()));
         }
         if (creature.bluff == null) {
             creatureBluffGroup.selectToggle(creatureBluffNone);
@@ -635,9 +669,10 @@ public class sfncFXMLController implements Initializable {
                     creatureBluffGroup.selectToggle(creatureBluffNone);
                     break;
                 case CUSTOM:
-                    creatureBluffGroup.selectToggle(creatureBluffMaster);
+                    creatureBluffGroup.selectToggle(creatureBluffCustom);
                     break;
             }
+            creatureBluffCustomValue.setText(Integer.toString(creature.bluff.getCustomValue()));
         }
         if (creature.computers == null) {
             creatureComputersGroup.selectToggle(creatureComputersNone);
@@ -655,9 +690,10 @@ public class sfncFXMLController implements Initializable {
                     creatureComputersGroup.selectToggle(creatureComputersNone);
                     break;
                 case CUSTOM:
-                    creatureComputersGroup.selectToggle(creatureComputersMaster);
+                    creatureComputersGroup.selectToggle(creatureComputersCustom);
                     break;
             }
+            creatureComputersCustomValue.setText(Integer.toString(creature.computers.getCustomValue()));
         }
         if (creature.culture == null) {
             creatureCultureGroup.selectToggle(creatureCultureNone);
@@ -675,9 +711,10 @@ public class sfncFXMLController implements Initializable {
                     creatureCultureGroup.selectToggle(creatureCultureNone);
                     break;
                 case CUSTOM:
-                    creatureCultureGroup.selectToggle(creatureCultureMaster);
+                    creatureCultureGroup.selectToggle(creatureCultureCustom);
                     break;
             }
+            creatureCultureCustomValue.setText(Integer.toString(creature.culture.getCustomValue()));
         }
         if (creature.diplomacy == null) {
             creatureDiplomacyGroup.selectToggle(creatureDiplomacyNone);
@@ -695,9 +732,10 @@ public class sfncFXMLController implements Initializable {
                     creatureDiplomacyGroup.selectToggle(creatureDiplomacyNone);
                     break;
                 case CUSTOM:
-                    creatureDiplomacyGroup.selectToggle(creatureDiplomacyMaster);
+                    creatureDiplomacyGroup.selectToggle(creatureDiplomacyCustom);
                     break;
             }
+            creatureDiplomacyCustomValue.setText(Integer.toString(creature.diplomacy.getCustomValue()));
         }
         if (creature.disguise == null) {
             creatureDisguiseGroup.selectToggle(creatureDisguiseNone);
@@ -715,9 +753,10 @@ public class sfncFXMLController implements Initializable {
                     creatureDisguiseGroup.selectToggle(creatureDisguiseNone);
                     break;
                 case CUSTOM:
-                    creatureDisguiseGroup.selectToggle(creatureDisguiseMaster);
+                    creatureDisguiseGroup.selectToggle(creatureDisguiseCustom);
                     break;
             }
+            creatureDisguiseCustomValue.setText(Integer.toString(creature.disguise.getCustomValue()));
         }
         if (creature.engineering == null) {
             creatureEngineeringGroup.selectToggle(creatureEngineeringNone);
@@ -735,9 +774,10 @@ public class sfncFXMLController implements Initializable {
                     creatureEngineeringGroup.selectToggle(creatureEngineeringNone);
                     break;
                 case CUSTOM:
-                    creatureEngineeringGroup.selectToggle(creatureEngineeringMaster);
+                    creatureEngineeringGroup.selectToggle(creatureEngineeringCustom);
                     break;
             }
+            creatureEngineeringCustomValue.setText(Integer.toString(creature.engineering.getCustomValue()));
         }
         if (creature.intimidate == null) {
             creatureIntimidateGroup.selectToggle(creatureIntimidateNone);
@@ -755,9 +795,10 @@ public class sfncFXMLController implements Initializable {
                     creatureIntimidateGroup.selectToggle(creatureIntimidateNone);
                     break;
                 case CUSTOM:
-                    creatureIntimidateGroup.selectToggle(creatureIntimidateMaster);
+                    creatureIntimidateGroup.selectToggle(creatureIntimidateCustom);
                     break;
             }
+            creatureIntimidateCustomValue.setText(Integer.toString(creature.intimidate.getCustomValue()));
         }
         if (creature.lifeScience == null) {
             creatureLifeScienceGroup.selectToggle(creatureLifeScienceNone);
@@ -775,9 +816,10 @@ public class sfncFXMLController implements Initializable {
                     creatureLifeScienceGroup.selectToggle(creatureLifeScienceNone);
                     break;
                 case CUSTOM:
-                    creatureLifeScienceGroup.selectToggle(creatureLifeScienceMaster);
+                    creatureLifeScienceGroup.selectToggle(creatureLifeScienceCustom);
                     break;
             }
+            creatureLifeScienceCustomValue.setText(Integer.toString(creature.lifeScience.getCustomValue()));
         }
         if (creature.medicine == null) {
             creatureMedicineGroup.selectToggle(creatureMedicineNone);
@@ -795,9 +837,10 @@ public class sfncFXMLController implements Initializable {
                     creatureMedicineGroup.selectToggle(creatureMedicineNone);
                     break;
                 case CUSTOM:
-                    creatureMedicineGroup.selectToggle(creatureMedicineMaster);
+                    creatureMedicineGroup.selectToggle(creatureMedicineCustom);
                     break;
             }
+            creatureMedicineCustomValue.setText(Integer.toString(creature.medicine.getCustomValue()));
         }
         if (creature.mysticism == null) {
             creatureMysticismGroup.selectToggle(creatureMysticismNone);
@@ -815,9 +858,10 @@ public class sfncFXMLController implements Initializable {
                     creatureMysticismGroup.selectToggle(creatureMysticismNone);
                     break;
                 case CUSTOM:
-                    creatureMysticismGroup.selectToggle(creatureMysticismMaster);
+                    creatureMysticismGroup.selectToggle(creatureMysticismCustom);
                     break;
             }
+            creatureMysticismCustomValue.setText(Integer.toString(creature.mysticism.getCustomValue()));
         }
         if (creature.perception == null) {
             creaturePerceptionGroup.selectToggle(creaturePerceptionNone);
@@ -835,9 +879,10 @@ public class sfncFXMLController implements Initializable {
                     creaturePerceptionGroup.selectToggle(creaturePerceptionNone);
                     break;
                 case CUSTOM:
-                    creaturePerceptionGroup.selectToggle(creaturePerceptionMaster);
+                    creaturePerceptionGroup.selectToggle(creaturePerceptionCustom);
                     break;
             }
+            creaturePerceptionCustomValue.setText(Integer.toString(creature.perception.getCustomValue()));
         }
         if (creature.physicalScience == null) {
             creaturePhysicalScienceGroup.selectToggle(creaturePhysicalScienceNone);
@@ -855,9 +900,10 @@ public class sfncFXMLController implements Initializable {
                     creaturePhysicalScienceGroup.selectToggle(creaturePhysicalScienceNone);
                     break;
                 case CUSTOM:
-                    creaturePhysicalScienceGroup.selectToggle(creaturePhysicalScienceMaster);
+                    creaturePhysicalScienceGroup.selectToggle(creaturePhysicalScienceCustom);
                     break;
             }
+            creaturePhysicalScienceCustomValue.setText(Integer.toString(creature.physicalScience.getCustomValue()));
         }
         if (creature.piloting == null) {
             creaturePilotingGroup.selectToggle(creaturePilotingNone);
@@ -875,9 +921,10 @@ public class sfncFXMLController implements Initializable {
                     creaturePilotingGroup.selectToggle(creaturePilotingNone);
                     break;
                 case CUSTOM:
-                    creaturePilotingGroup.selectToggle(creaturePilotingMaster);
+                    creaturePilotingGroup.selectToggle(creaturePilotingCustom);
                     break;
             }
+            creaturePilotingCustomValue.setText(Integer.toString(creature.piloting.getCustomValue()));
         }
         if (creature.profession == null) {
             creatureProfessionGroup.selectToggle(creatureProfessionNone);
@@ -895,9 +942,10 @@ public class sfncFXMLController implements Initializable {
                     creatureProfessionGroup.selectToggle(creatureProfessionNone);
                     break;
                 case CUSTOM:
-                    creatureProfessionGroup.selectToggle(creatureProfessionMaster);
+                    creatureProfessionGroup.selectToggle(creatureProfessionCustom);
                     break;
             }
+            creatureProfessionCustomValue.setText(Integer.toString(creature.profession.getCustomValue()));
         }
         if (creature.senseMotive == null) {
             creatureSenseMotiveGroup.selectToggle(creatureSenseMotiveNone);
@@ -915,9 +963,10 @@ public class sfncFXMLController implements Initializable {
                     creatureSenseMotiveGroup.selectToggle(creatureSenseMotiveNone);
                     break;
                 case CUSTOM:
-                    creatureSenseMotiveGroup.selectToggle(creatureSenseMotiveMaster);
+                    creatureSenseMotiveGroup.selectToggle(creatureSenseMotiveCustom);
                     break;
             }
+            creatureSenseMotiveCustomValue.setText(Integer.toString(creature.senseMotive.getCustomValue()));
         }
         if (creature.sleightOfHand == null) {
             creatureSleightOfHandGroup.selectToggle(creatureSleightOfHandNone);
@@ -935,9 +984,10 @@ public class sfncFXMLController implements Initializable {
                     creatureSleightOfHandGroup.selectToggle(creatureSleightOfHandNone);
                     break;
                 case CUSTOM:
-                    creatureSleightOfHandGroup.selectToggle(creatureSleightOfHandMaster);
+                    creatureSleightOfHandGroup.selectToggle(creatureSleightOfHandCustom);
                     break;
             }
+            creatureSleightOfHandCustomValue.setText(Integer.toString(creature.sleightOfHand.getCustomValue()));
         }
         if (creature.stealth == null) {
             creatureStealthGroup.selectToggle(creatureStealthNone);
@@ -955,9 +1005,10 @@ public class sfncFXMLController implements Initializable {
                     creatureStealthGroup.selectToggle(creatureStealthNone);
                     break;
                 case CUSTOM:
-                    creatureStealthGroup.selectToggle(creatureStealthMaster);
+                    creatureStealthGroup.selectToggle(creatureStealthCustom);
                     break;
             }
+            creatureStealthCustomValue.setText(Integer.toString(creature.stealth.getCustomValue()));
         }
         if (creature.survival == null) {
             creatureSurvivalGroup.selectToggle(creatureSurvivalNone);
@@ -975,9 +1026,10 @@ public class sfncFXMLController implements Initializable {
                     creatureSurvivalGroup.selectToggle(creatureSurvivalNone);
                     break;
                 case CUSTOM:
-                    creatureSurvivalGroup.selectToggle(creatureSurvivalMaster);
+                    creatureSurvivalGroup.selectToggle(creatureSurvivalCustom);
                     break;
             }
+            creatureSurvivalCustomValue.setText(Integer.toString(creature.survival.getCustomValue()));
         }
     }
     
@@ -1772,6 +1824,8 @@ public class sfncFXMLController implements Initializable {
         creatureSkillsLabel.setStyle("-fx-font-weight: bold");
         creatureLanguagesLabel.setStyle("-fx-font-weight: bold");
         creatureOtherAbilitiesLabel.setStyle("-fx-font-weight: bold");
+        
+        updateTabStatus();
 
         // step 0 controls
         creatureNameInput.textProperty().addListener(
@@ -1800,6 +1854,7 @@ public class sfncFXMLController implements Initializable {
                     creature.setCRFromComboBox(newValue.intValue());
                     updateStatBlock();
                     updateWindowTitle();
+                    updateTabStatus();
                 }
             }
         );
@@ -1819,6 +1874,7 @@ public class sfncFXMLController implements Initializable {
                     updateWindowTitle();
                     setAbilityControls();
                     setSkillControls();
+                    updateTabStatus();
                 }
             }
         );
@@ -1850,6 +1906,7 @@ public class sfncFXMLController implements Initializable {
                     }
                     updateStatBlock();
                     updateWindowTitle();
+                    updateTabStatus();
                     setSubtypeWarning();
                 }
             }

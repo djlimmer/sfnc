@@ -37,7 +37,7 @@
                <children>
                   <TabPane layoutX="21.0" layoutY="14.0" prefHeight="573.0" prefWidth="235.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <tabs>
-                      <Tab text="0. Name and CR">
+                      <Tab fx:id="step0" text="0. Name and CR">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -61,7 +61,7 @@
                               </AnchorPane>
                         </content>
                       </Tab>
-                      <Tab text="1. Array">
+                      <Tab fx:id="step1" text="1. Array">
                            <content>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                  <children>
@@ -70,7 +70,7 @@
                                  </children>
                               </AnchorPane>
                            </content></Tab>
-                        <Tab text="2. Type">
+                        <Tab fx:id="step2" text="2. Type">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -83,7 +83,7 @@
                                  </children></AnchorPane>
                           </content>
                         </Tab>
-                        <Tab text="3. Subtypes">
+                        <Tab fx:id="step3" text="3. Subtypes">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -99,17 +99,17 @@
                                  </children></AnchorPane>
                           </content>
                         </Tab>
-                        <Tab disable="true" text="4. Class">
+                        <Tab fx:id="step4" disable="true" text="4. Class">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                           </content>
                         </Tab>
-                        <Tab disable="true" text="5. Templates">
+                        <Tab fx:id="step5" disable="true" text="5. Templates">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                           </content>
                         </Tab>
-                        <Tab text="6. Special Abilities">
+                        <Tab fx:id="step6" text="6. Special Abilities">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -124,13 +124,13 @@
                                     <Label layoutX="14.0" layoutY="547.0" style="-fx-font-weight: bold;" text="Make Your Own Ability" />
                                     <Label layoutX="14.0" layoutY="567.0" prefHeight="25.0" text="Name:" />
                                     <Label layoutX="14.0" layoutY="599.0" prefHeight="25.0" text="Location:" />
-                                    <Button fx:id="creatureAddCustomAbilityButton" layoutX="66.0" layoutY="648.0" mnemonicParsing="false" text="AddAbility" />
-                                    <TextField fx:id="creatureCustomAbilityNameInput" layoutX="68.0" layoutY="567.0" prefHeight="25.0" prefWidth="133.0" />
-                                    <ComboBox fx:id="creatureCustomAbilityLocationInput" layoutX="68.0" layoutY="599.0" prefHeight="25.0" prefWidth="132.0" />
+                                    <Button fx:id="creatureAddCustomAbilityButton" disable="true" layoutX="66.0" layoutY="648.0" mnemonicParsing="false" text="Add Ability" />
+                                    <TextField fx:id="creatureCustomAbilityNameInput" disable="true" layoutX="68.0" layoutY="567.0" prefHeight="25.0" prefWidth="133.0" />
+                                    <ComboBox fx:id="creatureCustomAbilityLocationInput" disable="true" layoutX="68.0" layoutY="599.0" prefHeight="25.0" prefWidth="132.0" />
                                  </children></AnchorPane>
                           </content>
                         </Tab>
-                        <Tab text="7. Skills">
+                        <Tab fx:id="step7" text="7. Skills">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -175,142 +175,142 @@
                                           <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <TextField fx:id="creaturePhysicalScienceCustomValue" layoutX="175.0" layoutY="455.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="14" />
-                                          <RadioButton fx:id="creatureBluffNone" layoutX="135.0" layoutY="184.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                                          <RadioButton fx:id="creatureCultureMaster" layoutX="95.0" layoutY="234.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                          <RadioButton fx:id="creatureProfessionGood" layoutX="115.0" layoutY="509.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="16" />
-                                          <RadioButton fx:id="creatureSurvivalGood" layoutX="115.0" layoutY="609.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="20" />
-                                          <RadioButton fx:id="creatureDisguiseNone" layoutX="156.0" layoutY="284.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="7" />
-                                          <RadioButton fx:id="creaturePerceptionMaster" layoutX="95.0" layoutY="434.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-                                          <RadioButton fx:id="creatureSenseMotiveNone" layoutX="135.0" layoutY="534.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="17" />
-                                          <RadioButton fx:id="creatureCultureGood" layoutX="115.0" layoutY="234.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                                          <TextField fx:id="creatureCultureCustomValue" layoutX="175.0" layoutY="230.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="5" />
-                                          <Label layoutX="6.0" layoutY="609.0" text="Survival" GridPane.rowIndex="20" />
-                                          <RadioButton fx:id="creatureSleightOfHandNone" layoutX="135.0" layoutY="559.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="18" />
-                                          <RadioButton fx:id="creatureSurvivalNone" layoutX="155.0" layoutY="609.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="20" />
-                                          <RadioButton fx:id="creatureIntimidateNone" layoutX="157.0" layoutY="334.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="9" />
-                                          <RadioButton fx:id="creatureSenseMotiveGood" layoutX="115.0" layoutY="534.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="17" />
-                                          <RadioButton fx:id="creatureAcrobaticsNone" layoutX="135.0" layoutY="134.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                          <RadioButton fx:id="creatureMysticismMaster" layoutX="95.0" layoutY="409.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-                                          <RadioButton fx:id="creatureCultureCustom" layoutX="155.0" layoutY="234.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-                                          <RadioButton fx:id="creatureBluffGood" layoutX="115.0" layoutY="184.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                          <RadioButton fx:id="creatureSenseMotiveMaster" layoutX="95.0" layoutY="534.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="17" />
-                                          <RadioButton fx:id="creatureLifeScienceMaster" layoutX="95.0" layoutY="359.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                                          <TextField fx:id="creatureMedicineCustomValue" layoutX="175.0" layoutY="380.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="11" />
-                                          <Label layoutX="6.0" layoutY="409.0" text="Mysticism" GridPane.rowIndex="12" />
-                                          <RadioButton fx:id="creatureAthleticsMaster" layoutX="95.0" layoutY="159.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <RadioButton fx:id="creaturePerceptionNone" layoutX="155.0" layoutY="434.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="13" />
-                                          <TextField fx:id="creatureAcrobaticsCustomValue" layoutX="175.0" layoutY="130.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                                          <TextField fx:id="creaturePilotingCustomValue" layoutX="175.0" layoutY="480.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="15" />
-                                          <TextField fx:id="creatureProfessionCustomValue" layoutX="175.0" layoutY="505.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="16" />
-                                          <RadioButton fx:id="creatureEngineeringCustom" layoutX="136.0" layoutY="309.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="8" />
-                                          <TextField fx:id="creatureSleightOfHandCustomValue" layoutX="175.0" layoutY="555.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="18" />
-                                          <Label layoutX="6.0" layoutY="209.0" text="Computers" GridPane.rowIndex="4" />
-                                          <RadioButton fx:id="creatureLifeScienceGood" layoutX="115.0" layoutY="359.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="10" />
-                                          <TextField fx:id="creatureBluffCustomValue" layoutX="175.0" layoutY="180.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-                                          <RadioButton fx:id="creatureStealthNone" layoutX="155.0" layoutY="584.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="19" />
-                                          <RadioButton fx:id="creatureIntimidateCustom" layoutX="137.0" layoutY="334.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="9" />
-                                          <Label layoutX="6.0" layoutY="234.0" text="Culture" GridPane.rowIndex="5" />
-                                          <TextField fx:id="creaturePerceptionCustomValue" layoutX="175.0" layoutY="430.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="13" />
-                                          <Label layoutX="6.0" layoutY="584.0" text="Stealth" GridPane.rowIndex="19" />
-                                          <Label layoutX="6.0" layoutY="509.0" text="Profession" GridPane.rowIndex="16" />
-                                          <RadioButton fx:id="creatureSleightOfHandMaster" layoutX="95.0" layoutY="559.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="18" />
-                                          <RadioButton fx:id="creaturePilotingNone" layoutX="155.0" layoutY="484.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="15" />
-                                          <RadioButton fx:id="creatureStealthGood" layoutX="115.0" layoutY="584.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="19" />
-                                          <Label layoutX="6.0" layoutY="184.0" text="Bluff" GridPane.rowIndex="3" />
-                                          <RadioButton fx:id="creatureEngineeringGood" layoutX="116.0" layoutY="309.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-                                          <TextField fx:id="creatureLifeScienceCustomValue" layoutX="175.0" layoutY="355.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="10" />
-                                          <RadioButton fx:id="creatureAcrobaticsGood" layoutX="115.0" layoutY="134.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <RadioButton fx:id="creaturePilotingCustom" layoutX="135.0" layoutY="484.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="15" />
-                                          <RadioButton fx:id="creatureComputersGood" layoutX="115.0" layoutY="209.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                                          <RadioButton fx:id="creatureMysticismGood" layoutX="115.0" layoutY="409.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="12" />
-                                          <TextField fx:id="creatureStealthCustomValue" layoutX="175.0" layoutY="580.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="19" />
-                                          <RadioButton fx:id="creatureSenseMotiveCustom" layoutX="155.0" layoutY="534.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="17" />
-                                          <Label layoutX="6.0" layoutY="534.0" text="Sense Motive" GridPane.rowIndex="17" />
-                                          <TextField fx:id="creatureIntimidateCustomValue" layoutX="177.0" layoutY="330.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="9" />
-                                          <RadioButton fx:id="creatureStealthMaster" layoutX="95.0" layoutY="584.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="19" />
-                                          <RadioButton fx:id="creatureCultureNone" layoutX="135.0" layoutY="234.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                                          <RadioButton fx:id="creaturePhysicalScienceGood" layoutX="115.0" layoutY="459.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="14" />
-                                          <TextField fx:id="creatureMysticismCustomValue" layoutX="175.0" layoutY="405.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="12" />
-                                          <Label layoutX="6.0" layoutY="484.0" text="Piloting" GridPane.rowIndex="15" />
-                                          <TextField fx:id="creatureAthleticsCustomValue" layoutX="175.0" layoutY="155.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                                          <RadioButton fx:id="creatureAthleticsGood" layoutX="115.0" layoutY="159.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                          <TextField fx:id="creatureComputersCustomValue" layoutX="175.0" layoutY="205.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-                                          <TextField fx:id="creatureDisguiseCustomValue" layoutX="176.0" layoutY="280.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="7" />
-                                          <Label layoutX="6.0" layoutY="559.0" text="Sleight of Hand" GridPane.rowIndex="18" />
-                                          <RadioButton fx:id="creatureAthleticsNone" layoutX="135.0" layoutY="159.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                          <RadioButton fx:id="creatureDiplomacyNone" layoutX="156.0" layoutY="259.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                                          <RadioButton fx:id="creatureSurvivalCustom" layoutX="135.0" layoutY="609.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="20" />
-                                          <RadioButton fx:id="creatureEngineeringMaster" layoutX="96.0" layoutY="309.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                                          <RadioButton fx:id="creaturePhysicalScienceMaster" layoutX="95.0" layoutY="459.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="14" />
-                                          <TextField fx:id="creatureDiplomacyCustomValue" layoutX="176.0" layoutY="255.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="6" />
-                                          <RadioButton fx:id="creatureBluffCustom" layoutX="155.0" layoutY="184.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                                          <RadioButton fx:id="creatureMedicineGood" layoutX="115.0" layoutY="384.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="11" />
-                                          <RadioButton fx:id="creatureMysticismNone" layoutX="155.0" layoutY="409.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="12" />
-                                          <Label layoutX="7.0" layoutY="259.0" text="Diplomacy" GridPane.rowIndex="6" />
-                                          <RadioButton fx:id="creatureAcrobaticsMaster" layoutX="95.0" layoutY="134.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <RadioButton fx:id="creatureDiplomacyGood" layoutX="116.0" layoutY="259.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                                          <TextField fx:id="creatureSurvivalCustomValue" layoutX="175.0" layoutY="605.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="20" />
-                                          <RadioButton fx:id="creatureMedicineNone" layoutX="155.0" layoutY="384.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="11" />
-                                          <Label layoutX="7.0" layoutY="284.0" text="Disguise" GridPane.rowIndex="7" />
-                                          <RadioButton fx:id="creatureLifeScienceNone" layoutX="155.0" layoutY="359.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="10" />
-                                          <RadioButton fx:id="creatureAcrobaticsCustom" layoutX="155.0" layoutY="134.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                          <RadioButton fx:id="creatureComputersCustom" layoutX="155.0" layoutY="209.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                                          <RadioButton fx:id="creatureIntimidateMaster" layoutX="97.0" layoutY="334.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                                          <RadioButton fx:id="creaturePerceptionCustom" layoutX="135.0" layoutY="434.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="13" />
-                                          <RadioButton fx:id="creatureSleightOfHandCustom" layoutX="155.0" layoutY="559.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="18" />
-                                          <RadioButton fx:id="creatureComputersMaster" layoutX="95.0" layoutY="209.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                          <RadioButton fx:id="creatureLifeScienceCustom" layoutX="135.0" layoutY="359.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="10" />
-                                          <RadioButton fx:id="creaturePhysicalScienceCustom" layoutX="135.0" layoutY="459.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="14" />
-                                          <RadioButton fx:id="creatureProfessionMaster" layoutX="95.0" layoutY="509.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="16" />
-                                          <RadioButton fx:id="creatureDiplomacyCustom" layoutX="136.0" layoutY="259.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="6" />
-                                          <RadioButton fx:id="creaturePerceptionGood" layoutX="115.0" layoutY="434.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="13" />
-                                          <RadioButton fx:id="creaturePilotingGood" layoutX="115.0" layoutY="484.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="15" />
-                                          <RadioButton fx:id="creatureEngineeringNone" layoutX="156.0" layoutY="309.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="8" />
-                                          <TextField fx:id="creatureEngineeringCustomValue" layoutX="176.0" layoutY="305.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="8" />
-                                          <RadioButton fx:id="creaturePhysicalScienceNone" layoutX="155.0" layoutY="459.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="14" />
-                                          <RadioButton fx:id="creatureIntimidateGood" layoutX="117.0" layoutY="334.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="9" />
-                                          <RadioButton fx:id="creatureStealthCustom" layoutX="135.0" layoutY="584.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="19" />
-                                          <Label layoutX="6.0" layoutY="134.0" text="Acrobatics" GridPane.rowIndex="1" />
-                                          <Label layoutX="6.0" layoutY="384.0" text="Medicine" GridPane.rowIndex="11" />
-                                          <RadioButton fx:id="creatureSleightOfHandGood" layoutX="115.0" layoutY="559.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="18" />
-                                          <Label layoutX="6.0" layoutY="159.0" text="Athletics" GridPane.rowIndex="2" />
-                                          <RadioButton fx:id="creatureProfessionCustom" layoutX="135.0" layoutY="509.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="16" />
-                                          <Label layoutX="7.0" layoutY="309.0" text="Engineering" GridPane.rowIndex="8" />
-                                          <RadioButton fx:id="creatureProfessionNone" layoutX="155.0" layoutY="509.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="16" />
-                                          <RadioButton fx:id="creatureDiplomacyMaster" layoutX="96.0" layoutY="259.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                          <RadioButton fx:id="creatureMysticismCustom" layoutX="135.0" layoutY="409.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="12" />
-                                          <RadioButton fx:id="creaturePilotingMaster" layoutX="95.0" layoutY="484.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="15" />
                                           <Label layoutX="6.0" layoutY="109.0" style="-fx-font-weight: bold;" text="Skill" />
-                                          <RadioButton fx:id="creatureBluffMaster" layoutX="95.0" layoutY="184.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <Label layoutX="6.0" layoutY="459.0" text="Physical Science" GridPane.rowIndex="14" />
-                                          <RadioButton fx:id="creatureMedicineMaster" layoutX="95.0" layoutY="384.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                                          <Label layoutX="8.0" layoutY="334.0" text="Intimidate" GridPane.rowIndex="9" />
-                                          <Label layoutX="6.0" layoutY="359.0" text="Life Science" GridPane.rowIndex="10" />
-                                          <Label layoutX="6.0" layoutY="434.0" text="Perception" GridPane.rowIndex="13" />
-                                          <RadioButton fx:id="creatureAthleticsCustom" layoutX="155.0" layoutY="159.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                                          <TextField fx:id="creatureSenseMotiveCustomValue" layoutX="175.0" layoutY="530.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="17" />
-                                          <RadioButton fx:id="creatureDisguiseMaster" layoutX="96.0" layoutY="284.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                          <RadioButton fx:id="creatureDisguiseGood" layoutX="116.0" layoutY="284.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                                          <RadioButton fx:id="creatureDisguiseCustom" layoutX="136.0" layoutY="284.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="7" />
-                                          <RadioButton fx:id="creatureMedicineCustom" layoutX="135.0" layoutY="384.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="11" />
-                                          <RadioButton fx:id="creatureSurvivalMaster" layoutX="95.0" layoutY="609.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="20" />
-                                          <RadioButton fx:id="creatureComputersNone" layoutX="135.0" layoutY="209.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                                           <Label style="-fx-font-weight: bold;" text="M" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                                           <Label style="-fx-font-weight: bold;" text="G" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                                           <Label style="-fx-font-weight: bold;" text="X" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
                                           <Label style="-fx-font-weight: bold;" text="Custom" GridPane.columnIndex="4" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" />
+                                          <Label layoutX="6.0" layoutY="134.0" text="Acrobatics" GridPane.rowIndex="1" />
+                                          <RadioButton fx:id="creatureAcrobaticsMaster" layoutX="95.0" layoutY="134.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <RadioButton fx:id="creatureAcrobaticsGood" layoutX="115.0" layoutY="134.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <RadioButton fx:id="creatureAcrobaticsNone" layoutX="135.0" layoutY="134.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <RadioButton fx:id="creatureAcrobaticsCustom" layoutX="155.0" layoutY="134.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                          <TextField fx:id="creatureAcrobaticsCustomValue" layoutX="175.0" layoutY="130.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                          <Label layoutX="6.0" layoutY="159.0" text="Athletics" GridPane.rowIndex="2" />
+                                          <RadioButton fx:id="creatureAthleticsMaster" layoutX="95.0" layoutY="159.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <RadioButton fx:id="creatureAthleticsGood" layoutX="115.0" layoutY="159.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <RadioButton fx:id="creatureAthleticsNone" layoutX="135.0" layoutY="159.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                          <RadioButton fx:id="creatureAthleticsCustom" layoutX="155.0" layoutY="159.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                          <TextField fx:id="creatureAthleticsCustomValue" layoutX="175.0" layoutY="155.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                                          <Label layoutX="6.0" layoutY="184.0" text="Bluff" GridPane.rowIndex="3" />
+                                          <RadioButton fx:id="creatureBluffMaster" layoutX="95.0" layoutY="184.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <RadioButton fx:id="creatureBluffGood" layoutX="115.0" layoutY="184.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                          <RadioButton fx:id="creatureBluffNone" layoutX="135.0" layoutY="184.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                          <RadioButton fx:id="creatureBluffCustom" layoutX="155.0" layoutY="184.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                                          <TextField fx:id="creatureBluffCustomValue" layoutX="175.0" layoutY="180.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                                          <Label layoutX="6.0" layoutY="209.0" text="Computers" GridPane.rowIndex="4" />
+                                          <RadioButton fx:id="creatureComputersMaster" layoutX="95.0" layoutY="209.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <RadioButton fx:id="creatureComputersGood" layoutX="115.0" layoutY="209.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                          <RadioButton fx:id="creatureComputersNone" layoutX="135.0" layoutY="209.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                          <RadioButton fx:id="creatureComputersCustom" layoutX="155.0" layoutY="209.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                                          <TextField fx:id="creatureComputersCustomValue" layoutX="175.0" layoutY="205.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+                                          <Label layoutX="6.0" layoutY="234.0" text="Culture" GridPane.rowIndex="5" />
+                                          <RadioButton fx:id="creatureCultureMaster" layoutX="95.0" layoutY="234.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <RadioButton fx:id="creatureCultureGood" layoutX="115.0" layoutY="234.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                                          <RadioButton fx:id="creatureCultureNone" layoutX="135.0" layoutY="234.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                          <RadioButton fx:id="creatureCultureCustom" layoutX="155.0" layoutY="234.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                                          <TextField fx:id="creatureCultureCustomValue" layoutX="175.0" layoutY="230.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+                                          <Label layoutX="7.0" layoutY="259.0" text="Diplomacy" GridPane.rowIndex="6" />
+                                          <RadioButton fx:id="creatureDiplomacyMaster" layoutX="96.0" layoutY="259.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                          <RadioButton fx:id="creatureDiplomacyGood" layoutX="116.0" layoutY="259.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                                          <RadioButton fx:id="creatureDiplomacyNone" layoutX="156.0" layoutY="259.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                                          <RadioButton fx:id="creatureDiplomacyCustom" layoutX="136.0" layoutY="259.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+                                          <TextField fx:id="creatureDiplomacyCustomValue" layoutX="176.0" layoutY="255.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+                                          <Label layoutX="7.0" layoutY="284.0" text="Disguise" GridPane.rowIndex="7" />
+                                          <RadioButton fx:id="creatureDisguiseMaster" layoutX="96.0" layoutY="284.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                          <RadioButton fx:id="creatureDisguiseGood" layoutX="116.0" layoutY="284.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                                          <RadioButton fx:id="creatureDisguiseNone" layoutX="156.0" layoutY="284.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+                                          <RadioButton fx:id="creatureDisguiseCustom" layoutX="136.0" layoutY="284.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+                                          <TextField fx:id="creatureDisguiseCustomValue" layoutX="176.0" layoutY="280.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="7" />
+                                          <Label layoutX="7.0" layoutY="309.0" text="Engineering" GridPane.rowIndex="8" />
+                                          <RadioButton fx:id="creatureEngineeringMaster" layoutX="96.0" layoutY="309.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                          <RadioButton fx:id="creatureEngineeringGood" layoutX="116.0" layoutY="309.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                                          <RadioButton fx:id="creatureEngineeringNone" layoutX="156.0" layoutY="309.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+                                          <RadioButton fx:id="creatureEngineeringCustom" layoutX="136.0" layoutY="309.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+                                          <TextField fx:id="creatureEngineeringCustomValue" layoutX="176.0" layoutY="305.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="8" />
+                                          <Label layoutX="8.0" layoutY="334.0" text="Intimidate" GridPane.rowIndex="9" />
+                                          <RadioButton fx:id="creatureIntimidateMaster" layoutX="97.0" layoutY="334.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                          <RadioButton fx:id="creatureIntimidateGood" layoutX="117.0" layoutY="334.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                                          <RadioButton fx:id="creatureIntimidateNone" layoutX="157.0" layoutY="334.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+                                          <RadioButton fx:id="creatureIntimidateCustom" layoutX="137.0" layoutY="334.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+                                          <TextField fx:id="creatureIntimidateCustomValue" layoutX="177.0" layoutY="330.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="9" />
+                                          <Label layoutX="6.0" layoutY="359.0" text="Life Science" GridPane.rowIndex="10" />
+                                          <RadioButton fx:id="creatureLifeScienceMaster" layoutX="95.0" layoutY="359.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                          <RadioButton fx:id="creatureLifeScienceGood" layoutX="115.0" layoutY="359.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+                                          <RadioButton fx:id="creatureLifeScienceNone" layoutX="155.0" layoutY="359.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+                                          <RadioButton fx:id="creatureLifeScienceCustom" layoutX="135.0" layoutY="359.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="10" />
+                                          <TextField fx:id="creatureLifeScienceCustomValue" layoutX="175.0" layoutY="355.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="10" />
+                                          <Label layoutX="6.0" layoutY="384.0" text="Medicine" GridPane.rowIndex="11" />
+                                          <RadioButton fx:id="creatureMedicineMaster" layoutX="95.0" layoutY="384.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                                          <RadioButton fx:id="creatureMedicineGood" layoutX="115.0" layoutY="384.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="11" />
+                                          <RadioButton fx:id="creatureMedicineNone" layoutX="155.0" layoutY="384.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="11" />
+                                          <RadioButton fx:id="creatureMedicineCustom" layoutX="135.0" layoutY="384.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="11" />
+                                          <TextField fx:id="creatureMedicineCustomValue" layoutX="175.0" layoutY="380.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="11" />
+                                          <Label layoutX="6.0" layoutY="409.0" text="Mysticism" GridPane.rowIndex="12" />
+                                          <RadioButton fx:id="creatureMysticismMaster" layoutX="95.0" layoutY="409.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                                          <RadioButton fx:id="creatureMysticismGood" layoutX="115.0" layoutY="409.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="12" />
+                                          <RadioButton fx:id="creatureMysticismNone" layoutX="155.0" layoutY="409.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="12" />
+                                          <RadioButton fx:id="creatureMysticismCustom" layoutX="135.0" layoutY="409.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="12" />
+                                          <TextField fx:id="creatureMysticismCustomValue" layoutX="175.0" layoutY="405.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="12" />
+                                          <Label layoutX="6.0" layoutY="434.0" text="Perception" GridPane.rowIndex="13" />
+                                          <RadioButton fx:id="creaturePerceptionMaster" layoutX="95.0" layoutY="434.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                                          <RadioButton fx:id="creaturePerceptionGood" layoutX="115.0" layoutY="434.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="13" />
+                                          <RadioButton fx:id="creaturePerceptionNone" layoutX="155.0" layoutY="434.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="13" />
+                                          <RadioButton fx:id="creaturePerceptionCustom" layoutX="135.0" layoutY="434.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="13" />
+                                          <TextField fx:id="creaturePerceptionCustomValue" layoutX="175.0" layoutY="430.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="13" />
+                                          <Label layoutX="6.0" layoutY="459.0" text="Physical Science" GridPane.rowIndex="14" />
+                                          <RadioButton fx:id="creaturePhysicalScienceMaster" layoutX="95.0" layoutY="459.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                                          <RadioButton fx:id="creaturePhysicalScienceGood" layoutX="115.0" layoutY="459.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="14" />
+                                          <RadioButton fx:id="creaturePhysicalScienceNone" layoutX="155.0" layoutY="459.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="14" />
+                                          <RadioButton fx:id="creaturePhysicalScienceCustom" layoutX="135.0" layoutY="459.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="14" />
+                                          <TextField fx:id="creaturePhysicalScienceCustomValue" layoutX="175.0" layoutY="455.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="14" />
+                                          <Label layoutX="6.0" layoutY="484.0" text="Piloting" GridPane.rowIndex="15" />
+                                          <RadioButton fx:id="creaturePilotingMaster" layoutX="95.0" layoutY="484.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                                          <RadioButton fx:id="creaturePilotingGood" layoutX="115.0" layoutY="484.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="15" />
+                                          <RadioButton fx:id="creaturePilotingNone" layoutX="155.0" layoutY="484.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="15" />
+                                          <RadioButton fx:id="creaturePilotingCustom" layoutX="135.0" layoutY="484.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="15" />
+                                          <TextField fx:id="creaturePilotingCustomValue" layoutX="175.0" layoutY="480.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="15" />
+                                          <Label layoutX="6.0" layoutY="509.0" text="Profession" GridPane.rowIndex="16" />
+                                          <RadioButton fx:id="creatureProfessionMaster" layoutX="95.0" layoutY="509.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+                                          <RadioButton fx:id="creatureProfessionGood" layoutX="115.0" layoutY="509.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="16" />
+                                          <RadioButton fx:id="creatureProfessionNone" layoutX="155.0" layoutY="509.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="16" />
+                                          <RadioButton fx:id="creatureProfessionCustom" layoutX="135.0" layoutY="509.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="16" />
+                                          <TextField fx:id="creatureProfessionCustomValue" layoutX="175.0" layoutY="505.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="16" />
+                                          <Label layoutX="6.0" layoutY="534.0" text="Sense Motive" GridPane.rowIndex="17" />
+                                          <RadioButton fx:id="creatureSenseMotiveMaster" layoutX="95.0" layoutY="534.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="17" />
+                                          <RadioButton fx:id="creatureSenseMotiveGood" layoutX="115.0" layoutY="534.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="17" />
+                                          <RadioButton fx:id="creatureSenseMotiveNone" layoutX="135.0" layoutY="534.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="17" />
+                                          <RadioButton fx:id="creatureSenseMotiveCustom" layoutX="155.0" layoutY="534.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="17" />
+                                          <TextField fx:id="creatureSenseMotiveCustomValue" layoutX="175.0" layoutY="530.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="17" />
+                                          <Label layoutX="6.0" layoutY="559.0" text="Sleight of Hand" GridPane.rowIndex="18" />
+                                          <RadioButton fx:id="creatureSleightOfHandMaster" layoutX="95.0" layoutY="559.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+                                          <RadioButton fx:id="creatureSleightOfHandGood" layoutX="115.0" layoutY="559.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="18" />
+                                          <RadioButton fx:id="creatureSleightOfHandNone" layoutX="135.0" layoutY="559.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="18" />
+                                          <RadioButton fx:id="creatureSleightOfHandCustom" layoutX="155.0" layoutY="559.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="18" />
+                                          <TextField fx:id="creatureSleightOfHandCustomValue" layoutX="175.0" layoutY="555.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="18" />
+                                          <Label layoutX="6.0" layoutY="584.0" text="Stealth" GridPane.rowIndex="19" />
+                                          <RadioButton fx:id="creatureStealthMaster" layoutX="95.0" layoutY="584.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="19" />
+                                          <RadioButton fx:id="creatureStealthGood" layoutX="115.0" layoutY="584.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="19" />
+                                          <RadioButton fx:id="creatureStealthNone" layoutX="155.0" layoutY="584.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="19" />
+                                          <RadioButton fx:id="creatureStealthCustom" layoutX="135.0" layoutY="584.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="19" />
+                                          <TextField fx:id="creatureStealthCustomValue" layoutX="175.0" layoutY="580.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="19" />
+                                          <Label layoutX="6.0" layoutY="609.0" text="Survival" GridPane.rowIndex="20" />
+                                          <RadioButton fx:id="creatureSurvivalMaster" layoutX="95.0" layoutY="609.0" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="20" />
+                                          <RadioButton fx:id="creatureSurvivalGood" layoutX="115.0" layoutY="609.0" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="20" />
+                                          <RadioButton fx:id="creatureSurvivalNone" layoutX="155.0" layoutY="609.0" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="20" />
+                                          <RadioButton fx:id="creatureSurvivalCustom" layoutX="135.0" layoutY="609.0" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="20" />
+                                          <TextField fx:id="creatureSurvivalCustomValue" layoutX="175.0" layoutY="605.0" prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="5" GridPane.rowIndex="20" />
                                        </children>
                                     </GridPane>
                                  </children></AnchorPane>
                           </content>
                         </Tab>
-                        <Tab disable="true" text="8. Spells">
+                        <Tab fx:id="step8" disable="true" text="8. Spells">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                           </content>
                         </Tab>
-                        <Tab disable="true" text="9. Final Check">
+                        <Tab fx:id="step9" disable="true" text="9. Final Check">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                           </content>

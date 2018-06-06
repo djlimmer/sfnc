@@ -282,10 +282,23 @@ public class Creature {
             this.type = reader.readLine();
             this.useTypeAdjustments = !("false".equals(reader.readLine()));
             this.typeOption = Integer.parseInt(reader.readLine());
-            this.generalSubtypes = new ArrayList<>(Arrays.asList(reader.readLine().split(",")));
-            this.humanoidSubtypes = new ArrayList<>(Arrays.asList(reader.readLine().split(",")));
-            this.outsiderSubtypes = new ArrayList<>(Arrays.asList(reader.readLine().split(",")));
-            this.freeformSubtypes = new ArrayList<>(Arrays.asList(reader.readLine().split(",")));
+            String subtypeString = reader.readLine();
+            if(subtypeString.equals(""))
+                this.generalSubtypes = new ArrayList<>();
+            else
+                this.generalSubtypes = new ArrayList<>(Arrays.asList(subtypeString.split(",")));
+            if((subtypeString = reader.readLine()).equals(""))
+                this.humanoidSubtypes = new ArrayList<>();
+            else
+                this.humanoidSubtypes = new ArrayList<>(Arrays.asList(subtypeString.split(",")));
+            if((subtypeString = reader.readLine()).equals(""))
+                this.outsiderSubtypes = new ArrayList<>();
+            else
+                this.outsiderSubtypes = new ArrayList<>(Arrays.asList(subtypeString.split(",")));
+            if((subtypeString = reader.readLine()).equals(""))
+                this.freeformSubtypes = new ArrayList<>();
+            else
+                this.freeformSubtypes = new ArrayList<>(Arrays.asList(subtypeString.split(",")));
             this.chosenAbilities = new ArrayList<>();
             Integer n = Integer.parseInt(reader.readLine());
             for (Integer i = 0; i < n; i++) {

@@ -37,7 +37,7 @@
                <children>
                   <TabPane layoutX="21.0" layoutY="14.0" prefHeight="573.0" prefWidth="235.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <tabs>
-                      <Tab text="0. Name and CR">
+                      <Tab fx:id="step0" text="0. Name and CR">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -61,7 +61,7 @@
                               </AnchorPane>
                         </content>
                       </Tab>
-                      <Tab text="1. Array">
+                      <Tab fx:id="step1" text="1. Array">
                            <content>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                  <children>
@@ -70,7 +70,7 @@
                                  </children>
                               </AnchorPane>
                            </content></Tab>
-                        <Tab text="2. Type">
+                        <Tab fx:id="step2" text="2. Type">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -83,7 +83,7 @@
                                  </children></AnchorPane>
                           </content>
                         </Tab>
-                        <Tab text="3. Subtypes">
+                        <Tab fx:id="step3" text="3. Subtypes">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -99,17 +99,17 @@
                                  </children></AnchorPane>
                           </content>
                         </Tab>
-                        <Tab disable="true" text="4. Class">
+                        <Tab fx:id="step4" disable="true" text="4. Class">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                           </content>
                         </Tab>
-                        <Tab disable="true" text="5. Templates">
+                        <Tab fx:id="step5" disable="true" text="5. Templates">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                           </content>
                         </Tab>
-                        <Tab text="6. Special Abilities">
+                        <Tab fx:id="step6" text="6. Special Abilities">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -124,13 +124,13 @@
                                     <Label layoutX="14.0" layoutY="547.0" style="-fx-font-weight: bold;" text="Make Your Own Ability" />
                                     <Label layoutX="14.0" layoutY="567.0" prefHeight="25.0" text="Name:" />
                                     <Label layoutX="14.0" layoutY="599.0" prefHeight="25.0" text="Location:" />
-                                    <Button fx:id="creatureAddCustomAbilityButton" layoutX="66.0" layoutY="648.0" mnemonicParsing="false" text="AddAbility" />
-                                    <TextField fx:id="creatureCustomAbilityNameInput" layoutX="68.0" layoutY="567.0" prefHeight="25.0" prefWidth="133.0" />
-                                    <ComboBox fx:id="creatureCustomAbilityLocationInput" layoutX="68.0" layoutY="599.0" prefHeight="25.0" prefWidth="132.0" />
+                                    <Button fx:id="creatureAddCustomAbilityButton" disable="true" layoutX="66.0" layoutY="648.0" mnemonicParsing="false" text="Add Ability" />
+                                    <TextField fx:id="creatureCustomAbilityNameInput" disable="true" layoutX="68.0" layoutY="567.0" prefHeight="25.0" prefWidth="133.0" />
+                                    <ComboBox fx:id="creatureCustomAbilityLocationInput" disable="true" layoutX="68.0" layoutY="599.0" prefHeight="25.0" prefWidth="132.0" />
                                  </children></AnchorPane>
                           </content>
                         </Tab>
-                        <Tab text="7. Skills">
+                        <Tab fx:id="step7" text="7. Skills">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -305,12 +305,12 @@
                                  </children></AnchorPane>
                           </content>
                         </Tab>
-                        <Tab disable="true" text="8. Spells">
+                        <Tab fx:id="step8" disable="true" text="8. Spells">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                           </content>
                         </Tab>
-                        <Tab disable="true" text="9. Final Check">
+                        <Tab fx:id="step9" disable="true" text="9. Final Check">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                           </content>
