@@ -172,6 +172,8 @@ public class sfncFXMLController implements Initializable {
         String xpLine = "XP " + creature.getXPString() + " (" + creature.getArray() + ")";
         // create type line
         String typeLine = "";
+        typeLine += creature.getAlignment().getAbbrev() + " ";
+        typeLine += creature.getSize() + " ";
         if (!"".equals(creature.getType())) {
             typeLine += creature.getType();
             List<String> subtypes = creature.getAllSubtypes();
@@ -237,7 +239,14 @@ public class sfncFXMLController implements Initializable {
         // melee goes here
         // multiattack goes here
         // ranged goes here
-        // space and reach go here
+        String spaceLine = "";
+        // needs to handle tall vs. long reach, which means a UI dongle.
+        // consider having the monster handle basic space and reach, and this function
+        //  adds any modifiers
+        if ((!creature.size.getSpace().equals("5 ft.")) || (creature.size.getReachTall() != 5)) {
+            spaceLine += "Space " + creature.size.getSpace()
+                    + "; " + "Reach " + creature.size.getReachTall();
+        }
         addSemicolon = false;
         String offensiveAbilitiesLine = "";
         if (hasAbilitiesByLocation(Location.OFFENSIVE_ABILITIES)) {
@@ -293,8 +302,8 @@ public class sfncFXMLController implements Initializable {
             // writer.println(meleeLine);
             // writer.println(multiattackLine);
             // writer.println(rangedLine);
-            // if (!"".equals(spaceLine))
-            //  writer.println(spaceLine);
+             if (!"".equals(spaceLine))
+                 writer.println(spaceLine);
             if (!"".equals(offensiveAbilitiesLine))
                 writer.println(offensiveAbilitiesLine);
             // if (!"".equals(SLABlock)
@@ -324,6 +333,8 @@ public class sfncFXMLController implements Initializable {
     @FXML   private Tab step0 = new Tab();
     @FXML   private TextField creatureNameInput = new TextField();
     @FXML   private ComboBox creatureCRInput = new ComboBox();
+    @FXML   private ComboBox creatureAlignmentInput = new ComboBox();
+    @FXML   private ComboBox creatureSizeInput = new ComboBox();
 
     // Step 1 controls
     @FXML   private Tab step1 = new Tab();
@@ -538,7 +549,10 @@ public class sfncFXMLController implements Initializable {
     // melee
     // multiattack
     // ranged
-    // space and reach
+    private Label creatureSpaceLabel = new Label("Space ");
+    private Label creatureSpaceDisplay = new Label();
+    private Label creatureReachLabel = new Label("Reach ");
+    private Label creatureReachDisplay = new Label();
     private Label creatureOffensiveAbilitiesLabel = new Label("Offensive Abilities ");
     private Label creatureOffensiveAbilitiesDisplay = new Label();
     // spell-like abilities
@@ -559,6 +573,8 @@ public class sfncFXMLController implements Initializable {
         // step 0
         creatureNameInput.setText(creature.getName());
         creatureCRInput.setValue(creature.getCRDisplayString());
+        creatureAlignmentInput.setValue(creature.getAlignment());
+        creatureSizeInput.setValue(creature.getSize());
         // step 1
         creatureArrayInput.setValue(creature.getArray());
         // step 2
@@ -1754,7 +1770,9 @@ public class sfncFXMLController implements Initializable {
         creatureSensesBlock.getChildren().clear();
         // set up type & subtype display
         if (!"".equals(creature.getType())) {
-            String typeDisplayString = creature.getType();
+            String typeDisplayString = creature.alignment.getAbbrev() + " " 
+                    + creature.getSize() + " "
+                    + creature.getType();
             List<String> subtypes = creature.getAllSubtypes();
             if (subtypes != null) {
                 Collections.sort(subtypes);
@@ -1830,14 +1848,26 @@ public class sfncFXMLController implements Initializable {
         //update offensive abilities block
         creatureOffensiveAbilitiesBlock.getChildren().clear();
         addSemicolon = false;
+        Boolean addNewLine = false;
         // speed goes here
         // melee goes here
         // multiattack goes here
         // ranged goes here
-        // space and reach go here
+        if ((!creature.size.getSpace().equals("5 ft.")) || (creature.size.getReachTall() != 5)) {
+            if (addNewLine)
+                creatureOffensiveAbilitiesBlock.getChildren().addAll(new Text("\n"));
+            creatureSpaceDisplay.setText(creature.size.getSpace());
+            creatureReachDisplay.setText(Integer.toString(creature.size.getReachTall())+" ft.");
+            creatureOffensiveAbilitiesBlock.getChildren().addAll(
+                    creatureSpaceLabel, creatureSpaceDisplay,
+                    new Text("; "),
+                    creatureReachLabel, creatureReachDisplay
+            );
+            addNewLine = true;
+        }
         if (hasAbilitiesByLocation(Location.OFFENSIVE_ABILITIES)) {
-            // remove comment line after speed is in
-            // creatureOffensiveAbilitiesBlock.getChildren().addAll(new Text("\n"));
+            if (addNewLine)
+                creatureOffensiveAbilitiesBlock.getChildren().addAll(new Text("\n"));
             creatureOffensiveAbilitiesDisplay.setText(makeAbilityStringByLocation(Location.OFFENSIVE_ABILITIES));
             creatureOffensiveAbilitiesBlock.getChildren().addAll(creatureOffensiveAbilitiesLabel,creatureOffensiveAbilitiesDisplay);
         }
@@ -1956,6 +1986,8 @@ public class sfncFXMLController implements Initializable {
         creatureSkillsLabel.setStyle("-fx-font-weight: bold");
         creatureLanguagesLabel.setStyle("-fx-font-weight: bold");
         creatureOtherAbilitiesLabel.setStyle("-fx-font-weight: bold");
+        creatureSpaceLabel.setStyle("-fx-font-weight: bold");
+        creatureReachLabel.setStyle("-fx-font-weight: bold");
         
         updateTabStatus();
 
@@ -1987,6 +2019,42 @@ public class sfncFXMLController implements Initializable {
                     updateStatBlock();
                     updateWindowTitle();
                     updateTabStatus();
+                }
+            }
+        );
+        
+        creatureAlignmentInput.setItems(FXCollections.observableArrayList(
+                Arrays.stream(Alignment.values())
+                        .map(Alignment::toString)
+                        .collect(Collectors.toList())  
+        ));
+
+        creatureAlignmentInput.getSelectionModel().selectedIndexProperty().addListener(
+            new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue observable,
+                        Number oldValue, Number newValue) {
+                    creature.setAlignmentFromComboBox(newValue.intValue());
+                    updateStatBlock();
+                    updateWindowTitle();
+                }
+            }
+        );
+        
+        creatureSizeInput.setItems(FXCollections.observableArrayList(
+                Arrays.stream(Size.values())
+                        .map(Size::toString)
+                        .collect(Collectors.toList())  
+        ));
+
+        creatureSizeInput.getSelectionModel().selectedIndexProperty().addListener(
+            new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue observable,
+                        Number oldValue, Number newValue) {
+                    creature.setSizeFromComboBox(newValue.intValue());
+                    updateStatBlock();
+                    updateWindowTitle();
                 }
             }
         );

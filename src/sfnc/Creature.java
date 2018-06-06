@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.function.Consumer;
 
 /**
  *
@@ -24,6 +23,8 @@ import java.util.function.Consumer;
 public class Creature {
     String name;
     ChallengeRating CR;
+    Alignment alignment;
+    Size size;
     String array;
     String type;
     Boolean useTypeAdjustments;
@@ -62,6 +63,8 @@ public class Creature {
     Creature() {
         this.name = "";
         this.CR = ChallengeRating.NONE;
+        this.alignment = Alignment.NEUTRAL;
+        this.size = Size.MEDIUM;
         this.array = "";
         this.type = "";
         this.useTypeAdjustments = true;
@@ -112,6 +115,14 @@ public class Creature {
         return CR.toString();
     }
     
+    public Alignment getAlignment() {
+        return alignment;
+    }
+    
+    public Size getSize() {
+        return size;
+    }
+
     public Integer getXP() {
         return CR.getXP();
     }
@@ -190,6 +201,28 @@ public class Creature {
         this.hasChanged = true;
     }
 
+    public void setAlignment(Alignment a) {
+        this.alignment = a;
+        this.hasChanged = true;
+    }
+    
+    public void setAlignmentFromComboBox(Integer i) {
+        // check for legal bounds here
+        this.alignment = Alignment.values()[i];
+        this.hasChanged = true;
+    }
+    
+    public void setSize(Size s) {
+        this.size = s;
+        this.hasChanged = true;
+    }
+    
+    public void setSizeFromComboBox(Integer i) {
+        // check for legal bounds here
+        this.size = Size.values()[i];
+        this.hasChanged = true;
+    }
+    
     void setArray(String a) {
         this.array = a;
         this.hasChanged = true;
@@ -278,6 +311,8 @@ public class Creature {
             }
             this.name = reader.readLine();
             this.CR = ChallengeRating.valueOf(reader.readLine());
+            this.alignment = Alignment.valueOf(reader.readLine());
+            this.size = Size.valueOf(reader.readLine());
             this.array = reader.readLine();
             this.type = reader.readLine();
             this.useTypeAdjustments = !("false".equals(reader.readLine()));
@@ -364,6 +399,8 @@ public class Creature {
             writer.println("sfnc file");
             writer.println(name);
             writer.println(CR.name());
+            writer.println(alignment.name());
+            writer.println(size.name());
             writer.println(array);
             writer.println(type);
             writer.println(useTypeAdjustments);
