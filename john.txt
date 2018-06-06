@@ -1,5 +1,12 @@
-john                                                              CR 6
+john                                                                    CR 6
 XP 2,400 (Expert)
-DEFENSE                                                          HP 80
+Humanoid (brave, elebrian, transposed)
+Init +0; Perception +18
+DEFENSE                                                                HP 80
 EAC 18; KAC 19
 Fort +5; Ref +7; Will +9
+OFFENSE
+Offensive Abilities create darkness
+STATISTICS
+Skills Bluff +13, Computers +8, Diplomacy +13, Sleight of Hand +18, Stealth +18
+Other Abilities discorporation

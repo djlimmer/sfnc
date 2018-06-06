@@ -255,7 +255,8 @@ scamper|~n~|DEFENSIVE_ABILITIES|1
 scavenger shell|~n~|DEFENSIVE_ABILITIES|1
 scorching strikes|~n~|OFFENSIVE_ABILITIES|1
 searing mind|~n~|DEFENSIVE_ABILITIES|1
-secondary magic|~n~|NONE|1
+secondary magic (1/day)|~n~|NONE|1
+secondary magic (1/unit)|~n~|NONE|1
 self-destruct|~n~|OFFENSIVE_ABILITIES|1
 semiconductive|~n~|OFFENSIVE_ABILITIES|1
 share pain|~n~|DEFENSIVE_ABILITIES|1

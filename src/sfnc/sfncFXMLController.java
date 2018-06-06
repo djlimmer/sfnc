@@ -154,10 +154,11 @@ public class sfncFXMLController implements Initializable {
     
     @FXML public void exportTextAction(ActionEvent actionEvent) {
         
-        final int EXPORTLINEWIDTH = 70;
+        final int EXPORTLINEWIDTH = 76;
+        Boolean addSemicolon = false;
         
         updateArray();
-        // create the output lines
+        // create id/CR line
         String nameLine = creature.getName();
         String CROutput = "CR " + creature.CR;
         // Needs Java 11, I think:  nameLine += " ".repeat(EXPORTLINEWIDTH - nameLine.length() - CROutput.length());
@@ -167,25 +168,99 @@ public class sfncFXMLController implements Initializable {
         }
         nameLine += CROutput;
 
+        // create XP line
         String xpLine = "XP " + creature.getXPString() + " (" + creature.getArray() + ")";
+        // create type line
+        String typeLine = "";
+        if (!"".equals(creature.getType())) {
+            typeLine += creature.getType();
+            List<String> subtypes = creature.getAllSubtypes();
+            if (subtypes != null) {
+                Collections.sort(subtypes);
+                String subtypeDisplayString = String.join(", ",subtypes);
+                if (!"".equals(subtypeDisplayString))
+                    typeLine += " (" + subtypeDisplayString + ")";
+            }
+        }
+        // create init/senses/perception line
         String sensesLine = "";
+        sensesLine += "Init +0; ";
         if (hasAbilitiesByLocation(Location.SENSES))
-            sensesLine += "Senses " + makeAbilityStringByLocation(Location.SENSES);
-        String HPOutput = (array == null) ? "" : "HP " + array.hitPoints.toString();
+            sensesLine += "Senses " + makeAbilityStringByLocation(Location.SENSES) + "; ";
+        sensesLine += "Perception " + makeSkillBonusString(creature.perception);
+        // create aura line
+        String auraLine = "";
+        if (hasAbilitiesByLocation(Location.AURA))
+            auraLine += "Aura " + makeAbilityStringByLocation(Location.AURA);
         
+        // create defense/HP/RP line
+        String HPOutput = (array == null) ? "" : "HP " + array.hitPoints.toString();
+        // RP goes here
         String defenseLine = "DEFENSE";
         numSpaces = EXPORTLINEWIDTH - defenseLine.length() - HPOutput.length();
         for (int i=0; i < numSpaces; i++) {
             defenseLine += " ";
         }
         defenseLine += HPOutput;
-        
+        // create AC line
         String ACLine = (array == null) ? "" : "EAC " + array.EAC.toString() + "; KAC " + array.KAC.toString();
+        // create save line
         String SaveLine = (array == null) ? "" : "Fort " + bonusString(array.fort) + "; Ref " + bonusString(array.ref)
                 + "; Will " + bonusString(array.will);
+        // create defensive abilities line
         String defensiveAbilitiesLine = "";
-        if (hasAbilitiesByLocation(Location.IMMUNITIES))
+        if (hasAbilitiesByLocation(Location.DEFENSIVE_ABILITIES)) {
+            defensiveAbilitiesLine += "Defensive Abilities " + makeAbilityStringByLocation(Location.DEFENSIVE_ABILITIES);
+            addSemicolon = true;
+        }
+        // DR goes here
+        if (hasAbilitiesByLocation(Location.IMMUNITIES)) {
+            if (addSemicolon)
+                defensiveAbilitiesLine += "; ";
             defensiveAbilitiesLine += "Immunities " + makeAbilityStringByLocation(Location.IMMUNITIES);
+            addSemicolon = true;
+        }
+        if (hasAbilitiesByLocation(Location.RESISTANCES)) {
+            if (addSemicolon)
+                defensiveAbilitiesLine += "; ";
+            defensiveAbilitiesLine += "Resistances " + makeAbilityStringByLocation(Location.RESISTANCES);
+            addSemicolon = true;
+        }
+        // SR goes here
+        if (hasAbilitiesByLocation(Location.WEAKNESSES)) {
+            if (addSemicolon)
+                defensiveAbilitiesLine += "; ";
+            defensiveAbilitiesLine += "Weaknesses " + makeAbilityStringByLocation(Location.WEAKNESSES);
+        }
+        
+        // speed goes here
+        // melee goes here
+        // multiattack goes here
+        // ranged goes here
+        // space and reach go here
+        addSemicolon = false;
+        String offensiveAbilitiesLine = "";
+        if (hasAbilitiesByLocation(Location.OFFENSIVE_ABILITIES)) {
+            offensiveAbilitiesLine += "Offensive Abilities " + makeAbilityStringByLocation(Location.OFFENSIVE_ABILITIES);
+        }
+        // SLAs go here
+        // Spells go here
+        
+        // ability score modifiers go here
+        // feats go here
+        String skillsLine = "";
+        if (hasSkills()) {
+            skillsLine += "Skills " + makeSkillsString();
+        }
+        String languagesLine = "";
+        if (hasAbilitiesByLocation(Location.LANGUAGES)) {
+            languagesLine += "Languages " + makeAbilityStringByLocation(Location.LANGUAGES);
+        }
+        String otherAbilitiesLine = "";
+        if (hasAbilitiesByLocation(Location.OTHER_ABILITIES)) {
+            languagesLine += "Other Abilities " + makeAbilityStringByLocation(Location.OTHER_ABILITIES);
+        }
+        // gear and augmentations go here
         
         // get the file
         FileChooser fileChooser = new FileChooser();
@@ -203,14 +278,43 @@ public class sfncFXMLController implements Initializable {
             PrintWriter writer = new PrintWriter(file.getPath(),"UTF-8");
             writer.println(nameLine);
             writer.println(xpLine);
+            writer.println(typeLine);
             if (!"".equals(sensesLine))
                 writer.println(sensesLine);
+            if (!"".equals(auraLine))
+                writer.println(auraLine);
             writer.println(defenseLine);
             writer.println(ACLine);
             writer.println(SaveLine);
             if (!"".equals(defensiveAbilitiesLine))
                 writer.println(defensiveAbilitiesLine);
+            writer.println("OFFENSE");
+            // writer.println(speedLine);
+            // writer.println(meleeLine);
+            // writer.println(multiattackLine);
+            // writer.println(rangedLine);
+            // if (!"".equals(spaceLine))
+            //  writer.println(spaceLine);
+            if (!"".equals(offensiveAbilitiesLine))
+                writer.println(offensiveAbilitiesLine);
+            // if (!"".equals(SLABlock)
+            //  writer.println(SLABlock);
+            // if (!"".equals(SpellsBlock)
+            //  writer.println(SpellsBlock);
+            // writer.println(abilityScoreLine);
+            // if (!"".equals(featsLine)
+            //  writer.println(featsLine);
+            writer.println("STATISTICS");
+            writer.println(skillsLine);
+            if (!"".equals(languagesLine))
+                writer.println(languagesLine);
+            if (!"".equals(otherAbilitiesLine))
+                writer.println(otherAbilitiesLine);
+            // if (!"".equals(gearLine)
+            //  writer.println(gearLine);
+
             writer.close();
+            
         } catch (IOException e) {
             System.err.println("Something went wrong (exporting to text)");
         }
@@ -1441,9 +1545,37 @@ public class sfncFXMLController implements Initializable {
                 // ysoki race gets cheek pouches, moxie, Engineering and Stealth as master skills, Survival as good skill
             }
             abilitySet.addAll(creature.getChosenAbilities());
+            
+            // handle abilities that modify the array
+            if (abilitySet.contains(Ability.getAbility("brute")))
+                // no effect until attacks are in place
+                ;
+            if (hasAbilityByID("extra hit points"))
+                array.hitPoints += array.hitPoints/5;
+            if (hasAbilityByID("save boost (+1 to all)")) {
+                array.fort += 1;
+                array.ref += 1;
+                array.will += 1;
+            }
+            if (hasAbilityByID("save boost (+3 fort)"))
+                array.fort += 3;
+            if (hasAbilityByID("save boost (+3 ref)"))
+                array.ref += 3;
+            if (hasAbilityByID("save boost (+3 will)"))
+                array.will += 3;
+            if (hasAbilityByID("skillful")) {
+                array.goodSkillBonus += 1;
+                array.masterSkillBonus += 1;
+            }
         }
     }
 
+    public Boolean hasAbilityByID(String id) {
+        if (abilitySet == null)
+            return false;
+        return abilitySet.stream().anyMatch(a -> (a.getId().equals(id)));
+    }
+    
     public Boolean hasAbilitiesByLocation(Location loc) {
         if (abilitySet == null)
             return false;
