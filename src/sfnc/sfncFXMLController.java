@@ -75,7 +75,7 @@ public class sfncFXMLController implements Initializable {
     MainArray array;
     Boolean useTypeAdjustments = true;
     Boolean useClassAdjustments = false;
-    Integer initiative;
+    Integer initiative = 0;
     Set<Ability> abilitySet;
     
     // where-to-save info
@@ -186,7 +186,7 @@ public class sfncFXMLController implements Initializable {
         }
         // create init/senses/perception line
         String sensesLine = "";
-        sensesLine += "Init +0; ";
+        sensesLine += "Init " + bonusString(initiative) + "; ";
         if (hasAbilitiesByLocation(Location.SENSES))
             sensesLine += "Senses " + makeAbilityStringByLocation(Location.SENSES) + "; ";
         sensesLine += "Perception " + makeSkillBonusString(creature.perception);
@@ -240,9 +240,6 @@ public class sfncFXMLController implements Initializable {
         // multiattack goes here
         // ranged goes here
         String spaceLine = "";
-        // needs to handle tall vs. long reach, which means a UI dongle.
-        // consider having the monster handle basic space and reach, and this function
-        //  adds any modifiers
         if ((!creature.size.getSpace().equals("5 ft.")) || (creature.size.getReachTall() != 5)) {
             spaceLine += "Space " + creature.size.getSpace()
                     + "; " + "Reach " + creature.getReach() + " ft.";
@@ -255,6 +252,56 @@ public class sfncFXMLController implements Initializable {
         // SLAs go here
         // Spells go here
         
+        String abilityModLine = "";
+        abilityModLine += "Str ";
+        switch(creature.strength.getAbilityModifierChoice()) {
+            case HIGH: abilityModLine += bonusString(array.abilityScoreModifier1); break;
+            case MID: abilityModLine += bonusString(array.abilityScoreModifier2); break;
+            case LOW: abilityModLine += bonusString(array.abilityScoreModifier3); break;
+            case CUSTOM: abilityModLine += bonusString(creature.getStrength().getCustomValue()); break;
+            default: abilityModLine += "+0";
+        }
+        abilityModLine += "; Dex ";
+        switch(creature.dexterity.getAbilityModifierChoice()) {
+            case HIGH: abilityModLine += bonusString(array.abilityScoreModifier1); break;
+            case MID: abilityModLine += bonusString(array.abilityScoreModifier2); break;
+            case LOW: abilityModLine += bonusString(array.abilityScoreModifier3); break;
+            case CUSTOM: abilityModLine += bonusString(creature.getDexterity().getCustomValue()); break;
+            default: abilityModLine += "+0";
+        }
+        abilityModLine += "; Con ";
+        switch(creature.constitution.getAbilityModifierChoice()) {
+            case HIGH: abilityModLine += bonusString(array.abilityScoreModifier1); break;
+            case MID: abilityModLine += bonusString(array.abilityScoreModifier2); break;
+            case LOW: abilityModLine += bonusString(array.abilityScoreModifier3); break;
+            case CUSTOM: abilityModLine += bonusString(creature.getConstitution().getCustomValue()); break;
+            default: abilityModLine += "+0";
+        }
+        abilityModLine += "; Int ";
+        switch(creature.intelligence.getAbilityModifierChoice()) {
+            case HIGH: abilityModLine += bonusString(array.abilityScoreModifier1); break;
+            case MID: abilityModLine += bonusString(array.abilityScoreModifier2); break;
+            case LOW: abilityModLine += bonusString(array.abilityScoreModifier3); break;
+            case CUSTOM: abilityModLine += bonusString(creature.getIntelligence().getCustomValue()); break;
+            default: abilityModLine += "+0";
+        }
+        abilityModLine += "; Wis ";
+        switch(creature.wisdom.getAbilityModifierChoice()) {
+            case HIGH: abilityModLine += bonusString(array.abilityScoreModifier1); break;
+            case MID: abilityModLine += bonusString(array.abilityScoreModifier2); break;
+            case LOW: abilityModLine += bonusString(array.abilityScoreModifier3); break;
+            case CUSTOM: abilityModLine += bonusString(creature.getWisdom().getCustomValue()); break;
+            default: abilityModLine += "+0";
+        }
+        abilityModLine += "; Cha ";
+        switch(creature.charisma.getAbilityModifierChoice()) {
+            case HIGH: abilityModLine += bonusString(array.abilityScoreModifier1); break;
+            case MID: abilityModLine += bonusString(array.abilityScoreModifier2); break;
+            case LOW: abilityModLine += bonusString(array.abilityScoreModifier3); break;
+            case CUSTOM: abilityModLine += bonusString(creature.getCharisma().getCustomValue()); break;
+            default: abilityModLine += "+0";
+        }
+
         // ability score modifiers go here
         // feats go here
         String skillsLine = "";
@@ -314,6 +361,7 @@ public class sfncFXMLController implements Initializable {
             // if (!"".equals(featsLine)
             //  writer.println(featsLine);
             writer.println("STATISTICS");
+            writer.println(abilityModLine);
             writer.println(skillsLine);
             if (!"".equals(languagesLine))
                 writer.println(languagesLine);
@@ -617,7 +665,34 @@ public class sfncFXMLController implements Initializable {
             reachOptionsGroup.selectToggle(creatureTallReach);
         // step 1
         creatureArrayInput.setValue(creature.getArray());
-        switch(creature.getHighStat()) {
+        String highStat = creature.getHighStat();
+        String midStat = creature.getMidStat();
+        String lowStat = creature.getLowStat();
+        AbilityModifier Str = new AbilityModifier(creature.strength);
+        AbilityModifier Dex = new AbilityModifier(creature.dexterity);
+        AbilityModifier Con = new AbilityModifier(creature.constitution);
+        AbilityModifier Int = new AbilityModifier(creature.intelligence);
+        AbilityModifier Wis = new AbilityModifier(creature.wisdom);
+        AbilityModifier Cha = new AbilityModifier(creature.charisma);
+        creatureStrengthCustomValue.setText(
+                (Str.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
+                        "" : Str.getCustomValue().toString());
+        creatureDexterityCustomValue.setText(
+                (Dex.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
+                        "" : Dex.getCustomValue().toString());
+        creatureConstitutionCustomValue.setText(
+                (Con.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
+                        "" : Con.getCustomValue().toString());
+        creatureIntelligenceCustomValue.setText(
+                (Int.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
+                        "" : Int.getCustomValue().toString());
+        creatureWisdomCustomValue.setText(
+                (Wis.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
+                        "" : Wis.getCustomValue().toString());
+        creatureCharismaCustomValue.setText(
+                (Cha.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
+                        "" : Cha.getCustomValue().toString());
+        switch(highStat) {
             case "strength":
                 highStatGroup.selectToggle(creatureHighStrength);
                 break;
@@ -639,7 +714,7 @@ public class sfncFXMLController implements Initializable {
             default:
                 highStatGroup.selectToggle(null);
         }
-        switch(creature.getMidStat()) {
+      switch(midStat) {
             case "strength":
                 midStatGroup.selectToggle(creatureMidStrength);
                 break;
@@ -661,7 +736,7 @@ public class sfncFXMLController implements Initializable {
             default:
                 midStatGroup.selectToggle(null);
         }
-        switch(creature.getLowStat()) {
+      switch(lowStat) {
             case "strength":
                 lowStatGroup.selectToggle(creatureLowStrength);
                 break;
@@ -683,24 +758,6 @@ public class sfncFXMLController implements Initializable {
             default:
                 lowStatGroup.selectToggle(null);
         }
-        creatureStrengthCustomValue.setText(
-                (creature.charisma.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
-                        "" : bonusString(creature.charisma.getCustomValue()));
-        creatureDexterityCustomValue.setText(
-                (creature.charisma.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
-                        "" : bonusString(creature.charisma.getCustomValue()));
-        creatureConstitutionCustomValue.setText(
-                (creature.charisma.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
-                        "" : bonusString(creature.charisma.getCustomValue()));
-        creatureIntelligenceCustomValue.setText(
-                (creature.charisma.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
-                        "" : bonusString(creature.charisma.getCustomValue()));
-        creatureWisdomCustomValue.setText(
-                (creature.charisma.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
-                        "" : bonusString(creature.charisma.getCustomValue()));
-        creatureCharismaCustomValue.setText(
-                (creature.charisma.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
-                        "" : bonusString(creature.charisma.getCustomValue()));
         // step 2
         creatureTypeInput.setValue(creature.getType());
         creatureTypeAdjustmentUse.setSelected(creature.useTypeAdjustments());
@@ -1710,6 +1767,14 @@ public class sfncFXMLController implements Initializable {
                 array.goodSkillBonus += 1;
                 array.masterSkillBonus += 1;
             }
+            // set initiative
+            switch(creature.dexterity.getAbilityModifierChoice()) {
+                case HIGH: initiative = array.abilityScoreModifier1; break;
+                case MID: initiative = array.abilityScoreModifier2; break;
+                case LOW: initiative = array.abilityScoreModifier3; break;
+                case CUSTOM: initiative = creature.getDexterity().getCustomValue(); break;
+                default: initiative = 0;
+        }
         }
     }
 
@@ -1912,7 +1977,7 @@ public class sfncFXMLController implements Initializable {
         }
         // update init/senses/perception line
         creatureSensesBlock.getChildren().add(new Text("\n"));
-        creatureInitDisplay.setText("+0");
+        creatureInitDisplay.setText(bonusString(initiative));
         creatureSensesBlock.getChildren().addAll(creatureInitLabel,creatureInitDisplay);
         creatureSensesBlock.getChildren().add(new Text("; "));
         if (hasAbilitiesByLocation(Location.SENSES)) {
@@ -2016,7 +2081,7 @@ public class sfncFXMLController implements Initializable {
             case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
             case MID: statMod = bonusString(array.abilityScoreModifier2); break;
             case LOW: statMod = bonusString(array.abilityScoreModifier3); break;
-            case CUSTOM: statMod = bonusString(creature.getStrength().getCustomValue()); break;
+            case CUSTOM: statMod = bonusString(creature.getDexterity().getCustomValue()); break;
             default: statMod = "+0";
         }
         creatureDexterityModifier.setText(statMod);
@@ -2024,7 +2089,7 @@ public class sfncFXMLController implements Initializable {
             case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
             case MID: statMod = bonusString(array.abilityScoreModifier2); break;
             case LOW: statMod = bonusString(array.abilityScoreModifier3); break;
-            case CUSTOM: statMod = bonusString(creature.getStrength().getCustomValue()); break;
+            case CUSTOM: statMod = bonusString(creature.getConstitution().getCustomValue()); break;
             default: statMod = "+0";
         }
         creatureConstitutionModifier.setText(statMod);
@@ -2032,7 +2097,7 @@ public class sfncFXMLController implements Initializable {
             case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
             case MID: statMod = bonusString(array.abilityScoreModifier2); break;
             case LOW: statMod = bonusString(array.abilityScoreModifier3); break;
-            case CUSTOM: statMod = bonusString(creature.getStrength().getCustomValue()); break;
+            case CUSTOM: statMod = bonusString(creature.getIntelligence().getCustomValue()); break;
             default: statMod = "+0";
         }
         creatureIntelligenceModifier.setText(statMod);
@@ -2040,7 +2105,7 @@ public class sfncFXMLController implements Initializable {
             case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
             case MID: statMod = bonusString(array.abilityScoreModifier2); break;
             case LOW: statMod = bonusString(array.abilityScoreModifier3); break;
-            case CUSTOM: statMod = bonusString(creature.getStrength().getCustomValue()); break;
+            case CUSTOM: statMod = bonusString(creature.getWisdom().getCustomValue()); break;
             default: statMod = "+0";
         }
         creatureWisdomModifier.setText(statMod);
@@ -2048,7 +2113,7 @@ public class sfncFXMLController implements Initializable {
             case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
             case MID: statMod = bonusString(array.abilityScoreModifier2); break;
             case LOW: statMod = bonusString(array.abilityScoreModifier3); break;
-            case CUSTOM: statMod = bonusString(creature.getStrength().getCustomValue()); break;
+            case CUSTOM: statMod = bonusString(creature.getCharisma().getCustomValue()); break;
             default: statMod = "+0";
         }
         creatureCharismaModifier.setText(statMod);

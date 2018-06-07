@@ -1,0 +1,14 @@
+fred                                                                    CR 5
+XP 1,600 (Combatant)
+LE Tiny Fey
+Init +5; Senses low-light vision; Perception +16
+DEFENSE                                                                HP 70
+EAC 17; KAC 19
+Fort +9; Ref +9; Will +4
+Defensive Abilities evasion
+OFFENSE
+Space 2-1/2 ft.; Reach 0 ft.
+Offensive Abilities limning light
+STATISTICS
+Str -2; Dex +5; Con -1; Int +2; Wis +0; Cha +3
+Skills Acrobatics +11, Culture +11

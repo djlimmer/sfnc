@@ -516,7 +516,12 @@ public class Creature {
             stealth = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
             skillString = reader.readLine().split("\\|");
             survival = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
-            // read ability modifiers here
+            strength = new AbilityModifier(reader.readLine());
+            dexterity = new AbilityModifier(reader.readLine());
+            constitution = new AbilityModifier(reader.readLine());
+            intelligence = new AbilityModifier(reader.readLine());
+            wisdom = new AbilityModifier(reader.readLine());
+            charisma = new AbilityModifier(reader.readLine());
 
             reader.close();
         } catch (IOException e) {
@@ -569,7 +574,12 @@ public class Creature {
             writer.println(sleightOfHand.getSkillChoice()+"|"+sleightOfHand.getCustomValue());
             writer.println(stealth.getSkillChoice()+"|"+stealth.getCustomValue());
             writer.println(survival.getSkillChoice()+"|"+survival.getCustomValue());
-            // write ability modifiers here
+            writer.println(strength.getSaveString());
+            writer.println(dexterity.getSaveString());
+            writer.println(constitution.getSaveString());
+            writer.println(intelligence.getSaveString());
+            writer.println(wisdom.getSaveString());
+            writer.println(charisma.getSaveString());
             
             writer.close();
         } catch (IOException e) {

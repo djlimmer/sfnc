@@ -174,7 +174,7 @@ public class Ability {
         
         // this assumes the correct format; I should probably do error checking here
         if (abilityParts.size() != 9)
-            System.out.println("abilityParts has " + abilityParts.size() + "elements.");
+            System.err.println("abilityParts has " + abilityParts.size() + "elements.");
 
         this.id = abilityParts.get(0);
         this.location = Location.valueOf(abilityParts.get(1));

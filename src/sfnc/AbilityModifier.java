@@ -35,6 +35,14 @@ public class AbilityModifier {
         this(a.abilityModifierChoice,a.customValue);
     }
     
+    AbilityModifier(String s) {
+        // s is a line from a save file: abilityModifierChoice|customValue
+        String[] parts = s.split("\\|");
+
+        this.abilityModifierChoice = AbilityModifierChoice.valueOf(parts[0]);
+        this.customValue = Integer.valueOf(parts[1]);
+    }
+    
     public AbilityModifierChoice getAbilityModifierChoice() {
         return abilityModifierChoice;
     }
@@ -43,6 +51,9 @@ public class AbilityModifier {
         return customValue;
     }
     
+    public String getSaveString() {
+        return abilityModifierChoice.name() + "|" + customValue.toString();
+    }
     public void setAbilityModifierChoice(AbilityModifierChoice c) {
         abilityModifierChoice = c;
     }
