@@ -1,0 +1,15 @@
+sam                                                                     CR 9
+XP 6,400 (Combatant)
+N Huge Construct (incorporeal, magical)
+Init +3; Senses darkvision 60 ft., low-light vision; Perception +17
+DEFENSE                                                               HP 145
+EAC 22; KAC 24
+Fort +9; Ref +9; Will +6
+Immunities construct immunities
+OFFENSE
+Space 15 ft.; Reach 15 ft.
+Offensive Abilities paralyzing gaze
+STATISTICS
+Str —; Dex +3; Con —; Int —; Wis +4; Cha +0
+
+Other Abilities incorporeal, mindless

@@ -64,6 +64,8 @@ public class sfncFXMLController implements Initializable {
     String[] arrayNames = new String[NUMBER_OF_ARRAYS];
     Integer chosenArray;
     
+    // static final String EMDASH = "\u2014";
+    
     List<String> generalSubtypes = new ArrayList<>();
     List<String> humanoidSubtypes = new ArrayList<>();
     List<String> outsiderSubtypes = new ArrayList<>();
@@ -254,7 +256,9 @@ public class sfncFXMLController implements Initializable {
         
         String abilityModLine = "";
         abilityModLine += "Str ";
-        switch(creature.strength.getAbilityModifierChoice()) {
+        if (hasAbilityByID("mindless"))
+            abilityModLine += "\u2014";
+        else switch(creature.strength.getAbilityModifierChoice()) {
             case HIGH: abilityModLine += bonusString(array.abilityScoreModifier1); break;
             case MID: abilityModLine += bonusString(array.abilityScoreModifier2); break;
             case LOW: abilityModLine += bonusString(array.abilityScoreModifier3); break;
@@ -270,7 +274,9 @@ public class sfncFXMLController implements Initializable {
             default: abilityModLine += "+0";
         }
         abilityModLine += "; Con ";
-        switch(creature.constitution.getAbilityModifierChoice()) {
+        if (hasAbilityByID("noConScore"))
+            abilityModLine += "\u2014";
+        else switch(creature.constitution.getAbilityModifierChoice()) {
             case HIGH: abilityModLine += bonusString(array.abilityScoreModifier1); break;
             case MID: abilityModLine += bonusString(array.abilityScoreModifier2); break;
             case LOW: abilityModLine += bonusString(array.abilityScoreModifier3); break;
@@ -278,7 +284,9 @@ public class sfncFXMLController implements Initializable {
             default: abilityModLine += "+0";
         }
         abilityModLine += "; Int ";
-        switch(creature.intelligence.getAbilityModifierChoice()) {
+        if (hasAbilityByID("mindless"))
+            abilityModLine += "\u2014";
+        else switch(creature.intelligence.getAbilityModifierChoice()) {
             case HIGH: abilityModLine += bonusString(array.abilityScoreModifier1); break;
             case MID: abilityModLine += bonusString(array.abilityScoreModifier2); break;
             case LOW: abilityModLine += bonusString(array.abilityScoreModifier3); break;
@@ -2069,7 +2077,9 @@ public class sfncFXMLController implements Initializable {
         //update statistics block
         creatureStatisticsBlock.getChildren().clear();
         String statMod;
-        switch(creature.strength.getAbilityModifierChoice()) {
+        if (hasAbilityByID("incorporeal"))
+                statMod = "\u2014";
+        else switch(creature.strength.getAbilityModifierChoice()) {
             case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
             case MID: statMod = bonusString(array.abilityScoreModifier2); break;
             case LOW: statMod = bonusString(array.abilityScoreModifier3); break;
@@ -2085,7 +2095,9 @@ public class sfncFXMLController implements Initializable {
             default: statMod = "+0";
         }
         creatureDexterityModifier.setText(statMod);
-        switch(creature.constitution.getAbilityModifierChoice()) {
+        if (hasAbilityByID("noConScore"))
+            statMod = "\u2014";
+        else switch(creature.constitution.getAbilityModifierChoice()) {
             case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
             case MID: statMod = bonusString(array.abilityScoreModifier2); break;
             case LOW: statMod = bonusString(array.abilityScoreModifier3); break;
@@ -2093,7 +2105,9 @@ public class sfncFXMLController implements Initializable {
             default: statMod = "+0";
         }
         creatureConstitutionModifier.setText(statMod);
-        switch(creature.intelligence.getAbilityModifierChoice()) {
+        if (hasAbilityByID("mindless"))
+            statMod = "\u2014";
+        else switch(creature.intelligence.getAbilityModifierChoice()) {
             case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
             case MID: statMod = bonusString(array.abilityScoreModifier2); break;
             case LOW: statMod = bonusString(array.abilityScoreModifier3); break;
@@ -3817,6 +3831,8 @@ public class sfncFXMLController implements Initializable {
         
         // step 9 controls
 
+        creature.clearChange();
+        updateWindowTitle();
     }
 
     private int loadArrays() {
