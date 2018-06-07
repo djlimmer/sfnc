@@ -57,6 +57,12 @@ public class Creature {
     public Skill sleightOfHand;
     public Skill stealth;
     public Skill survival;
+    AbilityModifier strength;
+    AbilityModifier dexterity;
+    AbilityModifier constitution;
+    AbilityModifier intelligence;
+    AbilityModifier wisdom;
+    AbilityModifier charisma;
     
     // temporary status variables
     Boolean hasChanged;
@@ -97,6 +103,12 @@ public class Creature {
         this.sleightOfHand = new Skill();
         this.stealth = new Skill();
         this.survival = new Skill();
+        this.strength = new AbilityModifier();
+        this.dexterity = new AbilityModifier();
+        this.constitution = new AbilityModifier();
+        this.intelligence = new AbilityModifier();
+        this.wisdom = new AbilityModifier();
+        this.charisma = new AbilityModifier();
     }
     
     Creature(String n, ChallengeRating c) {
@@ -193,6 +205,30 @@ public class Creature {
             s.addAll(freeformSubtypes);
         
         return s;
+    }
+    
+    public AbilityModifier getStrength() {
+        return strength;
+    }
+    
+    public AbilityModifier getDexterity() {
+        return dexterity;
+    }
+    
+    public AbilityModifier getConstitution() {
+        return constitution;
+    }
+    
+    public AbilityModifier getIntelligence() {
+        return intelligence;
+    }
+    
+    public AbilityModifier getWisdom() {
+        return wisdom;
+    }
+    
+    public AbilityModifier getCharisma() {
+        return charisma;
     }
     
     public Boolean hasChanged() {
@@ -308,6 +344,36 @@ public class Creature {
         this.hasChanged = this.chosenAbilities.remove(a);
     }
     
+    public void setStrength(AbilityModifier a) {
+        this.strength = new AbilityModifier(a);
+        this.hasChanged = true;
+    }
+    
+    public void setDexterity(AbilityModifier a) {
+        this.dexterity = new AbilityModifier(a);
+        this.hasChanged = true;
+    }
+    
+    public void setConstitution(AbilityModifier a) {
+        this.constitution = new AbilityModifier(a);
+        this.hasChanged = true;
+    }
+    
+    public void setIntelligence(AbilityModifier a) {
+        this.intelligence = new AbilityModifier(a);
+        this.hasChanged = true;
+    }
+    
+    public void setWisdom(AbilityModifier a) {
+        this.wisdom = new AbilityModifier(a);
+        this.hasChanged = true;
+    }
+    
+    public void setCharisma(AbilityModifier a) {
+        this.charisma = new AbilityModifier(a);
+        this.hasChanged = true;
+    }
+    
     public void setChange() {
         this.hasChanged = true;
     }
@@ -402,6 +468,7 @@ public class Creature {
             stealth = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
             skillString = reader.readLine().split("\\|");
             survival = new Skill(SkillChoice.valueOf(skillString[0]),Integer.valueOf(skillString[1]));
+            // read ability modifiers here
 
             reader.close();
         } catch (IOException e) {
@@ -454,6 +521,8 @@ public class Creature {
             writer.println(sleightOfHand.getSkillChoice()+"|"+sleightOfHand.getCustomValue());
             writer.println(stealth.getSkillChoice()+"|"+stealth.getCustomValue());
             writer.println(survival.getSkillChoice()+"|"+survival.getCustomValue());
+            // write ability modifiers here
+            
             writer.close();
         } catch (IOException e) {
             System.err.println("Something went wrong (saving to file)");
