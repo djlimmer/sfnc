@@ -231,6 +231,54 @@ public class Creature {
         return charisma;
     }
     
+    public String getHighStat() {
+        if (strength.getAbilityModifierChoice() == AbilityModifierChoice.HIGH)
+            return "strength";
+        if (dexterity.getAbilityModifierChoice() == AbilityModifierChoice.HIGH)
+            return "dexterity";
+        if (constitution.getAbilityModifierChoice() == AbilityModifierChoice.HIGH)
+            return "constitution";
+        if (intelligence.getAbilityModifierChoice() == AbilityModifierChoice.HIGH)
+            return "intelligence";
+        if (wisdom.getAbilityModifierChoice() == AbilityModifierChoice.HIGH)
+            return "wisdom";
+        if (charisma.getAbilityModifierChoice() == AbilityModifierChoice.HIGH)
+            return "charisma";
+        return "none";
+    }
+    
+    public String getMidStat() {
+        if (strength.getAbilityModifierChoice() == AbilityModifierChoice.MID)
+            return "strength";
+        if (dexterity.getAbilityModifierChoice() == AbilityModifierChoice.MID)
+            return "dexterity";
+        if (constitution.getAbilityModifierChoice() == AbilityModifierChoice.MID)
+            return "constitution";
+        if (intelligence.getAbilityModifierChoice() == AbilityModifierChoice.MID)
+            return "intelligence";
+        if (wisdom.getAbilityModifierChoice() == AbilityModifierChoice.MID)
+            return "wisdom";
+        if (charisma.getAbilityModifierChoice() == AbilityModifierChoice.MID)
+            return "charisma";
+        return "none";
+    }
+    
+    public String getLowStat() {
+        if (strength.getAbilityModifierChoice() == AbilityModifierChoice.LOW)
+            return "strength";
+        if (dexterity.getAbilityModifierChoice() == AbilityModifierChoice.LOW)
+            return "dexterity";
+        if (constitution.getAbilityModifierChoice() == AbilityModifierChoice.LOW)
+            return "constitution";
+        if (intelligence.getAbilityModifierChoice() == AbilityModifierChoice.LOW)
+            return "intelligence";
+        if (wisdom.getAbilityModifierChoice() == AbilityModifierChoice.LOW)
+            return "wisdom";
+        if (charisma.getAbilityModifierChoice() == AbilityModifierChoice.LOW)
+            return "charisma";
+        return "none";
+    }
+    
     public Boolean hasChanged() {
         return hasChanged;
     }

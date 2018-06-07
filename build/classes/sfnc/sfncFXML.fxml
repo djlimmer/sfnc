@@ -74,6 +74,62 @@
                                  <children>
                                     <Label layoutX="13.0" layoutY="42.0" text="Array: " />
                                     <ChoiceBox fx:id="creatureArrayInput" layoutX="49.0" layoutY="40.0" prefWidth="150.0" />
+                                    <GridPane layoutX="5.0" layoutY="91.0" prefHeight="146.0" prefWidth="192.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="10.0" prefWidth="75.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="0.0" prefWidth="30.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="10.0" prefWidth="30.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="10.0" prefWidth="30.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="0.0" prefWidth="50.0" />
+                                          <ColumnConstraints />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="24.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="24.0" minHeight="4.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="24.0" minHeight="5.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label layoutX="78.0" layoutY="91.0" style="-fx-font-weight: bold;" text="Mid" GridPane.columnIndex="2" />
+                                          <Label layoutX="103.0" layoutY="91.0" style="-fx-font-weight: bold;" text="Low" GridPane.columnIndex="3" />
+                                          <Label layoutX="5.0" layoutY="91.0" style="-fx-font-weight: bold;" text="Ability" />
+                                          <Label layoutX="132.0" layoutY="91.0" style="-fx-font-weight: bold;" text="Custom" GridPane.columnIndex="4" GridPane.columnSpan="2" />
+                                          <Label layoutX="47.0" layoutY="91.0" style="-fx-font-weight: bold;" text="Hi" GridPane.columnIndex="1" />
+                                          <Label text="Strength" GridPane.rowIndex="1" />
+                                          <Label text="Dexterity" GridPane.rowIndex="2" />
+                                          <Label text="Constitution" GridPane.rowIndex="3" />
+                                          <Label text="Intelligence" GridPane.rowIndex="4" />
+                                          <Label text="Wisdom" GridPane.rowIndex="5" />
+                                          <Label text="Charisma" GridPane.rowIndex="6" />
+                                          <RadioButton fx:id="creatureHighStrength" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <RadioButton fx:id="creatureHighDexterity" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <RadioButton fx:id="creatureHighConstitution" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <RadioButton fx:id="creatureHighIntelligence" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <RadioButton fx:id="creatureHighWisdom" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <RadioButton fx:id="creatureHighCharisma" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                          <RadioButton fx:id="creatureMidStrength" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <RadioButton fx:id="creatureMidDexterity" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <RadioButton fx:id="creatureMidConstitution" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                          <RadioButton fx:id="creatureMidIntelligence" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                          <RadioButton fx:id="creatureMidWisdom" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                                          <RadioButton fx:id="creatureMidCharisma" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                                          <RadioButton fx:id="creatureLowStrength" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <RadioButton fx:id="creatureLowDexterity" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                          <RadioButton fx:id="creatureLowConstitution" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                          <RadioButton fx:id="creatureLowIntelligence" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                          <RadioButton fx:id="creatureLowWisdom" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                          <RadioButton fx:id="creatureLowCharisma" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                                          <TextField fx:id="creatureStrengthCustomValue" prefHeight="25.0" prefWidth="35.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                          <TextField fx:id="creatureDexterityCustomValue" prefHeight="25.0" prefWidth="35.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                          <TextField fx:id="creatureConstitutionCustomValue" prefHeight="25.0" prefWidth="35.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                                          <TextField fx:id="creatureIntelligenceCustomValue" prefHeight="25.0" prefWidth="35.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                                          <TextField fx:id="creatureWisdomCustomValue" prefHeight="25.0" prefWidth="35.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                                          <TextField fx:id="creatureCharismaCustomValue" prefHeight="25.0" prefWidth="35.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+                                       </children>
+                                    </GridPane>
                                  </children>
                               </AnchorPane>
                            </content></Tab>
@@ -398,6 +454,27 @@
                         <HBox prefHeight="25.0" style="-fx-border-style: none none solid none;">
                            <children>
                               <Label prefHeight="25.0" style="-fx-font-weight: bold;" text="STATISTICS" />
+                           </children>
+                        </HBox>
+                        <HBox prefWidth="200.0">
+                           <children>
+                              <Label style="-fx-font-weight: bold;" text="Str " />
+                              <Label fx:id="creatureStrengthModifier" text="+0" />
+                              <Label text="; " />
+                              <Label style="-fx-font-weight: bold;" text="Dex " />
+                              <Label fx:id="creatureDexterityModifier" text="+0" />
+                              <Label text="; " />
+                              <Label style="-fx-font-weight: bold;" text="Con " />
+                              <Label fx:id="creatureConstitutionModifier" text="+0" />
+                              <Label text="; " />
+                              <Label style="-fx-font-weight: bold;" text="Int " />
+                              <Label fx:id="creatureIntelligenceModifier" text="+0" />
+                              <Label text="; " />
+                              <Label style="-fx-font-weight: bold;" text="Wis " />
+                              <Label fx:id="creatureWisdomModifier" text="+0" />
+                              <Label text="; " />
+                              <Label style="-fx-font-weight: bold;" text="Cha " />
+                              <Label fx:id="creatureCharismaModifier" text="+0" />
                            </children>
                         </HBox>
                         <TextFlow fx:id="creatureStatisticsBlock" />

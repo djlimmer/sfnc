@@ -342,6 +342,33 @@ public class sfncFXMLController implements Initializable {
     // Step 1 controls
     @FXML   private Tab step1 = new Tab();
     @FXML   private ChoiceBox creatureArrayInput = new ChoiceBox();
+    private ToggleGroup highStatGroup = new ToggleGroup();
+    private ToggleGroup midStatGroup = new ToggleGroup();
+    private ToggleGroup lowStatGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureHighStrength = new RadioButton();
+    @FXML   private RadioButton creatureMidStrength = new RadioButton();
+    @FXML   private RadioButton creatureLowStrength = new RadioButton();
+    @FXML   private RadioButton creatureHighDexterity = new RadioButton();
+    @FXML   private RadioButton creatureMidDexterity = new RadioButton();
+    @FXML   private RadioButton creatureLowDexterity = new RadioButton();
+    @FXML   private RadioButton creatureHighConstitution = new RadioButton();
+    @FXML   private RadioButton creatureMidConstitution = new RadioButton();
+    @FXML   private RadioButton creatureLowConstitution = new RadioButton();
+    @FXML   private RadioButton creatureHighIntelligence = new RadioButton();
+    @FXML   private RadioButton creatureMidIntelligence = new RadioButton();
+    @FXML   private RadioButton creatureLowIntelligence = new RadioButton();
+    @FXML   private RadioButton creatureHighWisdom = new RadioButton();
+    @FXML   private RadioButton creatureMidWisdom = new RadioButton();
+    @FXML   private RadioButton creatureLowWisdom = new RadioButton();
+    @FXML   private RadioButton creatureHighCharisma = new RadioButton();
+    @FXML   private RadioButton creatureMidCharisma = new RadioButton();
+    @FXML   private RadioButton creatureLowCharisma = new RadioButton();
+    @FXML   private TextField creatureStrengthCustomValue = new TextField();
+    @FXML   private TextField creatureDexterityCustomValue = new TextField();
+    @FXML   private TextField creatureConstitutionCustomValue = new TextField();
+    @FXML   private TextField creatureIntelligenceCustomValue = new TextField();
+    @FXML   private TextField creatureWisdomCustomValue = new TextField();
+    @FXML   private TextField creatureCharismaCustomValue = new TextField();
     
     // Step 2 controls
     @FXML   private Tab step2 = new Tab();
@@ -561,6 +588,12 @@ public class sfncFXMLController implements Initializable {
     // spell-like abilities
     // spells known
     @FXML   private TextFlow creatureStatisticsBlock = new TextFlow();
+    @FXML   private Label creatureStrengthModifier = new Label("");
+    @FXML   private Label creatureDexterityModifier = new Label("");
+    @FXML   private Label creatureConstitutionModifier = new Label("");
+    @FXML   private Label creatureIntelligenceModifier = new Label("");
+    @FXML   private Label creatureWisdomModifier = new Label("");
+    @FXML   private Label creatureCharismaModifier = new Label("");
     // ability score modifiers
     // feats
     private Label creatureSkillsLabel = new Label("Skills ");
@@ -584,6 +617,90 @@ public class sfncFXMLController implements Initializable {
             reachOptionsGroup.selectToggle(creatureTallReach);
         // step 1
         creatureArrayInput.setValue(creature.getArray());
+        switch(creature.getHighStat()) {
+            case "strength":
+                highStatGroup.selectToggle(creatureHighStrength);
+                break;
+            case "dexterity":
+                highStatGroup.selectToggle(creatureHighDexterity);
+                break;
+            case "constitution":
+                highStatGroup.selectToggle(creatureHighConstitution);
+                break;
+            case "intelligence":
+                highStatGroup.selectToggle(creatureHighIntelligence);
+                break;
+            case "wisdom":
+                highStatGroup.selectToggle(creatureHighWisdom);
+                break;
+            case "charisma":
+                highStatGroup.selectToggle(creatureHighCharisma);
+                break;
+            default:
+                highStatGroup.selectToggle(null);
+        }
+        switch(creature.getMidStat()) {
+            case "strength":
+                midStatGroup.selectToggle(creatureMidStrength);
+                break;
+            case "dexterity":
+                midStatGroup.selectToggle(creatureMidDexterity);
+                break;
+            case "constitution":
+                midStatGroup.selectToggle(creatureMidConstitution);
+                break;
+            case "intelligence":
+                midStatGroup.selectToggle(creatureMidIntelligence);
+                break;
+            case "wisdom":
+                midStatGroup.selectToggle(creatureMidWisdom);
+                break;
+            case "charisma":
+                midStatGroup.selectToggle(creatureMidCharisma);
+                break;
+            default:
+                midStatGroup.selectToggle(null);
+        }
+        switch(creature.getLowStat()) {
+            case "strength":
+                lowStatGroup.selectToggle(creatureLowStrength);
+                break;
+            case "dexterity":
+                lowStatGroup.selectToggle(creatureLowDexterity);
+                break;
+            case "constitution":
+                lowStatGroup.selectToggle(creatureLowConstitution);
+                break;
+            case "intelligence":
+                lowStatGroup.selectToggle(creatureLowIntelligence);
+                break;
+            case "wisdom":
+                lowStatGroup.selectToggle(creatureLowWisdom);
+                break;
+            case "charisma":
+                lowStatGroup.selectToggle(creatureLowCharisma);
+                break;
+            default:
+                lowStatGroup.selectToggle(null);
+        }
+        creatureStrengthCustomValue.setText(
+                (creature.charisma.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
+                        "" : bonusString(creature.charisma.getCustomValue()));
+        creatureDexterityCustomValue.setText(
+                (creature.charisma.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
+                        "" : bonusString(creature.charisma.getCustomValue()));
+        creatureConstitutionCustomValue.setText(
+                (creature.charisma.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
+                        "" : bonusString(creature.charisma.getCustomValue()));
+        creatureIntelligenceCustomValue.setText(
+                (creature.charisma.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
+                        "" : bonusString(creature.charisma.getCustomValue()));
+        creatureWisdomCustomValue.setText(
+                (creature.charisma.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
+                        "" : bonusString(creature.charisma.getCustomValue()));
+        creatureCharismaCustomValue.setText(
+                (creature.charisma.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
+                        "" : bonusString(creature.charisma.getCustomValue()));
         // step 2
         creatureTypeInput.setValue(creature.getType());
         creatureTypeAdjustmentUse.setSelected(creature.useTypeAdjustments());
@@ -1886,7 +2003,55 @@ public class sfncFXMLController implements Initializable {
 
         //update statistics block
         creatureStatisticsBlock.getChildren().clear();
-        // ability score modifiers go here
+        String statMod;
+        switch(creature.strength.getAbilityModifierChoice()) {
+            case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
+            case MID: statMod = bonusString(array.abilityScoreModifier2); break;
+            case LOW: statMod = bonusString(array.abilityScoreModifier3); break;
+            case CUSTOM: statMod = bonusString(creature.getStrength().getCustomValue()); break;
+            default: statMod = "+0";
+        }
+        creatureStrengthModifier.setText(statMod);
+        switch(creature.dexterity.getAbilityModifierChoice()) {
+            case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
+            case MID: statMod = bonusString(array.abilityScoreModifier2); break;
+            case LOW: statMod = bonusString(array.abilityScoreModifier3); break;
+            case CUSTOM: statMod = bonusString(creature.getStrength().getCustomValue()); break;
+            default: statMod = "+0";
+        }
+        creatureDexterityModifier.setText(statMod);
+        switch(creature.constitution.getAbilityModifierChoice()) {
+            case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
+            case MID: statMod = bonusString(array.abilityScoreModifier2); break;
+            case LOW: statMod = bonusString(array.abilityScoreModifier3); break;
+            case CUSTOM: statMod = bonusString(creature.getStrength().getCustomValue()); break;
+            default: statMod = "+0";
+        }
+        creatureConstitutionModifier.setText(statMod);
+        switch(creature.intelligence.getAbilityModifierChoice()) {
+            case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
+            case MID: statMod = bonusString(array.abilityScoreModifier2); break;
+            case LOW: statMod = bonusString(array.abilityScoreModifier3); break;
+            case CUSTOM: statMod = bonusString(creature.getStrength().getCustomValue()); break;
+            default: statMod = "+0";
+        }
+        creatureIntelligenceModifier.setText(statMod);
+        switch(creature.wisdom.getAbilityModifierChoice()) {
+            case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
+            case MID: statMod = bonusString(array.abilityScoreModifier2); break;
+            case LOW: statMod = bonusString(array.abilityScoreModifier3); break;
+            case CUSTOM: statMod = bonusString(creature.getStrength().getCustomValue()); break;
+            default: statMod = "+0";
+        }
+        creatureWisdomModifier.setText(statMod);
+        switch(creature.charisma.getAbilityModifierChoice()) {
+            case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
+            case MID: statMod = bonusString(array.abilityScoreModifier2); break;
+            case LOW: statMod = bonusString(array.abilityScoreModifier3); break;
+            case CUSTOM: statMod = bonusString(creature.getStrength().getCustomValue()); break;
+            default: statMod = "+0";
+        }
+        creatureCharismaModifier.setText(statMod);
         // feats go here
         if (hasSkills()) {
             // remove comment line after ability scores are in
@@ -1905,6 +2070,100 @@ public class sfncFXMLController implements Initializable {
             creatureStatisticsBlock.getChildren().addAll(creatureOtherAbilitiesLabel,creatureOtherAbilitiesDisplay);
         }
         // gear and augmentations go here
+    }
+    
+    public void updateAbilityModifiers() {
+        // look through the controls and update ability modifiers as appropriate
+        AbilityModifier stat = creature.getStrength();
+        try {
+            Integer customScore = Integer.valueOf(creatureStrengthCustomValue.getText());
+            stat.setAbilityModifierChoice(AbilityModifierChoice.CUSTOM);
+            stat.setCustomValue(customScore);
+        } catch (NumberFormatException e) {
+            if (creatureHighStrength.isSelected())
+                stat.setAbilityModifierChoice(AbilityModifierChoice.HIGH);
+            else if (creatureMidStrength.isSelected())
+                stat.setAbilityModifierChoice(AbilityModifierChoice.MID);
+            else if (creatureLowStrength.isSelected())
+                stat.setAbilityModifierChoice(AbilityModifierChoice.LOW);
+            else
+                stat.setAbilityModifierChoice(AbilityModifierChoice.NONE);
+        }
+        stat = creature.getDexterity();
+        try {
+            Integer customScore = Integer.valueOf(creatureDexterityCustomValue.getText());
+            stat.setAbilityModifierChoice(AbilityModifierChoice.CUSTOM);
+            stat.setCustomValue(customScore);
+        } catch (NumberFormatException e) {
+            if (creatureHighDexterity.isSelected())
+                stat.setAbilityModifierChoice(AbilityModifierChoice.HIGH);
+            else if (creatureMidDexterity.isSelected())
+                stat.setAbilityModifierChoice(AbilityModifierChoice.MID);
+            else if (creatureLowDexterity.isSelected())
+                stat.setAbilityModifierChoice(AbilityModifierChoice.LOW);
+            else
+                stat.setAbilityModifierChoice(AbilityModifierChoice.NONE);
+        }
+        stat = creature.getConstitution();
+        try {
+            Integer customScore = Integer.valueOf(creatureConstitutionCustomValue.getText());
+            stat.setAbilityModifierChoice(AbilityModifierChoice.CUSTOM);
+            stat.setCustomValue(customScore);
+        } catch (NumberFormatException e) {
+            if (creatureHighConstitution.isSelected())
+                stat.setAbilityModifierChoice(AbilityModifierChoice.HIGH);
+            else if (creatureMidConstitution.isSelected())
+                stat.setAbilityModifierChoice(AbilityModifierChoice.MID);
+            else if (creatureLowConstitution.isSelected())
+                stat.setAbilityModifierChoice(AbilityModifierChoice.LOW);
+            else
+                stat.setAbilityModifierChoice(AbilityModifierChoice.NONE);
+        }
+        stat = creature.getIntelligence();
+        try {
+            Integer customScore = Integer.valueOf(creatureIntelligenceCustomValue.getText());
+            stat.setAbilityModifierChoice(AbilityModifierChoice.CUSTOM);
+            stat.setCustomValue(customScore);
+        } catch (NumberFormatException e) {
+            if (creatureHighIntelligence.isSelected())
+                stat.setAbilityModifierChoice(AbilityModifierChoice.HIGH);
+            else if (creatureMidIntelligence.isSelected())
+                stat.setAbilityModifierChoice(AbilityModifierChoice.MID);
+            else if (creatureLowIntelligence.isSelected())
+                stat.setAbilityModifierChoice(AbilityModifierChoice.LOW);
+            else
+                stat.setAbilityModifierChoice(AbilityModifierChoice.NONE);
+        }
+        stat = creature.getWisdom();
+        try {
+            Integer customScore = Integer.valueOf(creatureWisdomCustomValue.getText());
+            stat.setAbilityModifierChoice(AbilityModifierChoice.CUSTOM);
+            stat.setCustomValue(customScore);
+        } catch (NumberFormatException e) {
+            if (creatureHighWisdom.isSelected())
+                stat.setAbilityModifierChoice(AbilityModifierChoice.HIGH);
+            else if (creatureMidWisdom.isSelected())
+                stat.setAbilityModifierChoice(AbilityModifierChoice.MID);
+            else if (creatureLowWisdom.isSelected())
+                stat.setAbilityModifierChoice(AbilityModifierChoice.LOW);
+            else
+                stat.setAbilityModifierChoice(AbilityModifierChoice.NONE);
+        }
+        stat = creature.getCharisma();
+        try {
+            Integer customScore = Integer.valueOf(creatureCharismaCustomValue.getText());
+            stat.setAbilityModifierChoice(AbilityModifierChoice.CUSTOM);
+            stat.setCustomValue(customScore);
+        } catch (NumberFormatException e) {
+            if (creatureHighCharisma.isSelected())
+                stat.setAbilityModifierChoice(AbilityModifierChoice.HIGH);
+            else if (creatureMidCharisma.isSelected())
+                stat.setAbilityModifierChoice(AbilityModifierChoice.MID);
+            else if (creatureLowCharisma.isSelected())
+                stat.setAbilityModifierChoice(AbilityModifierChoice.LOW);
+            else
+                stat.setAbilityModifierChoice(AbilityModifierChoice.NONE);
+        }
     }
     
     public void updateWindowTitle() {
@@ -2103,6 +2362,194 @@ public class sfncFXMLController implements Initializable {
             }
         );
         
+        creatureHighStrength.setToggleGroup(highStatGroup);
+        creatureHighDexterity.setToggleGroup(highStatGroup);
+        creatureHighConstitution.setToggleGroup(highStatGroup);
+        creatureHighIntelligence.setToggleGroup(highStatGroup);
+        creatureHighWisdom.setToggleGroup(highStatGroup);
+        creatureHighCharisma.setToggleGroup(highStatGroup);
+        creatureMidStrength.setToggleGroup(midStatGroup);
+        creatureMidDexterity.setToggleGroup(midStatGroup);
+        creatureMidConstitution.setToggleGroup(midStatGroup);
+        creatureMidIntelligence.setToggleGroup(midStatGroup);
+        creatureMidWisdom.setToggleGroup(midStatGroup);
+        creatureMidCharisma.setToggleGroup(midStatGroup);
+        creatureLowStrength.setToggleGroup(lowStatGroup);
+        creatureLowDexterity.setToggleGroup(lowStatGroup);
+        creatureLowConstitution.setToggleGroup(lowStatGroup);
+        creatureLowIntelligence.setToggleGroup(lowStatGroup);
+        creatureLowWisdom.setToggleGroup(lowStatGroup);
+        creatureLowCharisma.setToggleGroup(lowStatGroup);
+        
+        highStatGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (newToggle == null) return;
+                if (newToggle.equals(creatureHighStrength)) {
+                    creatureMidStrength.setSelected(false);
+                    creatureLowStrength.setSelected(false);
+                }
+                if (newToggle.equals(creatureHighDexterity)) {
+                    creatureMidDexterity.setSelected(false);
+                    creatureLowDexterity.setSelected(false);
+                }
+                if (newToggle.equals(creatureHighConstitution)) {
+                    creatureMidConstitution.setSelected(false);
+                    creatureLowConstitution.setSelected(false);
+                }
+                if (newToggle.equals(creatureHighIntelligence)) {
+                    creatureMidIntelligence.setSelected(false);
+                    creatureLowIntelligence.setSelected(false);
+                }
+                if (newToggle.equals(creatureHighWisdom)) {
+                    creatureMidWisdom.setSelected(false);
+                    creatureLowWisdom.setSelected(false);
+                }
+                if (newToggle.equals(creatureHighCharisma)) {
+                    creatureMidCharisma.setSelected(false);
+                    creatureLowCharisma.setSelected(false);
+                }
+                updateAbilityModifiers();
+                updateStatBlock();
+                updateWindowTitle();
+            }
+        });
+        midStatGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (newToggle == null) return;
+                if (newToggle.equals(creatureMidStrength)) {
+                    creatureHighStrength.setSelected(false);
+                    creatureLowStrength.setSelected(false);
+                }
+                if (newToggle.equals(creatureMidDexterity)) {
+                    creatureHighDexterity.setSelected(false);
+                    creatureLowDexterity.setSelected(false);
+                }
+                if (newToggle.equals(creatureMidConstitution)) {
+                    creatureHighConstitution.setSelected(false);
+                    creatureLowConstitution.setSelected(false);
+                }
+                if (newToggle.equals(creatureMidIntelligence)) {
+                    creatureHighIntelligence.setSelected(false);
+                    creatureLowIntelligence.setSelected(false);
+                }
+                if (newToggle.equals(creatureMidWisdom)) {
+                    creatureHighWisdom.setSelected(false);
+                    creatureLowWisdom.setSelected(false);
+                }
+                if (newToggle.equals(creatureMidCharisma)) {
+                    creatureHighCharisma.setSelected(false);
+                    creatureLowCharisma.setSelected(false);
+                }
+                updateAbilityModifiers();
+                updateStatBlock();
+                updateWindowTitle();
+            }
+        });
+        lowStatGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (newToggle == null) return;
+                if (newToggle.equals(creatureLowStrength)) {
+                    creatureMidStrength.setSelected(false);
+                    creatureHighStrength.setSelected(false);
+                }
+                if (newToggle.equals(creatureLowDexterity)) {
+                    creatureMidDexterity.setSelected(false);
+                    creatureHighDexterity.setSelected(false);
+                }
+                if (newToggle.equals(creatureLowConstitution)) {
+                    creatureMidConstitution.setSelected(false);
+                    creatureHighConstitution.setSelected(false);
+                }
+                if (newToggle.equals(creatureLowIntelligence)) {
+                    creatureMidIntelligence.setSelected(false);
+                    creatureHighIntelligence.setSelected(false);
+                }
+                if (newToggle.equals(creatureLowWisdom)) {
+                    creatureMidWisdom.setSelected(false);
+                    creatureHighWisdom.setSelected(false);
+                }
+                if (newToggle.equals(creatureLowCharisma)) {
+                    creatureMidCharisma.setSelected(false);
+                    creatureHighCharisma.setSelected(false);
+                }
+                updateAbilityModifiers();
+                updateStatBlock();
+                updateWindowTitle();
+            }
+        });
+        creatureStrengthCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    updateAbilityModifiers();
+                    updateStatBlock();
+                    updateWindowTitle();
+                }
+            }
+        );
+        creatureDexterityCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    updateAbilityModifiers();
+                    updateStatBlock();
+                    updateWindowTitle();
+                }
+            }
+        );
+        creatureConstitutionCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    updateAbilityModifiers();
+                    updateStatBlock();
+                    updateWindowTitle();
+                }
+            }
+        );
+        creatureIntelligenceCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    updateAbilityModifiers();
+                    updateStatBlock();
+                    updateWindowTitle();
+                }
+            }
+        );
+        creatureWisdomCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    updateAbilityModifiers();
+                    updateStatBlock();
+                    updateWindowTitle();
+                }
+            }
+        );
+        creatureCharismaCustomValue.textProperty().addListener(
+            new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                        String oldValue, String newValue) {
+                    updateAbilityModifiers();
+                    updateStatBlock();
+                    updateWindowTitle();
+                }
+            }
+        );
+
         // step 2 controls
         String[] typeNames = {
             "Aberration", "Animal", "Construct", "Dragon", "Fey", "Humanoid",
