@@ -1,29 +1,26 @@
 sfnc file
 sam
-TWELVE
-CHAOTIC_GOOD
-LARGE
-Combatant
-Magical Beast
+THIRTEEN
+NEUTRAL_EVIL
+HUGE
 true
-0
-chaotic
-
+Combatant
+Humanoid
+true
+1
+earth
+giant
 
 
 3
-able assistant|OTHER_ABILITIES|~n~|1|0|0|0|0|0
-brute|NONE|~n~|1|0|0|0|0|0
 extra hit points|NONE|~n~|1|0|0|0|0|0
-NONE|0
-NONE|0
-NONE|0
-NONE|0
-NONE|0
-NONE|0
-NONE|0
+gravity control|OFFENSIVE_ABILITIES|~n~|1|0|0|0|0|0
+massive|OTHER_ABILITIES|~n~|1|0|0|0|0|0
 NONE|0
 GOOD|0
+NONE|0
+NONE|0
+NONE|0
 NONE|0
 NONE|0
 NONE|0
@@ -31,7 +28,11 @@ MASTER|0
 NONE|0
 NONE|0
 NONE|0
-NONE|0
-NONE|0
-NONE|0
 GOOD|0
+GOOD|0
+NONE|0
+NONE|0
+NONE|0
+NONE|0
+NONE|0
+NONE|0

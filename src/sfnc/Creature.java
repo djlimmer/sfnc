@@ -25,6 +25,7 @@ public class Creature {
     ChallengeRating CR;
     Alignment alignment;
     Size size;
+    Boolean longReach;
     String array;
     String type;
     Boolean useTypeAdjustments;
@@ -65,6 +66,7 @@ public class Creature {
         this.CR = ChallengeRating.NONE;
         this.alignment = Alignment.NEUTRAL;
         this.size = Size.MEDIUM;
+        this.longReach = false;
         this.array = "";
         this.type = "";
         this.useTypeAdjustments = true;
@@ -121,6 +123,18 @@ public class Creature {
     
     public Size getSize() {
         return size;
+    }
+    
+    public Boolean hasTallReach() {
+        return !longReach;
+    }
+
+    public Boolean hasLongReach() {
+        return longReach;
+    }
+    
+    public Integer getReach() {
+        return longReach ? size.getReachLong() : size.getReachTall();
     }
 
     public Integer getXP() {
@@ -223,6 +237,11 @@ public class Creature {
         this.hasChanged = true;
     }
     
+    public void setLongReach(Boolean r) {
+        this.longReach = r;
+        this.hasChanged = true;
+    }
+    
     void setArray(String a) {
         this.array = a;
         this.hasChanged = true;
@@ -313,6 +332,7 @@ public class Creature {
             this.CR = ChallengeRating.valueOf(reader.readLine());
             this.alignment = Alignment.valueOf(reader.readLine());
             this.size = Size.valueOf(reader.readLine());
+            this.longReach = !("false".equals(reader.readLine()));
             this.array = reader.readLine();
             this.type = reader.readLine();
             this.useTypeAdjustments = !("false".equals(reader.readLine()));
@@ -401,6 +421,7 @@ public class Creature {
             writer.println(CR.name());
             writer.println(alignment.name());
             writer.println(size.name());
+            writer.println(longReach);
             writer.println(array);
             writer.println(type);
             writer.println(useTypeAdjustments);

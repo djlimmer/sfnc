@@ -245,7 +245,7 @@ public class sfncFXMLController implements Initializable {
         //  adds any modifiers
         if ((!creature.size.getSpace().equals("5 ft.")) || (creature.size.getReachTall() != 5)) {
             spaceLine += "Space " + creature.size.getSpace()
-                    + "; " + "Reach " + creature.size.getReachTall();
+                    + "; " + "Reach " + creature.getReach() + " ft.";
         }
         addSemicolon = false;
         String offensiveAbilitiesLine = "";
@@ -335,6 +335,9 @@ public class sfncFXMLController implements Initializable {
     @FXML   private ComboBox creatureCRInput = new ComboBox();
     @FXML   private ComboBox creatureAlignmentInput = new ComboBox();
     @FXML   private ComboBox creatureSizeInput = new ComboBox();
+    private ToggleGroup reachOptionsGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureTallReach = new RadioButton();
+    @FXML   private RadioButton creatureLongReach = new RadioButton();
 
     // Step 1 controls
     @FXML   private Tab step1 = new Tab();
@@ -575,19 +578,26 @@ public class sfncFXMLController implements Initializable {
         creatureCRInput.setValue(creature.getCRDisplayString());
         creatureAlignmentInput.setValue(creature.getAlignment());
         creatureSizeInput.setValue(creature.getSize());
+        if (creature.hasLongReach())
+            reachOptionsGroup.selectToggle(creatureLongReach);
+        else
+            reachOptionsGroup.selectToggle(creatureTallReach);
         // step 1
         creatureArrayInput.setValue(creature.getArray());
         // step 2
         creatureTypeInput.setValue(creature.getType());
         creatureTypeAdjustmentUse.setSelected(creature.useTypeAdjustments());
-        if (creature.getType().equals("Animal")) {
-            showAnimalTypeOptions();
-        }
-        else if (creature.getType().equals("Humanoid") || creature.getType().equals("Outsider")) {
-            showSaveBonusTypeOptions();
-        }
-        else {
-            hideTypeOptions();
+        switch (creature.getType()) {
+            case "Animal":
+                showAnimalTypeOptions();
+                break;
+            case "Humanoid":
+            case "Outsider":
+                showSaveBonusTypeOptions();
+                break;
+            default:
+                hideTypeOptions();
+                break;
         }
         // step 3
         setSubtypeWarning();
@@ -1853,11 +1863,11 @@ public class sfncFXMLController implements Initializable {
         // melee goes here
         // multiattack goes here
         // ranged goes here
-        if ((!creature.size.getSpace().equals("5 ft.")) || (creature.size.getReachTall() != 5)) {
+        if ((!creature.size.getSpace().equals("5 ft.")) || (creature.getReach() != 5)) {
             if (addNewLine)
                 creatureOffensiveAbilitiesBlock.getChildren().addAll(new Text("\n"));
             creatureSpaceDisplay.setText(creature.size.getSpace());
-            creatureReachDisplay.setText(Integer.toString(creature.size.getReachTall())+" ft.");
+            creatureReachDisplay.setText(Integer.toString(creature.getReach())+" ft.");
             creatureOffensiveAbilitiesBlock.getChildren().addAll(
                     creatureSpaceLabel, creatureSpaceDisplay,
                     new Text("; "),
@@ -2059,6 +2069,20 @@ public class sfncFXMLController implements Initializable {
             }
         );
         
+        creatureLongReach.setToggleGroup(reachOptionsGroup);
+        creatureTallReach.setToggleGroup(reachOptionsGroup);
+        
+        reachOptionsGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle oldToggle, Toggle newToggle) {
+                if (reachOptionsGroup.getSelectedToggle() != null)
+                    creature.setLongReach(creatureLongReach.isSelected());
+                updateStatBlock();
+                updateWindowTitle();
+            }
+        });
+
         // step 1 controls
         creatureArrayInput.setItems(FXCollections.observableArrayList(
                 arrayNames));
