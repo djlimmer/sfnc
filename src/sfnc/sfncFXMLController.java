@@ -262,7 +262,7 @@ public class sfncFXMLController implements Initializable {
             flyInfoString += ", ";
         flyInfoString += creature.getFlyManeuverability();
         if (!("".equals(flyInfoString)))
-            speedLine += "(" + flyInfoString + ")";
+            speedLine += " (" + flyInfoString + ")";
                 if (creature.getSwimSpeed() != 0) {
             if (addSemicolon) speedLine += "; ";
             speedLine += "swim " + creature.getSwimSpeed() + " ft.";
@@ -621,6 +621,13 @@ public class sfncFXMLController implements Initializable {
     
     // Step 9 controls
     @FXML   private Tab step9 = new Tab();
+    @FXML   private TextField creatureGroundSpeed = new TextField();
+    @FXML   private TextField creatureBurrowSpeed = new TextField();
+    @FXML   private TextField creatureClimbSpeed = new TextField();
+    @FXML   private TextField creatureFlySpeed = new TextField();
+    @FXML   private TextField creatureFlyType = new TextField();
+    @FXML   private TextField creatureFlyManeuverability = new TextField();
+    @FXML   private TextField creatureSwimSpeed = new TextField();
     
     // stat block controls
     @FXML   private Label creatureNameDisplay = new Label();
@@ -2106,7 +2113,7 @@ public class sfncFXMLController implements Initializable {
             flyInfoString += ", ";
         flyInfoString += creature.getFlyManeuverability();
         if (!("".equals(flyInfoString)))
-            speedLine += "(" + flyInfoString + ")";
+            speedLine += " (" + flyInfoString + ")";
         if (creature.getSwimSpeed() != 0) {
             if (addSemicolon) speedLine += "; ";
             speedLine += "swim " + creature.getSwimSpeed() + " ft.";
@@ -3894,8 +3901,160 @@ public class sfncFXMLController implements Initializable {
         // step 8 controls
         
         // step 9 controls
-        // put speed controls here?
+        creatureGroundSpeed.textProperty().addListener(
+        new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable,
+                    String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.setGroundSpeed(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                    }
+                    else try {
+                        creature.setGroundSpeed(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }   
+            }
+        });
 
+        creatureGroundSpeed.textProperty().addListener(
+        new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable,
+                    String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.setGroundSpeed(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                    }
+                    else try {
+                        creature.setGroundSpeed(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }   
+            }
+        });
+
+        creatureBurrowSpeed.textProperty().addListener(
+        new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable,
+                    String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.setBurrowSpeed(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                    }
+                    else try {
+                        creature.setBurrowSpeed(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }   
+            }
+        });
+
+        creatureClimbSpeed.textProperty().addListener(
+        new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable,
+                    String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.setClimbSpeed(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                    }
+                    else try {
+                        creature.setClimbSpeed(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }   
+            }
+        });
+
+        creatureFlySpeed.textProperty().addListener(
+        new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable,
+                    String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.setFlySpeed(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                    }
+                    else try {
+                        creature.setFlySpeed(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }   
+            }
+        });
+
+        creatureSwimSpeed.textProperty().addListener(
+        new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable,
+                    String oldValue, String newValue) {
+                    if ("".equals(newValue)) {
+                        creature.setSwimSpeed(0);
+                        updateStatBlock();
+                        updateWindowTitle();
+                    }
+                    else try {
+                        creature.setSwimSpeed(Integer.valueOf(newValue));
+                        updateStatBlock();
+                        updateWindowTitle();
+                    } 
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything.
+                        return;
+                    }   
+            }
+        });
+
+        creatureFlyType.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable,
+                    String oldValue, String newValue) {
+                creature.setFlyType(newValue);
+                updateStatBlock();
+                updateWindowTitle();
+            }
+        });
+
+        creatureFlyManeuverability.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable,
+                    String oldValue, String newValue) {
+                creature.setFlyManeuverability(newValue);
+                updateStatBlock();
+                updateWindowTitle();
+            }
+        });
+
+        
+        // final bits
         creature.clearChange();
         updateWindowTitle();
     }
