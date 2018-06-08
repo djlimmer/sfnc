@@ -63,6 +63,13 @@ public class Creature {
     AbilityModifier intelligence;
     AbilityModifier wisdom;
     AbilityModifier charisma;
+    Integer groundSpeed;
+    Integer burrowSpeed;
+    Integer climbSpeed;
+    Integer flySpeed;
+    String flyType;
+    String flyManeuverability;
+    Integer swimSpeed;
     
     // temporary status variables
     Boolean hasChanged;
@@ -109,6 +116,13 @@ public class Creature {
         this.intelligence = new AbilityModifier();
         this.wisdom = new AbilityModifier();
         this.charisma = new AbilityModifier();
+        this.groundSpeed = 30;
+        this.burrowSpeed = 0;
+        this.climbSpeed = 0;
+        this.flySpeed = 0;
+        this.flyType = "";
+        this.flyManeuverability = "";
+        this.swimSpeed = 0;
     }
     
     Creature(String n, ChallengeRating c) {
@@ -279,6 +293,34 @@ public class Creature {
         return "none";
     }
     
+    public Integer getGroundSpeed() {
+        return groundSpeed;
+    }
+    
+    public Integer getBurrowSpeed() {
+        return burrowSpeed;
+    }
+    
+    public Integer getClimbSpeed() {
+        return climbSpeed;
+    }
+    
+    public Integer getFlySpeed() {
+        return flySpeed;
+    }
+    
+    public Integer getSwimSpeed() {
+        return swimSpeed;
+    }
+    
+    public String getFlyType() {
+        return flyType;
+    }
+    
+    public String getFlyManeuverability() {
+        return flyManeuverability;
+    }
+    
     public Boolean hasChanged() {
         return hasChanged;
     }
@@ -422,6 +464,41 @@ public class Creature {
         this.hasChanged = true;
     }
     
+    public void setGroundSpeed(Integer s) {
+        this.groundSpeed = s;
+        this.hasChanged = true;
+    }
+    
+    public void setBurrowSpeed(Integer s) {
+        this.burrowSpeed = s;
+        this.hasChanged = true;
+    }
+    
+    public void setClimbSpeed(Integer s) {
+        this.climbSpeed = s;
+        this.hasChanged = true;
+    }
+    
+    public void setFlySpeed(Integer s) {
+        this.flySpeed = s;
+        this.hasChanged = true;
+    }
+    
+    public void setSwimSpeed(Integer s) {
+        this.swimSpeed = s;
+        this.hasChanged = true;
+    }
+    
+    public void setFlyType(String s) {
+        this.flyType = s;
+        this.hasChanged = true;
+    }
+    
+    public void setFlyManeuverability(String s) {
+        this.flyManeuverability = s;
+        this.hasChanged = true;
+    }
+    
     public void setChange() {
         this.hasChanged = true;
     }
@@ -522,6 +599,13 @@ public class Creature {
             intelligence = new AbilityModifier(reader.readLine());
             wisdom = new AbilityModifier(reader.readLine());
             charisma = new AbilityModifier(reader.readLine());
+            this.groundSpeed = Integer.valueOf(reader.readLine());
+            this.burrowSpeed = Integer.valueOf(reader.readLine());
+            this.climbSpeed = Integer.valueOf(reader.readLine());
+            this.flySpeed = Integer.valueOf(reader.readLine());
+            this.flyType = reader.readLine();
+            this.flyManeuverability = reader.readLine();
+            this.swimSpeed = Integer.valueOf(reader.readLine());
 
             reader.close();
         } catch (IOException e) {
@@ -580,6 +664,13 @@ public class Creature {
             writer.println(intelligence.getSaveString());
             writer.println(wisdom.getSaveString());
             writer.println(charisma.getSaveString());
+            writer.println(groundSpeed);
+            writer.println(burrowSpeed);
+            writer.println(climbSpeed);
+            writer.println(flySpeed);
+            writer.println(flyType);
+            writer.println(flyManeuverability);
+            writer.println(swimSpeed);
             
             writer.close();
         } catch (IOException e) {

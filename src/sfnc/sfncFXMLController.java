@@ -236,8 +236,38 @@ public class sfncFXMLController implements Initializable {
                 defensiveAbilitiesLine += "; ";
             defensiveAbilitiesLine += "Weaknesses " + makeAbilityStringByLocation(Location.WEAKNESSES);
         }
-        
-        // speed goes here
+        addSemicolon = false;
+        String speedLine = "Speed ";
+        if (creature.getGroundSpeed() != 0) {
+            speedLine += creature.getGroundSpeed() + " ft.";
+            addSemicolon = true;
+        }
+        if (creature.getBurrowSpeed() != 0) {
+            if (addSemicolon) speedLine += "; ";
+            speedLine += "burrow " + creature.getBurrowSpeed() + " ft.";
+            addSemicolon = true;
+        }
+        if (creature.getClimbSpeed() != 0) {
+            if (addSemicolon) speedLine += "; ";
+            speedLine += "climb " + creature.getClimbSpeed() + " ft.";
+            addSemicolon = true;
+        }
+        if (creature.getFlySpeed() != 0) {
+            if (addSemicolon) speedLine += "; ";
+            speedLine += "fly " + creature.getFlySpeed() + " ft.";
+            addSemicolon = true;
+        }
+        String flyInfoString = creature.getFlyType();
+        if ((!("".equals(flyInfoString))) && (!("".equals(creature.getFlyManeuverability()))))
+            flyInfoString += ", ";
+        flyInfoString += creature.getFlyManeuverability();
+        if (!("".equals(flyInfoString)))
+            speedLine += "(" + flyInfoString + ")";
+                if (creature.getSwimSpeed() != 0) {
+            if (addSemicolon) speedLine += "; ";
+            speedLine += "swim " + creature.getSwimSpeed() + " ft.";
+            addSemicolon = true;
+        }
         // melee goes here
         // multiattack goes here
         // ranged goes here
@@ -353,7 +383,7 @@ public class sfncFXMLController implements Initializable {
             if (!"".equals(defensiveAbilitiesLine))
                 writer.println(defensiveAbilitiesLine);
             writer.println("OFFENSE");
-            // writer.println(speedLine);
+            writer.println(speedLine);
             // writer.println(meleeLine);
             // writer.println(multiattackLine);
             // writer.println(rangedLine);
@@ -650,7 +680,6 @@ public class sfncFXMLController implements Initializable {
     @FXML   private Label creatureIntelligenceModifier = new Label("");
     @FXML   private Label creatureWisdomModifier = new Label("");
     @FXML   private Label creatureCharismaModifier = new Label("");
-    // ability score modifiers
     // feats
     private Label creatureSkillsLabel = new Label("Skills ");
     private Label creatureSkillsDisplay = new Label();
@@ -793,6 +822,9 @@ public class sfncFXMLController implements Initializable {
         setAbilityControls();
         // step 7
         setSkillControls();
+        // step 8
+        // step 9
+        //  set speed controls here
         updateTabStatus();
     }
     
@@ -2049,7 +2081,39 @@ public class sfncFXMLController implements Initializable {
         creatureOffensiveAbilitiesBlock.getChildren().clear();
         addSemicolon = false;
         Boolean addNewLine = false;
-        // speed goes here
+        String speedLine = "";
+        if (creature.getGroundSpeed() != 0) {
+            speedLine += creature.getGroundSpeed() + " ft.";
+            addSemicolon = true;
+        }
+        if (creature.getBurrowSpeed() != 0) {
+            if (addSemicolon) speedLine += "; ";
+            speedLine += "burrow " + creature.getBurrowSpeed() + " ft.";
+            addSemicolon = true;
+        }
+        if (creature.getClimbSpeed() != 0) {
+            if (addSemicolon) speedLine += "; ";
+            speedLine += "climb " + creature.getClimbSpeed() + " ft.";
+            addSemicolon = true;
+        }
+        if (creature.getFlySpeed() != 0) {
+            if (addSemicolon) speedLine += "; ";
+            speedLine += "fly " + creature.getFlySpeed() + " ft.";
+            addSemicolon = true;
+        }
+        String flyInfoString = creature.getFlyType();
+        if ((!("".equals(flyInfoString))) && (!("".equals(creature.getFlyManeuverability()))))
+            flyInfoString += ", ";
+        flyInfoString += creature.getFlyManeuverability();
+        if (!("".equals(flyInfoString)))
+            speedLine += "(" + flyInfoString + ")";
+        if (creature.getSwimSpeed() != 0) {
+            if (addSemicolon) speedLine += "; ";
+            speedLine += "swim " + creature.getSwimSpeed() + " ft.";
+        }
+        creatureSpeedDisplay.setText(speedLine+"\n");
+        creatureOffensiveAbilitiesBlock.getChildren().addAll(creatureSpeedLabel,creatureSpeedDisplay);
+        addSemicolon = false;
         // melee goes here
         // multiattack goes here
         // ranged goes here
@@ -3830,6 +3894,7 @@ public class sfncFXMLController implements Initializable {
         // step 8 controls
         
         // step 9 controls
+        // put speed controls here?
 
         creature.clearChange();
         updateWindowTitle();
