@@ -95,7 +95,7 @@
                                        <children>
                                           <Label layoutX="78.0" layoutY="91.0" style="-fx-font-weight: bold;" text="Mid" GridPane.columnIndex="2" />
                                           <Label layoutX="103.0" layoutY="91.0" style="-fx-font-weight: bold;" text="Low" GridPane.columnIndex="3" />
-                                          <Label layoutX="5.0" layoutY="91.0" style="-fx-font-weight: bold;" text="Ability" />
+                                          <Label layoutX="5.0" layoutY="90.0" style="-fx-font-weight: bold;" text="Ability" />
                                           <Label layoutX="132.0" layoutY="91.0" style="-fx-font-weight: bold;" text="Custom" GridPane.columnIndex="4" GridPane.columnSpan="2" />
                                           <Label layoutX="47.0" layoutY="91.0" style="-fx-font-weight: bold;" text="Hi" GridPane.columnIndex="1" />
                                           <Label text="Strength" GridPane.rowIndex="1" />
@@ -130,6 +130,64 @@
                                           <TextField fx:id="creatureCharismaCustomValue" prefHeight="25.0" prefWidth="35.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
                                        </children>
                                     </GridPane>
+                                    <Label layoutX="5.0" layoutY="250.0" style="-fx-font-weight: bold;" text="Attack" />
+                                    <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="265.0">
+                                       <children>
+                                          <Label layoutX="10.0" layoutY="265.0" text="Name:" />
+                                          <TextField fx:id="creatureAttackName" layoutX="51.0" layoutY="261.0">
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="293.0">
+                                       <children>
+                                          <Label layoutX="10.0" layoutY="293.0" text="Attack Modifier:">
+                                             <HBox.margin>
+                                                <Insets right="5.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <RadioButton fx:id="creatureHighAttackModifier" layoutX="100.0" layoutY="293.0" mnemonicParsing="false" text="High">
+                                             <HBox.margin>
+                                                <Insets right="10.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                          <RadioButton fx:id="creatureLowAttackModifier" layoutX="155.0" layoutY="293.0" mnemonicParsing="false" text="Low" />
+                                       </children>
+                                    </HBox>
+                                    <Label layoutX="10.0" layoutY="315.0" text="Damage Types:" />
+                                    <CheckBox fx:id="creatureBludgeoningDamage" layoutX="10.0" layoutY="335.0" mnemonicParsing="false" text="B" />
+                                    <CheckBox fx:id="creaturePiercingDamage" layoutX="45.0" layoutY="335.0" mnemonicParsing="false" text="P" />
+                                    <CheckBox fx:id="creatureSlashingDamage" layoutX="80.0" layoutY="335.0" mnemonicParsing="false" text="S" />
+                                    <CheckBox fx:id="creatureAcidDamage" layoutX="10.0" layoutY="360.0" mnemonicParsing="false" text="A" />
+                                    <CheckBox fx:id="creatureColdDamage" layoutX="45.0" layoutY="360.0" mnemonicParsing="false" text="C" />
+                                    <CheckBox fx:id="creatureElectricityDamage" layoutX="80.0" layoutY="360.0" mnemonicParsing="false" text="E" />
+                                    <CheckBox fx:id="creatureFireDamage" layoutX="115.0" layoutY="360.0" mnemonicParsing="false" text="F" />
+                                    <CheckBox fx:id="creatureSonicDamage" layoutX="150.0" layoutY="360.0" mnemonicParsing="false" text="So" />
+                                    <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="381.0">
+                                       <children>
+                                          <Label layoutX="10.0" layoutY="385.0" text="Crit Effect:">
+                                             <HBox.margin>
+                                                <Insets right="5.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <TextField fx:id="creatureCritEffect" layoutX="68.0" layoutY="381.0" prefHeight="25.0" prefWidth="131.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" layoutX="7.0" layoutY="410.0">
+                                       <children>
+                                          <RadioButton fx:id="creatureMeleeAttack" layoutX="7.0" layoutY="410.0" mnemonicParsing="false" text="Melee">
+                                             <HBox.margin>
+                                                <Insets right="30.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                          <RadioButton fx:id="creatureRangedAttack" layoutX="85.0" layoutY="410.0" mnemonicParsing="false" text="Ranged" />
+                                       </children>
+                                    </HBox>
+                                    <Button fx:id="addAttackToList" layoutX="65.0" layoutY="434.0" mnemonicParsing="false" text="Add Attack" />
+                                    <Label layoutX="10.0" layoutY="475.0" style="-fx-font-weight: bold;" text="List of Attacks" />
+                                    <ListView fx:id="creatureAttacks" layoutX="9.0" layoutY="492.0" prefHeight="200.0" prefWidth="192.0" />
                                  </children>
                               </AnchorPane>
                            </content></Tab>

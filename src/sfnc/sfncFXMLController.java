@@ -339,9 +339,10 @@ public class sfncFXMLController implements Initializable {
             case CUSTOM: abilityModLine += bonusString(creature.getCharisma().getCustomValue()); break;
             default: abilityModLine += "+0";
         }
-
-        // ability score modifiers go here
-        // feats go here
+        String featsLine = "";
+        if (hasAbilitiesByLocation(Location.FEATS)) {
+            featsLine += "Feats " + makeAbilityStringByLocation(Location.FEATS);
+        }
         String skillsLine = "";
         if (hasSkills()) {
             skillsLine += "Skills " + makeSkillsString();
@@ -401,6 +402,8 @@ public class sfncFXMLController implements Initializable {
             writer.println("STATISTICS");
             writer.println(abilityModLine);
             writer.println(skillsLine);
+            if (!"".equals(featsLine))
+                writer.println(featsLine);
             if (!"".equals(languagesLine))
                 writer.println(languagesLine);
             if (!"".equals(otherAbilitiesLine))
@@ -455,6 +458,24 @@ public class sfncFXMLController implements Initializable {
     @FXML   private TextField creatureIntelligenceCustomValue = new TextField();
     @FXML   private TextField creatureWisdomCustomValue = new TextField();
     @FXML   private TextField creatureCharismaCustomValue = new TextField();
+    @FXML   private TextField creatureAttackName = new TextField();
+    private ToggleGroup attackModifierGroup = new ToggleGroup();
+    @FXML   private RadioButton creatureHighAttackModifier = new RadioButton();
+    @FXML   private RadioButton creatureLowAttackModifier = new RadioButton();
+    @FXML   private CheckBox creatureBludgeoningDamage = new CheckBox();
+    @FXML   private CheckBox creaturePiercingDamage = new CheckBox();
+    @FXML   private CheckBox creatureSlashingDamage = new CheckBox();
+    @FXML   private CheckBox creatureAcidDamage = new CheckBox();
+    @FXML   private CheckBox creatureColdDamage = new CheckBox();
+    @FXML   private CheckBox creatureElectricityDamage = new CheckBox();
+    @FXML   private CheckBox creatureFireDamage = new CheckBox();
+    @FXML   private CheckBox creatureSonicDamage = new CheckBox();
+    @FXML   private TextField creatureCritEffect = new TextField();
+    private ToggleGroup attackType = new ToggleGroup();
+    @FXML   private RadioButton creatureMeleeAttack = new RadioButton();
+    @FXML   private RadioButton creatureRangedAttack = new RadioButton();
+    @FXML   private Button addAttackToList = new Button();
+    @FXML   private ListView<String> creatureAttacks = new ListView<>();
     
     // Step 2 controls
     @FXML   private Tab step2 = new Tab();
@@ -468,9 +489,9 @@ public class sfncFXMLController implements Initializable {
     // Step 3 controls
     @FXML   private Tab step3 = new Tab();
     @FXML   private Label creatureSubtypeWarning = new Label();
-    @FXML   private ListView<String> creatureGeneralSubtypesInput = new ListView<String>();
-    @FXML   private ListView<String> creatureHumanoidSubtypesInput = new ListView<String>();
-    @FXML   private ListView<String> creatureOutsiderSubtypesInput = new ListView<String>();
+    @FXML   private ListView<String> creatureGeneralSubtypesInput = new ListView<>();
+    @FXML   private ListView<String> creatureHumanoidSubtypesInput = new ListView<>();
+    @FXML   private ListView<String> creatureOutsiderSubtypesInput = new ListView<>();
     @FXML   private TextField creatureFreeformSubtypesInput = new TextField();
     
     // Step 4 controls
