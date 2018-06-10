@@ -669,9 +669,11 @@ public class sfncFXMLController implements Initializable {
     @FXML   private TextFlow creatureOffensiveAbilitiesBlock = new TextFlow();
     private Label creatureSpeedLabel = new Label("Speed ");
     private Label creatureSpeedDisplay = new Label();
-    // melee
+    private Label creatureMeleeAttackLabel = new Label("Melee ");
+    private Label creatureMeleeAttackDisplay = new Label();
     // multiattack
-    // ranged
+    private Label creatureRangedAttackLabel = new Label("Ranged ");
+    private Label creatureRangedAttackDisplay = new Label();
     private Label creatureSpaceLabel = new Label("Space ");
     private Label creatureSpaceDisplay = new Label();
     private Label creatureReachLabel = new Label("Reach ");
@@ -1995,6 +1997,66 @@ public class sfncFXMLController implements Initializable {
         return skillsString;
     }
     
+    public String makeAttackString(Attack a) {
+        String attackString = "";
+        Boolean useAmpersand = false;
+        // Boolean useAnd = false;
+        
+        attackString += a.getName() + " ";
+        attackString += bonusString(a.hasHighAttackModifier() ? array.highAttackBonus : array.lowAttackBonus) + " (";
+        // sometimes, there is no base damage or damage modifier
+        attackString += a.getBaseDamage();
+        if (a.getDamageModifier() != 0)
+            attackString += bonusString(a.getDamageModifier());
+        attackString += " ";
+        if (a.isBludgeoning()) {
+            attackString += "B";
+            useAmpersand = true;
+        }
+        if (a.isPiercing()) {
+            if (useAmpersand) attackString += "&";
+            attackString += "P";
+            useAmpersand = true;
+        }
+        if (a.isSlashing()) {
+            if (useAmpersand) attackString += "&";
+            attackString += "S";
+            useAmpersand = true;
+        }
+        if (a.isAcid()) {
+            if (useAmpersand) attackString += "&";
+            attackString += "A";
+            useAmpersand = true;
+        }
+        if (a.isCold()) {
+            if (useAmpersand) attackString += "&";
+            attackString += "C";
+            useAmpersand = true;
+        }
+        if (a.isElectricity()) {
+            if (useAmpersand) attackString += "&";
+            attackString += "E";
+            useAmpersand = true;
+        }
+        if (a.isFire()) {
+            if (useAmpersand) attackString += "&";
+            attackString += "F";
+            useAmpersand = true;
+        }
+        if (a.isSonic()) {
+            if (useAmpersand) attackString += "&";
+            attackString += "So";
+            useAmpersand = true;
+        }
+        // if there are any rider effects:
+        //  "plus" rider "and" 2nd rider "and" ...
+        if (!("".equals(a.getCriticalEffect())))
+            attackString += "; " + a.getCriticalEffect();
+        attackString += ")";
+
+        return attackString;
+    }
+    
     public void updateStatBlock() {
         Boolean addSemicolon = false;
         
@@ -2121,9 +2183,44 @@ public class sfncFXMLController implements Initializable {
         creatureSpeedDisplay.setText(speedLine+"\n");
         creatureOffensiveAbilitiesBlock.getChildren().addAll(creatureSpeedLabel,creatureSpeedDisplay);
         addSemicolon = false;
-        // melee goes here
-        // multiattack goes here
-        // ranged goes here
+        // make a temp bogus melee attack for now
+        if (array != null) {
+            Attack tempAttack = new Attack();
+            tempAttack.setName("punch");
+            tempAttack.setHighAttackModifier(true);
+            tempAttack.setBaseDamage(array.standardMeleeDamage);
+            Integer damageModifier = creature.getCR().getCRValue();
+            if (!hasAbilityByID("incorporeal"))
+                switch(creature.getStrength().getAbilityModifierChoice()) {
+                    case HIGH: damageModifier += array.abilityScoreModifier1; break;
+                    case MID: damageModifier += array.abilityScoreModifier2; break;
+                    case LOW: damageModifier += array.abilityScoreModifier3; break;
+                    case CUSTOM: damageModifier += creature.getStrength().getCustomValue(); break;
+            }
+            tempAttack.setDamageModifier(damageModifier);
+            tempAttack.setBludgeoning(true);
+            String meleeString = makeAttackString(tempAttack);
+            if (!("".equals(meleeString))) {
+                creatureMeleeAttackDisplay.setText(meleeString);
+                creatureOffensiveAbilitiesBlock.getChildren().addAll(
+                        new Text("\n"),creatureMeleeAttackLabel,creatureMeleeAttackDisplay);
+            }
+            // multiattack goes here
+            // make a temp bogus ranged attack for now
+            tempAttack = new Attack();
+            tempAttack.setName("electric jolt");
+            tempAttack.setHighAttackModifier(false);
+            tempAttack.setBaseDamage(array.energyRangedDamage);
+            tempAttack.setDamageModifier(creature.getCR().getCRValue());
+            tempAttack.setElectricity(true);
+            tempAttack.setCriticalEffect("stun");
+            String rangedString = makeAttackString(tempAttack);
+            if (!("".equals(rangedString))) {
+                creatureRangedAttackDisplay.setText(rangedString);
+                creatureOffensiveAbilitiesBlock.getChildren().addAll(
+                        new Text("\n"),creatureRangedAttackLabel,creatureRangedAttackDisplay);
+            }
+        }
         if ((!creature.size.getSpace().equals("5 ft.")) || (creature.getReach() != 5)) {
             if (addNewLine)
                 creatureOffensiveAbilitiesBlock.getChildren().addAll(new Text("\n"));
@@ -2407,6 +2504,8 @@ public class sfncFXMLController implements Initializable {
         creatureOtherAbilitiesLabel.setStyle("-fx-font-weight: bold");
         creatureSpaceLabel.setStyle("-fx-font-weight: bold");
         creatureReachLabel.setStyle("-fx-font-weight: bold");
+        creatureMeleeAttackLabel.setStyle("-fx-font-weight: bold");
+        creatureRangedAttackLabel.setStyle("-fx-font-weight: bold");
         
         updateTabStatus();
 
