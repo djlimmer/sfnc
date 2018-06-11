@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -263,14 +264,54 @@ public class sfncFXMLController implements Initializable {
         flyInfoString += creature.getFlyManeuverability();
         if (!("".equals(flyInfoString)))
             speedLine += " (" + flyInfoString + ")";
-                if (creature.getSwimSpeed() != 0) {
+        if (creature.getSwimSpeed() != 0) {
             if (addSemicolon) speedLine += "; ";
             speedLine += "swim " + creature.getSwimSpeed() + " ft.";
             addSemicolon = true;
         }
-        // melee goes here
-        // multiattack goes here
-        // ranged goes here
+        String meleeLine = "";
+        String rangedLine = "";
+        Boolean addOr = false;
+        if (array != null) {
+            Integer damageModifier = creature.getCR().getCRValue();
+            if (!hasAbilityByID("incorporeal"))
+                switch(creature.getStrength().getAbilityModifierChoice()) {
+                case HIGH: damageModifier += array.abilityScoreModifier1; break;
+                case MID: damageModifier += array.abilityScoreModifier2; break;
+                case LOW: damageModifier += array.abilityScoreModifier3; break;
+                case CUSTOM: damageModifier += creature.getStrength().getCustomValue(); break;
+                }
+            creature.meleeAttacks.sort(Comparator.comparing(Attack::getName));
+            for(Attack a : creature.meleeAttacks) {
+                if (addOr) 
+                    meleeLine += " or ";
+                a.setBaseDamage(array.standardMeleeDamage);
+                a.setDamageModifier(damageModifier);
+                meleeLine += makeAttackString(a);
+                addOr = true;
+            }
+            if (!("".equals(meleeLine))) {
+                meleeLine = "Melee " + meleeLine;
+            }
+            // multiattack goes here
+            addOr = false;
+            damageModifier = creature.getCR().getCRValue();
+            creature.rangedAttacks.sort(Comparator.comparing(Attack::getName));
+            for(Attack a : creature.rangedAttacks) {
+                if (addOr) 
+                    rangedLine += " or ";
+                if (a.isBludgeoning() || a.isPiercing() || a.isSlashing())
+                    a.setBaseDamage(array.kineticRangedDamage);
+                else
+                    a.setBaseDamage(array.energyRangedDamage);
+                a.setDamageModifier(damageModifier);
+                rangedLine += makeAttackString(a);
+                addOr = true;
+            }
+            if (!("".equals(rangedLine))) {
+                rangedLine = "Ranged " + rangedLine;
+            }
+        }
         String spaceLine = "";
         if ((!creature.size.getSpace().equals("5 ft.")) || (creature.size.getReachTall() != 5)) {
             spaceLine += "Space " + creature.size.getSpace()
@@ -385,9 +426,11 @@ public class sfncFXMLController implements Initializable {
                 writer.println(defensiveAbilitiesLine);
             writer.println("OFFENSE");
             writer.println(speedLine);
-            // writer.println(meleeLine);
+            if (!"".equals(meleeLine))
+                writer.println(meleeLine);
             // writer.println(multiattackLine);
-            // writer.println(rangedLine);
+            if (!"".equals(rangedLine))
+                writer.println(rangedLine);
              if (!"".equals(spaceLine))
                  writer.println(spaceLine);
             if (!"".equals(offensiveAbilitiesLine))
@@ -471,11 +514,37 @@ public class sfncFXMLController implements Initializable {
     @FXML   private CheckBox creatureFireDamage = new CheckBox();
     @FXML   private CheckBox creatureSonicDamage = new CheckBox();
     @FXML   private TextField creatureCritEffect = new TextField();
-    private ToggleGroup attackType = new ToggleGroup();
+    private ToggleGroup attackTypeGroup = new ToggleGroup();
     @FXML   private RadioButton creatureMeleeAttack = new RadioButton();
     @FXML   private RadioButton creatureRangedAttack = new RadioButton();
     @FXML   private Button addAttackToList = new Button();
     @FXML   private ListView<String> creatureAttacks = new ListView<>();
+    
+    @FXML public void addAttackAction(ActionEvent actionEvent) {
+        Attack attack = new Attack();
+        attack.setName(creatureAttackName.getText());
+        attack.setHighAttackModifier(attackModifierGroup.getSelectedToggle()==creatureHighAttackModifier);
+        attack.setBludgeoning(creatureBludgeoningDamage.isSelected());
+        attack.setPiercing(creaturePiercingDamage.isSelected());
+        attack.setSlashing(creatureSlashingDamage.isSelected());
+        attack.setAcid(creatureAcidDamage.isSelected());
+        attack.setCold(creatureColdDamage.isSelected());
+        attack.setElectricity(creatureElectricityDamage.isSelected());
+        attack.setFire(creatureFireDamage.isSelected());
+        attack.setSonic(creatureSonicDamage.isSelected());
+        attack.setCriticalEffect(creatureCritEffect.getText());
+        if(attackTypeGroup.getSelectedToggle()==creatureRangedAttack) {
+            creature.rangedAttacks.add(attack);
+        } else {
+            creature.meleeAttacks.add(attack);
+        }
+        
+        creature.setChange();
+        updateListOfAttacks();
+        updateStatBlock();
+        updateWindowTitle();
+    }
+
     
     // Step 2 controls
     @FXML   private Tab step2 = new Tab();
@@ -915,6 +984,7 @@ public class sfncFXMLController implements Initializable {
     }
     
     private void setAbilityControls() {
+        // TODO: don't count 0-cost abilities
         creatureAbilityChoicesAvailable.setText(Integer.toString(array.specialAbilities));
         creatureAbilityChoicesMade.setText(Integer.toString(creature.getChosenAbilities().size()));
         List<String> chosenAbilitiesDisplay = new ArrayList<>();
@@ -1405,6 +1475,20 @@ public class sfncFXMLController implements Initializable {
             }
             creatureSurvivalCustomValue.setText(Integer.toString(creature.survival.getCustomValue()));
         }
+    }
+    
+    private void updateListOfAttacks() {
+        List<String> attackList = new ArrayList<>();
+        for (Attack a : creature.meleeAttacks) {
+            attackList.add(a.getName() + " (M)");
+        }
+        for (Attack a : creature.rangedAttacks) {
+            attackList.add(a.getName() + " (R)");
+        }
+        Collections.sort(attackList);
+
+        creatureAttacks.setItems(FXCollections.observableArrayList(
+                attackList));
     }
     
     private void addSenseToAbilitySet(String senseName,Integer range) {
@@ -2072,7 +2156,7 @@ public class sfncFXMLController implements Initializable {
         // if there are any rider effects:
         //  "plus" rider "and" 2nd rider "and" ...
         if (!("".equals(a.getCriticalEffect())))
-            attackString += "; " + a.getCriticalEffect();
+            attackString += "; critical " + a.getCriticalEffect();
         attackString += ")";
 
         return attackString;
@@ -2204,40 +2288,49 @@ public class sfncFXMLController implements Initializable {
         creatureSpeedDisplay.setText(speedLine+"\n");
         creatureOffensiveAbilitiesBlock.getChildren().addAll(creatureSpeedLabel,creatureSpeedDisplay);
         addSemicolon = false;
-        // make a temp bogus melee attack for now
+        Boolean addOr = false;
         if (array != null) {
-            Attack tempAttack = new Attack();
-            tempAttack.setName("punch");
-            tempAttack.setHighAttackModifier(true);
-            tempAttack.setBaseDamage(array.standardMeleeDamage);
             Integer damageModifier = creature.getCR().getCRValue();
             if (!hasAbilityByID("incorporeal"))
                 switch(creature.getStrength().getAbilityModifierChoice()) {
-                    case HIGH: damageModifier += array.abilityScoreModifier1; break;
-                    case MID: damageModifier += array.abilityScoreModifier2; break;
-                    case LOW: damageModifier += array.abilityScoreModifier3; break;
-                    case CUSTOM: damageModifier += creature.getStrength().getCustomValue(); break;
+                case HIGH: damageModifier += array.abilityScoreModifier1; break;
+                case MID: damageModifier += array.abilityScoreModifier2; break;
+                case LOW: damageModifier += array.abilityScoreModifier3; break;
+                case CUSTOM: damageModifier += creature.getStrength().getCustomValue(); break;
+                }
+            String meleeAttacks = "";
+            creature.meleeAttacks.sort(Comparator.comparing(Attack::getName));
+            for(Attack a : creature.meleeAttacks) {
+                if (addOr) 
+                    meleeAttacks += " or ";
+                a.setBaseDamage(array.standardMeleeDamage);
+                a.setDamageModifier(damageModifier);
+                meleeAttacks += makeAttackString(a);
+                addOr = true;
             }
-            tempAttack.setDamageModifier(damageModifier);
-            tempAttack.setBludgeoning(true);
-            String meleeString = makeAttackString(tempAttack);
-            if (!("".equals(meleeString))) {
-                creatureMeleeAttackDisplay.setText(meleeString);
+            if (!("".equals(meleeAttacks))) {
+                creatureMeleeAttackDisplay.setText(meleeAttacks);
                 creatureOffensiveAbilitiesBlock.getChildren().addAll(
                         new Text("\n"),creatureMeleeAttackLabel,creatureMeleeAttackDisplay);
             }
             // multiattack goes here
-            // make a temp bogus ranged attack for now
-            tempAttack = new Attack();
-            tempAttack.setName("electric jolt");
-            tempAttack.setHighAttackModifier(false);
-            tempAttack.setBaseDamage(array.energyRangedDamage);
-            tempAttack.setDamageModifier(creature.getCR().getCRValue());
-            tempAttack.setElectricity(true);
-            tempAttack.setCriticalEffect("stun");
-            String rangedString = makeAttackString(tempAttack);
-            if (!("".equals(rangedString))) {
-                creatureRangedAttackDisplay.setText(rangedString);
+            addOr = false;
+            damageModifier = creature.getCR().getCRValue();
+            String rangedAttacks = "";
+            creature.rangedAttacks.sort(Comparator.comparing(Attack::getName));
+            for(Attack a : creature.rangedAttacks) {
+                if (addOr) 
+                    rangedAttacks += " or ";
+                if (a.isBludgeoning() || a.isPiercing() || a.isSlashing())
+                    a.setBaseDamage(array.kineticRangedDamage);
+                else
+                    a.setBaseDamage(array.energyRangedDamage);
+                a.setDamageModifier(damageModifier);
+                rangedAttacks += makeAttackString(a);
+                addOr = true;
+            }
+            if (!("".equals(rangedAttacks))) {
+                creatureRangedAttackDisplay.setText(rangedAttacks);
                 creatureOffensiveAbilitiesBlock.getChildren().addAll(
                         new Text("\n"),creatureRangedAttackLabel,creatureRangedAttackDisplay);
             }
@@ -2819,6 +2912,11 @@ public class sfncFXMLController implements Initializable {
                 }
             }
         );
+        
+        creatureHighAttackModifier.setToggleGroup(attackModifierGroup);
+        creatureLowAttackModifier.setToggleGroup(attackModifierGroup);
+        creatureMeleeAttack.setToggleGroup(attackTypeGroup);
+        creatureRangedAttack.setToggleGroup(attackTypeGroup);
 
         // step 2 controls
         String[] typeNames = {

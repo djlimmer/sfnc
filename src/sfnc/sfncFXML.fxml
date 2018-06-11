@@ -185,7 +185,7 @@
                                           <RadioButton fx:id="creatureRangedAttack" layoutX="85.0" layoutY="410.0" mnemonicParsing="false" text="Ranged" />
                                        </children>
                                     </HBox>
-                                    <Button fx:id="addAttackToList" layoutX="65.0" layoutY="434.0" mnemonicParsing="false" text="Add Attack" />
+                                    <Button fx:id="addAttackToList" layoutX="65.0" layoutY="434.0" mnemonicParsing="false" onAction="#addAttackAction" text="Add Attack" />
                                     <Label layoutX="10.0" layoutY="475.0" style="-fx-font-weight: bold;" text="List of Attacks" />
                                     <ListView fx:id="creatureAttacks" layoutX="9.0" layoutY="492.0" prefHeight="200.0" prefWidth="192.0" />
                                  </children>
