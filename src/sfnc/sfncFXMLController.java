@@ -440,8 +440,6 @@ public class sfncFXMLController implements Initializable {
             // if (!"".equals(SpellsBlock)
             //  writer.println(SpellsBlock);
             // writer.println(abilityScoreLine);
-            // if (!"".equals(featsLine)
-            //  writer.println(featsLine);
             writer.println("STATISTICS");
             writer.println(abilityModLine);
             writer.println(skillsLine);
@@ -984,9 +982,10 @@ public class sfncFXMLController implements Initializable {
     }
     
     private void setAbilityControls() {
-        // TODO: don't count 0-cost abilities
         creatureAbilityChoicesAvailable.setText(Integer.toString(array.specialAbilities));
-        creatureAbilityChoicesMade.setText(Integer.toString(creature.getChosenAbilities().size()));
+        Integer abilityCount = 0;
+        abilityCount = creature.getChosenAbilities().stream().map((a) -> a.getCost()).reduce(abilityCount, Integer::sum);
+        creatureAbilityChoicesMade.setText(Integer.toString(abilityCount));
         List<String> chosenAbilitiesDisplay = new ArrayList<>();
         creature.getChosenAbilities().stream().forEach((a) -> {
             chosenAbilitiesDisplay.add(a.getId());

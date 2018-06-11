@@ -516,7 +516,7 @@ public class Creature {
     public int openCreature(File file) {
         // output values:
         // 0 : no problems
-        // 1 : invalid file format (expecting an int)
+        // 1 : invalid file format (expecting an int, or not an sfnc file)
         // -1 : IOException
 
         try {

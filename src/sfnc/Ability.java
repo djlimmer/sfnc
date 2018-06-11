@@ -59,7 +59,7 @@ public class Ability {
     }
 
     Ability(Ability a) {
-        this(a.id, a.location, a.outputFormat, a.cost,a.range,a.DC,a.amount,a.dice,a.diceBonus);
+        this(a.id, a.location, a.outputFormat, a.cost, a.range, a.DC, a.amount, a.dice, a.diceBonus);
     }
     
     public String getId() {
@@ -175,16 +175,16 @@ public class Ability {
         // this assumes the correct format; I should probably do error checking here
         if (abilityParts.size() != 9)
             System.err.println("abilityParts has " + abilityParts.size() + "elements.");
-
+        
         this.id = abilityParts.get(0);
         this.location = Location.valueOf(abilityParts.get(1));
         this.outputFormat = abilityParts.get(2);
-        this.cost = Integer.getInteger(abilityParts.get(3));
-        this.range = Integer.getInteger(abilityParts.get(4));
-        this.DC = Integer.getInteger(abilityParts.get(5));
-        this.amount = Integer.getInteger(abilityParts.get(6));
+        this.cost = Integer.valueOf(abilityParts.get(3));
+        this.range = Integer.valueOf(abilityParts.get(4));
+        this.DC = Integer.valueOf(abilityParts.get(5));
+        this.amount = Integer.valueOf(abilityParts.get(6));
         this.dice = new Dice(abilityParts.get(7));
-        this.diceBonus = Integer.getInteger(abilityParts.get(8));
+        this.diceBonus = Integer.valueOf(abilityParts.get(8));
     }
     
     public static Ability getAbility(String n) {
