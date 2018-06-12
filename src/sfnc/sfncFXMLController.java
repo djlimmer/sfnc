@@ -952,9 +952,10 @@ public class sfncFXMLController implements Initializable {
             default:
                 lowStatGroup.selectToggle(null);
         }
-        // step 2
-        creatureTypeInput.setValue(creature.getType());
-        creatureTypeAdjustmentUse.setSelected(creature.useTypeAdjustments());
+      updateListOfAttacks();
+      // step 2
+      creatureTypeInput.setValue(creature.getType());
+      creatureTypeAdjustmentUse.setSelected(creature.useTypeAdjustments());
         switch (creature.getType()) {
             case "Animal":
                 showAnimalTypeOptions();
@@ -981,7 +982,13 @@ public class sfncFXMLController implements Initializable {
         setSkillControls();
         // step 8
         // step 9
-        //  set speed controls here
+        creatureGroundSpeed.setText(creature.getGroundSpeed().toString());
+        creatureBurrowSpeed.setText(creature.getBurrowSpeed().toString());
+        creatureClimbSpeed.setText(creature.getClimbSpeed().toString());
+        creatureFlySpeed.setText(creature.getFlySpeed().toString());
+        creatureFlyType.setText(creature.getFlyType());
+        creatureFlyManeuverability.setText(creature.getFlyManeuverability());
+        creatureSwimSpeed.setText(creature.getSwimSpeed().toString());
         updateTabStatus();
     }
     

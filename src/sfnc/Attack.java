@@ -160,13 +160,7 @@ public class Attack {
     }
     
     public void makeFromLoadString(String s) {
-        System.out.println("string passed in: " + s);
         List<String> attackParts = new ArrayList<>(Arrays.asList(s.split("\\|")));
-        System.out.print("string split up: ");
-        for (String st : attackParts) {
-            System.out.print("*" + st + "* ");
-        }
-        System.out.println("");
         
         // this assumes the correct format; I should probably do error checking here
         if (attackParts.size() != 13)

@@ -623,13 +623,14 @@ public class Creature {
             this.flyType = reader.readLine();
             this.flyManeuverability = reader.readLine();
             this.swimSpeed = Integer.valueOf(reader.readLine());
-            this.chosenAbilities = new ArrayList<>();
+            this.meleeAttacks = new ArrayList<>();
             n = Integer.parseInt(reader.readLine());
             for (Integer i = 0; i < n; i++) {
                 Attack a = new Attack();
                 a.makeFromLoadString(reader.readLine());
                 meleeAttacks.add(a);
             }
+            this.rangedAttacks = new ArrayList<>();
             n = Integer.parseInt(reader.readLine());
             for (Integer i = 0; i < n; i++) {
                 Attack a = new Attack();
