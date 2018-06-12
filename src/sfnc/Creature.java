@@ -566,7 +566,7 @@ public class Creature {
             Integer n = Integer.parseInt(reader.readLine());
             for (Integer i = 0; i < n; i++) {
                 Ability a = new Ability();
-                a.loadString(reader.readLine());
+                a.makeFromLoadString(reader.readLine());
                 chosenAbilities.add(a);
             }
             String[] skillString;
@@ -623,7 +623,19 @@ public class Creature {
             this.flyType = reader.readLine();
             this.flyManeuverability = reader.readLine();
             this.swimSpeed = Integer.valueOf(reader.readLine());
-            // meleeAttack and rangedAttack not yet saved, so not read
+            this.chosenAbilities = new ArrayList<>();
+            n = Integer.parseInt(reader.readLine());
+            for (Integer i = 0; i < n; i++) {
+                Attack a = new Attack();
+                a.makeFromLoadString(reader.readLine());
+                meleeAttacks.add(a);
+            }
+            n = Integer.parseInt(reader.readLine());
+            for (Integer i = 0; i < n; i++) {
+                Attack a = new Attack();
+                a.makeFromLoadString(reader.readLine());
+                rangedAttacks.add(a);
+            }
 
             reader.close();
         } catch (IOException e) {
@@ -654,7 +666,7 @@ public class Creature {
             writer.println(String.join(",",freeformSubtypes));
             writer.println(chosenAbilities.size());
             for (Ability a : chosenAbilities) {
-                writer.println(a.saveString());
+                writer.println(a.makeSaveString());
             }
             writer.println(acrobatics.getSkillChoice()+"|"+acrobatics.getCustomValue());
             writer.println(athletics.getSkillChoice()+"|"+athletics.getCustomValue());
@@ -689,7 +701,14 @@ public class Creature {
             writer.println(flyType);
             writer.println(flyManeuverability);
             writer.println(swimSpeed);
-            // meleeAttack and rangedAttack not yet saved
+            writer.println(meleeAttacks.size());
+            for (Attack a : meleeAttacks) {
+                writer.println(a.makeSaveString());
+            }
+            writer.println(rangedAttacks.size());
+            for (Attack a : rangedAttacks) {
+                writer.println(a.makeSaveString());
+            }
             
             writer.close();
         } catch (IOException e) {

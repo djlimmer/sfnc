@@ -2,6 +2,7 @@ john                                                                    CR 5
 XP 1,600 (Expert)
 N Medium Humanoid (elf)
 Init +3; Perception +11
+Aura aura of awesome
 DEFENSE                                                                HP 65
 EAC 17; KAC 18
 Fort +4; Ref +6; Will +8
@@ -10,5 +11,4 @@ Speed 20 ft.; burrow 10 ft.; climb 15 ft.; fly 60 ft. (Ex, perfect); swim 30 ft.
 STATISTICS
 Str +0; Dex +3; Con +0; Int +5; Wis +0; Cha +2
 Skills Computers +16, Engineering +16, Medicine +11, Physical Science +11, Piloting +16
-Feats johnson five
 Other Abilities artificial intelligence (exocortex), wireless hack

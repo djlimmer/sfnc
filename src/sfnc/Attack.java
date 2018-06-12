@@ -5,6 +5,10 @@
  */
 package sfnc;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  *
  * @author Doug
@@ -142,5 +146,44 @@ public class Attack {
     
     public void setCriticalEffect(String c) {
         criticalEffect = c;
+    }
+    
+    public String makeSaveString() {
+        String outputString = name + "|"
+                + highAttackModifier + "|"
+                + baseDamage + "|" + damageModifier + "|"
+                + bludgeoning + "|" + piercing + "|" + slashing + "|"
+                + acid + "|" + cold + "|" + electricity + "|" + fire + "|" + sonic + "|"
+                + "ce:" + criticalEffect;
+        
+        return outputString;
+    }
+    
+    public void makeFromLoadString(String s) {
+        System.out.println("string passed in: " + s);
+        List<String> attackParts = new ArrayList<>(Arrays.asList(s.split("\\|")));
+        System.out.print("string split up: ");
+        for (String st : attackParts) {
+            System.out.print("*" + st + "* ");
+        }
+        System.out.println("");
+        
+        // this assumes the correct format; I should probably do error checking here
+        if (attackParts.size() != 13)
+            System.err.println("attackParts has " + attackParts.size() + " elements.");
+        
+        this.name = attackParts.get(0);
+        this.highAttackModifier = ("true".equals(attackParts.get(1)));
+        this.baseDamage = new Dice(attackParts.get(2));
+        this.damageModifier = Integer.valueOf(attackParts.get(3));
+        this.bludgeoning = ("true".equals(attackParts.get(4)));
+        this.piercing = ("true".equals(attackParts.get(5)));
+        this.slashing = ("true".equals(attackParts.get(6)));
+        this.acid = ("true".equals(attackParts.get(7)));
+        this.cold = ("true".equals(attackParts.get(8)));
+        this.electricity = ("true".equals(attackParts.get(9)));
+        this.fire = ("true".equals(attackParts.get(10)));
+        this.sonic = ("true".equals(attackParts.get(11)));
+        this.criticalEffect = attackParts.get(12).substring(3);
     }
 }

@@ -154,7 +154,7 @@ public class Ability {
         return outputString;
     }
 
-    public String saveString() {
+    public String makeSaveString() {
         String outputString = new String(id);
         
         outputString += "|" + location;
@@ -169,7 +169,7 @@ public class Ability {
         return outputString;
     }
 
-    public void loadString(String s) {
+    public void makeFromLoadString(String s) {
         List<String> abilityParts = new ArrayList<>(Arrays.asList(s.split("\\|")));
         
         // this assumes the correct format; I should probably do error checking here
