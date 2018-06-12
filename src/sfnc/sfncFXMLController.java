@@ -28,6 +28,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -267,7 +268,6 @@ public class sfncFXMLController implements Initializable {
         if (creature.getSwimSpeed() != 0) {
             if (addSemicolon) speedLine += "; ";
             speedLine += "swim " + creature.getSwimSpeed() + " ft.";
-            addSemicolon = true;
         }
         String meleeLine = "";
         String rangedLine = "";
@@ -517,6 +517,7 @@ public class sfncFXMLController implements Initializable {
     @FXML   private RadioButton creatureRangedAttack = new RadioButton();
     @FXML   private Button addAttackToList = new Button();
     @FXML   private ListView<String> creatureAttacks = new ListView<>();
+    @FXML   private Button removeAttackFromList = new Button();
     
     @FXML public void addAttackAction(ActionEvent actionEvent) {
         Attack attack = new Attack();
@@ -543,6 +544,30 @@ public class sfncFXMLController implements Initializable {
         updateWindowTitle();
     }
 
+    @FXML public void removeAttackAction(ActionEvent actionEvent) {
+        ObservableList<String> selectedItems = creatureAttacks.getSelectionModel().getSelectedItems();
+        
+        for (String s : selectedItems) {
+            String attackName = s.substring(0,s.length()-4);
+            if (s.endsWith(" (M)"))
+                for (Attack a : creature.meleeAttacks) {
+                    if (a.getName().equals(attackName)) {
+                        creature.meleeAttacks.remove(a);
+                        break;
+                    }
+                }
+            else if (s.endsWith(" (R)"))
+                for (Attack a : creature.rangedAttacks) {
+                    if (a.getName().equals(attackName)) {
+                        creature.rangedAttacks.remove(a);
+                        break;
+                    }
+                }
+        }
+        updateListOfAttacks();
+        updateStatBlock();
+        updateWindowTitle();
+    }
     
     // Step 2 controls
     @FXML   private Tab step2 = new Tab();
@@ -571,11 +596,44 @@ public class sfncFXMLController implements Initializable {
     @FXML   private Tab step6 = new Tab();
     @FXML   private Label creatureAbilityChoicesAvailable = new Label();
     @FXML   private Label creatureAbilityChoicesMade = new Label();
-    @FXML   private ListView<String> creatureAbilityInput = new ListView<String>();
     @FXML   private ListView<String> creatureAbilitiesChosen = new ListView<String>();
+    @FXML   private Button creatureRemoveAbilitiesFromList = new Button();
+    @FXML   private ListView<String> creatureAbilityInput = new ListView<String>();
+    @FXML   private Button creatureAddAbilitiesToList = new Button();
     @FXML   private TextField creatureCustomAbilityNameInput = new TextField();
     @FXML   private ComboBox creatureCustomAbilityLocationInput = new ComboBox();
     @FXML   private Button creatureAddCustomAbilityButton = new Button();
+
+    @FXML public void removeAbilitiesAction(ActionEvent actionEvent) {
+        ObservableList<String> selectedItems = creatureAbilitiesChosen.getSelectionModel().getSelectedItems();
+        
+        for (String a : selectedItems) {
+            creature.dropAbility(Ability.getAbility(a));
+        }
+        setAbilityControls();
+        updateStatBlock();
+        updateWindowTitle();
+    }
+
+    @FXML public void addAbilitiesAction(ActionEvent actionEvent) {
+        ObservableList<String> selectedItems = creatureAbilityInput.getSelectionModel().getSelectedItems();
+        for (String a : selectedItems) {
+            creature.addAbility(Ability.getAbility(a));
+        }
+        setAbilityControls();
+        updateStatBlock();
+        updateWindowTitle();
+    }
+    
+    @FXML public void addCustomAbilityAction(ActionEvent actionEvent) {
+        Ability a = new Ability(creatureCustomAbilityNameInput.getText(),
+                Location.values()[creatureCustomAbilityLocationInput.getSelectionModel().getSelectedIndex()]);
+        creature.addAbility(a);
+        Ability.setOfAbilities.add(a);
+        setAbilityControls();
+        updateStatBlock();
+        updateWindowTitle();
+    }
 
     // Step 7 controls
     @FXML   private Tab step7 = new Tab();
@@ -780,6 +838,8 @@ public class sfncFXMLController implements Initializable {
     // feats
     private Label creatureSkillsLabel = new Label("Skills ");
     private Label creatureSkillsDisplay = new Label();
+    private Label creatureFeatsLabel = new Label("Feats ");
+    private Label creatureFeatsDisplay = new Label();
     private Label creatureLanguagesLabel = new Label("Languages ");
     private Label creatureLanguagesDisplay = new Label();
     private Label creatureOtherAbilitiesLabel = new Label("Other Abilities ");
@@ -991,6 +1051,7 @@ public class sfncFXMLController implements Initializable {
             chosenAbilitiesDisplay.add(a.getId());
             creatureAbilityInput.getSelectionModel().select(a.getId());
         });
+        Collections.sort(chosenAbilitiesDisplay);
         creatureAbilitiesChosen.setItems(FXCollections.observableArrayList(
                 chosenAbilitiesDisplay));
     }
@@ -2284,9 +2345,13 @@ public class sfncFXMLController implements Initializable {
             if (addSemicolon) speedLine += "; ";
             speedLine += "swim " + creature.getSwimSpeed() + " ft.";
         }
-        creatureSpeedDisplay.setText(speedLine+"\n");
-        creatureOffensiveAbilitiesBlock.getChildren().addAll(creatureSpeedLabel,creatureSpeedDisplay);
-        addSemicolon = false;
+        if (!("".equals(speedLine))) {
+            if (addNewLine)
+                creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n"));
+            creatureSpeedDisplay.setText(speedLine);
+            creatureOffensiveAbilitiesBlock.getChildren().addAll(creatureSpeedLabel,creatureSpeedDisplay);
+            addNewLine = true;
+        }
         Boolean addOr = false;
         if (array != null) {
             Integer damageModifier = creature.getCR().getCRValue();
@@ -2308,9 +2373,12 @@ public class sfncFXMLController implements Initializable {
                 addOr = true;
             }
             if (!("".equals(meleeAttacks))) {
+                if (addNewLine)
+                    creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n"));
                 creatureMeleeAttackDisplay.setText(meleeAttacks);
                 creatureOffensiveAbilitiesBlock.getChildren().addAll(
-                        new Text("\n"),creatureMeleeAttackLabel,creatureMeleeAttackDisplay);
+                        creatureMeleeAttackLabel,creatureMeleeAttackDisplay);
+                addNewLine = true;
             }
             // multiattack goes here
             addOr = false;
@@ -2329,14 +2397,17 @@ public class sfncFXMLController implements Initializable {
                 addOr = true;
             }
             if (!("".equals(rangedAttacks))) {
+                if (addNewLine)
+                    creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n"));
                 creatureRangedAttackDisplay.setText(rangedAttacks);
                 creatureOffensiveAbilitiesBlock.getChildren().addAll(
-                        new Text("\n"),creatureRangedAttackLabel,creatureRangedAttackDisplay);
+                        creatureRangedAttackLabel,creatureRangedAttackDisplay);
+                addNewLine = true;
             }
         }
         if ((!creature.size.getSpace().equals("5 ft.")) || (creature.getReach() != 5)) {
             if (addNewLine)
-                creatureOffensiveAbilitiesBlock.getChildren().addAll(new Text("\n"));
+                creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n"));
             creatureSpaceDisplay.setText(creature.size.getSpace());
             creatureReachDisplay.setText(Integer.toString(creature.getReach())+" ft.");
             creatureOffensiveAbilitiesBlock.getChildren().addAll(
@@ -2348,9 +2419,13 @@ public class sfncFXMLController implements Initializable {
         }
         if (hasAbilitiesByLocation(Location.OFFENSIVE_ABILITIES)) {
             if (addNewLine)
-                creatureOffensiveAbilitiesBlock.getChildren().addAll(new Text("\n"));
+                creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n"));
             creatureOffensiveAbilitiesDisplay.setText(makeAbilityStringByLocation(Location.OFFENSIVE_ABILITIES));
-            creatureOffensiveAbilitiesBlock.getChildren().addAll(creatureOffensiveAbilitiesLabel,creatureOffensiveAbilitiesDisplay);
+            creatureOffensiveAbilitiesBlock.getChildren().addAll(
+                    creatureOffensiveAbilitiesLabel,
+                    creatureOffensiveAbilitiesDisplay
+            );
+            addNewLine = true;
         }
         // SLAs go here
         // spells known goes here
@@ -2411,23 +2486,33 @@ public class sfncFXMLController implements Initializable {
             case CUSTOM: statMod = bonusString(creature.getCharisma().getCustomValue()); break;
             default: statMod = "+0";
         }
+        addNewLine = false;
         creatureCharismaModifier.setText(statMod);
-        // feats go here
+        if (hasAbilitiesByLocation(Location.FEATS)) {
+            creatureFeatsDisplay.setText(makeAbilityStringByLocation(Location.FEATS));
+            creatureStatisticsBlock.getChildren().addAll(creatureFeatsLabel,creatureFeatsDisplay);
+            addNewLine = true;
+        }
         if (hasSkills()) {
-            // remove comment line after ability scores are in
-            // creatureStatisticsBlock.getChildren().addAll(new Text("\n"));
+            if (addNewLine) 
+                creatureStatisticsBlock.getChildren().addAll(new Text("\n"));
             creatureSkillsDisplay.setText(makeSkillsString());
             creatureStatisticsBlock.getChildren().addAll(creatureSkillsLabel,creatureSkillsDisplay);
+            addNewLine = true;
         }
         if (hasAbilitiesByLocation(Location.LANGUAGES)) {
-            creatureStatisticsBlock.getChildren().addAll(new Text("\n"));
+            if (addNewLine)
+                creatureStatisticsBlock.getChildren().addAll(new Text("\n"));
             creatureLanguagesDisplay.setText(makeAbilityStringByLocation(Location.LANGUAGES));
             creatureStatisticsBlock.getChildren().addAll(creatureLanguagesLabel,creatureLanguagesDisplay);
+            addNewLine = true;
         }
         if (hasAbilitiesByLocation(Location.OTHER_ABILITIES)) {
-            creatureStatisticsBlock.getChildren().addAll(new Text("\n"));
+            if (addNewLine)
+                creatureStatisticsBlock.getChildren().addAll(new Text("\n"));
             creatureOtherAbilitiesDisplay.setText(makeAbilityStringByLocation(Location.OTHER_ABILITIES));
             creatureStatisticsBlock.getChildren().addAll(creatureOtherAbilitiesLabel,creatureOtherAbilitiesDisplay);
+            addNewLine = true;
         }
         // gear and augmentations go here
     }
@@ -2613,6 +2698,7 @@ public class sfncFXMLController implements Initializable {
         creatureSpeedLabel.setStyle("-fx-font-weight: bold");
         creatureOffensiveAbilitiesLabel.setStyle("-fx-font-weight: bold");
         creatureSkillsLabel.setStyle("-fx-font-weight: bold");
+        creatureFeatsLabel.setStyle("-fx-font-weight: bold");
         creatureLanguagesLabel.setStyle("-fx-font-weight: bold");
         creatureOtherAbilitiesLabel.setStyle("-fx-font-weight: bold");
         creatureSpaceLabel.setStyle("-fx-font-weight: bold");
@@ -2916,6 +3002,8 @@ public class sfncFXMLController implements Initializable {
         creatureLowAttackModifier.setToggleGroup(attackModifierGroup);
         creatureMeleeAttack.setToggleGroup(attackTypeGroup);
         creatureRangedAttack.setToggleGroup(attackTypeGroup);
+        creatureAttacks.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
 
         // step 2 controls
         String[] typeNames = {
@@ -3036,6 +3124,7 @@ public class sfncFXMLController implements Initializable {
         // step 5 controls
         
         // step 6 controls
+        creatureAbilitiesChosen.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         List<String> availableAbilitiesDisplay = new ArrayList<>();
         Ability.setOfAbilities.stream().forEach((a) -> {
             availableAbilitiesDisplay.add(a.getId());
@@ -3044,15 +3133,12 @@ public class sfncFXMLController implements Initializable {
         creatureAbilityInput.setItems(FXCollections.observableArrayList(
                 availableAbilitiesDisplay));
         creatureAbilityInput.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        creatureAbilityInput.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<String>() {
-            @Override
-            public void onChanged(Change<? extends String> c) {
-                creature.setChosenAbilities(creatureAbilityInput.getSelectionModel().getSelectedItems());
-                updateStatBlock();
-                updateWindowTitle();
-                setAbilityControls();
-            }
-        });
+        creatureCustomAbilityLocationInput.setItems(FXCollections.observableArrayList(
+                Arrays.stream(Location.values())
+                        .map(Location::toString)
+                        .collect(Collectors.toList())  
+        ));
+
         
         // step 7 controls
         creatureAcrobaticsMaster.setToggleGroup(creatureAcrobaticsGroup);

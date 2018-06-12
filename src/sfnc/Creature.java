@@ -432,12 +432,23 @@ public class Creature {
     
     public void addAbility(Ability a) {
         Ability aa = new Ability(a);
+        
+        for (Ability i : chosenAbilities) {
+            if (aa.getId().equals(i.getId()))
+                return;
+        }
         this.chosenAbilities.add(aa);
         this.hasChanged = true;
     }
     
     public void dropAbility(Ability a) {
-        this.hasChanged = this.chosenAbilities.remove(a);
+        for (Ability i : chosenAbilities) {
+            if (a.getId().equals(i.getId())) {
+                chosenAbilities.remove(i);
+                break;
+            }
+        }
+        this.hasChanged = true;
     }
     
     public void setStrength(AbilityModifier a) {
