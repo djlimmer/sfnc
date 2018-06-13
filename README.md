@@ -1,19 +1,18 @@
 # sfnc
-sfnc will be an alien/NPC creator for the Starfinder Roleplaying Game, using the rules and guidelines found in the _Alien Archive_.
+sfnc is an alien/NPC creator for the Starfinder Roleplaying Game, using the rules and guidelines found in the _Alien Archive_.
 
 ## Installation
-Hopefully, the only installation that will be needed is to download the Java file.
+The only installation that will be needed is to download the Java file and the various \*.txt files, and put them in the same directory.
 
 ## Usage
-Hopefully, you'll be able to use the program by double-clicking the Java file.
+You can use the program by double-clicking the Java file.
 
 ## Known Issues
-Since there isn't actually a program yet, there are no known issues!
+No known issues, but there are certainly features that need to be added.
 
 ## Contributing
-Since it's just starting up, I want to have only myself doing the contributing.
-Eventually, I will want help with data entry at the very least.
+Let me know if you want to contribute, and how; I'm sure we can work something out.
 
 ## License
-This will have some sort of license.
+This will have some sort of license.  For now, you can use it and modify it freely, as long as you don't claim it as your own.
 I will also probably have to provide some sort of OGL and/or Starfinder license, but I'm not a lawyer and can't afford one, so I'll probably do it wrong.
