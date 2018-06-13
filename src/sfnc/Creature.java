@@ -34,11 +34,11 @@ public class Creature {
     Integer typeOption;
     // typeOption: 0 - no choice, 1 - first choice, 2 - second choice, 3 - third choice
     // int for Animals, save bonus for Humanoid and Outsider.
-    List<String> generalSubtypes;
-    List<String> humanoidSubtypes;
-    List<String> outsiderSubtypes;
-    List<String> freeformSubtypes;
-    List<Ability> chosenAbilities;
+    Set<String> generalSubtypes;
+    Set<String> humanoidSubtypes;
+    Set<String> outsiderSubtypes;
+    Set<String> freeformSubtypes;
+    Set<Ability> chosenAbilities;
     public Skill acrobatics;
     public Skill athletics;
     public Skill bluff;
@@ -89,11 +89,11 @@ public class Creature {
         this.useTypeAdjustments = true;
         this.typeOption = 0;
         this.hasChanged = true;
-        this.generalSubtypes = new ArrayList<String>();
-        this.humanoidSubtypes = new ArrayList<String>();
-        this.outsiderSubtypes = new ArrayList<String>();
-        this.freeformSubtypes = new ArrayList<String>();
-        this.chosenAbilities = new ArrayList<Ability>();
+        this.generalSubtypes = new HashSet<String>();
+        this.humanoidSubtypes = new HashSet<String>();
+        this.outsiderSubtypes = new HashSet<String>();
+        this.freeformSubtypes = new HashSet<String>();
+        this.chosenAbilities = new HashSet<Ability>();
         this.acrobatics = new Skill();
         this.athletics = new Skill();
         this.bluff = new Skill();
@@ -185,7 +185,7 @@ public class Creature {
         return type;
     }
     
-    List<Ability> getChosenAbilities() {
+    Set<Ability> getChosenAbilities() {
         return chosenAbilities;
     }
     
@@ -197,19 +197,19 @@ public class Creature {
         return typeOption;
     }
     
-    public List<String> getGeneralSubtypes() {
+    public Set<String> getGeneralSubtypes() {
         return generalSubtypes;
     }
     
-    public List<String> getHumanoidSubtypes() {
+    public Set<String> getHumanoidSubtypes() {
         return humanoidSubtypes;
     }
     
-    public List<String> getOutsiderSubtypes() {
+    public Set<String> getOutsiderSubtypes() {
         return outsiderSubtypes;
     }
     
-    public List<String> getFreeformSubtypes() {
+    public Set<String> getFreeformSubtypes() {
         return freeformSubtypes;
     }
     
@@ -398,31 +398,31 @@ public class Creature {
     }
     
     public void setGeneralSubtypes(List<String> s) {
-        this.generalSubtypes = new ArrayList<>();
+        this.generalSubtypes = new HashSet<>();
         this.generalSubtypes.addAll(s);
         this.hasChanged = true;
     }
     
     public void setHumanoidSubtypes(List<String> s) {
-        this.humanoidSubtypes = new ArrayList<>();
+        this.humanoidSubtypes = new HashSet<>();
         this.humanoidSubtypes.addAll(s);
         this.hasChanged = true;
     }
     
     public void setOutsiderSubtypes(List<String> s) {
-        this.outsiderSubtypes = new ArrayList<>();
+        this.outsiderSubtypes = new HashSet<>();
         this.outsiderSubtypes.addAll(s);
         this.hasChanged = true;
     }
     
     public void setFreeformSubtypes(List<String> s) {
-        this.freeformSubtypes = new ArrayList<>();
+        this.freeformSubtypes = new HashSet<>();
         this.freeformSubtypes.addAll(s);
         this.hasChanged = true;
     }
     
     public void setChosenAbilities(List<String> a) {
-        this.chosenAbilities = new ArrayList<>();
+        this.chosenAbilities = new HashSet<>();
         a.stream().forEach((String s) -> {
             if (Ability.getAbility(s)!=null)
                 this.chosenAbilities.add(new Ability(Ability.getAbility(s)));
@@ -448,6 +448,14 @@ public class Creature {
                 break;
             }
         }
+        this.hasChanged = true;
+    }
+    
+    public void dropSubtype(String s) {
+        System.out.println("Subtype to drop: " + s);
+        generalSubtypes.remove(s);
+        humanoidSubtypes.remove(s);
+        outsiderSubtypes.remove(s);
         this.hasChanged = true;
     }
     
@@ -547,22 +555,22 @@ public class Creature {
             this.typeOption = Integer.parseInt(reader.readLine());
             String subtypeString = reader.readLine();
             if(subtypeString.equals(""))
-                this.generalSubtypes = new ArrayList<>();
+                this.generalSubtypes = new HashSet<>();
             else
-                this.generalSubtypes = new ArrayList<>(Arrays.asList(subtypeString.split(",")));
+                this.generalSubtypes = new HashSet<>(Arrays.asList(subtypeString.split(",")));
             if((subtypeString = reader.readLine()).equals(""))
-                this.humanoidSubtypes = new ArrayList<>();
+                this.humanoidSubtypes = new HashSet<>();
             else
-                this.humanoidSubtypes = new ArrayList<>(Arrays.asList(subtypeString.split(",")));
+                this.humanoidSubtypes = new HashSet<>(Arrays.asList(subtypeString.split(",")));
             if((subtypeString = reader.readLine()).equals(""))
-                this.outsiderSubtypes = new ArrayList<>();
+                this.outsiderSubtypes = new HashSet<>();
             else
-                this.outsiderSubtypes = new ArrayList<>(Arrays.asList(subtypeString.split(",")));
+                this.outsiderSubtypes = new HashSet<>(Arrays.asList(subtypeString.split(",")));
             if((subtypeString = reader.readLine()).equals(""))
-                this.freeformSubtypes = new ArrayList<>();
+                this.freeformSubtypes = new HashSet<>();
             else
-                this.freeformSubtypes = new ArrayList<>(Arrays.asList(subtypeString.split(",")));
-            this.chosenAbilities = new ArrayList<>();
+                this.freeformSubtypes = new HashSet<>(Arrays.asList(subtypeString.split(",")));
+            this.chosenAbilities = new HashSet<>();
             Integer n = Integer.parseInt(reader.readLine());
             for (Integer i = 0; i < n; i++) {
                 Ability a = new Ability();

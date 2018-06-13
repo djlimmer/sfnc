@@ -188,7 +188,7 @@
                                     <Button fx:id="addAttackToList" layoutX="65.0" layoutY="410.0" mnemonicParsing="false" onAction="#addAttackAction" text="Add Attack" />
                                     <Label layoutX="10.0" layoutY="450.0" style="-fx-font-weight: bold;" text="List of Attacks" />
                                     <ListView fx:id="creatureAttacks" layoutX="9.0" layoutY="470.0" prefHeight="200.0" prefWidth="192.0" />
-                                    <Button fx:id="removeAttackFromList" layoutX="25.0" layoutY="675.0" mnemonicParsing="false" onAction="#removeAttackAction" text="Remove Selected Abilities" />
+                                    <Button fx:id="removeAttackFromList" layoutX="25.0" layoutY="675.0" mnemonicParsing="false" onAction="#removeAttackAction" text="Remove Selected Attacks" />
                                  </children>
                               </AnchorPane>
                            </content></Tab>
@@ -209,15 +209,19 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <ListView fx:id="creatureGeneralSubtypesInput" layoutX="3.0" layoutY="47.0" prefHeight="180.0" prefWidth="200.0" />
-                                    <Label fx:id="creatureSubtypeWarning" style="-fx-font-weight: bold;" text="Label" textFill="RED" />
-                                    <Label layoutY="31.0" style="-fx-font-weight: bold;" text="General Subtypes" />
-                                    <Label layoutY="241.0" style="-fx-font-weight: bold;" text="Humanoid Subtypes" />
-                                    <ListView fx:id="creatureHumanoidSubtypesInput" layoutX="3.0" layoutY="257.0" prefHeight="180.0" prefWidth="200.0" />
-                                    <Label layoutY="451.0" style="-fx-font-weight: bold;" text="Outsider Subtypes" />
-                                    <ListView fx:id="creatureOutsiderSubtypesInput" layoutX="3.0" layoutY="467.0" prefHeight="180.0" prefWidth="200.0" />
-                                    <TextField fx:id="creatureFreeformSubtypesInput" layoutX="3.0" layoutY="677.0" prefHeight="25.0" prefWidth="200.0" />
-                                    <Label layoutX="3.0" layoutY="661.0" style="-fx-font-weight: bold;" text="Freeform Subtypes" />
+                                    <ListView fx:id="creatureGeneralSubtypesInput" layoutX="3.0" layoutY="47.0" prefHeight="110.0" prefWidth="200.0" />
+                                    <Label fx:id="creatureSubtypeWarning" layoutX="3.0" layoutY="3.0" style="-fx-font-weight: bold;" text="Label" textFill="RED" />
+                                    <Label layoutX="3.0" layoutY="31.0" style="-fx-font-weight: bold;" text="General Subtypes" />
+                                    <Label layoutX="3.0" layoutY="165.0" style="-fx-font-weight: bold;" text="Humanoid Subtypes" />
+                                    <ListView fx:id="creatureHumanoidSubtypesInput" layoutX="3.0" layoutY="181.0" prefHeight="110.0" prefWidth="200.0" />
+                                    <Label layoutX="3.0" layoutY="299.0" style="-fx-font-weight: bold;" text="Outsider Subtypes" />
+                                    <ListView fx:id="creatureOutsiderSubtypesInput" layoutX="3.0" layoutY="315.0" prefHeight="110.0" prefWidth="200.0" />
+                                    <TextField fx:id="creatureFreeformSubtypesInput" layoutX="3.0" layoutY="483.0" prefHeight="25.0" prefWidth="200.0" />
+                                    <Label layoutX="3.0" layoutY="467.0" style="-fx-font-weight: bold;" text="Custom Subtypes" />
+                                    <Button fx:id="creatureAddSubtypesToList" layoutX="34.0" layoutY="431.0" mnemonicParsing="false" onAction="#addSubtypesAction" text="Add Selected Subtypes" />
+                                    <Button fx:id="creatureRemoveSubtypesFromLilst" layoutX="23.0" layoutY="672.0" mnemonicParsing="false" onAction="#removeSubtypesAction" text="Remove Selected Subtypes" />
+                                    <Label layoutX="3.0" layoutY="540.0" style="-fx-font-weight: bold;" text="Current Noncustom Subtypes" />
+                                    <ListView fx:id="creatureSubtypesChosen" layoutX="3.0" layoutY="556.0" prefHeight="110.0" prefWidth="200.0" />
                                  </children></AnchorPane>
                           </content>
                         </Tab>
@@ -240,17 +244,17 @@
                                     <Label fx:id="creatureAbilityChoicesAvailable" layoutX="123.0" layoutY="14.0" text="0" />
                                     <Label fx:id="creatureAbilityChoicesMade" layoutX="123.0" layoutY="33.0" text="0" />
                                     <ListView fx:id="creatureAbilitiesChosen" layoutX="3.0" layoutY="71.0" prefHeight="200.0" prefWidth="200.0" />
-                                    <ListView fx:id="creatureAbilityInput" layoutX="3.0" layoutY="334.0" prefHeight="200.0" prefWidth="200.0" />
-                                    <Label layoutX="14.0" layoutY="52.0" style="-fx-font-weight: bold;" text="Current Chosen Abilities" />
-                                    <Label layoutX="14.0" layoutY="315.0" style="-fx-font-weight: bold;" text="Abilities to Choose" />
-                                    <Label layoutX="14.0" layoutY="577.0" style="-fx-font-weight: bold;" text="Make Your Own Ability" />
-                                    <Label layoutX="14.0" layoutY="596.0" prefHeight="25.0" text="Name:" />
-                                    <Label layoutX="14.0" layoutY="625.0" prefHeight="25.0" text="Location:" />
-                                    <Button fx:id="creatureAddCustomAbilityButton" layoutX="65.0" layoutY="656.0" mnemonicParsing="false" onAction="#addCustomAbilityAction" text="Add Ability" />
-                                    <TextField fx:id="creatureCustomAbilityNameInput" layoutX="68.0" layoutY="596.0" prefHeight="25.0" prefWidth="133.0" />
-                                    <ComboBox fx:id="creatureCustomAbilityLocationInput" layoutX="68.0" layoutY="625.0" prefHeight="25.0" prefWidth="132.0" />
+                                    <Label layoutX="14.0" layoutY="434.0" style="-fx-font-weight: bold;" text="Current Chosen Abilities" />
+                                    <Label layoutX="14.0" layoutY="52.0" style="-fx-font-weight: bold;" text="Abilities to Choose" />
+                                    <Label layoutX="14.0" layoutY="315.0" style="-fx-font-weight: bold;" text="Make Your Own Ability" />
+                                    <Label layoutX="14.0" layoutY="334.0" prefHeight="25.0" text="Name:" />
+                                    <Label layoutX="14.0" layoutY="364.0" prefHeight="25.0" text="Location:" />
+                                    <Button fx:id="creatureAddCustomAbilityButton" layoutX="65.0" layoutY="394.0" mnemonicParsing="false" onAction="#addCustomAbilityAction" text="Add Ability" />
+                                    <TextField fx:id="creatureCustomAbilityNameInput" layoutX="68.0" layoutY="334.0" prefHeight="25.0" prefWidth="133.0" />
+                                    <ComboBox fx:id="creatureCustomAbilityLocationInput" layoutX="68.0" layoutY="364.0" prefHeight="25.0" prefWidth="132.0" />
                                     <Button fx:id="creatureRemoveAbilitiesFromList" layoutX="26.0" layoutY="275.0" mnemonicParsing="false" onAction="#removeAbilitiesAction" text="Remove Selected Abilities" />
-                                    <Button fx:id="creatureAddAbilitiesToList" layoutX="36.0" layoutY="537.0" mnemonicParsing="false" onAction="#addAbilitiesAction" text="Add Selected Abilities" />
+                                    <Button fx:id="creatureAddAbilitiesToList" layoutX="36.0" layoutY="657.0" mnemonicParsing="false" onAction="#addAbilitiesAction" text="Add Selected Abilities" />
+                                    <ListView fx:id="creatureAbilityInput" layoutX="3.0" layoutY="453.0" prefHeight="200.0" prefWidth="200.0" />
                                  </children></AnchorPane>
                           </content>
                         </Tab>

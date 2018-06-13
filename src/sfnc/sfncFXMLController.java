@@ -584,7 +584,34 @@ public class sfncFXMLController implements Initializable {
     @FXML   private ListView<String> creatureGeneralSubtypesInput = new ListView<>();
     @FXML   private ListView<String> creatureHumanoidSubtypesInput = new ListView<>();
     @FXML   private ListView<String> creatureOutsiderSubtypesInput = new ListView<>();
+    @FXML   private Button creatureAddSubtypesToList = new Button();
     @FXML   private TextField creatureFreeformSubtypesInput = new TextField();
+    @FXML   private ListView<String> creatureSubtypesChosen = new ListView<>();
+    @FXML   private Button creatureRemoveSubtypesFromLilst = new Button();
+
+     @FXML public void removeSubtypesAction(ActionEvent actionEvent) {
+         System.out.println("Got to remove subtypes action.");
+        ObservableList<String> selectedItems = creatureSubtypesChosen.getSelectionModel().getSelectedItems();
+        for (String s : selectedItems) {
+            System.out.println("subtype to remove: " + s);
+            creature.dropSubtype(s);
+        }
+        creature.setChange();
+        updateListOfSubtypes();
+        updateStatBlock();
+        updateWindowTitle();
+    }
+
+   @FXML public void addSubtypesAction(ActionEvent actionEvent) {
+        creature.getGeneralSubtypes().addAll(creatureGeneralSubtypesInput.getSelectionModel().getSelectedItems());
+        creature.getHumanoidSubtypes().addAll(creatureHumanoidSubtypesInput.getSelectionModel().getSelectedItems());
+        creature.getOutsiderSubtypes().addAll(creatureOutsiderSubtypesInput.getSelectionModel().getSelectedItems());
+        creature.setChange();
+        updateListOfSubtypes();
+        updateStatBlock();
+        updateWindowTitle();
+    }
+    
     
     // Step 4 controls
     @FXML   private Tab step4 = new Tab();
@@ -970,10 +997,8 @@ public class sfncFXMLController implements Initializable {
         }
         // step 3
         setSubtypeWarning();
-        creature.getGeneralSubtypes().stream().forEach(creatureGeneralSubtypesInput.getSelectionModel()::select);
-        creature.getHumanoidSubtypes().stream().forEach(creatureHumanoidSubtypesInput.getSelectionModel()::select);
-        creature.getOutsiderSubtypes().stream().forEach(creatureOutsiderSubtypesInput.getSelectionModel()::select);
         creatureFreeformSubtypesInput.setText(String.join(",",creature.getFreeformSubtypes()));
+        updateListOfSubtypes();
         // step 4
         // step 5
         // step 6
@@ -1542,6 +1567,18 @@ public class sfncFXMLController implements Initializable {
             }
             creatureSurvivalCustomValue.setText(Integer.toString(creature.survival.getCustomValue()));
         }
+    }
+    
+    private void updateListOfSubtypes() {
+        List<String> subtypeList = new ArrayList<>();
+        
+        subtypeList.addAll(creature.getGeneralSubtypes());
+        subtypeList.addAll(creature.getHumanoidSubtypes());
+        subtypeList.addAll(creature.getOutsiderSubtypes());
+        Collections.sort(subtypeList);
+        
+        creatureSubtypesChosen.setItems(FXCollections.observableArrayList(
+                subtypeList));
     }
     
     private void updateListOfAttacks() {
@@ -3083,34 +3120,10 @@ public class sfncFXMLController implements Initializable {
         // step 3 controls
         creatureGeneralSubtypesInput.setItems(FXCollections.observableArrayList(generalSubtypes));
         creatureGeneralSubtypesInput.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        creatureGeneralSubtypesInput.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<String>() {
-            @Override
-            public void onChanged(Change<? extends String> c) {
-                creature.setGeneralSubtypes(creatureGeneralSubtypesInput.getSelectionModel().getSelectedItems());
-                updateStatBlock();
-                updateWindowTitle();
-            }
-        });
         creatureHumanoidSubtypesInput.setItems(FXCollections.observableArrayList(humanoidSubtypes));
         creatureHumanoidSubtypesInput.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        creatureHumanoidSubtypesInput.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<String>() {
-            @Override
-            public void onChanged(Change<? extends String> c) {
-                creature.setHumanoidSubtypes(creatureHumanoidSubtypesInput.getSelectionModel().getSelectedItems());
-                updateStatBlock();
-                updateWindowTitle();
-            }
-        });
         creatureOutsiderSubtypesInput.setItems(FXCollections.observableArrayList(outsiderSubtypes));
         creatureOutsiderSubtypesInput.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        creatureOutsiderSubtypesInput.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<String>() {
-            @Override
-            public void onChanged(Change<? extends String> c) {
-                creature.setOutsiderSubtypes(creatureOutsiderSubtypesInput.getSelectionModel().getSelectedItems());
-                updateStatBlock();
-                updateWindowTitle();
-            }
-        });
         creatureFreeformSubtypesInput.textProperty().addListener(
             new ChangeListener<String>() {
                 @Override
@@ -3125,6 +3138,7 @@ public class sfncFXMLController implements Initializable {
                 }
             }
         );
+        creatureSubtypesChosen.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
         // step 4 controls
         
@@ -4460,9 +4474,6 @@ public class sfncFXMLController implements Initializable {
             }
            
             bufferedReader.close();
-            java.util.Collections.sort(humanoidSubtypes);
-            java.util.Collections.sort(outsiderSubtypes);
-            java.util.Collections.sort(generalSubtypes);
             return 0;
         }
         catch(FileNotFoundException ex) {
