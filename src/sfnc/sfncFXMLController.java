@@ -1074,6 +1074,13 @@ public class sfncFXMLController implements Initializable {
     }
     
     private void setAbilityControls() {
+        creatureAbilityInput.getSelectionModel().clearSelection();
+        creatureAbilitiesChosen.getSelectionModel().clearSelection();
+        if (array == null) {
+            creatureAbilityChoicesAvailable.setText("0");
+            creatureAbilityChoicesMade.setText("0");
+            return;
+        }
         creatureAbilityChoicesAvailable.setText(Integer.toString(array.specialAbilities));
         Integer abilityCount = 0;
         abilityCount = creature.getChosenAbilities().stream().map((a) -> a.getCost()).reduce(abilityCount, Integer::sum);
@@ -1083,9 +1090,11 @@ public class sfncFXMLController implements Initializable {
             chosenAbilitiesDisplay.add(a.getId());
             creatureAbilityInput.getSelectionModel().select(a.getId());
         });
-        Collections.sort(chosenAbilitiesDisplay);
-        creatureAbilitiesChosen.setItems(FXCollections.observableArrayList(
+        if (chosenAbilitiesDisplay != null) {
+            Collections.sort(chosenAbilitiesDisplay);
+            creatureAbilitiesChosen.setItems(FXCollections.observableArrayList(
                 chosenAbilitiesDisplay));
+        }
     }
 
     private Integer countMasterSkills() {
@@ -1142,6 +1151,13 @@ public class sfncFXMLController implements Initializable {
     }
     
     private void setSkillControls() {
+        if (array == null) {
+            creatureMasterSkillsAvailable.setText("0");
+            creatureGoodSkillsAvailable.setText("0");
+            creatureMasterSkillsTaken.setText("0");
+            creatureGoodSkillsTaken.setText("0");
+            return;
+        }
         creatureMasterSkillsAvailable.setText(Integer.toString(array.masterSkillNumber));
         creatureGoodSkillsAvailable.setText(Integer.toString(array.goodSkillNumber));
         creatureMasterSkillsTaken.setText(Integer.toString(countMasterSkills()));
@@ -2479,6 +2495,8 @@ public class sfncFXMLController implements Initializable {
         String statMod;
         if (hasAbilityByID("incorporeal"))
                 statMod = "\u2014";
+        else if (array == null)
+            statMod = "+0";
         else switch(creature.strength.getAbilityModifierChoice()) {
             case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
             case MID: statMod = bonusString(array.abilityScoreModifier2); break;
@@ -2487,7 +2505,9 @@ public class sfncFXMLController implements Initializable {
             default: statMod = "+0";
         }
         creatureStrengthModifier.setText(statMod);
-        switch(creature.dexterity.getAbilityModifierChoice()) {
+        if (array == null)
+            statMod = "+0";
+        else switch(creature.dexterity.getAbilityModifierChoice()) {
             case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
             case MID: statMod = bonusString(array.abilityScoreModifier2); break;
             case LOW: statMod = bonusString(array.abilityScoreModifier3); break;
@@ -2497,6 +2517,8 @@ public class sfncFXMLController implements Initializable {
         creatureDexterityModifier.setText(statMod);
         if (hasAbilityByID("noConScore"))
             statMod = "\u2014";
+        else if (array == null)
+            statMod = "+0";
         else switch(creature.constitution.getAbilityModifierChoice()) {
             case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
             case MID: statMod = bonusString(array.abilityScoreModifier2); break;
@@ -2507,6 +2529,8 @@ public class sfncFXMLController implements Initializable {
         creatureConstitutionModifier.setText(statMod);
         if (hasAbilityByID("mindless"))
             statMod = "\u2014";
+        else if (array == null)
+            statMod = "+0";
         else switch(creature.intelligence.getAbilityModifierChoice()) {
             case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
             case MID: statMod = bonusString(array.abilityScoreModifier2); break;
@@ -2515,7 +2539,9 @@ public class sfncFXMLController implements Initializable {
             default: statMod = "+0";
         }
         creatureIntelligenceModifier.setText(statMod);
-        switch(creature.wisdom.getAbilityModifierChoice()) {
+        if (array == null)
+            statMod = "+0";
+        else switch(creature.wisdom.getAbilityModifierChoice()) {
             case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
             case MID: statMod = bonusString(array.abilityScoreModifier2); break;
             case LOW: statMod = bonusString(array.abilityScoreModifier3); break;
@@ -2523,15 +2549,17 @@ public class sfncFXMLController implements Initializable {
             default: statMod = "+0";
         }
         creatureWisdomModifier.setText(statMod);
-        switch(creature.charisma.getAbilityModifierChoice()) {
+        if (array == null)
+            statMod = "+0";
+        else switch(creature.charisma.getAbilityModifierChoice()) {
             case HIGH: statMod = bonusString(array.abilityScoreModifier1); break;
             case MID: statMod = bonusString(array.abilityScoreModifier2); break;
             case LOW: statMod = bonusString(array.abilityScoreModifier3); break;
             case CUSTOM: statMod = bonusString(creature.getCharisma().getCustomValue()); break;
             default: statMod = "+0";
         }
-        addNewLine = false;
         creatureCharismaModifier.setText(statMod);
+        addNewLine = false;
         if (hasAbilitiesByLocation(Location.FEATS)) {
             creatureFeatsDisplay.setText(makeAbilityStringByLocation(Location.FEATS));
             creatureStatisticsBlock.getChildren().addAll(creatureFeatsLabel,creatureFeatsDisplay);
@@ -2690,6 +2718,12 @@ public class sfncFXMLController implements Initializable {
             if ( (!creature.hasChanged()) || 
                     (fileChangeAlert.showAndWait().get() == ButtonType.OK)) {
                 creature = new Creature();
+                array = new MainArray();
+                useTypeAdjustments = true;
+                useClassAdjustments = false;
+                initiative = 0;
+                abilitySet = new HashSet<>();
+
                 setControls();
                 updateStatBlock();
                 currentSaveFile = null;
