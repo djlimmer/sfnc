@@ -2758,7 +2758,7 @@ public class sfncFXMLController implements Initializable {
         // set up about dialog box
         aboutDialog.initStyle(StageStyle.UTILITY);
         aboutDialog.setTitle("About sfnc");
-        aboutDialog.setContentText("Starfinder NPC/Alien Creator\nversion 1.3.0");
+        aboutDialog.setContentText("Starfinder NPC/Alien Creator\nversion 1.4.0-ish");
         aboutDialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
         
         // set up Labels and TextFlows
