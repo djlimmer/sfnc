@@ -26,8 +26,6 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -232,7 +230,12 @@ public class sfncFXMLController implements Initializable {
             defensiveAbilitiesLine += "Resistances " + makeAbilityStringByLocation(Location.RESISTANCES);
             addSemicolon = true;
         }
-        // SR goes here
+        if (hasAbilityByID("spell resistance 11+CR")) {
+            if (addSemicolon)
+                defensiveAbilitiesLine += "; ";
+            defensiveAbilitiesLine += "SR " + (11+creature.getCR().getCRValue());
+            addSemicolon = true;
+        }
         if (hasAbilitiesByLocation(Location.WEAKNESSES)) {
             if (addSemicolon)
                 defensiveAbilitiesLine += "; ";
@@ -2374,7 +2377,13 @@ public class sfncFXMLController implements Initializable {
             creatureDefensiveAbilitiesBlock.getChildren().addAll(creatureResistancesLabel,creatureResistancesDisplay);
             addSemicolon = true;
         }
-        // SR goes here
+        if (hasAbilityByID("spell resistance 11+CR")) {
+            if (addSemicolon)
+                creatureDefensiveAbilitiesBlock.getChildren().add(new Text("; "));
+            creatureSRDisplay.setText(Integer.toString(11+creature.getCR().getCRValue()));
+            creatureDefensiveAbilitiesBlock.getChildren().addAll(creatureSRLabel,creatureSRDisplay);
+            addSemicolon = true;
+        }
         if (hasAbilitiesByLocation(Location.WEAKNESSES)) {
             if (addSemicolon)
                 creatureDefensiveAbilitiesBlock.getChildren().add(new Text("; "));

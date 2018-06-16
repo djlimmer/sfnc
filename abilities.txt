@@ -282,7 +282,7 @@ speak with animals|~n~|LANGUAGES|1
 species tradition|~n~|OTHER_ABILITIES|1
 spectrend|~n~|OFFENSIVE_ABILITIES|1
 spell cache|~n~|OFFENSIVE_ABILITIES|1
-spell resistance|~n~|SR|1
+spell resistance 11+CR|~n~|SR|1
 spray|~n~|DEFENSIVE_ABILITIES|1
 squirt blood|~n~|OFFENSIVE_ABILITIES|1
 staggered|~n~|WEAKNESSES|0
