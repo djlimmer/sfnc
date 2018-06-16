@@ -3139,10 +3139,16 @@ public class sfncFXMLController implements Initializable {
             public void changed(ObservableValue<? extends Toggle> ov,
                     Toggle oldToggle, Toggle newToggle) {
                 if (typeOptionsGroup.getSelectedToggle() != null) {
-                    if (creatureTypeOption1.isSelected())
+                    if (creatureTypeOption1.isSelected()) {
                         creature.setTypeOption(1);
-                    else if (creatureTypeOption2.isSelected())
+                        if ("Animal".equals(creature.getType()))
+                            creatureIntelligenceCustomValue.setText("-4");
+                    }
+                    else if (creatureTypeOption2.isSelected()) {
                         creature.setTypeOption(2);
+                        if ("Animal".equals(creature.getType()))
+                            creatureIntelligenceCustomValue.setText("-5");
+                    }
                     else if (creatureTypeOption3.isSelected())
                         creature.setTypeOption(3);
                 }
