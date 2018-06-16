@@ -285,8 +285,14 @@ public class sfncFXMLController implements Initializable {
             for(Attack a : creature.meleeAttacks) {
                 if (addOr) 
                     meleeLine += " or ";
-                a.setBaseDamage(array.standardMeleeDamage);
-                a.setDamageModifier(damageModifier);
+                if ((a.hasHighAttackModifier()) || !(hasAbilityByID("brute")))
+                    a.setBaseDamage(array.standardMeleeDamage);
+                else
+                    a.setBaseDamage(mainArrays[chosenArray][Integer.min(27, creature.getCR().ordinal()+2)].standardMeleeDamage);
+                if ((a.hasHighAttackModifier()) || !(hasAbilityByID("brute")))
+                    a.setDamageModifier(damageModifier);
+                else
+                    a.setDamageModifier(damageModifier+2);
                 meleeLine += makeAttackString(a);
                 addOr = true;
             }
@@ -301,10 +307,18 @@ public class sfncFXMLController implements Initializable {
                 if (addOr) 
                     rangedLine += " or ";
                 if (a.isBludgeoning() || a.isPiercing() || a.isSlashing())
-                    a.setBaseDamage(array.kineticRangedDamage);
-                else
+                    if ((a.hasHighAttackModifier()) || !(hasAbilityByID("brute")))
+                        a.setBaseDamage(array.kineticRangedDamage);
+                    else
+                        a.setBaseDamage(mainArrays[chosenArray][Integer.min(27, creature.getCR().ordinal()+2)].kineticRangedDamage);
+                else if ((a.hasHighAttackModifier()) || !(hasAbilityByID("brute")))
                     a.setBaseDamage(array.energyRangedDamage);
-                a.setDamageModifier(damageModifier);
+                else
+                    a.setBaseDamage(mainArrays[chosenArray][Integer.min(27, creature.getCR().ordinal()+2)].energyRangedDamage);
+                if ((a.hasHighAttackModifier()) || !(hasAbilityByID("brute")))
+                    a.setDamageModifier(damageModifier);
+                else
+                    a.setDamageModifier(damageModifier+2);
                 rangedLine += makeAttackString(a);
                 addOr = true;
             }
@@ -2021,9 +2035,6 @@ public class sfncFXMLController implements Initializable {
             abilitySet.addAll(creature.getChosenAbilities());
             
             // handle abilities that modify the array
-            if (abilitySet.contains(Ability.getAbility("brute")))
-                // no effect until attacks are in place
-                ;
             if (hasAbilityByID("extra hit points"))
                 array.hitPoints += array.hitPoints/5;
             if (hasAbilityByID("save boost (+1 to all)")) {
@@ -2427,8 +2438,14 @@ public class sfncFXMLController implements Initializable {
             for(Attack a : creature.meleeAttacks) {
                 if (addOr) 
                     meleeAttacks += " or ";
-                a.setBaseDamage(array.standardMeleeDamage);
-                a.setDamageModifier(damageModifier);
+                if ((a.hasHighAttackModifier()) || !(hasAbilityByID("brute")))
+                    a.setBaseDamage(array.standardMeleeDamage);
+                else
+                    a.setBaseDamage(mainArrays[chosenArray][Integer.min(27, creature.getCR().ordinal()+2)].standardMeleeDamage);
+                if ((a.hasHighAttackModifier()) || !(hasAbilityByID("brute")))
+                    a.setDamageModifier(damageModifier);
+                else
+                    a.setDamageModifier(damageModifier+2);
                 meleeAttacks += makeAttackString(a);
                 addOr = true;
             }
@@ -2449,10 +2466,18 @@ public class sfncFXMLController implements Initializable {
                 if (addOr) 
                     rangedAttacks += " or ";
                 if (a.isBludgeoning() || a.isPiercing() || a.isSlashing())
-                    a.setBaseDamage(array.kineticRangedDamage);
-                else
+                    if ((a.hasHighAttackModifier()) || !(hasAbilityByID("brute")))
+                        a.setBaseDamage(array.kineticRangedDamage);
+                    else
+                        a.setBaseDamage(mainArrays[chosenArray][Integer.min(27, creature.getCR().ordinal()+2)].kineticRangedDamage);
+                else if ((a.hasHighAttackModifier()) || !(hasAbilityByID("brute")))
                     a.setBaseDamage(array.energyRangedDamage);
-                a.setDamageModifier(damageModifier);
+                else
+                    a.setBaseDamage(mainArrays[chosenArray][Integer.min(27, creature.getCR().ordinal()+2)].energyRangedDamage);
+                if ((a.hasHighAttackModifier()) || !(hasAbilityByID("brute")))
+                    a.setDamageModifier(damageModifier);
+                else
+                    a.setDamageModifier(damageModifier+2);
                 rangedAttacks += makeAttackString(a);
                 addOr = true;
             }
