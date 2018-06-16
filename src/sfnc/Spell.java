@@ -142,7 +142,7 @@ public class Spell {
         return spells.stream().anyMatch((s) -> (s.showMeleeAttack));
     }
     
-    // this isnt' sufficient; there are spells with the same name but different levels
+    // this isn't sufficient; there are spells with the same name but different levels
     public static Spell getSpell(String n) {
         Optional<Spell> optionalSpell = setOfSpells.stream()
                 .filter((Spell a) -> a.name.equals(n))

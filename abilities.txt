@@ -23,8 +23,8 @@ artificial intelligence (exocortex)|~n~|OTHER_ABILITIES|1
 assemble|~n~|OTHER_ABILITIES|1
 atmosphere dependent|~n~|WEAKNESSES|0
 atrophied|~n~|WEAKNESSES|0
-attach|~n~|OFFENSIVE_ABILITIES|1
-aura of menace|~n~|AURA|1
+attach|~n~|MELEE_ATTACK_FORM|1
+aura of menace|~n~ (~r~ ft., DC ~dc~)|AURA|1
 backlash|~n~|OFFENSIVE_ABILITIES|1
 blade storm|~n~|OFFENSIVE_ABILITIES|1
 blindsight dependent|~n~|WEAKNESSES|0
@@ -32,7 +32,8 @@ bone eater|~n~|OFFENSIVE_ABILITIES|1
 bonus to recall knowledge|~n~ +~c~|OTHER_ABILITIES|1
 brain collection|~n~|OFFENSIVE_ABILITIES|1
 brain dependency|~n~|WEAKNESSES|0
-breath weapon|~n~|OFFENSIVE_ABILITIES|1
+breath weapon (cone)|breath weapon (~r~-ft. cone, ~droll~ ~t~, DC ~dc~, usable every 1d4 rounds)|OFFENSIVE_ABILITIES|1
+breath weapon (line)|breath weapon (~r~-ft. line, ~droll~ ~t~, DC ~dc~, usable every 1d4 rounds)|OFFENSIVE_ABILITIES|1
 brute|~n~|NONE|1
 bulldoze|~n~|OFFENSIVE_ABILITIES|1
 cache capacitor|~n~|OFFENSIVE_ABILITIES|1
@@ -57,7 +58,7 @@ cooperative|~n~|OFFENSIVE_ABILITIES|1
 corrosive spines|~n~|OFFENSIVE_ABILITIES|1
 create darkness|~n~|OFFENSIVE_ABILITIES|1
 create spawn|~n~|OFFENSIVE_ABILITIES|1
-crush|~n~|OFFENSIVE_ABILITIES|1
+crush|~n~ (~droll~+~db~ B)|OFFENSIVE_ABILITIES|1
 cunning liar|~n~|OTHER_ABILITIES|1
 custom rig (armor upgrade)|~n~|OTHER_ABILITIES|1
 dark matter|~n~|DEFENSIVE_ABILITIES|1
@@ -74,7 +75,7 @@ desert stride|~n~|OTHER_ABILITIES|1
 disassemble|~n~|OFFENSIVE_ABILITIES|1
 discorporation|~n~|OTHER_ABILITIES|1
 distracting buzz|~n~|OFFENSIVE_ABILITIES|1
-distraction|~n~|OFFENSIVE_ABILITIES|1
+distraction|~n~ (DC ~dc~)|OFFENSIVE_ABILITIES|1
 disturbing speech|~n~|OFFENSIVE_ABILITIES|1
 double bite|~n~|OFFENSIVE_ABILITIES|1
 drain chi|~n~|OFFENSIVE_ABILITIES|1
@@ -87,7 +88,7 @@ echoes of obedience|~n~|OFFENSIVE_ABILITIES|1
 eldritch attacks|~n~|OFFENSIVE_ABILITIES|1
 electrical discharge|~n~|OFFENSIVE_ABILITIES|1
 empathy|~n~|OTHER_ABILITIES|1
-energy drain|~n~|OFFENSIVE_ABILITIES|1
+energy drain|~n~ (~a~ levels, DC ~dc~)|OFFENSIVE_ABILITIES|1
 enthrall|~n~|OFFENSIVE_ABILITIES|1
 enthrall victims|~n~|OFFENSIVE_ABILITIES|1
 envoy improvisations (clever feint)|~n~|OTHER_ABILITIES|1
@@ -105,7 +106,7 @@ explode head|~n~|OFFENSIVE_ABILITIES|1
 explosive boosters|~n~|OTHER_ABILITIES|1
 extension of all|~n~|LANGUAGES|1
 extra hit points|~n~|NONE|1
-fast healing|~n~|DEFENSIVE_ABILITIES|1
+fast healing|~n~ ~a~|DEFENSIVE_ABILITIES|1
 fatigue|~n~|AURA|1
 feather harpoon|~n~|OFFENSIVE_ABILITIES|1
 feeding appendages|~n~|OFFENSIVE_ABILITIES|1
@@ -125,10 +126,10 @@ force bolt|~n~|OFFENSIVE_ABILITIES|1
 forced amity|~n~|OFFENSIVE_ABILITIES|1
 four-armed|~n~|OTHER_ABILITIES|1
 freeze (hologram)|~n~|OTHER_ABILITIES|1
-frightful presence|~n~|AURA|1
+frightful presence|~n~ (~r~ ft., DC ~dc~)|AURA|1
 frothing rage|~n~|OFFENSIVE_ABILITIES|1
 fungible|~n~|OFFENSIVE_ABILITIES|1
-gaze|~n~|OFFENSIVE_ABILITIES|1
+gaze|~n~ (~r~ ft., DC ~dc~)|OFFENSIVE_ABILITIES|1
 gore|~n~|OFFENSIVE_ABILITIES|1
 grab|~n~|OFFENSIVE_ABILITIES|1
 grandiose proclamations|~n~|AURA|1
@@ -169,7 +170,7 @@ leech life|~n~|OFFENSIVE_ABILITIES|1
 light absorption|~n~|OTHER_ABILITIES|1
 light blindness|~n~|WEAKNESSES|0
 light leap|~n~|OTHER_ABILITIES|1
-limited telepathy|~n~|LANGUAGES|0
+limited telepathy|~n~ ~r~ ft.|LANGUAGES|0
 limning light|~n~|OFFENSIVE_ABILITIES|1
 lifelink|~n~|OTHER_ABILITIES|1
 lure|~n~|OFFENSIVE_ABILITIES|1
@@ -238,7 +239,7 @@ reactor sprite|~n~|DEFENSIVE_ABILITIES|1
 reconfigure|~n~|OTHER_ABILITIES|1
 redundant vitals|~n~|DEFENSIVE_ABILITIES|1
 reflective hide|~n~|DEFENSIVE_ABILITIES|1
-regeneration|~n~|DEFENSIVE_ABILITIES|1
+regeneration|~n~ ~a~ (~t~)|DEFENSIVE_ABILITIES|1
 regeneration (suppressed by chaotic-aligned attacks)|~n~|DEFENSIVE_ABILITIES|1
 reincorporate|~n~|OTHER_ABILITIES|1
 rejuvenation|~n~|DEFENSIVE_ABILITIES|1
@@ -289,6 +290,7 @@ staggered|~n~|WEAKNESSES|0
 stardust robes|~n~|OFFENSIVE_ABILITIES|1
 stellar alignment|~n~|OTHER_ABILITIES|1
 stellar alignment (graviton)|~n~|OTHER_ABILITIES|1
+stellar alignment (photon)|~n~|OTHER_ABILITIES|1
 stellar revelations (black hole)|~n~|OFFENSIVE_ABILITIES|1
 stellar revelations (blazing orbit)|~n~|OFFENSIVE_ABILITIES|1
 stellar revelations (defy gravity)|~n~|OFFENSIVE_ABILITIES|1
@@ -303,8 +305,8 @@ summoning graft|~n~|OTHER_ABILITIES|1
 susceptible to salt water|~n~|WEAKNESSES|0
 sunlight dependency|~n~|WEAKNESSES|0
 superior two-weapon fighting|~n~|OFFENSIVE_ABILITIES|1
-swallow whole|~n~|OFFENSIVE_ABILITIES|1
-swarm attack|~n~|OFFENSIVE_ABILITIES|1
+swallow whole|~n~ (~droll~+~dm~ A, EAC ~a~, KAC ~a~, ~a~ HP)|OFFENSIVE_ABILITIES|1
+swarm attack|~n~|MELEE_ATTACK_FORM|1
 swarm defenses|~n~|DEFENSIVE_ABILITIES|1
 swarm mind|~n~|DEFENSIVE_ABILITIES|1
 symbiosis|~n~|OTHER_ABILITIES|1
@@ -314,9 +316,9 @@ telepathy 100 ft. (non-verbal)|~n~|LANGUAGES|1
 tethered|~n~|WEAKNESSES|0
 three-dimensional tactics|~n~|OFFENSIVE_ABILITIES|1
 tinker|~n~|OFFENSIVE_ABILITIES|1
-tracking|~n~|OTHER_ABILITIES|1
+tracking|~n~ (~t~)|OTHER_ABILITIES|1
 traditional enemies|~n~|OFFENSIVE_ABILITIES|1
-trample|~n~|OFFENSIVE_ABILITIES|1
+trample|~n~ (~droll~+~dm~, DC ~dc~)|OFFENSIVE_ABILITIES|1
 transposing strike|~n~|OFFENSIVE_ABILITIES|1
 trick attack|~n~|OFFENSIVE_ABILITIES|1
 trill|~n~|OFFENSIVE_ABILITIES|1
@@ -337,7 +339,7 @@ upgrade slot|~n~|OTHER_ABILITIES|1
 void flyer|~n~|OTHER_ABILITIES|1
 void gaze|~n~|OFFENSIVE_ABILITIES|1
 void leap|~n~|OTHER_ABILITIES|1
-vortex|~n~|OFFENSIVE_ABILITIES|1
+vortex|~n~ (~droll~+~dm~ B, DC ~dc~, ~a~/day)|OFFENSIVE_ABILITIES|1
 vulnerable to acid|~n~|WEAKNESSES|0
 vulnerable to cold|~n~|WEAKNESSES|0
 vulnerable to critical hits|~n~|WEAKNESSES|0
@@ -349,7 +351,7 @@ warding iridescence|~n~|DEFENSIVE_ABILITIES|1
 wake rider|~n~|OTHER_ABILITIES|1
 water breathing|~n~|OTHER_ABILITIES|1
 water mastery|~n~|DEFENSIVE_ABILITIES|1
-whirlwind|~n~|OFFENSIVE_ABILITIES|1
+whirlwind|~n~ (~droll~+~dm~ B, DC ~dc~, ~a~/day)|OFFENSIVE_ABILITIES|1
 wireless hack|~n~|OTHER_ABILITIES|1
 words of destruction|~n~|OFFENSIVE_ABILITIES|1
 xill implantation|~n~|OFFENSIVE_ABILITIES|1
