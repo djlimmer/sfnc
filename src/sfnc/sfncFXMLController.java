@@ -2513,18 +2513,111 @@ public class sfncFXMLController implements Initializable {
     }
     
     private Boolean hasRP() {
-        Boolean hasRP = false;
         String[] RPAbilities = { 
+            // AA abilities
             "spawn constituents", "electrical discharge", "siphon", "gravity control",
             "slough minion", "ingested adaptation", "void flyer", "semiconductive",
-            "leech life"
+            // other source abilities
+            "leech life", 
+            // envoy abilities
+            "expertise", "true expertise", "envoy improvisations (look alive)", 
+            "envoy improvisations (clever improvisations)", "envoy improvisations (draw fire)",
+            "envoy improvisations (improved get 'em)", "envoy improvisations (expert attack)",
+            "envoy improvisations (situational awareness)", "envoy improvisations (sustained determination)", 
+            // mechanic abilities
+            "tech master", "mechanic tricks (energy shield)", "mechanic tricks (overload weapon)",
+            "mechanic tricks (boost shield)", "mechanic tricks (hyperclocking)",
+            "mechanic tricks (scoutbot)", "mechanic tricks (ultraclocking)",
+            // mystic abilities
+            "transcendence", "access Akashic Record", "retrocognition", "empathic mastery",
+            "healing channel", "steal life", "deny death", "share pain", "sow doubt",
+            "mindbreaking link", "explode head", "forced amity", "forceful commands",
+            "absolute control", "starry bond", "meteor shower", "interplanetary teleport",
+            "grasping vines", "share resistance", "guided rebirth",
+            // operative abilities
+            "operative specialization (detective)", "operative specialization (ghost)",
+            "operative specialization (thief)", "operative exploits (field treatment)",
+            "operative exploits (certainty)", "operative exploits (glimpse the truth)",
+            "operative exploits (holographic distraction)", "operative exploits (efficient cloaking field)",
+            // solarian abilities
+            "stellar paragon", "stellar revelations (astrologic sense)", 
+            "stellar revelations (crush)", "stellar revelations (glow of life)",
+            "stellar revelations (reflection)", "stellar revelations (soul furnace)",
+            // soldier abilities
+            "anchoring arcana", "kill shot", "power of legend", "arcane attack",
+            "keep fighting", "debilitating attack", "rapid recovery", "duck and weave",
+            "intense focus",
+            // technomancer abilities
+            "resolve attunement", "fuse spells", "magic hacks (technomantic proficiency)",
+            "magic hacks (debug spell)", "magic hacks (distant spell)",
+            "magic hacks (extended spell)", "magic hacks (spell grenade)",
+            "magic hacks (flash teleport)", "magic hacks (tech countermeasures)",
+            "magic hacks (widened spell)", "magic hacks (countertech sentinel)",
+            "magic hacks (reboot mind)", "magic hacks (seeking shot)",
+            "magic hacks (phase shot)", "magic hacks (quickened spell)",
+            "magic hacks (rain of fire)",
+            // archetype abilities
+            "phrenic defense", "phrenic senses", "field fix",
+            // feats
+            "deflect projectiles", "diehard", "fast talk", "great cleave",
+            "reflect projectiles",
+            // augmentations
+            "cardiac accelerator", "dragon gland"
+        };
+        String[] RPAbilitiesCR5 = {
+            "magic hacks (selective targeting)"    
+        };
+        String[] RPAbilitiesCR6 = {
+            "envoy improvisations (clever feint)", "envoy improvisations (dispiriting taunt)", 
+            "envoy improvisations (get 'em)", "envoy improvisations (inspiring boost)",
+            "envoy improvisations (not in the face)", "envoy improvisations (watch your step)", 
+            "envoy improvisations (watch out)"
+        };
+        String[] RPAbilitiesCR7 = {
+            "bardic performance"
+        };
+        String[] RPAbilitiesCR9 = {
+            "expertise talents (convincing liar)", "expertise talents (inspired medic)",
+            "expertise talents (slick customer)"
+        };
+        String[] RPAbilitiesCR12 = {
+            "envoy improvisations (don't quit)", "envoy improvisations (improved hurry)"
+        };
+        String[] RPSpells = {
+            "augury", "divination", "interplanetary teleport", "nondetection",
+            "recharge", "restoration", "security seal", "shield other", "terraform",
+            "vision", "wall of steel"
         };
         for (String t : RPAbilities)
             if (hasAbilityByID(t)) {
-                hasRP = true;
-                break;
+                return true;
             }
-        return hasRP;
+        if (creature.getCR().getCRValue() >= 5)
+            for (String t : RPAbilitiesCR5)
+                if (hasAbilityByID(t)) {
+                    return true;
+                }
+        if (creature.getCR().getCRValue() >= 6)
+            for (String t : RPAbilitiesCR6)
+                if (hasAbilityByID(t)) {
+                    return true;
+                }
+        if (creature.getCR().getCRValue() >= 7)
+            for (String t : RPAbilitiesCR7)
+                if (hasAbilityByID(t)) {
+                    return true;
+                }
+        if (creature.getCR().getCRValue() >= 9)
+            for (String t : RPAbilitiesCR9)
+                if (hasAbilityByID(t)) {
+                    return true;
+                }
+        if (creature.getCR().getCRValue() >= 12)
+            for (String t : RPAbilitiesCR12)
+                if (hasAbilityByID(t)) {
+                    return true;
+                }
+        return false;
     }
     
     public void updateStatBlock() {

@@ -259,7 +259,7 @@ secondary magic (1/day)|~n~|NONE|1
 secondary magic (1/unit)|~n~|NONE|1
 self-destruct|~n~ (~droll~+~c~ E, DC ~dc~)|OFFENSIVE_ABILITIES|1
 semiconductive|~n~|OFFENSIVE_ABILITIES|1
-share pain (DC ~dc~)|~n~|DEFENSIVE_ABILITIES|1
+share pain|~n~ (DC ~dc~)|DEFENSIVE_ABILITIES|1
 sheltering|~n~|DEFENSIVE_ABILITIES|1
 shining form|~n~|OTHER_ABILITIES|1
 skillful|~n~|NONE|1
