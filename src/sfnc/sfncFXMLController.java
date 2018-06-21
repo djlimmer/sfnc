@@ -362,7 +362,7 @@ public class sfncFXMLController implements Initializable {
             default: abilityModLine += "+0";
         }
         abilityModLine += "; Con ";
-        if (hasAbilityByID("noConScore"))
+        if (hasAbilityByID("no Con score"))
             abilityModLine += "\u2014";
         else switch(creature.constitution.getAbilityModifierChoice()) {
             case HIGH: abilityModLine += bonusString(array.abilityScoreModifier1); break;
@@ -840,9 +840,11 @@ public class sfncFXMLController implements Initializable {
     private Label creatureRPDisplay = new Label();
     @FXML   private Label creatureEACDisplay = new Label();
     @FXML   private Label creatureKACDisplay = new Label();
+    @FXML   private TextFlow creatureSavesBlock = new TextFlow();
     @FXML   private Label creatureFortDisplay = new Label();
     @FXML   private Label creatureRefDisplay = new Label();
     @FXML   private Label creatureWillDisplay = new Label();
+    private Label creatureSavesAbilitiesDisplay = new Label();
     @FXML   private TextFlow creatureDefensiveAbilitiesBlock = new TextFlow();
     private Label creatureDefensiveAbilitiesLabel = new Label("Defensive Abilities ");
     private Label creatureDefensiveAbilitiesDisplay = new Label();
@@ -1697,7 +1699,7 @@ public class sfncFXMLController implements Initializable {
                     addSenseToAbilitySet("darkvision",60);
                     addSenseToAbilitySet("low-light vision");
                     addImmunityToAbilitySet("construct immunities");
-                    abilitySet.add(Ability.getAbility("noConScore"));
+                    abilitySet.add(Ability.getAbility("no Con score"));
                     if (useTypeAdjustments) {
                         array.fort -= 2;
                         array.ref -= 2;
@@ -1791,7 +1793,7 @@ public class sfncFXMLController implements Initializable {
                     addSenseToAbilitySet("darkvision",60);
                     addImmunityToAbilitySet("undead immunities");
                     abilitySet.add(Ability.getAbility("unliving"));
-                    abilitySet.add(Ability.getAbility("noConScore"));
+                    abilitySet.add(Ability.getAbility("no Con score"));
                     if (useTypeAdjustments) {
                         array.will += 2;
                     }
@@ -2072,21 +2074,114 @@ public class sfncFXMLController implements Initializable {
         return abilitySet.stream().anyMatch(a -> (a.getId().equals(id)));
     }
     
-    public Boolean hasAbilitiesByLocation(Location loc) {
+    private Boolean hasAbilitiesByLocation(Location loc) {
         if (abilitySet == null)
             return false;
+        if ((loc == Location.DEFENSIVE_ABILITIES) && (hasAbilitiesByLocation(Location.DEFENSIVE_MAGIC_HACKS)))
+            return true;
+        if ((loc == Location.OFFENSIVE_ABILITIES) && (hasAbilitiesByLocation(Location.FIGHTING_STYLES)))
+            return true;
+        if ((loc == Location.OFFENSIVE_ABILITIES) && (hasAbilitiesByLocation(Location.OFFENSIVE_MAGIC_HACKS)))
+            return true;
+        if ((loc == Location.OTHER_ABILITIES) && (hasAbilitiesByLocation(Location.ENVOY_IMPROVISATIONS)))
+            return true;
+        if ((loc == Location.OTHER_ABILITIES) && (hasAbilitiesByLocation(Location.OTHER_MAGIC_HACKS)))
+            return true;
+        if ((loc == Location.OTHER_ABILITIES) && (hasAbilitiesByLocation(Location.OPERATIVE_EXPLOITS)))
+            return true;
         return abilitySet.stream().anyMatch(a -> (a.getLocation() == loc));
     }
-        
-    public String makeAbilityStringByLocation(Location l) {
+
+    public Integer getStrengthModifier() {
+        if (hasAbilityByID("incorporeal"))
+            return 0;
+        switch (creature.strength.getAbilityModifierChoice()) {
+            case HIGH: return array.abilityScoreModifier1;
+            case MID: return array.abilityScoreModifier2;
+            case LOW: return array.abilityScoreModifier3;
+            case CUSTOM: return creature.strength.getCustomValue();
+            default: return 0;
+        }
+    }
+    
+    private String makeAbilityStringByLocation(Location l) {
         List<String> abilitiesAtLocation = new ArrayList();
         abilitySet.stream().filter(a -> (a.getLocation() == l)).forEachOrdered(a -> abilitiesAtLocation.add(a.toString()));
+        if ((l == Location.DEFENSIVE_ABILITIES) && (hasAbilitiesByLocation(Location.DEFENSIVE_MAGIC_HACKS))) {
+            List<String> defensiveMagicHacks = new ArrayList<>();
+            abilitySet.stream().filter(a -> (a.getLocation() == Location.DEFENSIVE_MAGIC_HACKS)).forEachOrdered(a -> defensiveMagicHacks.add(a.toString()));
+            java.util.Collections.sort(defensiveMagicHacks);
+            abilitiesAtLocation.add("magic hacks (" + String.join(", ",defensiveMagicHacks) + ")");
+        }
+        if ((l == Location.OFFENSIVE_ABILITIES) && (hasAbilitiesByLocation(Location.FIGHTING_STYLES))) {
+            List<String> fightingStyles = new ArrayList<>();
+            abilitySet.stream().filter(a -> (a.getLocation() == Location.FIGHTING_STYLES)).forEachOrdered(a -> fightingStyles.add(a.toString()));
+            java.util.Collections.sort(fightingStyles);
+            abilitiesAtLocation.add("fighting styles (" + String.join(", ",fightingStyles) + ")");
+        }
+        if ((l == Location.OFFENSIVE_ABILITIES) && (hasAbilitiesByLocation(Location.OFFENSIVE_MAGIC_HACKS))) {
+            List<String> offensiveMagicHacks = new ArrayList<>();
+            abilitySet.stream().filter(a -> (a.getLocation() == Location.OFFENSIVE_MAGIC_HACKS)).forEachOrdered(a -> offensiveMagicHacks.add(a.toString()));
+            java.util.Collections.sort(offensiveMagicHacks);
+            abilitiesAtLocation.add("magic hacks (" + String.join(", ",offensiveMagicHacks) + ")");
+        }
+        if ((l == Location.OTHER_ABILITIES) && (hasAbilitiesByLocation(Location.ENVOY_IMPROVISATIONS))) {
+            List<String> envoyImprovisations = new ArrayList<>();
+            abilitySet.stream().filter(a -> (a.getLocation() == Location.ENVOY_IMPROVISATIONS)).forEachOrdered(a -> envoyImprovisations.add(a.toString()));
+            java.util.Collections.sort(envoyImprovisations);
+            abilitiesAtLocation.add("envoy improvisations (" + String.join(", ",envoyImprovisations) + ")");
+        }
+        if ((l == Location.OTHER_ABILITIES) && (hasAbilitiesByLocation(Location.OTHER_MAGIC_HACKS))) {
+            List<String> otherMagicHacks = new ArrayList<>();
+            abilitySet.stream().filter(a -> (a.getLocation() == Location.OTHER_MAGIC_HACKS)).forEachOrdered(a -> otherMagicHacks.add(a.toString()));
+            java.util.Collections.sort(otherMagicHacks);
+            abilitiesAtLocation.add("magic hacks (" + String.join(", ",otherMagicHacks) + ")");
+        }
+        if ((l == Location.OTHER_ABILITIES) && (hasAbilitiesByLocation(Location.OPERATIVE_EXPLOITS))) {
+            List<String> operativeExploits = new ArrayList<>();
+            abilitySet.stream().filter(a -> (a.getLocation() == Location.OPERATIVE_EXPLOITS)).forEachOrdered(a -> operativeExploits.add(a.toString()));
+            java.util.Collections.sort(operativeExploits);
+            abilitiesAtLocation.add("operative exploits (" + String.join(", ",operativeExploits) + ")");
+        }
         java.util.Collections.sort(abilitiesAtLocation);
         
         String abilityString = String.join(", ",abilitiesAtLocation);
-        // replace ~c~
+        // replacements: ~c~: CR, ~dc~: ability save DC, ~c-2~: CR - 2
+        //    ~erdmg~: energy ranged damage, ~erdmg-2~: energy ranged damage from 2 CR lower
+        //    ~krdmg~: kinetic ranged damage
+        //    ~stdmg~: standard melee damage, ~mdm~: melee damage modifier
+        //    ~3admg~: three-attack damage, ~lmam~: low melee attack modifier, ~hmam~: high melee attack modifier
+        //    ~bwrc~: cone breath weapon range, ~bwrl~: line breath weapon range, ~bwdmg~: breath weapon damage
+        //    ~swarm~: swarm attack damage
+        //    ~wn~: whirlwind/vortex number of times per day; 1 + CR/5
         abilityString = abilityString.replace("~c~", Integer.toString(Integer.max(0, creature.getCR().getCRValue())));
-        
+        abilityString = abilityString.replace("~c-2~", Integer.toString(Integer.max(0, creature.getCR().getCRValue()-2)));
+        abilityString = abilityString.replace("~dc~", Integer.toString(array.abilityDC));
+        abilityString = abilityString.replace("~hmam~", bonusString(array.highAttackBonus));
+        abilityString = abilityString.replace("~lmam~", bonusString(array.lowAttackBonus));
+        abilityString = abilityString.replace("~erdmg~",array.energyRangedDamage.toString());
+        abilityString = abilityString.replace("~erdmg-2~",
+                mainArrays[chosenArray][Integer.max(0,creature.getCR().getCRValue()-2)].energyRangedDamage.toString());
+        abilityString = abilityString.replace("~krdmg~",array.kineticRangedDamage.toString());
+        abilityString = abilityString.replace("~stdmg~",array.standardMeleeDamage.toString());
+        abilityString = abilityString.replace("~3admg~",array.threeAttackMeleeDamage.toString());
+        if (creature.getCR().getCRValue() <= 0)
+            abilityString = abilityString.replace("~swarm~",mainArrays[chosenArray][8].threeAttackMeleeDamage.toString());
+        else if (creature.getCR().getCRValue() <= 6)
+            abilityString = abilityString.replace("~swarm~",mainArrays[chosenArray][8].threeAttackMeleeDamage.toString()
+            +"+"+Integer.toString(creature.getCR().getCRValue()));
+        else
+            abilityString = abilityString.replace("~swarm~",array.fourAttackMeleeDamage.toString()+"+"+Integer.toString(creature.getCR().getCRValue()));
+        Integer meleeDamageModifier = creature.getCR().getCRValue() + getStrengthModifier();
+        abilityString = abilityString.replace("~mdm~",(meleeDamageModifier==0) ? "" : bonusString(meleeDamageModifier));
+        abilityString = abilityString.replace("~bwrc~",Integer.toString(
+                30 + (creature.getSize().ordinal() >= 4 ? 10 : 5)*(creature.getSize().ordinal()-4)
+        ));
+        abilityString = abilityString.replace("~bwrl~",Integer.toString(
+                60 + 2*(creature.getSize().ordinal() >= 4 ? 10 : 5)*(creature.getSize().ordinal()-4)
+        ));
+        abilityString = abilityString.replace("~bwdmg~",Integer.toString(1+creature.getCR().getCRValue())+"d6");
+        abilityString = abilityString.replace("~wn~",Integer.toString(1+creature.getCR().getCRValue()/5));
         return abilityString;
     }
     
@@ -2355,6 +2450,11 @@ public class sfncFXMLController implements Initializable {
                 (array == null) ? "" : bonusString(array.ref));
         creatureWillDisplay.setText(
                 (array == null) ? "" : bonusString(array.will));
+        if (hasAbilitiesByLocation(Location.SAVES)) {
+            creatureSavesAbilitiesDisplay.setText(makeAbilityStringByLocation(Location.SAVES));
+            creatureSavesBlock.getChildren().addAll(new Text("; "),creatureSavesAbilitiesDisplay);
+        }
+
         //update defensive abilities line
         creatureDefensiveAbilitiesBlock.getChildren().clear();
         if (hasAbilitiesByLocation(Location.DEFENSIVE_ABILITIES)) {
@@ -2381,6 +2481,12 @@ public class sfncFXMLController implements Initializable {
             if (addSemicolon)
                 creatureDefensiveAbilitiesBlock.getChildren().add(new Text("; "));
             creatureSRDisplay.setText(Integer.toString(11+creature.getCR().getCRValue()));
+            creatureDefensiveAbilitiesBlock.getChildren().addAll(creatureSRLabel,creatureSRDisplay);
+            addSemicolon = true;
+        } else if (hasAbilityByID("spell resistance 6+CR")) {
+            if (addSemicolon)
+                creatureDefensiveAbilitiesBlock.getChildren().add(new Text("; "));
+            creatureSRDisplay.setText(Integer.toString(6+creature.getCR().getCRValue()));
             creatureDefensiveAbilitiesBlock.getChildren().addAll(creatureSRLabel,creatureSRDisplay);
             addSemicolon = true;
         }
@@ -2549,7 +2655,7 @@ public class sfncFXMLController implements Initializable {
             default: statMod = "+0";
         }
         creatureDexterityModifier.setText(statMod);
-        if (hasAbilityByID("noConScore"))
+        if (hasAbilityByID("no Con score"))
             statMod = "\u2014";
         else if (array == null)
             statMod = "+0";

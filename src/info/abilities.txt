@@ -200,7 +200,7 @@ mutable|~n~|DEFENSIVE_ABILITIES|1
 nanite repair|~n~|DEFENSIVE_ABILITIES|1
 natural weapons|~n~|OFFENSIVE_ABILITIES|1
 no breath|~n~|OTHER_ABILITIES|1
-noConScore||NONE|0
+no Con score||NONE|0
 old-fashioned|~n~|OTHER_ABILITIES|1
 open pustules|~n~|DEFENSIVE_ABILITIES|1
 operative exploits (cloaking field)|~n~|OTHER_ABILITIES|1

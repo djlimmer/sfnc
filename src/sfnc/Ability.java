@@ -138,19 +138,8 @@ public class Ability {
     public String toString() {
         String outputString = outputFormat;
         outputString = outputString.replace("~n~", id);
-        outputString = outputString.replace("~r~", (range == null) ? "0" : Integer.toString(range));
-        outputString = outputString.replace("~dc~", (DC == null) ? "0" : Integer.toString(DC));
-        outputString = outputString.replace("~a~", (amount == null) ? "0" : Integer.toString(amount));
-        String drollReplace = "";
-        if (diceBonus != null && dice != null) {
-            drollReplace += dice.toString();
-            if (diceBonus < 0)
-                drollReplace += Integer.toString(diceBonus);
-            else if (diceBonus > 0)
-                drollReplace += "+" + Integer.toString(diceBonus);
-        }
-        outputString = outputString.replace("~droll~",drollReplace);
-        
+        outputString = outputString.replace("~r~", (range == null) ? "~r~" : Integer.toString(range));
+        outputString = outputString.replace("~a~", (amount == null) ? "~a~" : Integer.toString(amount));
         return outputString;
     }
 
