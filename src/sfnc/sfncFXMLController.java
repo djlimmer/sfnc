@@ -44,6 +44,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
@@ -648,6 +649,12 @@ public class sfncFXMLController implements Initializable {
     @FXML   private ComboBox creatureCustomAbilityLocationInput = new ComboBox();
     @FXML   private Button creatureAddCustomAbilityButton = new Button();
 
+    private TextInputDialog rangeRadiusDialog = new TextInputDialog();
+    private TextInputDialog damageTypeDialog = new TextInputDialog();
+    private TextInputDialog amountDialog = new TextInputDialog();
+    private TextInputDialog textDialog = new TextInputDialog();
+    private TextInputDialog regenerationDialog = new TextInputDialog();
+    
     @FXML public void removeAbilitiesAction(ActionEvent actionEvent) {
         ObservableList<String> selectedItems = creatureAbilitiesChosen.getSelectionModel().getSelectedItems();
         
@@ -661,8 +668,71 @@ public class sfncFXMLController implements Initializable {
 
     @FXML public void addAbilitiesAction(ActionEvent actionEvent) {
         ObservableList<String> selectedItems = creatureAbilityInput.getSelectionModel().getSelectedItems();
-        for (String a : selectedItems) {
-            creature.addAbility(Ability.getAbility(a));
+        for (String s : selectedItems) {
+            Ability a = Ability.getAbility(s);
+            if (a.getId().equals("breath weapon (cone)") || a.getId().equals("breath weapon (line)")) {
+                Optional<String> result = damageTypeDialog.showAndWait();
+                result.ifPresent(a::setCustomText);
+            }
+            Boolean needsRange = false;
+            String[] rangeAbilities = {
+                "gaze", "grenade expert", "limited telepathy","paralyzing gaze", 
+                "stellar revelation (supernova)", "telepathy", 
+                "telepathy (non-verbal)", "void gaze"};
+            for (String t : rangeAbilities)
+                if (s.equals(t)) {
+                    needsRange = true;
+                    break;
+                }
+            if (a.getLocation().equals(Location.AURA) || needsRange) {
+                Optional<String> result = rangeRadiusDialog.showAndWait();
+                if (result.isPresent()) {
+                    try {
+                        a.setRange(Integer.valueOf(result.get()));
+                    }
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything
+                    }
+                }
+            }
+            Boolean needsAmount = false;
+            String[] amountAbilities = {
+                "cache capacitor", "energy drain", "fast healing", "healing channel",
+                "heavy fire", "lifelink", "miracle worker", "peer into the future", "regeneration",
+                "sow doubt", "stellar revelation (blazing orbit)", "stellar revelation (stellar rush)",
+                "stellar revelation (supernova)"
+            };
+            for (String t : amountAbilities)
+                if (s.equals(t)) {
+                    needsAmount = true;
+                    break;
+                }
+            if (needsAmount) {
+                Optional<String> result = amountDialog.showAndWait();
+                if (result.isPresent()) {
+                    try {
+                        a.setAmount(Integer.valueOf(result.get()));
+                    }
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything
+                    }
+                }
+            }
+            Boolean needsText = false;
+            String[] textAbilities = {
+                "rejuvenation (timed)", "regeneration", "summon allies", "swallow whole", "trick attack", "upgrade slot"
+            };
+            for (String t : textAbilities)
+                if (s.equals(t)) {
+                    needsText = true;
+                    break;
+                }
+            if (needsText) {
+                Optional<String> result = textDialog.showAndWait();
+                result.ifPresent(a::setCustomText);
+            }
+
+            creature.addAbility(a);
         }
         setAbilityControls();
         updateStatBlock();
@@ -2900,6 +2970,25 @@ public class sfncFXMLController implements Initializable {
         aboutDialog.setTitle("About sfnc");
         aboutDialog.setContentText("Starfinder NPC/Alien Creator\nversion 1.4.0-ish");
         aboutDialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+
+        // set up dialog boxes for gathering information for abilities
+        // rangeRadiusDialog
+        rangeRadiusDialog.setTitle("Range / Radius");
+        rangeRadiusDialog.setHeaderText(null);
+        rangeRadiusDialog.setContentText("Enter range/radius: ");
+        // damageTypeDialog
+        damageTypeDialog.setTitle("Damage Type");
+        damageTypeDialog.setHeaderText(null);
+        damageTypeDialog.setContentText("Enter damage type: ");
+        // amountDialog
+        amountDialog.setTitle("Amount");
+        amountDialog.setHeaderText(null);
+        amountDialog.setContentText("Enter amount: ");
+        // textDialog
+        textDialog.setTitle("Custom text");
+        textDialog.setHeaderText(null);
+        textDialog.setContentText("Enter text to be displayed: ");
+        // regenerationDialog
         
         // set up Labels and TextFlows
         creatureInitLabel.setStyle("-fx-font-weight: bold");

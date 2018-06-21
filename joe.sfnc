@@ -1,0 +1,54 @@
+sfnc file
+joe
+SEVEN
+NEUTRAL_EVIL
+LARGE
+true
+Combatant
+Dragon
+true
+0
+cold
+
+
+
+2
+breath weapon (cone)|OFFENSIVE_ABILITIES|breath weapon (~bwrc~-ft. cone, ~bwdmg~ ~t~, Reflex DC ~dc~, usable every 1d4 rounds)|1|0|0|0|0|0|C
+crush|OFFENSIVE_ABILITIES|~n~ (~stdmg~~mdm~ B)|1|0|0|0|0|0|
+NONE|0
+NONE|0
+NONE|0
+NONE|0
+NONE|0
+NONE|0
+NONE|0
+NONE|0
+NONE|0
+NONE|0
+NONE|0
+NONE|0
+GOOD|0
+NONE|0
+NONE|0
+NONE|0
+NONE|0
+NONE|0
+NONE|0
+NONE|0
+HIGH|0
+NONE|0
+MID|0
+LOW|0
+NONE|0
+NONE|0
+30
+0
+0
+0
+
+
+0
+2
+bite|true|2d6|12|false|true|false|false|false|false|false|false|ce:
+tail sweep|false|2d6|12|false|true|false|false|false|false|false|false|ce:
+0

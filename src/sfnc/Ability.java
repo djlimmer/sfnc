@@ -26,27 +26,28 @@ public class Ability {
     Integer amount;
     Dice dice;
     Integer diceBonus;
+    String customText;
     
     public static Set<Ability> setOfAbilities = new HashSet<Ability>();
 
     Ability() {
-        this("",Location.UNDETERMINED,"~n~",1,0,0,0,null,0);
+        this("",Location.UNDETERMINED,"~n~",1,0,0,0,null,0,"");
     }
     
     Ability(String n, Location l) {
-        this(n,l,"~n~",1,0,0,0,null,0);
+        this(n,l,"~n~",1,0,0,0,null,0,"");
     }
 
     Ability(String n, Location l, String o) {
-        this(n,l,o,1,0,0,0,null,0);
+        this(n,l,o,1,0,0,0,null,0,"");
     }
 
     Ability(String n, Location l, String o, Integer c) {
-        this(n,l,o,c,0,0,0,null,0);
+        this(n,l,o,c,0,0,0,null,0,"");
     }
     
     Ability(String n, Location l, String o, Integer c, Integer r,
-            Integer dc, Integer a, Dice d, Integer db) {
+            Integer dc, Integer a, Dice d, Integer db, String ct) {
         this.id = n;
         this.location = l;
         this.outputFormat = o;
@@ -56,10 +57,11 @@ public class Ability {
         this.amount = a;
         this.dice = new Dice(d);
         this.diceBonus = db;
+        this.customText = ct;
     }
 
     Ability(Ability a) {
-        this(a.id, a.location, a.outputFormat, a.cost, a.range, a.DC, a.amount, a.dice, a.diceBonus);
+        this(a.id, a.location, a.outputFormat, a.cost, a.range, a.DC, a.amount, a.dice, a.diceBonus,a.customText);
     }
     
     public String getId() {
@@ -98,6 +100,10 @@ public class Ability {
         return diceBonus;
     }
     
+    public String getCustomText() {
+        return customText;
+    }    
+    
     public void setId(String n) {
         id = n;
     }
@@ -134,12 +140,17 @@ public class Ability {
         this.diceBonus = d;
     }
     
+    public void setCustomText(String ct) {
+        this.customText = ct;
+    }
+    
     @Override
     public String toString() {
         String outputString = outputFormat;
         outputString = outputString.replace("~n~", id);
         outputString = outputString.replace("~r~", (range == null) ? "~r~" : Integer.toString(range));
         outputString = outputString.replace("~a~", (amount == null) ? "~a~" : Integer.toString(amount));
+        outputString = outputString.replace("~t~", (customText == null) ? "~t~" : customText);
         return outputString;
     }
 
@@ -154,6 +165,7 @@ public class Ability {
         outputString += "|" + amount;
         outputString += "|" + dice;
         outputString += "|" + diceBonus;
+        outputString += "|ct:" + customText;
         
         return outputString;
     }
@@ -162,8 +174,8 @@ public class Ability {
         List<String> abilityParts = new ArrayList<>(Arrays.asList(s.split("\\|")));
         
         // this assumes the correct format; I should probably do error checking here
-        if (abilityParts.size() != 9)
-            System.err.println("abilityParts has " + abilityParts.size() + "elements.");
+        if (abilityParts.size() != 10)
+            System.err.println("abilityParts has " + abilityParts.size() + " elements.");
         
         this.id = abilityParts.get(0);
         this.location = Location.valueOf(abilityParts.get(1));
@@ -174,6 +186,7 @@ public class Ability {
         this.amount = Integer.valueOf(abilityParts.get(6));
         this.dice = new Dice(abilityParts.get(7));
         this.diceBonus = Integer.valueOf(abilityParts.get(8));
+        this.customText = abilityParts.get(9).substring(3);
     }
     
     public static Ability getAbility(String n) {
