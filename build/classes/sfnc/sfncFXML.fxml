@@ -578,7 +578,7 @@
                               <Label fx:id="creatureKACDisplay" text="Label" />
                            </children>
                         </HBox>
-                        <TextFlow fx:id="creatureSavesBlock" prefWidth="200.0">
+                        <TextFlow prefWidth="200.0">
                            <children>
                               <Label style="-fx-font-weight: bold;" text="Fort " />
                               <Label fx:id="creatureFortDisplay" text="Label" />
@@ -588,6 +588,7 @@
                               <Label text="; " />
                               <Label style="-fx-font-weight: bold;" text="Will " />
                               <Label fx:id="creatureWillDisplay" text="Label" />
+                              <TextFlow fx:id="creatureSavesBlock" />
                            </children>
                         </TextFlow>
                         <TextFlow fx:id="creatureDefensiveAbilitiesBlock" />

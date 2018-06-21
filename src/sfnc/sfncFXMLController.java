@@ -677,7 +677,7 @@ public class sfncFXMLController implements Initializable {
             Boolean needsRange = false;
             String[] rangeAbilities = {
                 "gaze", "grenade expert", "limited telepathy","paralyzing gaze", 
-                "stellar revelation (supernova)", "telepathy", 
+                "stellar revelations (supernova)", "telepathy", 
                 "telepathy (non-verbal)", "void gaze"};
             for (String t : rangeAbilities)
                 if (s.equals(t)) {
@@ -699,8 +699,8 @@ public class sfncFXMLController implements Initializable {
             String[] amountAbilities = {
                 "cache capacitor", "energy drain", "fast healing", "healing channel",
                 "heavy fire", "lifelink", "miracle worker", "peer into the future", "regeneration",
-                "sow doubt", "stellar revelation (blazing orbit)", "stellar revelation (stellar rush)",
-                "stellar revelation (supernova)"
+                "sow doubt", "stellar revelations (blazing orbit)", "stellar revelations (stellar rush)",
+                "stellar revelations (supernova)"
             };
             for (String t : amountAbilities)
                 if (s.equals(t)) {
@@ -2153,6 +2153,8 @@ public class sfncFXMLController implements Initializable {
             return true;
         if ((loc == Location.OFFENSIVE_ABILITIES) && (hasAbilitiesByLocation(Location.OFFENSIVE_MAGIC_HACKS)))
             return true;
+        if ((loc == Location.OFFENSIVE_ABILITIES) && (hasAbilitiesByLocation(Location.STELLAR_REVELATIONS)))
+            return true;
         if ((loc == Location.OTHER_ABILITIES) && (hasAbilitiesByLocation(Location.ENVOY_IMPROVISATIONS)))
             return true;
         if ((loc == Location.OTHER_ABILITIES) && (hasAbilitiesByLocation(Location.OTHER_MAGIC_HACKS)))
@@ -2194,6 +2196,12 @@ public class sfncFXMLController implements Initializable {
             abilitySet.stream().filter(a -> (a.getLocation() == Location.OFFENSIVE_MAGIC_HACKS)).forEachOrdered(a -> offensiveMagicHacks.add(a.toString()));
             java.util.Collections.sort(offensiveMagicHacks);
             abilitiesAtLocation.add("magic hacks (" + String.join(", ",offensiveMagicHacks) + ")");
+        }
+        if ((l == Location.OFFENSIVE_ABILITIES) && (hasAbilitiesByLocation(Location.STELLAR_REVELATIONS))) {
+            List<String> stellarRevelations = new ArrayList<>();
+            abilitySet.stream().filter(a -> (a.getLocation() == Location.STELLAR_REVELATIONS)).forEachOrdered(a -> stellarRevelations.add(a.toString()));
+            java.util.Collections.sort(stellarRevelations);
+            abilitiesAtLocation.add("stellar revelations (" + String.join(", ",stellarRevelations) + ")");
         }
         if ((l == Location.OTHER_ABILITIES) && (hasAbilitiesByLocation(Location.ENVOY_IMPROVISATIONS))) {
             List<String> envoyImprovisations = new ArrayList<>();
@@ -2508,6 +2516,7 @@ public class sfncFXMLController implements Initializable {
 
         // update defenses block
         // RP goes here, sort of
+        creatureSavesBlock.getChildren().clear();
         creatureHPDisplay.setText(
                 (array == null) ? "" : array.hitPoints.toString());
         creatureEACDisplay.setText(
