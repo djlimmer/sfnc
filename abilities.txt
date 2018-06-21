@@ -161,7 +161,7 @@ integrated weapons|~n~|DEFENSIVE_ABILITIES|1
 intellectual knack|~n~|OTHER_ABILITIES|1
 jiang-shi weaknesses|~n~|WEAKNESSES|0
 jolting arc|~n~|OFFENSIVE_ABILITIES|1
-keep fighting|~n~ (2d6+9 HP)|OTHER_ABILITIES|1
+keep fighting|~n~ (~1+c/5~d6+~c~ HP)|OTHER_ABILITIES|1
 kitbash|~n~|OTHER_ABILITIES|1
 knockdown|~n~|OFFENSIVE_ABILITIES|1
 lasso|~n~|OFFENSIVE_ABILITIES|1
@@ -182,9 +182,9 @@ magic hacks (tech countermeasures)|tech countermeasures|OTHER_MAGIC_HACKS|1
 malleable|~n~|OTHER_ABILITIES|1
 massive|~n~|OTHER_ABILITIES|1
 maze mind|~n~|OTHER_ABILITIES|1
-mechanic tricks (energy shield)|energy shield [~a~ HP, ~b~ min.]|OTHER_ABILITIES|1
-mechanic tricks (holographic projector)|holographic projector|OTHER_ABILITIES|1
-mechanic tricks (neural shunt)|neural shunt|OTHER_ABILITIES|1
+mechanic tricks (energy shield)|energy shield [~a~ HP, ~b~ min.]|MECHANIC_TRICKS|1
+mechanic tricks (holographic projector)|holographic projector|MECHANIC_TRICKS|1
+mechanic tricks (neural shunt)|neural shunt|MECHANIC_TRICKS|1
 mental anguish|~n~ (DC ~dc~)|OFFENSIVE_ABILITIES|1
 mind-breaking link|~n~ (DC ~dc~)|OFFENSIVE_ABILITIES|1
 mindkiller|~n~ (DC ~dc~)|OFFENSIVE_ABILITIES|1

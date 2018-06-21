@@ -13,8 +13,8 @@ fire
 
 
 2
-force bolt|OFFENSIVE_ABILITIES|~n~|1|0|0|0|0|0|ct:
 breath weapon (line)|OFFENSIVE_ABILITIES|breath weapon (~bwrl~-ft. line, ~bwdmg~ ~t~, Reflex DC ~dc~, usable every 1d4 rounds)|1|0|0|0|0|0|ct:F
+electrical discharge|OFFENSIVE_ABILITIES|~n~ (~krdmg~+~c~ E plus staggered, Reflex DC ~dc~ half)|1|0|0|0|0|0|ct:
 NONE|0
 NONE|0
 NONE|0

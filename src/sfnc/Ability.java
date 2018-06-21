@@ -151,6 +151,7 @@ public class Ability {
         outputString = outputString.replace("~r~", (range == null) ? "~r~" : Integer.toString(range));
         outputString = outputString.replace("~a~", (amount == null) ? "~a~" : Integer.toString(amount));
         outputString = outputString.replace("~t~", (customText == null) ? "~t~" : customText);
+        outputString = outputString.replace("~b~", (diceBonus == null) ? "~b~" : Integer.toString(diceBonus));
         return outputString;
     }
 

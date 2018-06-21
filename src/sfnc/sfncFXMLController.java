@@ -32,6 +32,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -47,6 +48,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -200,7 +203,8 @@ public class sfncFXMLController implements Initializable {
         
         // create defense/HP/RP line
         String HPOutput = (array == null) ? "" : "HP " + array.hitPoints.toString();
-        // RP goes here
+        if (hasRP())
+                HPOutput += " RP " + Integer.toString(3+creature.getCR().getCRValue()/5);
         String defenseLine = "DEFENSE";
         numSpaces = EXPORTLINEWIDTH - defenseLine.length() - HPOutput.length();
         for (int i=0; i < numSpaces; i++) {
@@ -654,6 +658,13 @@ public class sfncFXMLController implements Initializable {
     private TextInputDialog amountDialog = new TextInputDialog();
     private TextInputDialog textDialog = new TextInputDialog();
     private TextInputDialog regenerationDialog = new TextInputDialog();
+    private Dialog twoAmountsDialog = new Dialog();
+    private Label aLabel = new Label("Value for a: ");
+    private Label bLabel = new Label("Value for b: ");
+    private TextField aInput = new TextField();
+    private TextField bInput = new TextField();
+    private GridPane twoAmountsGrid = new GridPane();
+    private ButtonType buttonTypeOK = new ButtonType("OK", ButtonData.OK_DONE);
     
     @FXML public void removeAbilitiesAction(ActionEvent actionEvent) {
         ObservableList<String> selectedItems = creatureAbilitiesChosen.getSelectionModel().getSelectedItems();
@@ -677,7 +688,7 @@ public class sfncFXMLController implements Initializable {
             Boolean needsRange = false;
             String[] rangeAbilities = {
                 "gaze", "grenade expert", "limited telepathy","paralyzing gaze", 
-                "stellar revelations (supernova)", "telepathy", 
+                "stellar revelations (black hole)", "stellar revelations (supernova)", "telepathy", 
                 "telepathy (non-verbal)", "void gaze"};
             for (String t : rangeAbilities)
                 if (s.equals(t)) {
@@ -699,8 +710,8 @@ public class sfncFXMLController implements Initializable {
             String[] amountAbilities = {
                 "cache capacitor", "energy drain", "fast healing", "healing channel",
                 "heavy fire", "lifelink", "miracle worker", "peer into the future", "regeneration",
-                "sow doubt", "stellar revelations (blazing orbit)", "stellar revelations (stellar rush)",
-                "stellar revelations (supernova)"
+                "sow doubt", "stellar revelations (blazing orbit)", "stellar revelations (black hole)",
+                "stellar revelations (stellar rush)", "stellar revelations (supernova)"
             };
             for (String t : amountAbilities)
                 if (s.equals(t)) {
@@ -712,6 +723,27 @@ public class sfncFXMLController implements Initializable {
                 if (result.isPresent()) {
                     try {
                         a.setAmount(Integer.valueOf(result.get()));
+                    }
+                    catch(NumberFormatException e) {
+                        // it's not a number; don't change anything
+                    }
+                }
+            }
+            Boolean needsTwoAmounts = false;
+            String[] twoAmountAbilities = { 
+                "mechanic tricks (energy shield)", "zenith revelations (wormholes)"
+            };
+            for (String t : twoAmountAbilities)
+                if (s.equals(t)) {
+                    needsTwoAmounts = true;
+                    break;
+                }
+            if (needsTwoAmounts) {
+                Optional<String> result = twoAmountsDialog.showAndWait();
+                if (result.isPresent()) {
+                    try {
+                        a.setAmount(Integer.valueOf(aInput.getText()));
+                        a.setDiceBonus(Integer.valueOf(bInput.getText()));
                     }
                     catch(NumberFormatException e) {
                         // it's not a number; don't change anything
@@ -905,8 +937,9 @@ public class sfncFXMLController implements Initializable {
     private Label creaturePerceptionDisplay = new Label();
     private Label creatureAuraLabel = new Label("Aura ");
     private Label creatureAuraDisplay = new Label();
+    @FXML   private HBox creatureRPBox = new HBox();
     @FXML   private Label creatureHPDisplay = new Label();
-    private Label creatureRPLabel = new Label("RP ");
+    private Label creatureRPLabel = new Label(" RP ");
     private Label creatureRPDisplay = new Label();
     @FXML   private Label creatureEACDisplay = new Label();
     @FXML   private Label creatureKACDisplay = new Label();
@@ -2159,6 +2192,8 @@ public class sfncFXMLController implements Initializable {
             return true;
         if ((loc == Location.OTHER_ABILITIES) && (hasAbilitiesByLocation(Location.OTHER_MAGIC_HACKS)))
             return true;
+        if ((loc == Location.OTHER_ABILITIES) && (hasAbilitiesByLocation(Location.MECHANIC_TRICKS)))
+            return true;
         if ((loc == Location.OTHER_ABILITIES) && (hasAbilitiesByLocation(Location.OPERATIVE_EXPLOITS)))
             return true;
         return abilitySet.stream().anyMatch(a -> (a.getLocation() == loc));
@@ -2215,6 +2250,12 @@ public class sfncFXMLController implements Initializable {
             java.util.Collections.sort(otherMagicHacks);
             abilitiesAtLocation.add("magic hacks (" + String.join(", ",otherMagicHacks) + ")");
         }
+        if ((l == Location.OTHER_ABILITIES) && (hasAbilitiesByLocation(Location.MECHANIC_TRICKS))) {
+            List<String> mechanicTricks = new ArrayList<>();
+            abilitySet.stream().filter(a -> (a.getLocation() == Location.MECHANIC_TRICKS)).forEachOrdered(a -> mechanicTricks.add(a.toString()));
+            java.util.Collections.sort(mechanicTricks);
+            abilitiesAtLocation.add("mechanic tricks (" + String.join(", ",mechanicTricks) + ")");
+        }
         if ((l == Location.OTHER_ABILITIES) && (hasAbilitiesByLocation(Location.OPERATIVE_EXPLOITS))) {
             List<String> operativeExploits = new ArrayList<>();
             abilitySet.stream().filter(a -> (a.getLocation() == Location.OPERATIVE_EXPLOITS)).forEachOrdered(a -> operativeExploits.add(a.toString()));
@@ -2225,6 +2266,7 @@ public class sfncFXMLController implements Initializable {
         
         String abilityString = String.join(", ",abilitiesAtLocation);
         // replacements: ~c~: CR, ~dc~: ability save DC, ~c-2~: CR - 2
+        //    ~1+c/5~: 1 + CR/5 (for keep fighting)
         //    ~erdmg~: energy ranged damage, ~erdmg-2~: energy ranged damage from 2 CR lower
         //    ~krdmg~: kinetic ranged damage
         //    ~stdmg~: standard melee damage, ~mdm~: melee damage modifier
@@ -2234,12 +2276,13 @@ public class sfncFXMLController implements Initializable {
         //    ~wn~: whirlwind/vortex number of times per day; 1 + CR/5
         abilityString = abilityString.replace("~c~", Integer.toString(Integer.max(0, creature.getCR().getCRValue())));
         abilityString = abilityString.replace("~c-2~", Integer.toString(Integer.max(0, creature.getCR().getCRValue()-2)));
+        abilityString = abilityString.replace("~1+c/5~", Integer.toString(Integer.max(0, 1 + creature.getCR().getCRValue()/5)));
         abilityString = abilityString.replace("~dc~", Integer.toString(array.abilityDC));
         abilityString = abilityString.replace("~hmam~", bonusString(array.highAttackBonus));
         abilityString = abilityString.replace("~lmam~", bonusString(array.lowAttackBonus));
         abilityString = abilityString.replace("~erdmg~",array.energyRangedDamage.toString());
         abilityString = abilityString.replace("~erdmg-2~",
-                mainArrays[chosenArray][Integer.max(0,creature.getCR().getCRValue()-2)].energyRangedDamage.toString());
+                mainArrays[chosenArray][Integer.max(1,creature.getCR().getCRValue()-2)].energyRangedDamage.toString());
         abilityString = abilityString.replace("~krdmg~",array.kineticRangedDamage.toString());
         abilityString = abilityString.replace("~stdmg~",array.standardMeleeDamage.toString());
         abilityString = abilityString.replace("~3admg~",array.threeAttackMeleeDamage.toString());
@@ -2469,6 +2512,21 @@ public class sfncFXMLController implements Initializable {
         return attackString;
     }
     
+    private Boolean hasRP() {
+        Boolean hasRP = false;
+        String[] RPAbilities = { 
+            "spawn constituents", "electrical discharge", "siphon", "gravity control",
+            "slough minion", "ingested adaptation", "void flyer", "semiconductive",
+            "leech life"
+        };
+        for (String t : RPAbilities)
+            if (hasAbilityByID(t)) {
+                hasRP = true;
+                break;
+            }
+        return hasRP;
+    }
+    
     public void updateStatBlock() {
         Boolean addSemicolon = false;
         
@@ -2515,7 +2573,12 @@ public class sfncFXMLController implements Initializable {
         }
 
         // update defenses block
-        // RP goes here, sort of
+        // handle RP
+        creatureRPBox.getChildren().clear();
+        if (hasRP()) {
+            creatureRPDisplay.setText(Integer.toString(3+creature.getCR().getCRValue()/5));
+            creatureRPBox.getChildren().addAll(creatureRPLabel,creatureRPDisplay);
+        }
         creatureSavesBlock.getChildren().clear();
         creatureHPDisplay.setText(
                 (array == null) ? "" : array.hitPoints.toString());
@@ -2993,6 +3056,15 @@ public class sfncFXMLController implements Initializable {
         amountDialog.setTitle("Amount");
         amountDialog.setHeaderText(null);
         amountDialog.setContentText("Enter amount: ");
+        // twoAmountsDialog
+        twoAmountsDialog.setTitle("Two Amounts");
+        twoAmountsDialog.setHeaderText(null);
+        twoAmountsGrid.add(aLabel, 1, 1);
+        twoAmountsGrid.add(bLabel, 1, 2);
+        twoAmountsGrid.add(aInput, 2, 1);
+        twoAmountsGrid.add(bInput, 2, 2);
+        twoAmountsDialog.getDialogPane().setContent(twoAmountsGrid);
+        twoAmountsDialog.getDialogPane().getButtonTypes().add(buttonTypeOK);
         // textDialog
         textDialog.setTitle("Custom text");
         textDialog.setHeaderText(null);

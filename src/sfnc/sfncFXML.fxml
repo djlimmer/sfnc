@@ -565,6 +565,7 @@
                                  <children>
                                     <Label style="-fx-font-weight: bold;" text="HP " />
                                     <Label fx:id="creatureHPDisplay" text="Label" />
+                                    <HBox fx:id="creatureRPBox" alignment="CENTER_LEFT" />
                                  </children>
                               </HBox>
                            </children>
