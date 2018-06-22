@@ -4,7 +4,7 @@ FOUR
 NEUTRAL_EVIL
 MEDIUM
 true
-Combatant
+Spellcaster
 Dragon
 true
 0
@@ -13,8 +13,8 @@ fire
 
 
 2
-breath weapon (line)|OFFENSIVE_ABILITIES|breath weapon (~bwrl~-ft. line, ~bwdmg~ ~t~, Reflex DC ~dc~, usable every 1d4 rounds)|1|0|0|0|0|0|ct:F
 electrical discharge|OFFENSIVE_ABILITIES|~n~ (~krdmg~+~c~ E plus staggered, Reflex DC ~dc~ half)|1|0|0|0|0|0|ct:
+breath weapon (line)|OFFENSIVE_ABILITIES|breath weapon (~bwrl~-ft. line, ~bwdmg~ ~t~, Reflex DC ~dc~, usable every 1d4 rounds)|1|0|0|0|0|0|ct:F
 NONE|0
 NONE|0
 NONE|0
@@ -49,10 +49,10 @@ NONE|0
 
 0
 1
-bite|true|1d6|9|false|true|false|false|false|false|false|false|ce:
+bite|true|1d4|9|false|true|false|false|false|false|false|false|ce:
 0
-false
-
+true
+technomancer
 0
 0
 0

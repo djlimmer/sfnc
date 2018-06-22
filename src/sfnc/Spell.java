@@ -94,8 +94,14 @@ public class Spell {
             System.err.println("stringParts has " + spellParts.size() + "elements.");
         
         this.name = spellParts.get(0);
-        this.mysticLevel = Integer.valueOf(spellParts.get(1));
-        this.technomancerLevel = Integer.valueOf(spellParts.get(2));
+        if (spellParts.get(1).equals("-"))
+            this.mysticLevel = -1;
+        else
+            this.mysticLevel = Integer.valueOf(spellParts.get(1));
+        if (spellParts.get(2).equals("-"))
+            this.technomancerLevel = -1;
+        else
+            this.technomancerLevel = Integer.valueOf(spellParts.get(2));
         this.showDC = Boolean.valueOf(spellParts.get(3));
         this.showRangedAttack = Boolean.valueOf(spellParts.get(4));
         this.showMeleeAttack = Boolean.valueOf(spellParts.get(5));
@@ -115,7 +121,7 @@ public class Spell {
         List<Spell> spellList = new ArrayList<>();
         
         switch(type) {
-            case "mystic":
+            case "mystic": 
                 setOfSpells.stream().filter((s) -> (Objects.equals(s.mysticLevel, level))).forEach((s) -> {
                     spellList.add(s);
         });

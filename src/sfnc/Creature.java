@@ -134,7 +134,7 @@ public class Creature {
         this.swimSpeed = 0;
         meleeAttacks = new ArrayList<>();
         rangedAttacks = new ArrayList<>();
-        this.usesSLAs = false;
+        this.usesSLAs = true;
         this.spellType = "";
         this.highSpells = new HashSet<>();
         this.midSpells = new HashSet<>();
@@ -504,7 +504,6 @@ public class Creature {
     }
     
     public void dropSubtype(String s) {
-        System.out.println("Subtype to drop: " + s);
         generalSubtypes.remove(s);
         humanoidSubtypes.remove(s);
         outsiderSubtypes.remove(s);
