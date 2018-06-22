@@ -74,6 +74,11 @@ public class Creature {
     Integer swimSpeed;
     List<Attack> meleeAttacks;
     List<Attack> rangedAttacks;
+    Boolean usesSLAs;
+    String spellType;
+    Set<Spell> highSpells;
+    Set<Spell> midSpells;
+    Set<Spell> lowSpells;
     
     // temporary status variables
     Boolean hasChanged;
@@ -129,6 +134,11 @@ public class Creature {
         this.swimSpeed = 0;
         meleeAttacks = new ArrayList<>();
         rangedAttacks = new ArrayList<>();
+        this.usesSLAs = false;
+        this.spellType = "";
+        this.highSpells = new HashSet<>();
+        this.midSpells = new HashSet<>();
+        this.lowSpells = new HashSet<>();
     }
     
     Creature(String n, ChallengeRating c) {
@@ -177,7 +187,7 @@ public class Creature {
         return CR.getXP()==0 ? "\u2013" : NumberFormat.getNumberInstance(Locale.getDefault()).format(CR.getXP());
     }
     
-      String getArray() {
+    String getArray() {
         return array;
     }
     
@@ -325,6 +335,48 @@ public class Creature {
     
     public String getFlyManeuverability() {
         return flyManeuverability;
+    }
+    
+    public Boolean isSpellcaster() {
+        if (array.equals("spellcaster"))
+            return true;
+        if (chosenAbilities == null)
+            return false;
+        return chosenAbilities.stream().anyMatch(a -> (a.getId().startsWith("secondary magic")));
+    }
+    
+    public Boolean usesSLAs() {
+        return isSpellcaster() && usesSLAs();
+    }
+    
+    public Boolean usesSpells() {
+        return isSpellcaster() && !usesSLAs();
+    }
+    
+    public String getSpellType() {
+        return spellType;
+    }
+    
+    public Set<Spell> getHighSpells() {
+        return highSpells;
+    }
+    
+    public Set<Spell> getMidSpells() {
+        return midSpells;
+    }
+    
+    public Set<Spell> getLowSpells() {
+        return lowSpells;
+    }
+    
+    public Boolean hasSpell(Spell s) {
+        if (highSpells.stream().anyMatch((z) -> (z.name.equals(s.name)))) {
+            return true;
+        }
+        if (midSpells.stream().anyMatch((z) -> (z.name.equals(s.name)))) {
+            return true;
+        }
+        return lowSpells.stream().anyMatch((z) -> (z.name.equals(s.name)));
     }
     
     public Boolean hasChanged() {
@@ -524,6 +576,83 @@ public class Creature {
         this.hasChanged = true;
     }
     
+    public void setUsesSLAs(Boolean b) {
+        this.usesSLAs = b;
+        this.hasChanged = true;
+    }
+    
+    public void setSpellType(String s) {
+        this.spellType = s;
+        this.hasChanged = true;
+    }
+    
+    public void setHighSpells(List<Spell> sl) {
+        this.highSpells = new HashSet<>();
+        sl.stream().forEach((Spell s) -> {
+            this.highSpells.add(new Spell(s));
+        });
+        this.hasChanged = true;
+    }
+    
+    public void setMidSpells(List<Spell> sl) {
+        this.midSpells = new HashSet<>();
+        sl.stream().forEach((Spell s) -> {
+            this.midSpells.add(new Spell(s));
+        });
+        this.hasChanged = true;
+    }
+    
+    public void setLowSpells(List<Spell> sl) {
+        this.lowSpells = new HashSet<>();
+        sl.stream().forEach((Spell s) -> {
+            this.lowSpells.add(new Spell(s));
+        });
+        this.hasChanged = true;
+    }
+    
+    public void addHighSpell(Spell s) {
+        this.highSpells.add(new Spell(s));
+        this.hasChanged = true;
+    }
+    
+    public void addMidSpell(Spell s) {
+        this.midSpells.add(new Spell(s));
+        this.hasChanged = true;
+    }
+    
+    public void addLowSpell(Spell s) {
+        this.lowSpells.add(new Spell(s));
+        this.hasChanged = true;
+    }
+    
+    public void dropHighSpell(Spell s) {
+        highSpells.stream().filter((t) -> (t.name.equals(s.name))).forEach((t) -> {
+            this.highSpells.remove(t);
+        });
+        this.hasChanged = true;
+    }
+    
+    public void dropMidSpell(Spell s) {
+        midSpells.stream().filter((t) -> (t.name.equals(s.name))).forEach((t) -> {
+            this.midSpells.remove(t);
+        });
+        this.hasChanged = true;
+    }
+    
+    public void dropLowSpell(Spell s) {
+        lowSpells.stream().filter((t) -> (t.name.equals(s.name))).forEach((t) -> {
+            this.lowSpells.remove(t);
+        });
+        this.hasChanged = true;
+    }
+    
+    public void dropAllSpells() {
+        highSpells = new HashSet<>();
+        midSpells = new HashSet<>();
+        lowSpells = new HashSet<>();
+        this.hasChanged = true;
+    }
+    
     public void setChange() {
         this.hasChanged = true;
     }
@@ -645,6 +774,26 @@ public class Creature {
                 a.makeFromLoadString(reader.readLine());
                 rangedAttacks.add(a);
             }
+            this.usesSLAs = !("false".equals(reader.readLine()));
+            this.spellType = reader.readLine();
+            n = Integer.parseInt(reader.readLine());
+            for (Integer i = 0; i < n; i++) {
+                Spell s = new Spell();
+                s.makeFromLoadString(reader.readLine());
+                highSpells.add(s);
+            }
+            n = Integer.parseInt(reader.readLine());
+            for (Integer i = 0; i < n; i++) {
+                Spell s = new Spell();
+                s.makeFromLoadString(reader.readLine());
+                midSpells.add(s);
+            }
+            n = Integer.parseInt(reader.readLine());
+            for (Integer i = 0; i < n; i++) {
+                Spell s = new Spell();
+                s.makeFromLoadString(reader.readLine());
+                lowSpells.add(s);
+            }
 
             reader.close();
         } catch (IOException e) {
@@ -718,7 +867,20 @@ public class Creature {
             for (Attack a : rangedAttacks) {
                 writer.println(a.makeSaveString());
             }
-            
+            writer.println(usesSLAs);
+            writer.println(spellType);
+            writer.println(highSpells.size());
+            for (Spell s: highSpells) {
+                writer.println(s.makeSaveString());
+            }            
+            writer.println(midSpells.size());
+            for (Spell s: midSpells) {
+                writer.println(s.makeSaveString());
+            }            
+            writer.println(lowSpells.size());
+            for (Spell s: lowSpells) {
+                writer.println(s.makeSaveString());
+            }            
             writer.close();
         } catch (IOException e) {
             System.err.println("Something went wrong (saving to file)");

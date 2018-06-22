@@ -1157,6 +1157,7 @@ public class sfncFXMLController implements Initializable {
         // step 7
         setSkillControls();
         // step 8
+        setSpellControls();
         // step 9
         creatureGroundSpeed.setText(creature.getGroundSpeed().toString());
         creatureBurrowSpeed.setText(creature.getBurrowSpeed().toString());
@@ -1808,6 +1809,136 @@ public class sfncFXMLController implements Initializable {
         }
     }
     
+    private void setSpellControls() {
+        if (creature.usesSpells())
+            creatureSpellcastingType.selectToggle(creatureSpellsCasting);
+        else
+            creatureSpellcastingType.selectToggle(creatureSLACasting);
+        switch (creature.getSpellType()) {
+            case "mystic":
+                creatureSpellcastingClass.selectToggle(creatureMysticSpells);
+                break;
+            case "technomancer":
+                creatureSpellcastingClass.selectToggle(creatureTechnomancerSpells);
+                break;
+            case "all":
+                creatureSpellcastingClass.selectToggle(creatureAllSpells);
+                break;
+            default:
+                creatureSpellcastingClass.selectToggle(null);
+        }
+        if (creatureSpellcastingType.getSelectedToggle().equals(creatureSpellsCasting)) {
+            creatureSpellTypeLabel.setText("Spells");
+            switch (creature.getCR()) {
+                case TWENTYFIVE:
+                case TWENTYFOUR:
+                case TWENTYTHREE:
+                case TWENTYTWO:
+                case TWENTYONE:
+                case TWENTY:
+                case NINETEEN:
+                    creatureHighSpellsLabel.setText("3/day: 4 6th-level spells");
+                    creatureMidSpellsLabel.setText("6/day: 3 5th-level spells");
+                    creatureLowSpellsLabel.setText("at will: 2 4th-level spells");
+                    break;
+                case EIGHTEEN:
+                case SEVENTEEN:
+                case SIXTEEN:
+                    creatureHighSpellsLabel.setText("3/day: 2 6th-level spells");
+                    creatureMidSpellsLabel.setText("6/day: 4 5th-level spells");
+                    creatureLowSpellsLabel.setText("at will: 2 4th-level spells");
+                    break;
+                case FIFTEEN:
+                case FOURTEEN:
+                case THIRTEEN:
+                    creatureHighSpellsLabel.setText("3/day: 2 5th-level spells");
+                    creatureMidSpellsLabel.setText("6/day: 4 4th-level spells");
+                    creatureLowSpellsLabel.setText("at will: 2 3rd-level spells");
+                    break;
+                case TWELVE:
+                case ELEVEN:
+                case TEN:
+                    creatureHighSpellsLabel.setText("3/day: 2 4th-level spells");
+                    creatureMidSpellsLabel.setText("6/day: 4 3rd-level spells");
+                    creatureLowSpellsLabel.setText("at will: 2 2nd-level spells");
+                    break;
+                case NINE:
+                case EIGHT:
+                case SEVEN:
+                    creatureHighSpellsLabel.setText("3/day: 2 3rd-level spells");
+                    creatureMidSpellsLabel.setText("6/day: 4 2nd-level spells");
+                    creatureLowSpellsLabel.setText("at will: 2 1st-level spells");
+                    break;
+                case SIX:
+                case FIVE:
+                case FOUR:
+                    creatureHighSpellsLabel.setText("3/day: 2 2nd-level spells");
+                    creatureMidSpellsLabel.setText("6/day: 3 1st-level spells");
+                    creatureLowSpellsLabel.setText("at will: 2 0-level spells");
+                    break;
+                default:
+                    creatureHighSpellsLabel.setText("3/day: 2 1st-level spells");
+                    creatureMidSpellsLabel.setText("at will: 2 0-level spells");
+                    creatureLowSpellsLabel.setText("");
+            }
+        }
+        else {
+            creatureSpellTypeLabel.setText("SLAs");
+            switch (creature.getCR()) {
+                case TWENTYFIVE:
+                case TWENTYFOUR:
+                case TWENTYTHREE:
+                case TWENTYTWO:
+                case TWENTYONE:
+                case TWENTY:
+                case NINETEEN:
+                    creatureHighSpellsLabel.setText("1/day: 4 6th-level spells");
+                    creatureMidSpellsLabel.setText("3/day: 3 5th-level spells");
+                    creatureLowSpellsLabel.setText("at will: 2 4th-level spells");
+                    break;
+                case EIGHTEEN:
+                case SEVENTEEN:
+                case SIXTEEN:
+                    creatureHighSpellsLabel.setText("1/day: 2 6th-level spells");
+                    creatureMidSpellsLabel.setText("3/day: 4 5th-level spells");
+                    creatureLowSpellsLabel.setText("at will: 2 4th-level spells");
+                    break;
+                case FIFTEEN:
+                case FOURTEEN:
+                case THIRTEEN:
+                    creatureHighSpellsLabel.setText("1/day: 2 5th-level spells");
+                    creatureMidSpellsLabel.setText("3/day: 4 4th-level spells");
+                    creatureLowSpellsLabel.setText("at will: 2 3rd-level spells");
+                    break;
+                case TWELVE:
+                case ELEVEN:
+                case TEN:
+                    creatureHighSpellsLabel.setText("1/day: 2 4th-level spells");
+                    creatureMidSpellsLabel.setText("3/day: 4 3rd-level spells");
+                    creatureLowSpellsLabel.setText("at will: 2 2nd-level spells");
+                    break;
+                case NINE:
+                case EIGHT:
+                case SEVEN:
+                    creatureHighSpellsLabel.setText("1/day: 2 3rd-level spells");
+                    creatureMidSpellsLabel.setText("3/day: 4 2nd-level spells");
+                    creatureLowSpellsLabel.setText("at will: 2 1st-level spells");
+                    break;
+                case SIX:
+                case FIVE:
+                case FOUR:
+                    creatureHighSpellsLabel.setText("1/day: 2 2nd-level spells");
+                    creatureMidSpellsLabel.setText("3/day: 3 1st-level spells");
+                    creatureLowSpellsLabel.setText("at will: 2 0-level spells");
+                    break;
+                default:
+                    creatureHighSpellsLabel.setText("1/day: 2 1st-level spells");
+                    creatureMidSpellsLabel.setText("at will: 2 0-level spells");
+                    creatureLowSpellsLabel.setText("");
+            }
+        }
+    }
+    
     private void updateArray() {
         if (chosenArray == null || creature.getCR().ordinal()==0) {
             array = null;
@@ -2198,7 +2329,9 @@ public class sfncFXMLController implements Initializable {
                 case LOW: initiative = array.abilityScoreModifier3; break;
                 case CUSTOM: initiative = creature.getDexterity().getCustomValue(); break;
                 default: initiative = 0;
-        }
+            }
+            if(hasAbilityByID("improved initiative"))
+                initiative += 4;
         }
     }
 
@@ -3247,6 +3380,7 @@ public class sfncFXMLController implements Initializable {
                     updateStatBlock();
                     updateWindowTitle();
                     updateTabStatus();
+                    setSpellControls();
                 }
             }
         );
@@ -3316,6 +3450,7 @@ public class sfncFXMLController implements Initializable {
                     updateWindowTitle();
                     setAbilityControls();
                     setSkillControls();
+                    setSpellControls();
                     updateTabStatus();
                 }
             }

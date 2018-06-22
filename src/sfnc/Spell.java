@@ -42,6 +42,10 @@ public class Spell {
         this(n,ml,tl,false,false,false);
     }
     
+    Spell() {
+        this("",-1,-1,false,false,false);
+    }
+    
     Spell(Spell s) {
         this(s.name,s.mysticLevel,s.technomancerLevel,s.showDC,s.showRangedAttack,s.showMeleeAttack);
     }
