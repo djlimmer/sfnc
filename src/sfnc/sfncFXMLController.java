@@ -910,6 +910,35 @@ public class sfncFXMLController implements Initializable {
 
     // Step 8 controls
     @FXML   private Tab step8 = new Tab();
+    private ToggleGroup creatureSpellcastingType = new ToggleGroup();
+    @FXML   private RadioButton creatureSLACasting = new RadioButton();
+    @FXML   private RadioButton creatureSpellsCasting = new RadioButton();
+    private ToggleGroup creatureSpellcastingClass = new ToggleGroup();
+    @FXML   private RadioButton creatureMysticSpells = new RadioButton();
+    @FXML   private RadioButton creatureTechnomancerSpells = new RadioButton();
+    @FXML   private RadioButton creatureAllSpells = new RadioButton();
+    @FXML   private Label creatureSpellTypeLabel = new Label();
+    @FXML   private Label creatureHighSpellsLabel = new Label();
+    @FXML   private ListView<String> creatureHighSpellsInput = new ListView<>();
+    @FXML   private Label creatureMidSpellsLabel = new Label();
+    @FXML   private ListView<String> creatureMidSpellsInput = new ListView<>();
+    @FXML   private Label creatureLowSpellsLabel = new Label();
+    @FXML   private ListView<String> creatureLowSpellsInput = new ListView<>();
+    
+    @FXML   private void addSpellsAction() {
+        updateStatBlock();
+        updateWindowTitle();
+    }
+    
+    @FXML   private void removeChosenSpellsAction() {
+        updateStatBlock();
+        updateWindowTitle();
+    }
+    
+    @FXML   private void removeAllSpellsAction() {
+        updateStatBlock();
+        updateWindowTitle();
+    }
     
     // Step 9 controls
     @FXML   private Tab step9 = new Tab();
@@ -1145,6 +1174,8 @@ public class sfncFXMLController implements Initializable {
         step3.setDisable((creature.getType() == null) || (creature.getType().equals("")) || step2.isDisable());
         step6.setDisable((creature.getType() == null) || (creature.getType().equals("")) || step2.isDisable());
         step7.setDisable((creature.getType() == null) || (creature.getType().equals("")) || step2.isDisable());
+        step8.setDisable((creature.getType() == null) || (creature.getType().equals("")) || step2.isDisable()
+                || (!creature.getArray().equals("Spellcaster")));
     }
     
     private void showAnimalTypeOptions() {
@@ -2518,7 +2549,7 @@ public class sfncFXMLController implements Initializable {
             "spawn constituents", "electrical discharge", "siphon", "gravity control",
             "slough minion", "ingested adaptation", "void flyer", "semiconductive",
             // other source abilities
-            "leech life", 
+            "leech life", "tank shock!!!",
             // envoy abilities
             "expertise", "true expertise", "envoy improvisations (look alive)", 
             "envoy improvisations (clever improvisations)", "envoy improvisations (draw fire)",
@@ -3162,7 +3193,6 @@ public class sfncFXMLController implements Initializable {
         textDialog.setTitle("Custom text");
         textDialog.setHeaderText(null);
         textDialog.setContentText("Enter text to be displayed: ");
-        // regenerationDialog
         
         // set up Labels and TextFlows
         creatureInitLabel.setStyle("-fx-font-weight: bold");
@@ -4666,7 +4696,12 @@ public class sfncFXMLController implements Initializable {
         );
 
         // step 8 controls
-        
+        creatureSLACasting.setToggleGroup(creatureSpellcastingType);
+        creatureSpellsCasting.setToggleGroup(creatureSpellcastingType);
+        creatureMysticSpells.setToggleGroup(creatureSpellcastingClass);    
+        creatureTechnomancerSpells.setToggleGroup(creatureSpellcastingClass);   
+        creatureAllSpells.setToggleGroup(creatureSpellcastingClass);
+
         // step 9 controls
         creatureGroundSpeed.textProperty().addListener(
         new ChangeListener<String>() {

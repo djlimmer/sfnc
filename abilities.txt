@@ -355,4 +355,7 @@ wireless hack|~n~|OTHER_ABILITIES|1
 words of destruction|~n~|OFFENSIVE_ABILITIES|1
 xill implantation|~n~|OFFENSIVE_ABILITIES|1
 zenith revelations (wormholes)|zenith revelations (wormholes [~a~, ~b~ rounds])|OFFENSIVE_ABILITIES|1
+it has a tank form|~n~|OFFENSIVE_ABILITIES|1
+tank shock!!!|~n~|OFFENSIVE_ABILITIES|1
+roar (with DC)|roar (DC ~dc~)|OFFENSIVE_ABILITIES|1
 EOF

@@ -244,8 +244,8 @@
                                     <Label fx:id="creatureAbilityChoicesAvailable" layoutX="123.0" layoutY="14.0" text="0" />
                                     <Label fx:id="creatureAbilityChoicesMade" layoutX="123.0" layoutY="33.0" text="0" />
                                     <ListView fx:id="creatureAbilitiesChosen" layoutX="3.0" layoutY="71.0" prefHeight="200.0" prefWidth="200.0" />
-                                    <Label layoutX="14.0" layoutY="434.0" style="-fx-font-weight: bold;" text="Current Chosen Abilities" />
-                                    <Label layoutX="14.0" layoutY="52.0" style="-fx-font-weight: bold;" text="Abilities to Choose" />
+                                    <Label layoutX="14.0" layoutY="434.0" style="-fx-font-weight: bold;" text="Abilities to Choose" />
+                                    <Label layoutX="14.0" layoutY="52.0" style="-fx-font-weight: bold;" text="Current Chosen Abilities" />
                                     <Label layoutX="14.0" layoutY="315.0" style="-fx-font-weight: bold;" text="Make Your Own Ability" />
                                     <Label layoutX="14.0" layoutY="334.0" prefHeight="25.0" text="Name:" />
                                     <Label layoutX="14.0" layoutY="364.0" prefHeight="25.0" text="Location:" />
@@ -435,7 +435,34 @@
                         </Tab>
                         <Tab fx:id="step8" disable="true" text="8. Spells">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <HBox layoutX="40.0" layoutY="24.0" spacing="5.0">
+                                       <children>
+                                          <RadioButton fx:id="creatureSLACasting" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefWidth="70.0" text="SLAs" />
+                                          <RadioButton fx:id="creatureSpellsCasting" layoutX="70.0" layoutY="14.0" mnemonicParsing="false" text="Spells" />
+                                       </children>
+                                    </HBox>
+                                    <Label layoutX="14.0" layoutY="6.0" style="-fx-font-weight: bold;" text="Spellcasting Type" />
+                                    <Label layoutX="14.0" layoutY="50.0" style="-fx-font-weight: bold;" text="Spell Classes" />
+                                    <VBox layoutX="36.0" layoutY="67.0" spacing="3.0">
+                                       <children>
+                                          <RadioButton fx:id="creatureMysticSpells" mnemonicParsing="false" text="Mystic" />
+                                          <RadioButton fx:id="creatureTechnomancerSpells" mnemonicParsing="false" text="Technomancer" />
+                                          <RadioButton fx:id="creatureAllSpells" mnemonicParsing="false" text="Both" />
+                                       </children>
+                                    </VBox>
+                                    <Label fx:id="creatureSpellTypeLabel" layoutX="14.0" layoutY="125.0" style="-fx-font-weight: bold;" text="SLAs" />
+                                    <Label fx:id="creatureHighSpellsLabel" layoutX="14.0" layoutY="140.0" text="1/day: 2 2nd-level spells" />
+                                    <ListView fx:id="creatureHighSpellsInput" layoutX="3.0" layoutY="155.0" prefHeight="75.0" prefWidth="200.0" />
+                                    <Label fx:id="creatureMidSpellsLabel" layoutX="14.0" layoutY="230.0" text="3/day: 3 1st-level spells" />
+                                    <ListView fx:id="creatureMidSpellsInput" layoutX="3.0" layoutY="245.0" prefHeight="75.0" prefWidth="200.0" />
+                                    <Label fx:id="creatureLowSpellsLabel" layoutX="14.0" layoutY="320.0" text="At will: 2 0-level spells" />
+                                    <ListView fx:id="creatureLowSpellsInput" layoutX="3.0" layoutY="335.0" prefHeight="75.0" prefWidth="200.0" />
+                                    <Button layoutX="46.0" layoutY="420.0" mnemonicParsing="false" onAction="#addSpellsAction" text="Add Seleted Spells" />
+                                    <Button layoutX="33.0" layoutY="450.0" mnemonicParsing="false" onAction="#removeChosenSpellsAction" text="Remove Selected Spells" />
+                                    <Button layoutX="48.0" layoutY="480.0" mnemonicParsing="false" onAction="#removeAllSpellsAction" text="Remove All Spells" />
+                                 </children></AnchorPane>
                           </content>
                         </Tab>
                         <Tab fx:id="step9" text="9. Final Check">
