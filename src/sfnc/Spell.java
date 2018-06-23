@@ -119,6 +119,8 @@ public class Spell {
 
     public static List<Spell> getSpellListByLevel(String type, Integer level) {
         List<Spell> spellList = new ArrayList<>();
+        if (level < 0)
+            return spellList;
         
         switch(type) {
             case "mystic": 

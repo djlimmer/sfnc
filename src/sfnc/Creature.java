@@ -338,7 +338,7 @@ public class Creature {
     }
     
     public Boolean isSpellcaster() {
-        if (array.equals("spellcaster"))
+        if (array.equals("Spellcaster"))
             return true;
         if (chosenAbilities == null)
             return false;
@@ -346,11 +346,11 @@ public class Creature {
     }
     
     public Boolean usesSLAs() {
-        return isSpellcaster() && usesSLAs();
+        return isSpellcaster() && usesSLAs;
     }
     
     public Boolean usesSpells() {
-        return isSpellcaster() && !usesSLAs();
+        return isSpellcaster() && !usesSLAs;
     }
     
     public String getSpellType() {
@@ -610,16 +610,28 @@ public class Creature {
     }
     
     public void addHighSpell(Spell s) {
+        for(Spell t : highSpells) {
+            if(s.getName().equals(t.getName()))
+                return;
+        }
         this.highSpells.add(new Spell(s));
         this.hasChanged = true;
     }
     
     public void addMidSpell(Spell s) {
+        for(Spell t : midSpells) {
+            if(s.getName().equals(t.getName()))
+                return;
+        }
         this.midSpells.add(new Spell(s));
         this.hasChanged = true;
     }
     
     public void addLowSpell(Spell s) {
+        for(Spell t : lowSpells) {
+            if(s.getName().equals(t.getName()))
+                return;
+        }
         this.lowSpells.add(new Spell(s));
         this.hasChanged = true;
     }

@@ -17,10 +17,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -83,6 +86,8 @@ public class sfncFXMLController implements Initializable {
     Boolean useClassAdjustments = false;
     Integer initiative = 0;
     Set<Ability> abilitySet;
+    Set<SpellWithUses> spellSet;
+    Integer highSpellLevel = -1;
     
     // where-to-save info
     File currentExportDirectory = new File(".");
@@ -922,8 +927,19 @@ public class sfncFXMLController implements Initializable {
     @FXML   private ListView<String> creatureMidSpellsInput = new ListView<>();
     @FXML   private Label creatureLowSpellsLabel = new Label();
     @FXML   private ListView<String> creatureLowSpellsInput = new ListView<>();
-    
-    @FXML   private void addSpellsAction() {
+
+    @FXML   private void addSpellsAction(ActionEvent actionEvent) {
+        creatureHighSpellsInput.getSelectionModel().getSelectedItems().stream().forEach((String i) -> {
+            creature.addHighSpell(Spell.getSpell(i));
+        });
+        creatureMidSpellsInput.getSelectionModel().getSelectedItems().stream().forEach((String i) -> {
+            creature.addMidSpell(Spell.getSpell(i));
+        });
+        if (creature.getCR().getCRValue() > 3)
+            creatureLowSpellsInput.getSelectionModel().getSelectedItems().stream().forEach((String i) -> {
+                creature.addLowSpell(Spell.getSpell(i));
+            });
+        
         updateStatBlock();
         updateWindowTitle();
     }
@@ -1002,6 +1018,8 @@ public class sfncFXMLController implements Initializable {
     private Label creatureReachDisplay = new Label();
     private Label creatureOffensiveAbilitiesLabel = new Label("Offensive Abilities ");
     private Label creatureOffensiveAbilitiesDisplay = new Label();
+    private Label creatureSLALabel = new Label("Spell-Like Abilities ");
+    private Label creatureSpellsLabel = new Label("Spells Known ");
     // spell-like abilities
     // spells known
     @FXML   private TextFlow creatureStatisticsBlock = new TextFlow();
@@ -1839,124 +1857,56 @@ public class sfncFXMLController implements Initializable {
                 case TWENTYONE:
                 case TWENTY:
                 case NINETEEN:
+                    highSpellLevel = 6;
                     creatureHighSpellsLabel.setText("3/day: 4 6th-level spells");
                     creatureMidSpellsLabel.setText("6/day: 3 5th-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 4th-level spells");
-                    highSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 6)) {
-                        highSpellList.add(s.getName());
-                    }
-                    midSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 5)) {
-                        midSpellList.add(s.getName());
-                    }
-                    lowSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 4)) {
-                        lowSpellList.add(s.getName());
-                    }
                     break;
                 case EIGHTEEN:
                 case SEVENTEEN:
                 case SIXTEEN:
+                    highSpellLevel = 6;
                     creatureHighSpellsLabel.setText("3/day: 2 6th-level spells");
                     creatureMidSpellsLabel.setText("6/day: 4 5th-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 4th-level spells");
-                    highSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 6))
-                        highSpellList.add(s.getName());
-                    midSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 5)) {
-                        midSpellList.add(s.getName());
-                    }
-                    lowSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 4)) {
-                        lowSpellList.add(s.getName());
-                    }
                     break;
                 case FIFTEEN:
                 case FOURTEEN:
                 case THIRTEEN:
+                    highSpellLevel = 5;
                     creatureHighSpellsLabel.setText("3/day: 2 5th-level spells");
                     creatureMidSpellsLabel.setText("6/day: 4 4th-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 3rd-level spells");
-                    highSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 5))
-                        highSpellList.add(s.getName());
-                    midSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 4)) {
-                        midSpellList.add(s.getName());
-                    }
-                    lowSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 3)) {
-                        lowSpellList.add(s.getName());
-                    }
                     break;
                 case TWELVE:
                 case ELEVEN:
                 case TEN:
+                    highSpellLevel = 4;
                     creatureHighSpellsLabel.setText("3/day: 2 4th-level spells");
                     creatureMidSpellsLabel.setText("6/day: 4 3rd-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 2nd-level spells");
-                    highSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 4))
-                        highSpellList.add(s.getName());
-                    midSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 3)) {
-                        midSpellList.add(s.getName());
-                    }
-                    lowSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 2)) {
-                        lowSpellList.add(s.getName());
-                    }
                     break;
                 case NINE:
                 case EIGHT:
                 case SEVEN:
+                    highSpellLevel = 3;
                     creatureHighSpellsLabel.setText("3/day: 2 3rd-level spells");
                     creatureMidSpellsLabel.setText("6/day: 4 2nd-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 1st-level spells");
-                    highSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 3))
-                        highSpellList.add(s.getName());
-                    midSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 2)) {
-                        midSpellList.add(s.getName());
-                    }
-                    lowSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 1)) {
-                        lowSpellList.add(s.getName());
-                    }
                     break;
                 case SIX:
                 case FIVE:
                 case FOUR:
+                    highSpellLevel = 2;
                     creatureHighSpellsLabel.setText("3/day: 2 2nd-level spells");
                     creatureMidSpellsLabel.setText("6/day: 3 1st-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 0-level spells");
-                    highSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 2))
-                        highSpellList.add(s.getName());
-                    midSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 1)) {
-                        midSpellList.add(s.getName());
-                    }
-                    lowSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 0)) {
-                        lowSpellList.add(s.getName());
-                    }
                     break;
                 default:
+                    highSpellLevel = 1;
                     creatureHighSpellsLabel.setText("3/day: 2 1st-level spells");
                     creatureMidSpellsLabel.setText("at will: 2 0-level spells");
                     creatureLowSpellsLabel.setText("");
-                    highSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 1))
-                        highSpellList.add(s.getName());
-                    midSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 0)) {
-                        midSpellList.add(s.getName());
-                    }
-                    lowSpellList.clear();
             }
         }
         else {
@@ -1969,125 +1919,68 @@ public class sfncFXMLController implements Initializable {
                 case TWENTYONE:
                 case TWENTY:
                 case NINETEEN:
+                    highSpellLevel = 6;
                     creatureHighSpellsLabel.setText("1/day: 4 6th-level spells");
                     creatureMidSpellsLabel.setText("3/day: 3 5th-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 4th-level spells");
-                    highSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 6))
-                        highSpellList.add(s.getName());
-                    midSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 5)) {
-                        midSpellList.add(s.getName());
-                    }
-                    lowSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 4)) {
-                        lowSpellList.add(s.getName());
-                    }
                     break;
                 case EIGHTEEN:
                 case SEVENTEEN:
                 case SIXTEEN:
+                    highSpellLevel = 6;
                     creatureHighSpellsLabel.setText("1/day: 2 6th-level spells");
                     creatureMidSpellsLabel.setText("3/day: 4 5th-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 4th-level spells");
-                    highSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 6))
-                        highSpellList.add(s.getName());
-                    midSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 5)) {
-                        midSpellList.add(s.getName());
-                    }
-                    lowSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 4)) {
-                        lowSpellList.add(s.getName());
-                    }
                     break;
                 case FIFTEEN:
                 case FOURTEEN:
                 case THIRTEEN:
+                    highSpellLevel = 5;
                     creatureHighSpellsLabel.setText("1/day: 2 5th-level spells");
                     creatureMidSpellsLabel.setText("3/day: 4 4th-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 3rd-level spells");
-                    highSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 5))
-                        highSpellList.add(s.getName());
-                    midSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 4)) {
-                        midSpellList.add(s.getName());
-                    }
-                    lowSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 3)) {
-                        lowSpellList.add(s.getName());
-                    }
                     break;
                 case TWELVE:
                 case ELEVEN:
                 case TEN:
+                    highSpellLevel = 4;
                     creatureHighSpellsLabel.setText("1/day: 2 4th-level spells");
                     creatureMidSpellsLabel.setText("3/day: 4 3rd-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 2nd-level spells");
-                    highSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 4))
-                        highSpellList.add(s.getName());
-                    midSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 3)) {
-                        midSpellList.add(s.getName());
-                    }
-                    lowSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 2)) {
-                        lowSpellList.add(s.getName());
-                    }
                     break;
                 case NINE:
                 case EIGHT:
                 case SEVEN:
+                    highSpellLevel = 3;
                     creatureHighSpellsLabel.setText("1/day: 2 3rd-level spells");
                     creatureMidSpellsLabel.setText("3/day: 4 2nd-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 1st-level spells");
-                    highSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 3))
-                        highSpellList.add(s.getName());
-                    midSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 2)) {
-                        midSpellList.add(s.getName());
-                    }
-                    lowSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 1)) {
-                        lowSpellList.add(s.getName());
-                    }
                     break;
                 case SIX:
                 case FIVE:
                 case FOUR:
+                    highSpellLevel = 2;
                     creatureHighSpellsLabel.setText("1/day: 2 2nd-level spells");
                     creatureMidSpellsLabel.setText("3/day: 3 1st-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 0-level spells");
-                    highSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 2))
-                        highSpellList.add(s.getName());
-                    midSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 1)) {
-                        midSpellList.add(s.getName());
-                    }
-                    lowSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 0)) {
-                        lowSpellList.add(s.getName());
-                    }
                     break;
                 default:
+                    highSpellLevel = 1;
                     creatureHighSpellsLabel.setText("1/day: 2 1st-level spells");
                     creatureMidSpellsLabel.setText("at will: 2 0-level spells");
                     creatureLowSpellsLabel.setText("");
-                    highSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 1))
-                        highSpellList.add(s.getName());
-                    midSpellList.clear();
-                    for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), 0)) {
-                        midSpellList.add(s.getName());
-                    }
-                    lowSpellList.clear();
             }
         }
+        highSpellList.clear();
+        for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), highSpellLevel))
+            highSpellList.add(s.getName());
+        midSpellList.clear();
+        for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), highSpellLevel-1))
+            midSpellList.add(s.getName());
+        lowSpellList.clear();
+        for (Spell s : Spell.getSpellListByLevel(creature.getSpellType(), highSpellLevel-2))
+            lowSpellList.add(s.getName());
+        
         Collections.sort(highSpellList);
         creatureHighSpellsInput.setItems(FXCollections.observableArrayList(highSpellList));
         Collections.sort(midSpellList);
@@ -2103,6 +1996,7 @@ public class sfncFXMLController implements Initializable {
             useTypeAdjustments = creature.useTypeAdjustments();
             array = new MainArray(mainArrays[chosenArray][creature.getCR().ordinal()]);
             abilitySet = new HashSet();
+            spellSet = new HashSet();
             switch(creature.getType()) {
                 case "Aberration":
                     addSenseToAbilitySet("darkvision",60);
@@ -2530,6 +2424,17 @@ public class sfncFXMLController implements Initializable {
             case CUSTOM: return creature.strength.getCustomValue();
             default: return 0;
         }
+    }
+
+    private String makeSpellStringByUses(Integer u) {
+        Set<String> spellSetByUses = new HashSet();
+        spellSet.stream().filter((s) -> (Objects.equals(s.getUses(), u))).forEach((s) -> {
+                spellSetByUses.add(s.makeDisplayString(array.baseSpellDC));
+        });
+        List<String> spellsByUses = new ArrayList(spellSetByUses);
+        java.util.Collections.sort(spellsByUses);
+        String spellString = String.join(", ", spellsByUses);
+        return spellString;
     }
     
     private String makeAbilityStringByLocation(Location l) {
@@ -3183,8 +3088,64 @@ public class sfncFXMLController implements Initializable {
             );
             addNewLine = true;
         }
-        // SLAs go here
-        // spells known goes here
+        
+        if (creature.usesSLAs()) {
+            for (Spell s : creature.getHighSpells()) {
+                spellSet.add(new SpellWithUses(s,1));
+            }
+            if (creature.getCR().getCRValue() <= 3) {
+                for (Spell s : creature.getMidSpells())
+                    spellSet.add(new SpellWithUses(s,0));
+            }
+            else {
+                for (Spell s : creature.getMidSpells())
+                    spellSet.add(new SpellWithUses(s,3));
+                for (Spell s : creature.getLowSpells())
+                    spellSet.add(new SpellWithUses(s,0));
+            }
+            if (addNewLine)
+                creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n"));
+            creatureOffensiveAbilitiesBlock.getChildren().addAll(
+                    creatureSLALabel, new Text("(CL "+Integer.toString(creature.getCR().getCRValue())+")")
+            );
+            Integer maxUses = 0;
+            String spellString = "";
+            for (SpellWithUses s : spellSet)
+                maxUses = Integer.max(maxUses, s.getUses());
+            for (int i = 1; i <= maxUses; i++) {
+                spellString = makeSpellStringByUses(i);
+                if (!"".equals(spellString))
+                    creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n"+i+"/day\u2013"+spellString));
+            }
+            spellString = makeSpellStringByUses(0);
+            if (!"".equals(spellString))
+                creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\nAt will\u2013"+spellString));
+            spellString = makeSpellStringByUses(-1);
+            if (!"".equals(spellString))
+                creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\nConstant\u2013"+spellString));
+            addNewLine = true;
+        }
+        if (creature.usesSpells()) {
+            for (Spell s : creature.getHighSpells()) {
+                spellSet.add(new SpellWithUses(s,3));
+            }
+            if (creature.getCR().getCRValue() <= 3) {
+                for (Spell s : creature.getMidSpells())
+                    spellSet.add(new SpellWithUses(s,0));
+            }
+            else {
+                for (Spell s : creature.getMidSpells())
+                    spellSet.add(new SpellWithUses(s,6));
+                for (Spell s : creature.getLowSpells())
+                    spellSet.add(new SpellWithUses(s,0));
+            }
+            if (addNewLine)
+                creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n"));
+            creatureOffensiveAbilitiesBlock.getChildren().addAll(
+                    creatureSpellsLabel, new Text("(CL "+Integer.toString(creature.getCR().getCRValue())+")")
+            );
+            addNewLine = true;            
+        }
 
         //update statistics block
         creatureStatisticsBlock.getChildren().clear();
@@ -3424,6 +3385,7 @@ public class sfncFXMLController implements Initializable {
                 useClassAdjustments = false;
                 initiative = 0;
                 abilitySet = new HashSet<>();
+                spellSet = new HashSet<>();
 
                 setControls();
                 updateStatBlock();
@@ -3511,6 +3473,8 @@ public class sfncFXMLController implements Initializable {
         creatureReachLabel.setStyle("-fx-font-weight: bold");
         creatureMeleeAttackLabel.setStyle("-fx-font-weight: bold");
         creatureRangedAttackLabel.setStyle("-fx-font-weight: bold");
+        creatureSLALabel.setStyle("-fx-font-weight: bold");
+        creatureSpellsLabel.setStyle("-fx-font-weight: bold");
         
         updateTabStatus();
 
