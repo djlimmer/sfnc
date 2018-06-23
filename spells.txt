@@ -47,8 +47,8 @@ Discharge|-|3|false|false|false
 Greater Discharge|-|6|false|false|false
 Disguise Self|1|1|false|false|false
 Disintegrate|-|6|true|true|false
-Dismissal|4|4|true|false|false
-Dismissal|5|5|true|false|false
+Dismissal 4|4|4|true|false|false
+Dismissal 5|5|5|true|false|false
 Dispel Magic|3|3|false|false|false
 Greater Dispel Magic|5|5|false|false|false
 Displacement|-|3|false|false|false
@@ -62,18 +62,18 @@ Erase|-|1|false|false|false
 Ethereal Jaunt|6|6|false|false|false
 Explosive Blast|-|3|true|false|false
 Fatigue|0|-|true|false|true
-Fear|1|-|true|false|false
-Fear|2|-|true|false|false
-Fear|3|-|true|false|false
-Fear|4|-|true|false|false
+Fear 1|1|-|true|false|false
+Fear 2|2|-|true|false|false
+Fear 3|3|-|true|false|false
+Fear 4|4|-|true|false|false
 Feeblemind|5|-|true|true|false
 Flesh to Stone|6|-|true|true|false
-Flight|-|1|false|false|false
-Flight|-|2|false|false|false
-Flight|-|3|false|false|false
-Flight|-|4|false|false|false
-Flight|-|5|false|false|false
-Flight|-|6|false|false|false
+Flight 1|-|1|false|false|false
+Flight 2|-|2|false|false|false
+Flight 3|-|3|false|false|false
+Flight 4|-|4|false|false|false
+Flight 5|-|5|false|false|false
+Flight 6|-|6|false|false|false
 Fog Cloud|2|2|false|false|false
 Force Blast|2|-|true|false|false
 Ghost Sound|0|0|true|false|false
@@ -88,12 +88,12 @@ Hold Monster|4|-|true|false|false
 Hold Person|2|-|true|false|false
 Hold Portal|-|1|false|false|false
 Hologram Memory|3|-|true|false|true
-Holographic Image|-|1|true|false|false
-Holographic Image|-|2|true|false|false
-Holographic Image|-|3|true|false|false
-Holographic Image|-|4|true|false|false
-Holographic Image|-|5|true|false|false
-Holographic Image|-|6|true|false|false
+Holographic Image 1|-|1|true|false|false
+Holographic Image 2|-|2|true|false|false
+Holographic Image 3|-|3|true|false|false
+Holographic Image 4|-|4|true|false|false
+Holographic Image 5|-|5|true|false|false
+Holographic Image 6|-|6|true|false|false
 Holographic Terrain|-|5|true|false|false
 Hurl Forcedisk|2|-|false|true|false
 Identify|1|1|false|false|false
@@ -118,32 +118,32 @@ Mending|-|0|false|false|false
 Microbot Assault|-|2|false|false|false
 Mind Link|1|-|false|false|false
 Mind Probe|4|-|true|false|false
-Mind Thrust|1|-|true|false|false
-Mind Thrust|2|-|true|false|false
-Mind Thrust|3|-|true|false|false
-Mind Thrust|4|-|true|false|false
-Mind Thrust|5|-|true|false|false
-Mind Thrust|6|-|true|false|false
+Mind Thrust 1|1|-|true|false|false
+Mind Thrust 2|2|-|true|false|false
+Mind Thrust 3|3|-|true|false|false
+Mind Thrust 4|4|-|true|false|false
+Mind Thrust 5|5|-|true|false|false
+Mind Thrust 6|6|-|true|false|false
 Miracle|7|-|false|false|false
 Mirror Image|-|2|false|false|false
 Mislead|-|6|true|false|false
 Modify Memory|5|-|true|false|false
-Mystic Cure|1|-|false|false|false
-Mystic Cure|2|-|false|false|false
-Mystic Cure|3|-|false|false|false
-Mystic Cure|4|-|false|false|false
-Mystic Cure|5|-|false|false|false
-Mystic Cure|6|-|false|false|false
-Mass Mystic Cure|5|-|false|false|false
-Mass Mystic Cure|5|-|false|false|false
+Mystic Cure 1|1|-|false|false|false
+Mystic Cure 2|2|-|false|false|false
+Mystic Cure 3|3|-|false|false|false
+Mystic Cure 4|4|-|false|false|false
+Mystic Cure 5|5|-|false|false|false
+Mystic Cure 6|6|-|false|false|false
+Mass Mystic Cure 5|5|-|false|false|false
+Mass Mystic Cure 6|6|-|false|false|false
 Nondetection|-|3|false|false|false
 Overheat|-|1|true|false|false
 Overload Systems|-|4|true|false|true
 Passwall|-|5|false|false|false
 Planar Barrier|6|6|false|false|false
-Planar Binding|4|4|true|false|false
-Planar Binding|5|5|true|false|false
-Planar Binding|6|6|true|false|false
+Planar Binding 4|4|4|true|false|false
+Planar Binding 5|5|5|true|false|false
+Planar Binding 6|6|6|true|false|false
 Plane Shift|6|6|true|false|true
 Private Sanctum|-|5|false|false|false
 Probability Prediction|-|3|false|false|false
@@ -217,12 +217,12 @@ Waves of Fatigue|5|-|false|false|false
 Wish|-|7|false|false|false
 Wisp Ally|1|-|false|false|false
 Zone of Truth|2|-|true|false|false
-Summon Creature|1|1|false|false|false
-Summon Creature|2|2|false|false|false
-Summon Creature|3|3|false|false|false
-Summon Creature|4|4|false|false|false
-Summon Creature|5|5|false|false|false
-Summon Creature|6|6|false|false|false
+Summon Creature 1|1|1|false|false|false
+Summon Creature 2|2|2|false|false|false
+Summon Creature 3|3|3|false|false|false
+Summon Creature 4|4|4|false|false|false
+Summon Creature 5|5|5|false|false|false
+Summon Creature 6|6|6|false|false|false
 Carnivorous|1|-|false|false|false
 Viral Destruction|3|-|true|false|false
 Control Atmosphere|4|-|true|false|false
@@ -233,12 +233,12 @@ Junk Armor|-|1|false|false|false
 Junksword|-|1|false|false|false
 Mental Block|3|3|true|false|false
 Might of the Ellicoth|1|-|false|false|false
-Necromantic Revitalization|1|1|false|false|false
-Necromantic Revitalization|2|2|false|false|false
-Necromantic Revitalization|3|3|false|false|false
-Necromantic Revitalization|4|4|false|false|false
-Necromantic Revitalization|5|5|false|false|false
-Necromantic Revitalization|6|6|false|false|false
+Necromantic Revitalization 1|1|1|false|false|false
+Necromantic Revitalization 2|2|2|false|false|false
+Necromantic Revitalization 3|3|3|false|false|false
+Necromantic Revitalization 4|4|4|false|false|false
+Necromantic Revitalization 5|5|5|false|false|false
+Necromantic Revitalization 6|6|6|false|false|false
 Reanimate|5|6|false|false|false
 Seeking Shot|1|-|false|false|false
 EOF

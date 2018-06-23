@@ -3153,8 +3153,16 @@ public class sfncFXMLController implements Initializable {
         if ((SLASet != null) && (!SLASet.isEmpty())) {
             if (addNewLine)
                 creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n"));
+            String SLAInfo = "(CL "+ordinal(creature.getCR().getCRValue());
+            // this always gives low attack bonus to melee spells and high attack bonus to ranged spells;
+            //    not all creatures follow this pattern
+            if (SpellWithUses.showMeleeAttackSWU(SLASet))
+                SLAInfo += ", melee "+bonusString(array.lowAttackBonus);
+            if (SpellWithUses.showRangedAttackSWU(SLASet))
+                SLAInfo += ", ranged "+bonusString(array.highAttackBonus);
+            SLAInfo += ")";
             creatureOffensiveAbilitiesBlock.getChildren().addAll(
-                    creatureSLALabel, new Text("(CL "+ordinal(creature.getCR().getCRValue())+")")
+                    creatureSLALabel, new Text(SLAInfo)
             );
             Integer maxUses = 0;
             String spellString = "";
@@ -3176,8 +3184,16 @@ public class sfncFXMLController implements Initializable {
         if ((spellSet != null) && (!spellSet.isEmpty())) {
             if (addNewLine)
                 creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n"));
+            String spellInfo = "(CL "+ordinal(creature.getCR().getCRValue());
+            // this always gives low attack bonus to melee spells and high attack bonus to ranged spells;
+            //    not all creatures follow this pattern
+            if (Spell.showMeleeAttack(spellSet))
+                spellInfo += ", melee "+bonusString(array.lowAttackBonus);
+            if (Spell.showRangedAttack(spellSet))
+                spellInfo += ", ranged "+bonusString(array.highAttackBonus);
+            spellInfo += ")";
             creatureOffensiveAbilitiesBlock.getChildren().addAll(
-                    creatureSpellsLabel, new Text("(CL "+ordinal(creature.getCR().getCRValue())+")")
+                    creatureSpellsLabel, new Text(spellInfo)
             );
             String spellString = makeSpellStringByLevel(highSpellLevel);
             if (!"".equals(spellString))

@@ -146,11 +146,11 @@ public class Spell {
         return spellList;
     }
     
-    public Boolean showRangedAttack(Collection<Spell> spells) {
+    public static Boolean showRangedAttack(Collection<Spell> spells) {
         return spells.stream().anyMatch((s) -> (s.showRangedAttack));
     }
     
-    public Boolean showMeleeAttack(Collection<Spell> spells) {
+    public static Boolean showMeleeAttack(Collection<Spell> spells) {
         return spells.stream().anyMatch((s) -> (s.showMeleeAttack));
     }
     

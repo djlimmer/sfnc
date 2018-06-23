@@ -5,6 +5,8 @@
  */
 package sfnc;
 
+import java.util.Collection;
+
 /**
  *
  * @author Doug
@@ -37,4 +39,12 @@ public class SpellWithUses extends Spell {
     public void setUses(Integer u) {
         this.uses = u;
     }    
+    
+    public static Boolean showRangedAttackSWU(Collection<SpellWithUses> spells) {
+        return spells.stream().anyMatch((s) -> (s.showRangedAttack));
+    }
+    
+    public static Boolean showMeleeAttackSWU(Collection<SpellWithUses> spells) {
+        return spells.stream().anyMatch((s) -> (s.showMeleeAttack));
+    }
 }
