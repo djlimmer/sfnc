@@ -112,7 +112,7 @@ public class Spell {
         
         // not sure this is the correct way to display spell DC
         if (showDC)
-            outputString += " (DC " + dc + ")";
+            outputString += " (DC " + (dc+Integer.max(mysticLevel,technomancerLevel)) + ")";
         
         return outputString;
     }

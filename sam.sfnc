@@ -13,7 +13,7 @@ fire
 
 
 2
-electrical discharge|OFFENSIVE_ABILITIES|~n~ (~krdmg~+~c~ E plus staggered, Reflex DC ~dc~ half)|1|0|0|0|0|0|ct:
+extra hit points|NONE|~n~|1|0|0|0|0|0|ct:
 breath weapon (line)|OFFENSIVE_ABILITIES|breath weapon (~bwrl~-ft. line, ~bwdmg~ ~t~, Reflex DC ~dc~, usable every 1d4 rounds)|1|0|0|0|0|0|ct:F
 NONE|0
 NONE|0
@@ -35,10 +35,10 @@ NONE|0
 NONE|0
 NONE|0
 NONE|0
-HIGH|0
-NONE|0
 MID|0
 LOW|0
+NONE|0
+HIGH|0
 NONE|0
 NONE|0
 30
@@ -49,18 +49,17 @@ NONE|0
 
 0
 1
-bite|true|1d4|9|false|true|false|false|false|false|false|false|ce:
+bite|true|1d4|7|false|true|false|false|false|false|false|false|ce:
 0
 true
 technomancer
 2
+Fog Cloud|2|2|false|false|false
 Daze Monster|2|2|true|false|false
-Command Undead|2|2|true|false|false
-4
-Identify|1|1|false|false|false
-Detect Tech|-1|1|false|false|false
+3
 Grease|-1|1|true|false|false
-Supercharge Weapon|-1|1|false|false|false
+Identify|1|1|false|false|false
+Overheat|-1|1|true|false|false
 2
 Token Spell|0|0|false|false|false
-Mending|-1|0|false|false|false
+Energy Ray|-1|0|false|true|false

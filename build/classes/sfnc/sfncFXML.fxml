@@ -454,14 +454,14 @@
                                     </VBox>
                                     <Label fx:id="creatureSpellTypeLabel" layoutX="14.0" layoutY="125.0" style="-fx-font-weight: bold;" text="SLAs" />
                                     <Label fx:id="creatureHighSpellsLabel" layoutX="14.0" layoutY="140.0" text="1/day: 2 2nd-level spells" />
-                                    <ListView fx:id="creatureHighSpellsInput" layoutX="3.0" layoutY="155.0" prefHeight="75.0" prefWidth="200.0" />
-                                    <Label fx:id="creatureMidSpellsLabel" layoutX="14.0" layoutY="230.0" text="3/day: 3 1st-level spells" />
-                                    <ListView fx:id="creatureMidSpellsInput" layoutX="3.0" layoutY="245.0" prefHeight="75.0" prefWidth="200.0" />
-                                    <Label fx:id="creatureLowSpellsLabel" layoutX="14.0" layoutY="320.0" text="At will: 2 0-level spells" />
-                                    <ListView fx:id="creatureLowSpellsInput" layoutX="3.0" layoutY="335.0" prefHeight="75.0" prefWidth="200.0" />
-                                    <Button layoutX="46.0" layoutY="420.0" mnemonicParsing="false" onAction="#addSpellsAction" text="Add Seleted Spells" />
-                                    <Button layoutX="33.0" layoutY="450.0" mnemonicParsing="false" onAction="#removeChosenSpellsAction" text="Remove Selected Spells" />
-                                    <Button layoutX="48.0" layoutY="480.0" mnemonicParsing="false" onAction="#removeAllSpellsAction" text="Remove All Spells" />
+                                    <ListView fx:id="creatureHighSpellsInput" layoutX="3.0" layoutY="155.0" prefHeight="135.0" prefWidth="200.0" />
+                                    <Label fx:id="creatureMidSpellsLabel" layoutX="14.0" layoutY="290.0" text="3/day: 3 1st-level spells" />
+                                    <ListView fx:id="creatureMidSpellsInput" layoutX="3.0" layoutY="305.0" prefHeight="135.0" prefWidth="200.0" />
+                                    <Label fx:id="creatureLowSpellsLabel" layoutX="14.0" layoutY="440.0" text="At will: 2 0-level spells" />
+                                    <ListView fx:id="creatureLowSpellsInput" layoutX="3.0" layoutY="455.0" prefHeight="135.0" prefWidth="200.0" />
+                                    <Button layoutX="46.0" layoutY="600.0" mnemonicParsing="false" onAction="#addSpellsAction" text="Add Seleted Spells" />
+                                    <Button layoutX="33.0" layoutY="630.0" mnemonicParsing="false" onAction="#removeChosenSpellsAction" text="Remove Selected Spells" />
+                                    <Button layoutX="48.0" layoutY="660.0" mnemonicParsing="false" onAction="#removeAllSpellsAction" text="Remove All Spells" />
                                  </children></AnchorPane>
                           </content>
                         </Tab>

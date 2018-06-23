@@ -940,17 +940,36 @@ public class sfncFXMLController implements Initializable {
             creatureLowSpellsInput.getSelectionModel().getSelectedItems().stream().forEach((String i) -> {
                 creature.addLowSpell(Spell.getSpell(i));
             });
-        
+        creatureHighSpellsInput.getSelectionModel().clearSelection();
+        creatureMidSpellsInput.getSelectionModel().clearSelection();
+        creatureLowSpellsInput.getSelectionModel().clearSelection();
         updateStatBlock();
         updateWindowTitle();
     }
     
     @FXML   private void removeChosenSpellsAction() {
+        creatureHighSpellsInput.getSelectionModel().getSelectedItems().stream().forEach((String i) -> {
+            creature.dropHighSpell(Spell.getSpell(i));
+        });
+        creatureMidSpellsInput.getSelectionModel().getSelectedItems().stream().forEach((String i) -> {
+            creature.dropMidSpell(Spell.getSpell(i));
+        });
+        if (creature.getCR().getCRValue() > 3)
+            creatureLowSpellsInput.getSelectionModel().getSelectedItems().stream().forEach((String i) -> {
+                creature.dropLowSpell(Spell.getSpell(i));
+            });
+        creatureHighSpellsInput.getSelectionModel().clearSelection();
+        creatureMidSpellsInput.getSelectionModel().clearSelection();
+        creatureLowSpellsInput.getSelectionModel().clearSelection();
         updateStatBlock();
         updateWindowTitle();
     }
     
     @FXML   private void removeAllSpellsAction() {
+        creature.dropAllSpells();
+        creatureHighSpellsInput.getSelectionModel().clearSelection();
+        creatureMidSpellsInput.getSelectionModel().clearSelection();
+        creatureLowSpellsInput.getSelectionModel().clearSelection();
         updateStatBlock();
         updateWindowTitle();
     }
@@ -3135,7 +3154,7 @@ public class sfncFXMLController implements Initializable {
             if (addNewLine)
                 creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n"));
             creatureOffensiveAbilitiesBlock.getChildren().addAll(
-                    creatureSLALabel, new Text("(CL "+Integer.toString(creature.getCR().getCRValue())+")")
+                    creatureSLALabel, new Text("(CL "+ordinal(creature.getCR().getCRValue())+")")
             );
             Integer maxUses = 0;
             String spellString = "";
@@ -3158,7 +3177,7 @@ public class sfncFXMLController implements Initializable {
             if (addNewLine)
                 creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n"));
             creatureOffensiveAbilitiesBlock.getChildren().addAll(
-                    creatureSpellsLabel, new Text("(CL "+Integer.toString(creature.getCR().getCRValue())+")")
+                    creatureSpellsLabel, new Text("(CL "+ordinal(creature.getCR().getCRValue())+")")
             );
             String spellString = makeSpellStringByLevel(highSpellLevel);
             if (!"".equals(spellString))

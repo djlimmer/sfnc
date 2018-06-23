@@ -637,23 +637,32 @@ public class Creature {
     }
     
     public void dropHighSpell(Spell s) {
-        highSpells.stream().filter((t) -> (t.name.equals(s.name))).forEach((t) -> {
-            this.highSpells.remove(t);
-        });
+        for (Spell i : highSpells) {
+            if (s.getName().equals(i.getName())) {
+                highSpells.remove(i);
+                break;
+            }
+        }
         this.hasChanged = true;
     }
     
     public void dropMidSpell(Spell s) {
-        midSpells.stream().filter((t) -> (t.name.equals(s.name))).forEach((t) -> {
-            this.midSpells.remove(t);
-        });
+        for (Spell i : midSpells) {
+            if (s.getName().equals(i.getName())) {
+                midSpells.remove(i);
+                break;
+            }
+        }
         this.hasChanged = true;
     }
     
     public void dropLowSpell(Spell s) {
-        lowSpells.stream().filter((t) -> (t.name.equals(s.name))).forEach((t) -> {
-            this.lowSpells.remove(t);
-        });
+        for (Spell i : lowSpells) {
+            if (s.getName().equals(i.getName())) {
+                lowSpells.remove(i);
+                break;
+            }
+        }
         this.hasChanged = true;
     }
     
