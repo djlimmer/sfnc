@@ -1,15 +1,15 @@
 sam                                                                     CR 4
-XP 1,200 (Combatant)
+XP 1,200 (Spellcaster)
 NE Medium Dragon (fire)
 Init +0; Senses darkvision 60 ft., low-light vision; Perception +10
-DEFENSE                                                           HP 50 RP 3
-EAC 16; KAC 18
-Fort +8; Ref +8; Will +5
+DEFENSE                                                           HP 43 RP 3
+EAC 15; KAC 16
+Fort +5; Ref +5; Will +9
 Immunities fire, paralysis, sleep; Weaknesses vulnerable to cold
 OFFENSE
 Speed 30 ft.
-Melee bite +13 (1d6+9 P)
-Offensive Abilities breath weapon (60-ft. line, 5d6 F, Reflex DC 13, usable every 1d4 rounds), electrical discharge (1d6+4 E plus staggered, Reflex DC 13 half)
+Melee bite +9 (1d4+9 P)
+Offensive Abilities breath weapon (60-ft. line, 5d6 F, Reflex DC 15, usable every 1d4 rounds), electrical discharge (1d4+4 E plus staggered, Reflex DC 15 half)
 STATISTICS
 Str +5; Dex +0; Con +3; Int +1; Wis +0; Cha +0
 

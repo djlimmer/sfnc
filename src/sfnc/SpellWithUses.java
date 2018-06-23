@@ -18,6 +18,9 @@ public class SpellWithUses extends Spell {
     }
     
     SpellWithUses(Spell s, Integer u) {
+        this();
+        if (s==null)
+            return;
         this.name = s.name;
         this.mysticLevel = s.mysticLevel;
         this.technomancerLevel = s.technomancerLevel;

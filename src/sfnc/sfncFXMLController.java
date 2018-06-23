@@ -86,7 +86,8 @@ public class sfncFXMLController implements Initializable {
     Boolean useClassAdjustments = false;
     Integer initiative = 0;
     Set<Ability> abilitySet;
-    Set<SpellWithUses> spellSet;
+    Set<SpellWithUses> SLASet;
+    Set<Spell> spellSet;
     Integer highSpellLevel = -1;
     
     // where-to-save info
@@ -1996,6 +1997,7 @@ public class sfncFXMLController implements Initializable {
             useTypeAdjustments = creature.useTypeAdjustments();
             array = new MainArray(mainArrays[chosenArray][creature.getCR().ordinal()]);
             abilitySet = new HashSet();
+            SLASet = new HashSet();
             spellSet = new HashSet();
             switch(creature.getType()) {
                 case "Aberration":
@@ -2373,6 +2375,36 @@ public class sfncFXMLController implements Initializable {
                 array.goodSkillBonus += 1;
                 array.masterSkillBonus += 1;
             }
+            // add spellcasting SLAs
+            if (creature.usesSLAs()) {
+                for (Spell s : creature.getHighSpells()) {
+                    SLASet.add(new SpellWithUses(s,1));
+                }
+                if (creature.getCR().getCRValue() <= 3) {
+                    for (Spell s : creature.getMidSpells())
+                        SLASet.add(new SpellWithUses(s,0));
+                }
+                else {
+                    for (Spell s : creature.getMidSpells())
+                        SLASet.add(new SpellWithUses(s,3));
+                    for (Spell s : creature.getLowSpells())
+                        SLASet.add(new SpellWithUses(s,0));
+                }
+            }
+            // add spellcasting spells
+            if (creature.usesSpells()) {
+                for (Spell s : creature.getHighSpells()) {
+                    spellSet.add(s);
+                }
+                for (Spell s : creature.getMidSpells()) {
+                    spellSet.add(s);
+                }
+                if (creature.getCR().getCRValue() > 3) {
+                    for (Spell s : creature.getLowSpells())
+                        spellSet.add(s);
+                }
+            }
+
             // set initiative
             switch(creature.dexterity.getAbilityModifierChoice()) {
                 case HIGH: initiative = array.abilityScoreModifier1; break;
@@ -2426,15 +2458,25 @@ public class sfncFXMLController implements Initializable {
         }
     }
 
-    private String makeSpellStringByUses(Integer u) {
-        Set<String> spellSetByUses = new HashSet();
-        spellSet.stream().filter((s) -> (Objects.equals(s.getUses(), u))).forEach((s) -> {
-                spellSetByUses.add(s.makeDisplayString(array.baseSpellDC));
-        });
-        List<String> spellsByUses = new ArrayList(spellSetByUses);
-        java.util.Collections.sort(spellsByUses);
-        String spellString = String.join(", ", spellsByUses);
+    private String makeSpellStringByLevel(Integer lv) {
+        Set<String> spellSetByLevel = new HashSet();
+        spellSet.stream().filter((s) -> Objects.equals(s.getMysticLevel(), lv) || Objects.equals(s.getTechnomancerLevel(), lv))
+                .forEach((s) -> spellSetByLevel.add(s.makeDisplayString(array.baseSpellDC)));
+        List<String> spellsByLevel = new ArrayList(spellSetByLevel);
+        java.util.Collections.sort(spellsByLevel);
+        String spellString = String.join(", ", spellsByLevel);
         return spellString;
+    }
+    
+    private String makeSLAStringByUses(Integer u) {
+        Set<String> SLASetByUses = new HashSet();
+        SLASet.stream().filter((s) -> (Objects.equals(s.getUses(), u))).forEach((s) -> {
+                SLASetByUses.add(s.makeDisplayString(array.baseSpellDC));
+        });
+        List<String> SLAsByUses = new ArrayList(SLASetByUses);
+        java.util.Collections.sort(SLAsByUses);
+        String SLAString = String.join(", ", SLAsByUses);
+        return SLAString;
     }
     
     private String makeAbilityStringByLocation(Location l) {
@@ -3089,20 +3131,7 @@ public class sfncFXMLController implements Initializable {
             addNewLine = true;
         }
         
-        if (creature.usesSLAs()) {
-            for (Spell s : creature.getHighSpells()) {
-                spellSet.add(new SpellWithUses(s,1));
-            }
-            if (creature.getCR().getCRValue() <= 3) {
-                for (Spell s : creature.getMidSpells())
-                    spellSet.add(new SpellWithUses(s,0));
-            }
-            else {
-                for (Spell s : creature.getMidSpells())
-                    spellSet.add(new SpellWithUses(s,3));
-                for (Spell s : creature.getLowSpells())
-                    spellSet.add(new SpellWithUses(s,0));
-            }
+        if ((SLASet != null) && (!SLASet.isEmpty())) {
             if (addNewLine)
                 creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n"));
             creatureOffensiveAbilitiesBlock.getChildren().addAll(
@@ -3110,40 +3139,36 @@ public class sfncFXMLController implements Initializable {
             );
             Integer maxUses = 0;
             String spellString = "";
-            for (SpellWithUses s : spellSet)
+            for (SpellWithUses s : SLASet)
                 maxUses = Integer.max(maxUses, s.getUses());
             for (int i = 1; i <= maxUses; i++) {
-                spellString = makeSpellStringByUses(i);
+                spellString = makeSLAStringByUses(i);
                 if (!"".equals(spellString))
-                    creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n"+i+"/day\u2013"+spellString));
+                    creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n    "+i+"/day\u2013"+spellString));
             }
-            spellString = makeSpellStringByUses(0);
+            spellString = makeSLAStringByUses(0);
             if (!"".equals(spellString))
-                creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\nAt will\u2013"+spellString));
-            spellString = makeSpellStringByUses(-1);
+                creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n    At will\u2013"+spellString));
+            spellString = makeSLAStringByUses(-1);
             if (!"".equals(spellString))
-                creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\nConstant\u2013"+spellString));
+                creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n    Constant\u2013"+spellString));
             addNewLine = true;
         }
-        if (creature.usesSpells()) {
-            for (Spell s : creature.getHighSpells()) {
-                spellSet.add(new SpellWithUses(s,3));
-            }
-            if (creature.getCR().getCRValue() <= 3) {
-                for (Spell s : creature.getMidSpells())
-                    spellSet.add(new SpellWithUses(s,0));
-            }
-            else {
-                for (Spell s : creature.getMidSpells())
-                    spellSet.add(new SpellWithUses(s,6));
-                for (Spell s : creature.getLowSpells())
-                    spellSet.add(new SpellWithUses(s,0));
-            }
+        if ((spellSet != null) && (!spellSet.isEmpty())) {
             if (addNewLine)
                 creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n"));
             creatureOffensiveAbilitiesBlock.getChildren().addAll(
                     creatureSpellsLabel, new Text("(CL "+Integer.toString(creature.getCR().getCRValue())+")")
             );
+            String spellString = makeSpellStringByLevel(highSpellLevel);
+            if (!"".equals(spellString))
+                creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n    "+ordinal(highSpellLevel)+" (3/day)\u2013"+spellString));
+            spellString = makeSpellStringByLevel(highSpellLevel-1);
+            if (!"".equals(spellString))
+                creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n    "+ordinal(highSpellLevel-1)+" (6/day)\u2013"+spellString));
+            spellString = makeSpellStringByLevel(highSpellLevel-2);
+            if (!"".equals(spellString))
+                creatureOffensiveAbilitiesBlock.getChildren().add(new Text("\n    "+ordinal(highSpellLevel-2)+" (at will)\u2013"+spellString));
             addNewLine = true;            
         }
 
@@ -3385,7 +3410,9 @@ public class sfncFXMLController implements Initializable {
                 useClassAdjustments = false;
                 initiative = 0;
                 abilitySet = new HashSet<>();
+                SLASet = new HashSet<>();
                 spellSet = new HashSet<>();
+                highSpellLevel = -1;
 
                 setControls();
                 updateStatBlock();
@@ -5282,5 +5309,20 @@ public class sfncFXMLController implements Initializable {
     private String bonusString(Integer n) {
         return ((n >= 0) ? "+" : "") + n.toString();
     }
-    
+
+    // code comes from Bohemian on Stack Overflow
+    public static String ordinal(int i) {
+        // modification to handle 0 the way the statblock handles it
+        if (i==0)
+            return "0";
+        String[] sufixes = new String[] { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th" };
+        switch (i % 100) {
+            case 11:
+            case 12:
+            case 13:
+                return i + "th";
+            default:
+                return i + sufixes[i % 10];
+        }
+    } 
 }

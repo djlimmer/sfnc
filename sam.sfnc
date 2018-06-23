@@ -53,6 +53,14 @@ bite|true|1d4|9|false|true|false|false|false|false|false|false|ce:
 0
 true
 technomancer
-0
-0
-0
+2
+Daze Monster|2|2|true|false|false
+Command Undead|2|2|true|false|false
+4
+Identify|1|1|false|false|false
+Detect Tech|-1|1|false|false|false
+Grease|-1|1|true|false|false
+Supercharge Weapon|-1|1|false|false|false
+2
+Token Spell|0|0|false|false|false
+Mending|-1|0|false|false|false
