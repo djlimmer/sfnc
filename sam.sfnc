@@ -13,7 +13,7 @@ fire
 
 
 2
-extra hit points|NONE|~n~|1|0|0|0|0|0|ct:
+summon allies|OTHER_ABILITIES|~n~ (~t~)|1|0|0|2|0|0|ct:mini-dragon 25%
 breath weapon (line)|OFFENSIVE_ABILITIES|breath weapon (~bwrl~-ft. line, ~bwdmg~ ~t~, Reflex DC ~dc~, usable every 1d4 rounds)|1|0|0|0|0|0|ct:F
 NONE|0
 NONE|0
@@ -51,15 +51,15 @@ NONE|0
 1
 bite|true|1d4|7|false|true|false|false|false|false|false|false|ce:
 0
-true
-technomancer
+false
+mystic
 2
-Fog Cloud|2|2|false|false|false
-Daze Monster|2|2|true|false|false
+augury|2|-1|false|false|false
+mind thrust 2|2|-1|true|false|false
 3
-Grease|-1|1|true|false|false
-Identify|1|1|false|false|false
-Overheat|-1|1|true|false|false
+summon creature 1|1|1|false|false|false
+carnivorous|1|-1|false|false|false
+charm person|1|-1|true|false|false
 2
-Token Spell|0|0|false|false|false
-Energy Ray|-1|0|false|true|false
+telekinetic projectile|0|-1|false|true|false
+daze|0|0|true|false|false

@@ -110,7 +110,9 @@ public class Spell {
     public String makeDisplayString(Integer dc) {
         String outputString = name;
         
-        // not sure this is the correct way to display spell DC
+        if (name.matches(".* \\d"))
+            outputString = outputString.substring(0, outputString.length()-2);
+            
         if (showDC)
             outputString += " (DC " + (dc+Integer.max(mysticLevel,technomancerLevel)) + ")";
         
@@ -155,6 +157,7 @@ public class Spell {
     }
     
     // this isn't sufficient; there are spells with the same name but different levels
+    // fixed by uniquifying spell names
     public static Spell getSpell(String n) {
         Optional<Spell> optionalSpell = setOfSpells.stream()
                 .filter((Spell a) -> a.name.equals(n))

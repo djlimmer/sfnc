@@ -1,244 +1,244 @@
 # name|mystic level|technomancer level|show DC|show ranged attack mod|show melee attack mod
-Animate Dead|4|4|false|false|false
-Arcane Eye|-|4|false|false|false
-Arcane Sight|-|3|false|false|false
-Arcing Surge|-|3|true|false|false
-Augury|2|-|false|false|false
-Battle Junkbot|-|6|false|false|false
-Bestow Curse|3|-|true|false|false
-Break Enchantment|5|5|false|false|false
-Call Cosmos|5|-|false|false|false
-Caustic Conversion|-|2|false|true|false
-Chain Surge|-|6|true|false|false
-Charm Monster|3|-|true|false|false
-Charm Person|1|-|true|false|false
-Clairaudience/Clairvoyance|3|3|false|false|false
-Command|1|-|true|false|false
-Greater Command|5|-|true|false|false
-Command Undead|2|2|true|false|false
-Commune with Nature|5|-|false|false|false
-Comprehend Languages|-|1|false|false|false
-Confusion|4|-|true|false|false
-Lesser Confusion|1|-|true|false|false
-Contact Other Plane|5|5|false|false|false
-Control Gravity|6|6|true|false|false
-Control Machines|-|5|true|false|false
-Control Undead|6|6|true|false|false
-Corrosive Haze|-|4|true|false|false
-Cosmic Eddy|4|-|true|false|false
-Creation|-|4|false|false|false
-Creation|-|5|false|false|false
-Crush Skull|5|-|true|true|false
-Dancing Lights|-|0|false|false|false
-Darkvision|2|2|false|false|false
-Daze|0|0|true|false|false
-Daze Monster|2|2|true|false|false
-Death Ward|4|-|false|false|false
-Deep Slumber|3|-|true|false|false
-Destruction Protocol|-|4|false|false|false
-Detect Affliction|0|0|false|false|false
-Detect Magic|0|0|false|false|false
-Detect Radiation|1|1|false|false|false
-Detect Tech|-|1|false|false|false
-Detect Thoughts|1|-|true|false|false
-Dimension Door|-|4|false|false|false
-Discern Lies|4|-|true|false|false
-Discharge|-|3|false|false|false
-Greater Discharge|-|6|false|false|false
-Disguise Self|1|1|false|false|false
-Disintegrate|-|6|true|true|false
-Dismissal 4|4|4|true|false|false
-Dismissal 5|5|5|true|false|false
-Dispel Magic|3|3|false|false|false
-Greater Dispel Magic|5|5|false|false|false
-Displacement|-|3|false|false|false
-Divination|4|-|false|false|false
-Dominate Person|5|-|true|true|false
-Energy Ray|-|0|false|true|false
-Enervation|4|-|false|true|false
-Enshrining Refuge|6|-|true|false|false
-Entropic Grasp|-|3|false|false|true
-Erase|-|1|false|false|false
-Ethereal Jaunt|6|6|false|false|false
-Explosive Blast|-|3|true|false|false
-Fatigue|0|-|true|false|true
-Fear 1|1|-|true|false|false
-Fear 2|2|-|true|false|false
-Fear 3|3|-|true|false|false
-Fear 4|4|-|true|false|false
-Feeblemind|5|-|true|true|false
-Flesh to Stone|6|-|true|true|false
-Flight 1|-|1|false|false|false
-Flight 2|-|2|false|false|false
-Flight 3|-|3|false|false|false
-Flight 4|-|4|false|false|false
-Flight 5|-|5|false|false|false
-Flight 6|-|6|false|false|false
-Fog Cloud|2|2|false|false|false
-Force Blast|2|-|true|false|false
-Ghost Sound|0|0|true|false|false
-Grave Words|0|-|false|false|false
-Gravitational Singularity|6|-|false|false|false
-Grease|-|1|true|false|false
-Handy Junkbot|-|3|false|false|false
-Haste|3|3|false|false|false
-Healing Junkbot|-|3|false|false|false
-Heat Leech|-|5|true|false|false
-Hold Monster|4|-|true|false|false
-Hold Person|2|-|true|false|false
-Hold Portal|-|1|false|false|false
-Hologram Memory|3|-|true|false|true
-Holographic Image 1|-|1|true|false|false
-Holographic Image 2|-|2|true|false|false
-Holographic Image 3|-|3|true|false|false
-Holographic Image 4|-|4|true|false|false
-Holographic Image 5|-|5|true|false|false
-Holographic Image 6|-|6|true|false|false
-Holographic Terrain|-|5|true|false|false
-Hurl Forcedisk|2|-|false|true|false
-Identify|1|1|false|false|false
-Implant Data|-|2|false|false|true
-Inflict Pain|2|-|true|false|false
-Mass Inflict Pain|6|-|true|false|false
-Inject Nanobots|-|2|true|false|true
-Instant Virus|-|3|ture|false|true
-Interplanetary Teleport|-|6|false|false|false
-Invisibility|-|2|false|false|false
-Greater Invisibility|-|4|false|false|false
-Mass Invisibility|-|6|false|false|false
-Irradiate|3|3|true|false|false
-Jolting Surge|-|1|false|false|true
-Keen Senses|1|1|false|false|false
-Knock|-|2|false|false|false
-Life Bubble|1|1|false|false|false
-Logic Bomb|-|2|true|false|false
-Magic Missile|-|1|false|false|false
-Make Whole|-|2|false|false|false
-Mending|-|0|false|false|false
-Microbot Assault|-|2|false|false|false
-Mind Link|1|-|false|false|false
-Mind Probe|4|-|true|false|false
-Mind Thrust 1|1|-|true|false|false
-Mind Thrust 2|2|-|true|false|false
-Mind Thrust 3|3|-|true|false|false
-Mind Thrust 4|4|-|true|false|false
-Mind Thrust 5|5|-|true|false|false
-Mind Thrust 6|6|-|true|false|false
-Miracle|7|-|false|false|false
-Mirror Image|-|2|false|false|false
-Mislead|-|6|true|false|false
-Modify Memory|5|-|true|false|false
-Mystic Cure 1|1|-|false|false|false
-Mystic Cure 2|2|-|false|false|false
-Mystic Cure 3|3|-|false|false|false
-Mystic Cure 4|4|-|false|false|false
-Mystic Cure 5|5|-|false|false|false
-Mystic Cure 6|6|-|false|false|false
-Mass Mystic Cure 5|5|-|false|false|false
-Mass Mystic Cure 6|6|-|false|false|false
-Nondetection|-|3|false|false|false
-Overheat|-|1|true|false|false
-Overload Systems|-|4|true|false|true
-Passwall|-|5|false|false|false
-Planar Barrier|6|6|false|false|false
-Planar Binding 4|4|4|true|false|false
-Planar Binding 5|5|5|true|false|false
-Planar Binding 6|6|6|true|false|false
-Plane Shift|6|6|true|false|true
-Private Sanctum|-|5|false|false|false
-Probability Prediction|-|3|false|false|false
-Prying Eyes|-|5|false|false|false
-Psychic Surgery|6|-|false|false|false
-Psychokinetic Hand|0|0|false|false|false
-Psychokinetic Strangulation|3|-|true|false|false
-Raise Dead|5|-|false|false|false
-Rapid Repair|-|5|false|false|false
-Ray of Exhaustion|3|-|true|true|false
-Recharge|-|2|false|false|false
-Reflecting Armor|1|-|false|false|false
-Regenerate|6|-|false|false|false
-Reincarnate|4|-|false|false|false
-Remove Affliction|3|-|false|false|false
-Remove Condition|2|-|false|false|false
-Greater Remove Condition|5|-|false|false|false
-Lesser Remove Condition|1|-|false|false|false
-Remove Radioactivity|4|4|false|false|false
-Resilient Sphere|-|4|true|false|false
-Resistant Aegis|5|5|false|false|false
-Resistant Armor|4|4|false|false|false
-Greater Resistant Armor|6|6|false|false|false
-Lesser Resistant Armor|3|3|false|false|false
-Restoration|4|-|false|false|false
-Lesser Restoration|2|-|false|false|false
-Retrocognition|5|-|false|false|false
-Rewire Flesh|-|4|true|false|false
-Mass Rewire Flesh|-|6|true|false|false
-Security Seal|-|2|false|false|false
-See Invisibility|2|2|false|false|false
-Shadow Walk|6|6|false|false|false
-Shadowy Fleet|-|6|true|false|false
-Share Language|1|-|false|false|false
-Shield Other|2|-|false|false|false
-Slow|3|3|true|false|false
-Snuff Life|6|-|true|false|false
-Soothing Protocol|-|4|false|false|true
-Speak with Dead|3|-|true|false|false
-Spider Climb|2|2|false|false|false
-Stabilize|0|-|false|false|false
-Status|2|-|false|false|false
-Subjective Reality|6|-|false|false|false
-Suggestion|3|-|true|false|false
-Mass Suggestion|6|-|true|false|false
-Supercharge Weapon|-|1|false|false|false
-Sympathetic Vibration|-|6|false|false|false
-Synapse Overload|-|5|true|false|true
-Synaptic Pulse|3|-|true|false|false
-Greater Synaptic Pulse|5|-|true|false|false
-Telekinesis|-|5|false|true|false
-Telekinetic Projectile|0|-|false|true|false
-Telepathic Bond|4|-|false|false|false
-Telepathic Jaunt|6|-|false|false|false
-Telepathic Message|0|0|false|false|false
-Telepathy|5|-|false|false|false
-Teleport|-|5|false|false|false
-Terraform|-|6|false|false|false
-Token Spell|0|0|false|false|false
-Tongues|3|3|false|false|false
-Transfer Charge|-|0|false|false|false
-True Seeing|6|6|false|false|false
-Unwilling Guardian|-|5|true|false|false
-Unseen Servant|-|1|false|false|false
-Veil|-|6|true|false|false
-Vision|6|-|false|false|false
-Wall of Fire|-|4|false|false|false
-Wall of Force|-|5|false|false|false
-Wall of Steel|-|6|false|false|false
-Waves of Fatigue|5|-|false|false|false
-Wish|-|7|false|false|false
-Wisp Ally|1|-|false|false|false
-Zone of Truth|2|-|true|false|false
-Summon Creature 1|1|1|false|false|false
-Summon Creature 2|2|2|false|false|false
-Summon Creature 3|3|3|false|false|false
-Summon Creature 4|4|4|false|false|false
-Summon Creature 5|5|5|false|false|false
-Summon Creature 6|6|6|false|false|false
-Carnivorous|1|-|false|false|false
-Viral Destruction|3|-|true|false|false
-Control Atmosphere|4|-|true|false|false
-Digital Doorway|-|4|false|false|false
-Directed Denial of Strength Attack|-|2|true|false|false
-Fabricate Scrap|-|0|false|false|false
-Junk Armor|-|1|false|false|false
-Junksword|-|1|false|false|false
-Mental Block|3|3|true|false|false
-Might of the Ellicoth|1|-|false|false|false
-Necromantic Revitalization 1|1|1|false|false|false
-Necromantic Revitalization 2|2|2|false|false|false
-Necromantic Revitalization 3|3|3|false|false|false
-Necromantic Revitalization 4|4|4|false|false|false
-Necromantic Revitalization 5|5|5|false|false|false
-Necromantic Revitalization 6|6|6|false|false|false
-Reanimate|5|6|false|false|false
-Seeking Shot|1|-|false|false|false
+animate dead|4|4|false|false|false
+arcane eye|-|4|false|false|false
+arcane sight|-|3|false|false|false
+arcing surge|-|3|true|false|false
+augury|2|-|false|false|false
+battle junkbot|-|6|false|false|false
+bestow curse|3|-|true|false|false
+break enchantment|5|5|false|false|false
+call cosmos|5|-|false|false|false
+caustic conversion|-|2|false|true|false
+chain surge|-|6|true|false|false
+charm monster|3|-|true|false|false
+charm person|1|-|true|false|false
+clairaudience/clairvoyance|3|3|false|false|false
+command|1|-|true|false|false
+greater command|5|-|true|false|false
+command undead|2|2|true|false|false
+commune with nature|5|-|false|false|false
+comprehend languages|-|1|false|false|false
+confusion|4|-|true|false|false
+lesser confusion|1|-|true|false|false
+contact other plane|5|5|false|false|false
+control gravity|6|6|true|false|false
+control machines|-|5|true|false|false
+control undead|6|6|true|false|false
+corrosive haze|-|4|true|false|false
+cosmic eddy|4|-|true|false|false
+creation|-|4|false|false|false
+creation|-|5|false|false|false
+crush skull|5|-|true|true|false
+dancing lights|-|0|false|false|false
+darkvision|2|2|false|false|false
+daze|0|0|true|false|false
+daze monster|2|2|true|false|false
+death ward|4|-|false|false|false
+deep slumber|3|-|true|false|false
+destruction protocol|-|4|false|false|false
+detect affliction|0|0|false|false|false
+detect magic|0|0|false|false|false
+detect radiation|1|1|false|false|false
+detect tech|-|1|false|false|false
+detect thoughts|1|-|true|false|false
+dimension door|-|4|false|false|false
+discern lies|4|-|true|false|false
+discharge|-|3|false|false|false
+greater discharge|-|6|false|false|false
+disguise self|1|1|false|false|false
+disintegrate|-|6|true|true|false
+dismissal 4|4|4|true|false|false
+dismissal 5|5|5|true|false|false
+dispel magic|3|3|false|false|false
+greater dispel magic|5|5|false|false|false
+displacement|-|3|false|false|false
+divination|4|-|false|false|false
+dominate person|5|-|true|true|false
+energy ray|-|0|false|true|false
+enervation|4|-|false|true|false
+enshrining refuge|6|-|true|false|false
+entropic grasp|-|3|false|false|true
+erase|-|1|false|false|false
+ethereal jaunt|6|6|false|false|false
+explosive blast|-|3|true|false|false
+fatigue|0|-|true|false|true
+fear 1|1|-|true|false|false
+fear 2|2|-|true|false|false
+fear 3|3|-|true|false|false
+fear 4|4|-|true|false|false
+feeblemind|5|-|true|true|false
+flesh to stone|6|-|true|true|false
+flight 1|-|1|false|false|false
+flight 2|-|2|false|false|false
+flight 3|-|3|false|false|false
+flight 4|-|4|false|false|false
+flight 5|-|5|false|false|false
+flight 6|-|6|false|false|false
+fog cloud|2|2|false|false|false
+force blast|2|-|true|false|false
+ghost sound|0|0|true|false|false
+grave words|0|-|false|false|false
+gravitational singularity|6|-|false|false|false
+grease|-|1|true|false|false
+handy junkbot|-|3|false|false|false
+haste|3|3|false|false|false
+healing junkbot|-|3|false|false|false
+heat leech|-|5|true|false|false
+hold monster|4|-|true|false|false
+hold person|2|-|true|false|false
+hold portal|-|1|false|false|false
+hologram memory|3|-|true|false|true
+holographic image 1|-|1|true|false|false
+holographic image 2|-|2|true|false|false
+holographic image 3|-|3|true|false|false
+holographic image 4|-|4|true|false|false
+holographic image 5|-|5|true|false|false
+holographic image 6|-|6|true|false|false
+holographic terrain|-|5|true|false|false
+hurl forcedisk|2|-|false|true|false
+identify|1|1|false|false|false
+implant data|-|2|false|false|true
+inflict pain|2|-|true|false|false
+mass inflict pain|6|-|true|false|false
+inject nanobots|-|2|true|false|true
+instant virus|-|3|ture|false|true
+interplanetary teleport|-|6|false|false|false
+invisibility|-|2|false|false|false
+greater invisibility|-|4|false|false|false
+mass invisibility|-|6|false|false|false
+irradiate|3|3|true|false|false
+jolting surge|-|1|false|false|true
+keen senses|1|1|false|false|false
+knock|-|2|false|false|false
+life bubble|1|1|false|false|false
+logic bomb|-|2|true|false|false
+magic missile|-|1|false|false|false
+make whole|-|2|false|false|false
+mending|-|0|false|false|false
+microbot assault|-|2|false|false|false
+mind link|1|-|false|false|false
+mind probe|4|-|true|false|false
+mind thrust 1|1|-|true|false|false
+mind thrust 2|2|-|true|false|false
+mind thrust 3|3|-|true|false|false
+mind thrust 4|4|-|true|false|false
+mind thrust 5|5|-|true|false|false
+mind thrust 6|6|-|true|false|false
+miracle|7|-|false|false|false
+mirror image|-|2|false|false|false
+mislead|-|6|true|false|false
+modify memory|5|-|true|false|false
+mystic cure 1|1|-|false|false|false
+mystic cure 2|2|-|false|false|false
+mystic cure 3|3|-|false|false|false
+mystic cure 4|4|-|false|false|false
+mystic cure 5|5|-|false|false|false
+mystic cure 6|6|-|false|false|false
+mass mystic cure 5|5|-|false|false|false
+mass mystic cure 6|6|-|false|false|false
+nondetection|-|3|false|false|false
+overheat|-|1|true|false|false
+overload systems|-|4|true|false|true
+passwall|-|5|false|false|false
+planar barrier|6|6|false|false|false
+planar binding 4|4|4|true|false|false
+planar binding 5|5|5|true|false|false
+planar binding 6|6|6|true|false|false
+plane shift|6|6|true|false|true
+private sanctum|-|5|false|false|false
+probability prediction|-|3|false|false|false
+prying eyes|-|5|false|false|false
+psychic surgery|6|-|false|false|false
+psychokinetic hand|0|0|false|false|false
+psychokinetic strangulation|3|-|true|false|false
+raise dead|5|-|false|false|false
+rapid repair|-|5|false|false|false
+ray of exhaustion|3|-|true|true|false
+recharge|-|2|false|false|false
+reflecting armor|1|-|false|false|false
+regenerate|6|-|false|false|false
+reincarnate|4|-|false|false|false
+remove affliction|3|-|false|false|false
+remove condition|2|-|false|false|false
+greater remove condition|5|-|false|false|false
+lesser remove condition|1|-|false|false|false
+remove radioactivity|4|4|false|false|false
+resilient sphere|-|4|true|false|false
+resistant aegis|5|5|false|false|false
+resistant armor|4|4|false|false|false
+greater resistant armor|6|6|false|false|false
+lesser resistant armor|3|3|false|false|false
+restoration|4|-|false|false|false
+lesser restoration|2|-|false|false|false
+retrocognition|5|-|false|false|false
+rewire flesh|-|4|true|false|false
+mass rewire flesh|-|6|true|false|false
+security seal|-|2|false|false|false
+see invisibility|2|2|false|false|false
+shadow walk|6|6|false|false|false
+shadowy fleet|-|6|true|false|false
+share language|1|-|false|false|false
+shield other|2|-|false|false|false
+slow|3|3|true|false|false
+snuff life|6|-|true|false|false
+soothing protocol|-|4|false|false|true
+speak with dead|3|-|true|false|false
+spider climb|2|2|false|false|false
+stabilize|0|-|false|false|false
+status|2|-|false|false|false
+subjective reality|6|-|false|false|false
+suggestion|3|-|true|false|false
+mass suggestion|6|-|true|false|false
+supercharge weapon|-|1|false|false|false
+sympathetic vibration|-|6|false|false|false
+synapse overload|-|5|true|false|true
+synaptic pulse|3|-|true|false|false
+greater synaptic pulse|5|-|true|false|false
+telekinesis|-|5|false|true|false
+telekinetic projectile|0|-|false|true|false
+telepathic bond|4|-|false|false|false
+telepathic jaunt|6|-|false|false|false
+telepathic message|0|0|false|false|false
+telepathy|5|-|false|false|false
+teleport|-|5|false|false|false
+terraform|-|6|false|false|false
+token spell|0|0|false|false|false
+tongues|3|3|false|false|false
+transfer charge|-|0|false|false|false
+true seeing|6|6|false|false|false
+unwilling guardian|-|5|true|false|false
+unseen servant|-|1|false|false|false
+veil|-|6|true|false|false
+vision|6|-|false|false|false
+wall of fire|-|4|false|false|false
+wall of force|-|5|false|false|false
+wall of steel|-|6|false|false|false
+waves of fatigue|5|-|false|false|false
+wish|-|7|false|false|false
+wisp ally|1|-|false|false|false
+zone of truth|2|-|true|false|false
+summon creature 1|1|1|false|false|false
+summon creature 2|2|2|false|false|false
+summon creature 3|3|3|false|false|false
+summon creature 4|4|4|false|false|false
+summon creature 5|5|5|false|false|false
+summon creature 6|6|6|false|false|false
+carnivorous|1|-|false|false|false
+viral destruction|3|-|true|false|false
+control atmosphere|4|-|true|false|false
+digital doorway|-|4|false|false|false
+directed denial of strength attack|-|2|true|false|false
+fabricate scrap|-|0|false|false|false
+junk armor|-|1|false|false|false
+junksword|-|1|false|false|false
+mental block|3|3|true|false|false
+might of the ellicoth|1|-|false|false|false
+necromantic revitalization 1|1|1|false|false|false
+necromantic revitalization 2|2|2|false|false|false
+necromantic revitalization 3|3|3|false|false|false
+necromantic revitalization 4|4|4|false|false|false
+necromantic revitalization 5|5|5|false|false|false
+necromantic revitalization 6|6|6|false|false|false
+reanimate|5|6|false|false|false
+seeking shot|1|-|false|false|false
 EOF

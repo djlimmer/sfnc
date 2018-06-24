@@ -17,13 +17,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -89,6 +87,7 @@ public class sfncFXMLController implements Initializable {
     Set<SpellWithUses> SLASet;
     Set<Spell> spellSet;
     Integer highSpellLevel = -1;
+    Boolean updateStatBlockOnHold = false;
     
     // where-to-save info
     File currentExportDirectory = new File(".");
@@ -715,7 +714,8 @@ public class sfncFXMLController implements Initializable {
                 "cache capacitor", "energy drain", "fast healing", "healing channel",
                 "heavy fire", "lifelink", "miracle worker", "peer into the future", "regeneration",
                 "sow doubt", "stellar revelations (blazing orbit)", "stellar revelations (black hole)",
-                "stellar revelations (stellar rush)", "stellar revelations (supernova)"
+                "stellar revelations (stellar rush)", "stellar revelations (supernova)",
+                "summon allies"
             };
             for (String t : amountAbilities)
                 if (s.equals(t)) {
@@ -1040,8 +1040,6 @@ public class sfncFXMLController implements Initializable {
     private Label creatureOffensiveAbilitiesDisplay = new Label();
     private Label creatureSLALabel = new Label("Spell-Like Abilities ");
     private Label creatureSpellsLabel = new Label("Spells Known ");
-    // spell-like abilities
-    // spells known
     @FXML   private TextFlow creatureStatisticsBlock = new TextFlow();
     @FXML   private Label creatureStrengthModifier = new Label("");
     @FXML   private Label creatureDexterityModifier = new Label("");
@@ -1049,7 +1047,6 @@ public class sfncFXMLController implements Initializable {
     @FXML   private Label creatureIntelligenceModifier = new Label("");
     @FXML   private Label creatureWisdomModifier = new Label("");
     @FXML   private Label creatureCharismaModifier = new Label("");
-    // feats
     private Label creatureSkillsLabel = new Label("Skills ");
     private Label creatureSkillsDisplay = new Label();
     private Label creatureFeatsLabel = new Label("Feats ");
@@ -1060,8 +1057,9 @@ public class sfncFXMLController implements Initializable {
     private Label creatureOtherAbilitiesDisplay = new Label();
     // gear and augmentations
 
-    
+
     public void setControls() {
+        updateStatBlockOnHold = true;
         // step 0
         creatureNameInput.setText(creature.getName());
         creatureCRInput.setValue(creature.getCRDisplayString());
@@ -1203,6 +1201,7 @@ public class sfncFXMLController implements Initializable {
         creatureFlyManeuverability.setText(creature.getFlyManeuverability());
         creatureSwimSpeed.setText(creature.getSwimSpeed().toString());
         updateTabStatus();
+        updateStatBlockOnHold = false;
     }
     
     private void updateTabStatus() {
@@ -1845,6 +1844,28 @@ public class sfncFXMLController implements Initializable {
         }
     }
     
+    private void addSummonAlliesToAbilitySet() {
+        // intended to put a box so the user can add the number of times per day
+        //   and the details of the summon, but it gets re-called all the time!
+        // look for a better way?
+        Ability a = Ability.getAbility("summon allies");
+        
+        /*Optional<String> result = amountDialog.showAndWait();
+        if (result.isPresent()) {
+            try {
+                a.setAmount(Integer.valueOf(result.get()));
+            }
+            catch(NumberFormatException e) {
+                // it's not a number; don't change anything
+            }
+        }
+        result = textDialog.showAndWait();
+        result.ifPresent(a::setCustomText);*/
+        // assume 1/day, leave text blank
+        a.setAmount(1);
+        abilitySet.add(a);
+    }
+    
     private void setSpellControls() {
         List<String> highSpellList = new ArrayList<>();
         List<String> midSpellList = new ArrayList<>();
@@ -2152,7 +2173,9 @@ public class sfncFXMLController implements Initializable {
                 addResistanceToAbilitySet("electricity",10);
                 addResistanceToAbilitySet("fire",10);
                 abilitySet.add(Ability.getAbility("extension of all"));
-                abilitySet.add(Ability.getAbility("telepathy 100 ft. (non-verbal)"));
+                Ability tempAbility = Ability.getAbility("telepathy (non-verbal)");
+                tempAbility.setRange(100);
+                abilitySet.add(tempAbility);
                 abilitySet.add(Ability.getAbility("bonus to recall knowledge"));
             }
             if (subtypes.contains("agathion")) {
@@ -2223,7 +2246,7 @@ public class sfncFXMLController implements Initializable {
                 addResistanceToAbilitySet("cold",10);
                 addResistanceToAbilitySet("electricity",10);
                 addResistanceToAbilitySet("fire",10);
-                abilitySet.add(Ability.getAbility("summon allies"));
+                addSummonAlliesToAbilitySet();
                 abilitySet.add(Ability.getAbility("telepathy"));
             }
             if (subtypes.contains("demon")) {
@@ -2232,7 +2255,7 @@ public class sfncFXMLController implements Initializable {
                 addResistanceToAbilitySet("acid",10);
                 addResistanceToAbilitySet("cold",10);
                 addResistanceToAbilitySet("fire",10);
-                abilitySet.add(Ability.getAbility("summon allies"));
+                addSummonAlliesToAbilitySet();
                 abilitySet.add(Ability.getAbility("telepathy"));
             }
             if (subtypes.contains("devil")) {
@@ -2241,7 +2264,7 @@ public class sfncFXMLController implements Initializable {
                 addImmunityToAbilitySet("poison");
                 addResistanceToAbilitySet("acid",10);
                 addResistanceToAbilitySet("cold",10);
-                abilitySet.add(Ability.getAbility("summon allies"));
+                addSummonAlliesToAbilitySet();
                 abilitySet.add(Ability.getAbility("telepathy"));
             }
             if (subtypes.contains("dwarf")) {
@@ -2423,6 +2446,16 @@ public class sfncFXMLController implements Initializable {
                         spellSet.add(s);
                 }
             }
+            // add SLAs from abilities
+            if (hasAbilityByID("summon allies")) {
+                for (Ability a : abilitySet) {
+                    if(a.getId().equals("summon allies")) {
+                        SLASet.add(new SpellWithUses(
+                                new Spell("summon allies ("+a.getCustomText()+")",1,1),
+                                a.getAmount()));
+                    }
+                }
+            }
 
             // set initiative
             switch(creature.dexterity.getAbilityModifierChoice()) {
@@ -2437,6 +2470,15 @@ public class sfncFXMLController implements Initializable {
         }
     }
 
+    public Boolean hasSpellByName(String name) {
+        Boolean hasIt = false;
+        if (SLASet != null)
+            hasIt = SLASet.stream().anyMatch(s -> s.getName().equals(name));
+        if ((!hasIt) && (spellSet != null))
+            hasIt = spellSet.stream().anyMatch(s -> s.getName().equals(name));
+        return hasIt;
+    }
+    
     public Boolean hasAbilityByID(String id) {
         if (abilitySet == null)
             return false;
@@ -2904,10 +2946,17 @@ public class sfncFXMLController implements Initializable {
                 if (hasAbilityByID(t)) {
                     return true;
                 }
+        for (String t : RPSpells)
+            if (hasSpellByName(t)) {
+                return true;
+            }
         return false;
     }
     
     public void updateStatBlock() {
+        if (updateStatBlockOnHold)
+            return;
+        
         Boolean addSemicolon = false;
         
         updateArray();
@@ -5348,6 +5397,8 @@ public class sfncFXMLController implements Initializable {
     // code comes from Bohemian on Stack Overflow
     public static String ordinal(int i) {
         // modification to handle 0 the way the statblock handles it
+        if (i<0)
+            return "";
         if (i==0)
             return "0";
         String[] sufixes = new String[] { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th" };

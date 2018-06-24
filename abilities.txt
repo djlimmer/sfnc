@@ -300,7 +300,7 @@ stellar revelations (supernova)|supernova [~r~-ft. radius, ~a~d6 F, DC ~dc~]|STE
 stonecunning|~n~|OTHER_ABILITIES|1
 strafing fire|~n~|OFFENSIVE_ABILITIES|1
 strangle|~n~|OFFENSIVE_ABILITIES|1
-summon allies|~n~ (~t~)|OTHER_ABILITIES|1
+summon allies|~n~ (~t~)|NONE|1
 susceptible to salt water|~n~|WEAKNESSES|0
 sunlight dependency|~n~|WEAKNESSES|0
 superior two-weapon fighting|~n~|OFFENSIVE_ABILITIES|1
