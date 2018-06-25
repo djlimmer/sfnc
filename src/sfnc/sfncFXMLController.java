@@ -127,8 +127,9 @@ public class sfncFXMLController implements Initializable {
             switch (creature.openCreature(file)) {
                 case 0:
                     chosenArray = Arrays.asList(arrayNames).indexOf(creature.getArray());
-                    setControls();
                     updateStatBlock();
+                    // setControls uses setAbilityControls, which uses array, which is set by updateStatBlock.
+                    setControls();
                     creature.clearChange();
                     break;
                 case 1: // invalid file format alert
@@ -1059,6 +1060,7 @@ public class sfncFXMLController implements Initializable {
 
 
     public void setControls() {
+
         updateStatBlockOnHold = true;
         // step 0
         creatureNameInput.setText(creature.getName());
@@ -1187,7 +1189,7 @@ public class sfncFXMLController implements Initializable {
         // step 4
         // step 5
         // step 6
-        setAbilityControls();
+       setAbilityControls();
         // step 7
         setSkillControls();
         // step 8
@@ -3353,6 +3355,7 @@ public class sfncFXMLController implements Initializable {
             addNewLine = true;
         }
         // gear and augmentations go here
+
     }
     
     public void updateAbilityModifiers() {
@@ -3498,8 +3501,9 @@ public class sfncFXMLController implements Initializable {
                 spellSet = new HashSet<>();
                 highSpellLevel = -1;
 
-                setControls();
                 updateStatBlock();
+                // setControls uses setAbilityControls, which uses array, which is set by updateStatBlock.
+                setControls();
                 currentSaveFile = null;
                 updateWindowTitle();
             }
