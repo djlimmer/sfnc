@@ -345,7 +345,6 @@ public class sfncFXMLController implements Initializable {
             spaceLine += "Space " + creature.size.getSpace()
                     + "; " + "Reach " + creature.getReach() + " ft.";
         }
-        addSemicolon = false;
         String offensiveAbilitiesLine = "";
         if (hasAbilitiesByLocation(Location.OFFENSIVE_ABILITIES)) {
             offensiveAbilitiesLine += "Offensive Abilities " + makeAbilityStringByLocation(Location.OFFENSIVE_ABILITIES);
@@ -623,6 +622,9 @@ public class sfncFXMLController implements Initializable {
             creature.dropSubtype(s);
         }
         creature.setChange();
+        setAbilityWarning();
+        setMovementWarning();
+        setSkillWarning();
         updateListOfSubtypes();
         updateStatBlock();
         updateWindowTitle();
@@ -633,6 +635,9 @@ public class sfncFXMLController implements Initializable {
         creature.getHumanoidSubtypes().addAll(creatureHumanoidSubtypesInput.getSelectionModel().getSelectedItems());
         creature.getOutsiderSubtypes().addAll(creatureOutsiderSubtypesInput.getSelectionModel().getSelectedItems());
         creature.setChange();
+        setAbilityWarning();
+        setMovementWarning();
+        setSkillWarning();
         updateListOfSubtypes();
         updateStatBlock();
         updateWindowTitle();
@@ -647,6 +652,7 @@ public class sfncFXMLController implements Initializable {
     
     // Step 6 controls
     @FXML   private Tab step6 = new Tab();
+    @FXML   private Label creatureAbilityWarning = new Label();
     @FXML   private Label creatureAbilityChoicesAvailable = new Label();
     @FXML   private Label creatureAbilityChoicesMade = new Label();
     @FXML   private ListView<String> creatureAbilitiesChosen = new ListView<String>();
@@ -788,6 +794,7 @@ public class sfncFXMLController implements Initializable {
 
     // Step 7 controls
     @FXML   private Tab step7 = new Tab();
+    @FXML   private Label creatureSkillWarning = new Label();
     @FXML   private Label creatureMasterSkillsAvailable = new Label();
     @FXML   private Label creatureMasterSkillsTaken = new Label();
     @FXML   private Label creatureGoodSkillsAvailable = new Label();
@@ -977,6 +984,7 @@ public class sfncFXMLController implements Initializable {
     
     // Step 9 controls
     @FXML   private Tab step9 = new Tab();
+    @FXML   private Label creatureMovementWarning = new Label();
     @FXML   private TextField creatureGroundSpeed = new TextField();
     @FXML   private TextField creatureBurrowSpeed = new TextField();
     @FXML   private TextField creatureClimbSpeed = new TextField();
@@ -1195,6 +1203,7 @@ public class sfncFXMLController implements Initializable {
         // step 8
         setSpellControls();
         // step 9
+        setMovementWarning();
         creatureGroundSpeed.setText(creature.getGroundSpeed().toString());
         creatureBurrowSpeed.setText(creature.getBurrowSpeed().toString());
         creatureClimbSpeed.setText(creature.getClimbSpeed().toString());
@@ -1249,19 +1258,106 @@ public class sfncFXMLController implements Initializable {
     }
     
     private void setSubtypeWarning() {
-                switch(creature.getType()) {
+        String warningString = "";
+
+        switch(creature.getType()) {
             case "Construct":
-                creatureSubtypeWarning.setText("Use 'magical' or 'technological'");
+                warningString = "Use 'magical' or 'technological'";
                 break;
             case "Humanoid":
-                creatureSubtypeWarning.setText("Must have a humanoid subtype");
+                warningString = "Must have a humanoid subtype";
                 break;
             case "Outsider":
-                creatureSubtypeWarning.setText("May need an outsider subtype");
+                warningString = "May need an outsider subtype";
                 break;
-            default:
-                creatureSubtypeWarning.setText("");
         }
+        
+        creatureSubtypeWarning.setText(warningString);
+    }
+
+    private void setAbilityWarning() {
+        String warningString = "";
+        List<String> subtypes = creature.getAllSubtypes();
+
+        if (subtypes.contains("android")) {
+            warningString += "darkvision 60 ft. low-light vision ";
+        }
+        if (subtypes.contains("aquatic")) {
+            warningString += "amphibious ";
+        }
+        if (subtypes.contains("dwarf")) {
+            warningString += "darkvision 60 ft. ";
+        }
+        if (subtypes.contains("earth")) {
+            warningString += "blindsense/blindsight (vibration) ";
+        }
+        if (subtypes.contains("elf")) {
+            warningString += "low-light vision ";
+        }
+        if (subtypes.contains("orc")) {
+            warningString += "darkvision 60 ft. ferocity ";
+        }
+        if (subtypes.contains("plantlike")) {
+            warningString += "plantlike ";
+        }
+        if (subtypes.contains("protean")) {
+            warningString += "blindsense ";
+        }
+
+        creatureAbilityWarning.setText(warningString);        
+    }
+    
+    private void setMovementWarning() {
+        String warningString = "";
+        List<String> subtypes = creature.getAllSubtypes();
+
+        if (subtypes.contains("air")) {
+            warningString += "fly (Su, perfect) ";
+        }
+        if (subtypes.contains("aquatic")) {
+            warningString += "swim ";
+        }
+        if (subtypes.contains("earth")) {
+            warningString += "burrow ";
+        }
+        if (subtypes.contains("ikeshti")) {
+            warningString += "climb ";
+        }
+        if (subtypes.contains("protean")) {
+            warningString += "fly (Su) ";
+        }
+        if (subtypes.contains("water")) {
+            warningString += "swim ";
+        }
+
+        creatureMovementWarning.setText(warningString);        
+    }
+    
+    private void setSkillWarning() {
+        String warningString = "";
+        List<String> subtypes = creature.getAllSubtypes();
+        
+        System.out.println("skill warning: " + subtypes);
+        if (hasAbilityByID("mindless")) {
+            warningString += "natural skills only";
+        }
+        if (subtypes.contains("air")) {
+            warningString += "Acrobatics G/M ";
+        }
+        if (subtypes.contains("aquatic")) {
+            warningString += "Athletics G/M  ";
+        }
+        if (subtypes.contains("elf")) {
+            warningString += "Perception M ";
+        }
+        if (subtypes.contains("giant")) {
+            warningString += "Intimidate, Perception M ";
+        }
+        if (subtypes.contains("water")) {
+            warningString += "Athletics G/M ";
+        }
+        
+        creatureSkillWarning.setText(warningString);        
     }
     
     private void setAbilityControls() {
@@ -1272,6 +1368,7 @@ public class sfncFXMLController implements Initializable {
             creatureAbilityChoicesMade.setText("0");
             return;
         }
+        setAbilityWarning();
         creatureAbilityChoicesAvailable.setText(Integer.toString(array.specialAbilities));
         Integer abilityCount = 0;
         abilityCount = creature.getChosenAbilities().stream().map((a) -> a.getCost()).reduce(abilityCount, Integer::sum);
@@ -3921,6 +4018,9 @@ public class sfncFXMLController implements Initializable {
                     updateWindowTitle();
                     updateTabStatus();
                     setSubtypeWarning();
+                    setAbilityWarning();
+                    setMovementWarning();
+                    setSkillWarning();
                 }
             }
         );
@@ -3982,6 +4082,10 @@ public class sfncFXMLController implements Initializable {
                         creature.setFreeformSubtypes(new ArrayList<>());
                     else
                         creature.setFreeformSubtypes(new ArrayList<>(Arrays.asList(newValue.split(","))));
+                    System.out.println("Setting warnings for subtype.");
+                    setAbilityWarning();
+                    setMovementWarning();
+                    setSkillWarning();
                     updateStatBlock();
                     updateWindowTitle();
                 }
