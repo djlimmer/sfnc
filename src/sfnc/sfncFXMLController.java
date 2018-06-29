@@ -132,7 +132,7 @@ public class sfncFXMLController implements Initializable {
                     chosenArray = Arrays.asList(arrayNames).indexOf(creature.getArray());
                     updateStatBlock();
                     // setControls uses setAbilityControls, which uses array, which is set by updateStatBlock.
-                    setControls();
+                    setAllControls();
                     creature.clearChange();
                     break;
                 case 1: // invalid file format alert
@@ -568,7 +568,6 @@ public class sfncFXMLController implements Initializable {
             creature.meleeAttacks.add(attack);
         }
         
-        creature.setChange();
         updateListOfAttacks();
         updateStatBlock();
         updateWindowTitle();
@@ -624,10 +623,6 @@ public class sfncFXMLController implements Initializable {
         for (String s : selectedItems) {
             creature.dropSubtype(s);
         }
-        creature.setChange();
-        setAbilityWarning();
-        setMovementWarning();
-        setSkillWarning();
         updateListOfSubtypes();
         updateStatBlock();
         updateWindowTitle();
@@ -638,9 +633,6 @@ public class sfncFXMLController implements Initializable {
         creature.getHumanoidSubtypes().addAll(creatureHumanoidSubtypesInput.getSelectionModel().getSelectedItems());
         creature.getOutsiderSubtypes().addAll(creatureOutsiderSubtypesInput.getSelectionModel().getSelectedItems());
         creature.setChange();
-        setAbilityWarning();
-        setMovementWarning();
-        setSkillWarning();
         updateListOfSubtypes();
         updateStatBlock();
         updateWindowTitle();
@@ -685,7 +677,7 @@ public class sfncFXMLController implements Initializable {
         for (String a : selectedItems) {
             creature.dropAbility(Ability.getAbility(a));
         }
-        setAbilityControls();
+        setTab6Controls();
         updateStatBlock();
         updateWindowTitle();
     }
@@ -780,7 +772,7 @@ public class sfncFXMLController implements Initializable {
 
             creature.addAbility(a);
         }
-        setAbilityControls();
+        setTab6Controls();
         updateStatBlock();
         updateWindowTitle();
     }
@@ -790,7 +782,7 @@ public class sfncFXMLController implements Initializable {
                 Location.values()[creatureCustomAbilityLocationInput.getSelectionModel().getSelectedIndex()]);
         creature.addAbility(a);
         Ability.setOfAbilities.add(a);
-        setAbilityControls();
+        setTab6Controls();
         updateStatBlock();
         updateWindowTitle();
     }
@@ -1326,6 +1318,7 @@ public class sfncFXMLController implements Initializable {
         updateCreatureOnHold = true;
         
         setSkillControls();
+        setSkillWarning();
 
         updateStatBlockOnHold = false;
         updateCreatureOnHold = false;
@@ -1372,153 +1365,7 @@ public class sfncFXMLController implements Initializable {
         updateCreatureOnHold = false;
     }
 
-    public void setControls() {
-
-/*        updateStatBlockOnHold = true;
-        updateCreatureOnHold = true;
-        
-        // step 0
-        creatureNameInput.setText(creature.getName());
-        creatureCRInput.setValue(creature.getCRDisplayString());
-        creatureAlignmentInput.setValue(creature.getAlignment());
-        creatureSizeInput.setValue(creature.getSize());
-        if (creature.hasLongReach())
-            reachOptionsGroup.selectToggle(creatureLongReach);
-        else
-            reachOptionsGroup.selectToggle(creatureTallReach);
-        // step 1
-        creatureArrayInput.setValue(creature.getArray());
-        String highStat = creature.getHighStat();
-        String midStat = creature.getMidStat();
-        String lowStat = creature.getLowStat();
-        AbilityModifier Str = new AbilityModifier(creature.strength);
-        AbilityModifier Dex = new AbilityModifier(creature.dexterity);
-        AbilityModifier Con = new AbilityModifier(creature.constitution);
-        AbilityModifier Int = new AbilityModifier(creature.intelligence);
-        AbilityModifier Wis = new AbilityModifier(creature.wisdom);
-        AbilityModifier Cha = new AbilityModifier(creature.charisma);
-        creatureStrengthCustomValue.setText(
-                (Str.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
-                        "" : Str.getCustomValue().toString());
-        creatureDexterityCustomValue.setText(
-                (Dex.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
-                        "" : Dex.getCustomValue().toString());
-        creatureConstitutionCustomValue.setText(
-                (Con.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
-                        "" : Con.getCustomValue().toString());
-        creatureIntelligenceCustomValue.setText(
-                (Int.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
-                        "" : Int.getCustomValue().toString());
-        creatureWisdomCustomValue.setText(
-                (Wis.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
-                        "" : Wis.getCustomValue().toString());
-        creatureCharismaCustomValue.setText(
-                (Cha.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
-                        "" : Cha.getCustomValue().toString());
-        switch(highStat) {
-            case "strength":
-                highStatGroup.selectToggle(creatureHighStrength);
-                break;
-            case "dexterity":
-                highStatGroup.selectToggle(creatureHighDexterity);
-                break;
-            case "constitution":
-                highStatGroup.selectToggle(creatureHighConstitution);
-                break;
-            case "intelligence":
-                highStatGroup.selectToggle(creatureHighIntelligence);
-                break;
-            case "wisdom":
-                highStatGroup.selectToggle(creatureHighWisdom);
-                break;
-            case "charisma":
-                highStatGroup.selectToggle(creatureHighCharisma);
-                break;
-            default:
-                highStatGroup.selectToggle(null);
-        }
-      switch(midStat) {
-            case "strength":
-                midStatGroup.selectToggle(creatureMidStrength);
-                break;
-            case "dexterity":
-                midStatGroup.selectToggle(creatureMidDexterity);
-                break;
-            case "constitution":
-                midStatGroup.selectToggle(creatureMidConstitution);
-                break;
-            case "intelligence":
-                midStatGroup.selectToggle(creatureMidIntelligence);
-                break;
-            case "wisdom":
-                midStatGroup.selectToggle(creatureMidWisdom);
-                break;
-            case "charisma":
-                midStatGroup.selectToggle(creatureMidCharisma);
-                break;
-            default:
-                midStatGroup.selectToggle(null);
-        }
-      switch(lowStat) {
-            case "strength":
-                lowStatGroup.selectToggle(creatureLowStrength);
-                break;
-            case "dexterity":
-                lowStatGroup.selectToggle(creatureLowDexterity);
-                break;
-            case "constitution":
-                lowStatGroup.selectToggle(creatureLowConstitution);
-                break;
-            case "intelligence":
-                lowStatGroup.selectToggle(creatureLowIntelligence);
-                break;
-            case "wisdom":
-                lowStatGroup.selectToggle(creatureLowWisdom);
-                break;
-            case "charisma":
-                lowStatGroup.selectToggle(creatureLowCharisma);
-                break;
-            default:
-                lowStatGroup.selectToggle(null);
-        }
-      updateListOfAttacks();
-      // step 2
-      creatureTypeInput.setValue(creature.getType());
-      creatureTypeAdjustmentUse.setSelected(creature.useTypeAdjustments());
-        switch (creature.getType()) {
-            case "Animal":
-                showAnimalTypeOptions();
-                break;
-            case "Humanoid":
-            case "Outsider":
-                showSaveBonusTypeOptions();
-                break;
-            default:
-                hideTypeOptions();
-                break;
-        }
-        // step 3
-        setSubtypeWarning();
-        creatureFreeformSubtypesInput.setText(String.join(",",creature.getFreeformSubtypes()));
-        updateListOfSubtypes();
-        // step 4
-        // step 5
-        // step 6
-       setAbilityControls();
-        // step 7
-        setSkillControls();
-        // step 8
-        setSpellControls();
-        // step 9
-        setMovementWarning();
-        creatureGroundSpeed.setText(creature.getGroundSpeed().toString());
-        creatureBurrowSpeed.setText(creature.getBurrowSpeed().toString());
-        creatureClimbSpeed.setText(creature.getClimbSpeed().toString());
-        creatureFlySpeed.setText(creature.getFlySpeed().toString());
-        creatureFlyType.setText(creature.getFlyType());
-        creatureFlyManeuverability.setText(creature.getFlyManeuverability());
-        creatureSwimSpeed.setText(creature.getSwimSpeed().toString());*/
-
+    public void setAllControls() {
         setTab0Controls();
         setTab1Controls();
         setTab2Controls();
@@ -1530,8 +1377,6 @@ public class sfncFXMLController implements Initializable {
         setTab8Controls();
         setTab9Controls();
         updateTabStatus();
-/*        updateStatBlockOnHold = false;
-        updateCreatureOnHold = false;*/
     }
     
     private void updateTabStatus() {
@@ -3918,8 +3763,8 @@ public class sfncFXMLController implements Initializable {
                 highSpellLevel = -1;
 
                 updateStatBlock();
-                // setControls uses setAbilityControls, which uses array, which is set by updateStatBlock.
-                setControls();
+                // setAllControls uses setAbilityControls, which uses array, which is set by updateStatBlock.
+                setAllControls();
                 currentSaveFile = null;
                 updateWindowTitle();
             }
@@ -4095,9 +3940,10 @@ public class sfncFXMLController implements Initializable {
                 @Override
                 public void changed(ObservableValue<? extends String> observable,
                         String oldValue, String newValue) {
-                    creature.setName(newValue);
+                    if (!updateCreatureOnHold) {
+                        creature.setName(newValue);
                     updateStatBlock();
-                    updateWindowTitle();
+                    updateWindowTitle();}
                 }
             }
         );
@@ -4113,12 +3959,13 @@ public class sfncFXMLController implements Initializable {
                 @Override
                 public void changed(ObservableValue observable,
                         Number oldValue, Number newValue) {
-                    creature.setCRFromComboBox(newValue.intValue());
+                    if (!updateCreatureOnHold) {
+                        creature.setCRFromComboBox(newValue.intValue());
                     updateStatBlock();
                     updateWindowTitle();
                     updateTabStatus();
                     setSpellControls();
-                }
+                }}
             }
         );
         
@@ -4133,10 +3980,11 @@ public class sfncFXMLController implements Initializable {
                 @Override
                 public void changed(ObservableValue observable,
                         Number oldValue, Number newValue) {
+                    if (!updateCreatureOnHold) {
                     creature.setAlignmentFromComboBox(newValue.intValue());
                     updateStatBlock();
                     updateWindowTitle();
-                }
+                }}
             }
         );
         
@@ -4151,10 +3999,11 @@ public class sfncFXMLController implements Initializable {
                 @Override
                 public void changed(ObservableValue observable,
                         Number oldValue, Number newValue) {
+                    if (!updateCreatureOnHold) {
                     creature.setSizeFromComboBox(newValue.intValue());
                     updateStatBlock();
                     updateWindowTitle();
-                }
+                }}
             }
         );
         
@@ -4165,11 +4014,12 @@ public class sfncFXMLController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Toggle> ov,
                     Toggle oldToggle, Toggle newToggle) {
+                    if (!updateCreatureOnHold) {
                 if (reachOptionsGroup.getSelectedToggle() != null)
                     creature.setLongReach(creatureLongReach.isSelected());
                 updateStatBlock();
                 updateWindowTitle();
-            }
+            }}
         });
 
         // step 1 controls
@@ -4181,15 +4031,13 @@ public class sfncFXMLController implements Initializable {
                 @Override
                 public void changed(ObservableValue observable,
                         Number oldValue, Number newValue) {
+                    if (!updateCreatureOnHold) {
                     creature.setArray(arrayNames[newValue.intValue()]);
                     chosenArray = newValue.intValue();
                     updateStatBlock();
                     updateWindowTitle();
-                    setAbilityControls();
-                    setSkillControls();
-                    setSpellControls();
                     updateTabStatus();
-                }
+                }}
             }
         );
         
@@ -4401,6 +4249,7 @@ public class sfncFXMLController implements Initializable {
                 @Override
                 public void changed(ObservableValue observable,
                         Number oldValue, Number newValue) {
+                    if (!updateCreatureOnHold) {
                     creature.setType(typeNames[newValue.intValue()]);
                     switch(creature.getType()) {
                         case "Animal": 
@@ -4416,11 +4265,7 @@ public class sfncFXMLController implements Initializable {
                     updateStatBlock();
                     updateWindowTitle();
                     updateTabStatus();
-                    setSubtypeWarning();
-                    setAbilityWarning();
-                    setMovementWarning();
-                    setSkillWarning();
-                }
+                }}
             }
         );
 
@@ -4429,11 +4274,12 @@ public class sfncFXMLController implements Initializable {
                 @Override
                 public void changed(ObservableValue observable,
                         Boolean oldValue, Boolean newValue) {
+                    if (!updateCreatureOnHold) {
                     useTypeAdjustments = newValue;
                     creature.setUseTypeAdjustments(newValue);
                     updateStatBlock();
                     updateWindowTitle();
-                }
+                }}
             }
         );
         creatureTypeAdjustmentUse.setSelected(true);
@@ -4446,6 +4292,7 @@ public class sfncFXMLController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Toggle> ov,
                     Toggle oldToggle, Toggle newToggle) {
+                    if (!updateCreatureOnHold) {
                 if (typeOptionsGroup.getSelectedToggle() != null) {
                     if (creatureTypeOption1.isSelected()) {
                         creature.setTypeOption(1);
@@ -4462,7 +4309,7 @@ public class sfncFXMLController implements Initializable {
                 }
                 updateStatBlock();
                 updateWindowTitle();
-            }
+            }}
         });
         
         // step 3 controls
@@ -4477,16 +4324,14 @@ public class sfncFXMLController implements Initializable {
                 @Override
                 public void changed(ObservableValue<? extends String> observable,
                         String oldValue, String newValue) {
+                                        if (!updateCreatureOnHold) {
                     if ("".equals(newValue))
                         creature.setFreeformSubtypes(new ArrayList<>());
                     else
                         creature.setFreeformSubtypes(new ArrayList<>(Arrays.asList(newValue.split(","))));
-                    setAbilityWarning();
-                    setMovementWarning();
-                    setSkillWarning();
                     updateStatBlock();
                     updateWindowTitle();
-                }
+                }}
             }
         );
         creatureSubtypesChosen.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -4523,6 +4368,7 @@ public class sfncFXMLController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Toggle> ov,
                     Toggle oldToggle, Toggle newToggle) {
+                    if (!updateCreatureOnHold) {
                 if (creatureAcrobaticsGroup.getSelectedToggle() != null) {
                     if (creatureAcrobaticsMaster.isSelected())
                         creature.acrobatics.setSkillChoice(SkillChoice.MASTER);
@@ -4539,13 +4385,14 @@ public class sfncFXMLController implements Initializable {
                 updateStatBlock();
                 updateWindowTitle();
                 setSkillControls();
-            }
+            }}
         });
         creatureAcrobaticsCustomValue.textProperty().addListener(
             new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observable,
                         String oldValue, String newValue) {
+                    if (!updateCreatureOnHold) {
                     if ("".equals(newValue)) {
                         creature.acrobatics.setCustomValue(0);
                         updateStatBlock();
@@ -4562,7 +4409,7 @@ public class sfncFXMLController implements Initializable {
                         // it's not a number; don't change anything.
                         return;
                     }
-                }
+                }}
             }
         );
 
@@ -4576,6 +4423,7 @@ public class sfncFXMLController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Toggle> ov,
                     Toggle oldToggle, Toggle newToggle) {
+                    if (!updateCreatureOnHold) {
                 if (creatureAthleticsGroup.getSelectedToggle() != null) {
                     if (creatureAthleticsMaster.isSelected())
                         creature.athletics.setSkillChoice(SkillChoice.MASTER);
@@ -4592,13 +4440,14 @@ public class sfncFXMLController implements Initializable {
                 updateStatBlock();
                 updateWindowTitle();
                 setSkillControls();
-            }
+            }}
         });
         creatureAthleticsCustomValue.textProperty().addListener(
             new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observable,
                         String oldValue, String newValue) {
+                    if (!updateCreatureOnHold) {
                     if ("".equals(newValue)) {
                         creature.athletics.setCustomValue(0);
                         updateStatBlock();
@@ -4615,7 +4464,7 @@ public class sfncFXMLController implements Initializable {
                         // it's not a number; don't change anything.
                         return;
                     }
-                }
+                }}
             }
         );
         
@@ -5583,16 +5432,18 @@ public class sfncFXMLController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Toggle> ov,
                     Toggle oldToggle, Toggle newToggle) {
+                if (!updateCreatureOnHold) {
                 creature.setUsesSLAs(!creatureSpellsCasting.isSelected());
                 updateStatBlock();
                 updateWindowTitle();
                 setSpellControls();
-            }
+            }}
         });
         creatureSpellcastingType.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
             @Override
             public void changed(ObservableValue<? extends Toggle> ov,
                     Toggle oldToggle, Toggle newToggle) {
+                    if (!updateCreatureOnHold) {
                 if (creatureSpellcastingType.getSelectedToggle() != null) {
                     if (creatureMysticSpells.isSelected())
                         creature.setSpellType("mystic");
@@ -5606,7 +5457,7 @@ public class sfncFXMLController implements Initializable {
                 updateStatBlock();
                 updateWindowTitle();
                 setSpellControls();
-            }
+            }}
         });
 
         // step 9 controls
@@ -5615,6 +5466,7 @@ public class sfncFXMLController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                     String oldValue, String newValue) {
+                    if (!updateCreatureOnHold) {
                     if ("".equals(newValue)) {
                         creature.setGroundSpeed(0);
                         updateStatBlock();
@@ -5629,14 +5481,15 @@ public class sfncFXMLController implements Initializable {
                         // it's not a number; don't change anything.
                         return;
                     }   
-            }
+            }}
         });
 
         creatureGroundSpeed.textProperty().addListener(
         new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable,
-                    String oldValue, String newValue) {
+                    String oldValue, String newValue) {                    
+                if (!updateCreatureOnHold) {
                     if ("".equals(newValue)) {
                         creature.setGroundSpeed(0);
                         updateStatBlock();
@@ -5651,7 +5504,7 @@ public class sfncFXMLController implements Initializable {
                         // it's not a number; don't change anything.
                         return;
                     }   
-            }
+            }}
         });
 
         creatureBurrowSpeed.textProperty().addListener(
@@ -5659,6 +5512,7 @@ public class sfncFXMLController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                     String oldValue, String newValue) {
+                    if (!updateCreatureOnHold) {
                     if ("".equals(newValue)) {
                         creature.setBurrowSpeed(0);
                         updateStatBlock();
@@ -5673,7 +5527,7 @@ public class sfncFXMLController implements Initializable {
                         // it's not a number; don't change anything.
                         return;
                     }   
-            }
+            }}
         });
 
         creatureClimbSpeed.textProperty().addListener(
@@ -5681,6 +5535,7 @@ public class sfncFXMLController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                     String oldValue, String newValue) {
+                    if (!updateCreatureOnHold) {
                     if ("".equals(newValue)) {
                         creature.setClimbSpeed(0);
                         updateStatBlock();
@@ -5695,7 +5550,7 @@ public class sfncFXMLController implements Initializable {
                         // it's not a number; don't change anything.
                         return;
                     }   
-            }
+            }}
         });
 
         creatureFlySpeed.textProperty().addListener(
@@ -5703,6 +5558,7 @@ public class sfncFXMLController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                     String oldValue, String newValue) {
+                    if (!updateCreatureOnHold) {
                     if ("".equals(newValue)) {
                         creature.setFlySpeed(0);
                         updateStatBlock();
@@ -5717,7 +5573,7 @@ public class sfncFXMLController implements Initializable {
                         // it's not a number; don't change anything.
                         return;
                     }   
-            }
+            }}
         });
 
         creatureSwimSpeed.textProperty().addListener(
@@ -5725,6 +5581,7 @@ public class sfncFXMLController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                     String oldValue, String newValue) {
+                    if (!updateCreatureOnHold) {
                     if ("".equals(newValue)) {
                         creature.setSwimSpeed(0);
                         updateStatBlock();
@@ -5739,27 +5596,29 @@ public class sfncFXMLController implements Initializable {
                         // it's not a number; don't change anything.
                         return;
                     }   
-            }
+            }}
         });
 
         creatureFlyType.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                     String oldValue, String newValue) {
+                    if (!updateCreatureOnHold) {
                 creature.setFlyType(newValue);
                 updateStatBlock();
                 updateWindowTitle();
-            }
+            }}
         });
 
         creatureFlyManeuverability.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                     String oldValue, String newValue) {
+                    if (!updateCreatureOnHold) {
                 creature.setFlyManeuverability(newValue);
                 updateStatBlock();
                 updateWindowTitle();
-            }
+            }}
         });
 
         

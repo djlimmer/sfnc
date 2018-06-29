@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -94,11 +95,11 @@ public class Creature {
         this.useTypeAdjustments = true;
         this.typeOption = 0;
         this.hasChanged = true;
-        this.generalSubtypes = new HashSet<String>();
-        this.humanoidSubtypes = new HashSet<String>();
-        this.outsiderSubtypes = new HashSet<String>();
-        this.freeformSubtypes = new HashSet<String>();
-        this.chosenAbilities = new HashSet<Ability>();
+        this.generalSubtypes = new HashSet<>();
+        this.humanoidSubtypes = new HashSet<>();
+        this.outsiderSubtypes = new HashSet<>();
+        this.freeformSubtypes = new HashSet<>();
+        this.chosenAbilities = new HashSet<>();
         this.acrobatics = new Skill();
         this.athletics = new Skill();
         this.bluff = new Skill();
@@ -384,96 +385,126 @@ public class Creature {
     }
     
     public void setName(String n) {
+        if (this.name.equals(n))
+            return;
         this.name = n;
         this.hasChanged = true;
     }
     
     public void setCR(ChallengeRating c) {
+        if (this.CR.equals(c))
+            return;
         this.CR = c;
         this.hasChanged = true;
     }
     
     public void setCRFromComboBox(Integer i) {
         // check for legal bounds here
+        // check to see if it really changed here
         this.CR = ChallengeRating.values()[i];
         this.hasChanged = true;
     }
 
     public void setAlignment(Alignment a) {
+        if (this.alignment.equals(a))
+            return;
         this.alignment = a;
         this.hasChanged = true;
     }
     
     public void setAlignmentFromComboBox(Integer i) {
         // check for legal bounds here
+        // check to see if it really changed here
         this.alignment = Alignment.values()[i];
         this.hasChanged = true;
     }
     
     public void setSize(Size s) {
+        if (this.size.equals(s))
+            return;
         this.size = s;
         this.hasChanged = true;
     }
     
     public void setSizeFromComboBox(Integer i) {
         // check for legal bounds here
+        // check to see if it really changed here
         this.size = Size.values()[i];
         this.hasChanged = true;
     }
     
     public void setLongReach(Boolean r) {
+        if (this.longReach.equals(r))
+            return;
         this.longReach = r;
         this.hasChanged = true;
     }
     
     void setArray(String a) {
+        if (this.array.equals(a))
+            return;
         this.array = a;
         this.hasChanged = true;
     }
 
     void setType(String t) {
+        if (this.type.equals(t))
+            return;
         this.type = t;
         this.hasChanged = true;
     }
     
     public void setUseTypeAdjustments(Boolean u) {
+        if (this.useTypeAdjustments.equals(u))
+            return;
         this.useTypeAdjustments = u;
         this.hasChanged = true;
     }
     
     public void setTypeOption(Integer i) {
-        if ((i == 0) || (i > 3))
+        if ((i == 0) || (i > 3)) {
+            if (typeOption == 0)
+                return;
             typeOption = 0;
-        else
+        }
+        else {
+            if (typeOption == i)
+                return;
             typeOption = i;
+        }
         this.hasChanged = true;
     }
     
     public void setGeneralSubtypes(List<String> s) {
+        // no good way to compare if nothing has changed?
         this.generalSubtypes = new HashSet<>();
         this.generalSubtypes.addAll(s);
         this.hasChanged = true;
     }
     
     public void setHumanoidSubtypes(List<String> s) {
+        // no good way to compare if nothing has changed?
         this.humanoidSubtypes = new HashSet<>();
         this.humanoidSubtypes.addAll(s);
         this.hasChanged = true;
     }
     
     public void setOutsiderSubtypes(List<String> s) {
+        // no good way to compare if nothing has changed?
         this.outsiderSubtypes = new HashSet<>();
         this.outsiderSubtypes.addAll(s);
         this.hasChanged = true;
     }
     
     public void setFreeformSubtypes(List<String> s) {
+        // no good way to compare if nothing has changed?
         this.freeformSubtypes = new HashSet<>();
         this.freeformSubtypes.addAll(s);
         this.hasChanged = true;
     }
     
     public void setChosenAbilities(List<String> a) {
+        // no good way to compare if nothing has changed?
         this.chosenAbilities = new HashSet<>();
         a.stream().forEach((String s) -> {
             if (Ability.getAbility(s)!=null)
@@ -499,11 +530,13 @@ public class Creature {
                 chosenAbilities.remove(i);
                 break;
             }
+            return;
         }
         this.hasChanged = true;
     }
     
     public void dropSubtype(String s) {
+        // check to see if it actually has the subtype
         generalSubtypes.remove(s);
         humanoidSubtypes.remove(s);
         outsiderSubtypes.remove(s);
@@ -511,76 +544,107 @@ public class Creature {
     }
     
     public void setStrength(AbilityModifier a) {
+        if (this.strength.equals(a))
+            return;
         this.strength = new AbilityModifier(a);
         this.hasChanged = true;
     }
     
     public void setDexterity(AbilityModifier a) {
+        if (this.dexterity.equals(a))
+            return;
         this.dexterity = new AbilityModifier(a);
         this.hasChanged = true;
     }
     
     public void setConstitution(AbilityModifier a) {
+                if (this.constitution.equals(a))
+            return;
+
         this.constitution = new AbilityModifier(a);
         this.hasChanged = true;
     }
     
     public void setIntelligence(AbilityModifier a) {
+        if (this.intelligence.equals(a))
+            return;
         this.intelligence = new AbilityModifier(a);
         this.hasChanged = true;
     }
     
     public void setWisdom(AbilityModifier a) {
+        if (this.wisdom.equals(a))
+            return;
         this.wisdom = new AbilityModifier(a);
         this.hasChanged = true;
     }
     
     public void setCharisma(AbilityModifier a) {
+        if (this.charisma.equals(a))
+            return;
         this.charisma = new AbilityModifier(a);
         this.hasChanged = true;
     }
     
     public void setGroundSpeed(Integer s) {
+        if (this.groundSpeed.equals(s))
+            return;
         this.groundSpeed = s;
         this.hasChanged = true;
     }
     
     public void setBurrowSpeed(Integer s) {
+        if (this.burrowSpeed.equals(s))
+            return;
         this.burrowSpeed = s;
         this.hasChanged = true;
     }
     
     public void setClimbSpeed(Integer s) {
+        if (this.climbSpeed.equals(s))
+            return;
         this.climbSpeed = s;
         this.hasChanged = true;
     }
     
     public void setFlySpeed(Integer s) {
+        if (this.flySpeed.equals(s))
+            return;
         this.flySpeed = s;
         this.hasChanged = true;
     }
     
     public void setSwimSpeed(Integer s) {
+        if (this.swimSpeed.equals(s))
+            return;
         this.swimSpeed = s;
         this.hasChanged = true;
     }
     
     public void setFlyType(String s) {
+        if (this.flyType.equals(s))
+            return;
         this.flyType = s;
         this.hasChanged = true;
     }
     
     public void setFlyManeuverability(String s) {
+        if (this.flyManeuverability.equals(s))
+            return;
         this.flyManeuverability = s;
         this.hasChanged = true;
     }
     
     public void setUsesSLAs(Boolean b) {
+        if (this.usesSLAs.equals(b))
+            return;
         this.usesSLAs = b;
         this.hasChanged = true;
     }
     
     public void setSpellType(String s) {
+        if (this.spellType.equals(s))
+            return;
         this.spellType = s;
         this.hasChanged = true;
     }
@@ -642,6 +706,7 @@ public class Creature {
                 highSpells.remove(i);
                 break;
             }
+            return;
         }
         this.hasChanged = true;
     }
@@ -652,6 +717,7 @@ public class Creature {
                 midSpells.remove(i);
                 break;
             }
+            return;
         }
         this.hasChanged = true;
     }
@@ -662,6 +728,7 @@ public class Creature {
                 lowSpells.remove(i);
                 break;
             }
+            return;
         }
         this.hasChanged = true;
     }
