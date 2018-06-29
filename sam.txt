@@ -2,14 +2,16 @@ sam                                                                     CR 4
 XP 1,200 (Spellcaster)
 NE Medium Dragon (fire)
 Init +1; Senses darkvision 60 ft., low-light vision; Perception +10
-DEFENSE                                                                HP 51
+Aura frightful presence (60 ft., DC 15)
+DEFENSE                                                                HP 43
 EAC 15; KAC 16
 Fort +5; Ref +5; Will +9
 Immunities fire, paralysis, sleep; Weaknesses vulnerable to cold
 OFFENSE
-Speed 30 ft.
+Speed 30 ft.; fly 60 ft. (Ex, average)
 Melee bite +9 (1d4+7 P)
 Offensive Abilities breath weapon (60-ft. line, 5d6 F, Reflex DC 15, usable every 1d4 rounds)
 STATISTICS
 Str +3; Dex +1; Con +0; Int +5; Wis +0; Cha +0
-
+Skills Acrobatics +15, Intimidate +15, Mysticism +10
+Other Abilities summon allies (mini-dragon 25%)

@@ -29,6 +29,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -88,6 +90,7 @@ public class sfncFXMLController implements Initializable {
     Set<Spell> spellSet;
     Integer highSpellLevel = -1;
     Boolean updateStatBlockOnHold = false;
+    Boolean updateCreatureOnHold = false;
     
     // where-to-save info
     File currentExportDirectory = new File(".");
@@ -1066,10 +1069,314 @@ public class sfncFXMLController implements Initializable {
     private Label creatureOtherAbilitiesDisplay = new Label();
     // gear and augmentations
 
+    /**
+     * This method sets the Tab 0 controls (name, CR, alignment, size)
+     * to the current creature's settings.
+     * The creature and the stat block shouldn't be changed.
+     * @return nothing
+     * 
+     */
+    @FXML private void setTab0Controls() {
+        updateStatBlockOnHold = true;
+        updateCreatureOnHold = true;
+        
+        creatureNameInput.setText(creature.getName());
+        creatureCRInput.setValue(creature.getCRDisplayString());
+        creatureAlignmentInput.setValue(creature.getAlignment());
+        creatureSizeInput.setValue(creature.getSize());
+        if (creature.hasLongReach())
+            reachOptionsGroup.selectToggle(creatureLongReach);
+        else
+            reachOptionsGroup.selectToggle(creatureTallReach);
+        
+        updateStatBlockOnHold = false;
+        updateCreatureOnHold = false;
+    }
+    
+    /**
+     * This method sets the Tab 1 controls (array, ability mods, attacks) 
+     * to the current creature's settings.
+     * The creature and the stat block shouldn't be changed.
+     * @return nothing
+     * 
+     */
+    @FXML private void setTab1Controls() {
+        updateStatBlockOnHold = true;
+        updateCreatureOnHold = true;
+        
+        creatureArrayInput.setValue(creature.getArray());
+        String highStat = creature.getHighStat();
+        String midStat = creature.getMidStat();
+        String lowStat = creature.getLowStat();
+        // The below shouldn't be necessary, but updateCreatureOnHold isn't yet implemented
+        AbilityModifier Str = new AbilityModifier(creature.strength);
+        AbilityModifier Dex = new AbilityModifier(creature.dexterity);
+        AbilityModifier Con = new AbilityModifier(creature.constitution);
+        AbilityModifier Int = new AbilityModifier(creature.intelligence);
+        AbilityModifier Wis = new AbilityModifier(creature.wisdom);
+        AbilityModifier Cha = new AbilityModifier(creature.charisma);
+        creatureStrengthCustomValue.setText(
+                (Str.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
+                        "" : Str.getCustomValue().toString());
+        creatureDexterityCustomValue.setText(
+                (Dex.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
+                        "" : Dex.getCustomValue().toString());
+        creatureConstitutionCustomValue.setText(
+                (Con.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
+                        "" : Con.getCustomValue().toString());
+        creatureIntelligenceCustomValue.setText(
+                (Int.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
+                        "" : Int.getCustomValue().toString());
+        creatureWisdomCustomValue.setText(
+                (Wis.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
+                        "" : Wis.getCustomValue().toString());
+        creatureCharismaCustomValue.setText(
+                (Cha.getAbilityModifierChoice() != AbilityModifierChoice.CUSTOM) ? 
+                        "" : Cha.getCustomValue().toString());
+        highStatGroup.selectToggle(null);
+        switch(highStat) {
+            case "strength":
+                highStatGroup.selectToggle(creatureHighStrength);
+                break;
+            case "dexterity":
+                highStatGroup.selectToggle(creatureHighDexterity);
+                break;
+            case "constitution":
+                highStatGroup.selectToggle(creatureHighConstitution);
+                break;
+            case "intelligence":
+                highStatGroup.selectToggle(creatureHighIntelligence);
+                break;
+            case "wisdom":
+                highStatGroup.selectToggle(creatureHighWisdom);
+                break;
+            case "charisma":
+                highStatGroup.selectToggle(creatureHighCharisma);
+        }
+        midStatGroup.selectToggle(null);
+      switch(midStat) {
+            case "strength":
+                midStatGroup.selectToggle(creatureMidStrength);
+                break;
+            case "dexterity":
+                midStatGroup.selectToggle(creatureMidDexterity);
+                break;
+            case "constitution":
+                midStatGroup.selectToggle(creatureMidConstitution);
+                break;
+            case "intelligence":
+                midStatGroup.selectToggle(creatureMidIntelligence);
+                break;
+            case "wisdom":
+                midStatGroup.selectToggle(creatureMidWisdom);
+                break;
+            case "charisma":
+                midStatGroup.selectToggle(creatureMidCharisma);
+        }
+      lowStatGroup.selectToggle(null);
+      switch(lowStat) {
+            case "strength":
+                lowStatGroup.selectToggle(creatureLowStrength);
+                break;
+            case "dexterity":
+                lowStatGroup.selectToggle(creatureLowDexterity);
+                break;
+            case "constitution":
+                lowStatGroup.selectToggle(creatureLowConstitution);
+                break;
+            case "intelligence":
+                lowStatGroup.selectToggle(creatureLowIntelligence);
+                break;
+            case "wisdom":
+                lowStatGroup.selectToggle(creatureLowWisdom);
+                break;
+            case "charisma":
+                lowStatGroup.selectToggle(creatureLowCharisma);
+                break;
+        }
+      
+      creatureAttackName.setText("");
+      attackModifierGroup.selectToggle(null);
+      creatureBludgeoningDamage.setSelected(false);
+      creaturePiercingDamage.setSelected(false);
+      creatureSlashingDamage.setSelected(false);
+      creatureAcidDamage.setSelected(false);
+      creatureColdDamage.setSelected(false);
+      creatureElectricityDamage.setSelected(false);
+      creatureFireDamage.setSelected(false);
+      creatureSonicDamage.setSelected(false);
+      creatureCritEffect.setText("");
+      attackTypeGroup.selectToggle(null);
+      
+      updateListOfAttacks();
+
+      updateStatBlockOnHold = false;
+      updateCreatureOnHold = false;
+    }
+
+    /**
+     * This method sets the Tab 2 controls (type, type options) 
+     * to the current creature's settings.
+     * The creature and the stat block shouldn't be changed.
+     * @return nothing
+     * 
+     */
+    @FXML private void setTab2Controls() {
+        updateStatBlockOnHold = true;
+        updateCreatureOnHold = true;
+        
+        creatureTypeInput.setValue(creature.getType());
+        creatureTypeAdjustmentUse.setSelected(creature.useTypeAdjustments());
+        switch (creature.getType()) {
+            case "Animal":
+                showAnimalTypeOptions();
+                break;
+            case "Humanoid":
+            case "Outsider":
+                showSaveBonusTypeOptions();
+                break;
+            default:
+                hideTypeOptions();
+                break;
+        }
+
+      updateStatBlockOnHold = false;
+      updateCreatureOnHold = false;
+    }
+
+    /**
+     * This method sets the Tab 3 controls (all the subtypes) 
+     * to the current creature's settings.
+     * The creature and the stat block shouldn't be changed.
+     * @return nothing
+     * 
+     */
+    @FXML private void setTab3Controls() {
+        updateStatBlockOnHold = true;
+        updateCreatureOnHold = true;
+        
+        setSubtypeWarning();
+        creatureFreeformSubtypesInput.setText(String.join(",",creature.getFreeformSubtypes()));
+        updateListOfSubtypes();
+
+        updateStatBlockOnHold = false;
+        updateCreatureOnHold = false;
+    }
+
+    /**
+     * This method sets the Tab 4 controls (nothing yet) 
+     * to the current creature's settings.
+     * The creature and the stat block shouldn't be changed.
+     * @return nothing
+     * 
+     */
+    @FXML private void setTab4Controls() {
+        updateStatBlockOnHold = true;
+        updateCreatureOnHold = true;
+        
+        // set controls here
+
+      updateStatBlockOnHold = false;
+      updateCreatureOnHold = false;
+    }
+
+    /**
+     * This method sets the Tab 5 controls (nothing yet) 
+     * to the current creature's settings.
+     * The creature and the stat block shouldn't be changed.
+     * @return nothing
+     * 
+     */
+    @FXML private void setTab5Controls() {
+        updateStatBlockOnHold = true;
+        updateCreatureOnHold = true;
+        
+        // set controls here
+
+      updateStatBlockOnHold = false;
+      updateCreatureOnHold = false;
+    }
+
+    /**
+     * This method sets the Tab 6 controls (special abilities) 
+     * to the current creature's settings.
+     * The creature and the stat block shouldn't be changed.
+     * @return nothing
+     * 
+     */
+    @FXML private void setTab6Controls() {
+        updateStatBlockOnHold = true;
+        updateCreatureOnHold = true;
+        
+        setAbilityControls();
+
+        updateStatBlockOnHold = false;
+        updateCreatureOnHold = false;
+    }
+
+    /**
+     * This method sets the Tab 7 controls (skills) 
+     * to the current creature's settings.
+     * The creature and the stat block shouldn't be changed.
+     * @return nothing
+     * 
+     */
+    @FXML private void setTab7Controls() {
+        updateStatBlockOnHold = true;
+        updateCreatureOnHold = true;
+        
+        setSkillControls();
+
+        updateStatBlockOnHold = false;
+        updateCreatureOnHold = false;
+    }
+
+    /**
+     * This method sets the Tab 8 controls (spells) 
+     * to the current creature's settings.
+     * The creature and the stat block shouldn't be changed.
+     * @return nothing
+     * 
+     */
+    @FXML private void setTab8Controls() {
+        updateStatBlockOnHold = true;
+        updateCreatureOnHold = true;
+        
+        setSpellControls();
+        
+        updateStatBlockOnHold = false;
+        updateCreatureOnHold = false;
+    }
+
+    /**
+     * This method sets the Tab 9 controls (movement) 
+     * to the current creature's settings.
+     * The creature and the stat block shouldn't be changed.
+     * @return nothing
+     * 
+     */
+    @FXML private void setTab9Controls() {
+        updateStatBlockOnHold = true;
+        updateCreatureOnHold = true;
+        
+        setMovementWarning();
+        creatureGroundSpeed.setText(creature.getGroundSpeed().toString());
+        creatureBurrowSpeed.setText(creature.getBurrowSpeed().toString());
+        creatureClimbSpeed.setText(creature.getClimbSpeed().toString());
+        creatureFlySpeed.setText(creature.getFlySpeed().toString());
+        creatureFlyType.setText(creature.getFlyType());
+        creatureFlyManeuverability.setText(creature.getFlyManeuverability());
+        creatureSwimSpeed.setText(creature.getSwimSpeed().toString());
+
+        updateStatBlockOnHold = false;
+        updateCreatureOnHold = false;
+    }
 
     public void setControls() {
 
-        updateStatBlockOnHold = true;
+/*        updateStatBlockOnHold = true;
+        updateCreatureOnHold = true;
+        
         // step 0
         creatureNameInput.setText(creature.getName());
         creatureCRInput.setValue(creature.getCRDisplayString());
@@ -1210,9 +1517,21 @@ public class sfncFXMLController implements Initializable {
         creatureFlySpeed.setText(creature.getFlySpeed().toString());
         creatureFlyType.setText(creature.getFlyType());
         creatureFlyManeuverability.setText(creature.getFlyManeuverability());
-        creatureSwimSpeed.setText(creature.getSwimSpeed().toString());
+        creatureSwimSpeed.setText(creature.getSwimSpeed().toString());*/
+
+        setTab0Controls();
+        setTab1Controls();
+        setTab2Controls();
+        setTab3Controls();
+        setTab4Controls();
+        setTab5Controls();
+        setTab6Controls();
+        setTab7Controls();
+        setTab8Controls();
+        setTab9Controls();
         updateTabStatus();
-        updateStatBlockOnHold = false;
+/*        updateStatBlockOnHold = false;
+        updateCreatureOnHold = false;*/
     }
     
     private void updateTabStatus() {
@@ -1337,7 +1656,6 @@ public class sfncFXMLController implements Initializable {
         String warningString = "";
         List<String> subtypes = creature.getAllSubtypes();
         
-        System.out.println("skill warning: " + subtypes);
         if (hasAbilityByID("mindless")) {
             warningString += "natural skills only";
         }
@@ -1442,12 +1760,13 @@ public class sfncFXMLController implements Initializable {
         if (array == null) {
             creatureMasterSkillsAvailable.setText("0");
             creatureGoodSkillsAvailable.setText("0");
-            creatureMasterSkillsTaken.setText("0");
-            creatureGoodSkillsTaken.setText("0");
-            return;
+//            creatureMasterSkillsTaken.setText("0");
+  //          creatureGoodSkillsTaken.setText("0");
+    //        return;
+        } else {
+            creatureMasterSkillsAvailable.setText(Integer.toString(array.masterSkillNumber));
+            creatureGoodSkillsAvailable.setText(Integer.toString(array.goodSkillNumber));
         }
-        creatureMasterSkillsAvailable.setText(Integer.toString(array.masterSkillNumber));
-        creatureGoodSkillsAvailable.setText(Integer.toString(array.goodSkillNumber));
         creatureMasterSkillsTaken.setText(Integer.toString(countMasterSkills()));
         creatureGoodSkillsTaken.setText(Integer.toString(countGoodSkills()));
         
@@ -3688,6 +4007,86 @@ public class sfncFXMLController implements Initializable {
         creatureSLALabel.setStyle("-fx-font-weight: bold");
         creatureSpellsLabel.setStyle("-fx-font-weight: bold");
         
+        step0.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event e){
+                if(step0.isSelected())
+                    setTab0Controls();
+            }
+        });
+    
+        step1.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event e) {
+                if(step1.isSelected())
+                    setTab1Controls();
+            }
+        });
+    
+        step2.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event e){
+                if(step2.isSelected())
+                    setTab2Controls();
+            }
+        });
+    
+        step3.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event e){
+                if(step3.isSelected())
+                    setTab3Controls();
+            }
+        });
+    
+        step4.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event e){
+                if(step4.isSelected())
+                    setTab4Controls();
+            }
+        });
+    
+        step5.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event e){
+                if(step5.isSelected())
+                    setTab5Controls();
+            }
+        });
+    
+        step6.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event e){
+                if(step6.isSelected())
+                    setTab6Controls();
+            }
+        });
+    
+        step7.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event e){
+                if(step7.isSelected())
+                    setTab7Controls();
+            }
+        });
+    
+        step8.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event e){
+                if(step8.isSelected())
+                    setTab8Controls();
+            }
+        });
+    
+        step9.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event e){
+                if(step9.isSelected())
+                    setTab9Controls();
+            }
+        });
+    
         updateTabStatus();
 
         // step 0 controls
@@ -4082,7 +4481,6 @@ public class sfncFXMLController implements Initializable {
                         creature.setFreeformSubtypes(new ArrayList<>());
                     else
                         creature.setFreeformSubtypes(new ArrayList<>(Arrays.asList(newValue.split(","))));
-                    System.out.println("Setting warnings for subtype.");
                     setAbilityWarning();
                     setMovementWarning();
                     setSkillWarning();

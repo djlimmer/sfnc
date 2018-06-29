@@ -12,9 +12,11 @@ fire
 
 
 
-2
-summon allies|OTHER_ABILITIES|~n~ (~t~)|1|0|0|2|0|0|ct:mini-dragon 25%
+3
 breath weapon (line)|OFFENSIVE_ABILITIES|breath weapon (~bwrl~-ft. line, ~bwdmg~ ~t~, Reflex DC ~dc~, usable every 1d4 rounds)|1|0|0|0|0|0|ct:F
+frightful presence|AURA|~n~ (~r~ ft., DC ~dc~)|1|60|0|0|0|0|ct:
+summon allies|OTHER_ABILITIES|~n~ (~t~)|1|0|0|2|0|0|ct:mini-dragon 25%
+MASTER|0
 NONE|0
 NONE|0
 NONE|0
@@ -22,11 +24,10 @@ NONE|0
 NONE|0
 NONE|0
 NONE|0
+MASTER|0
 NONE|0
 NONE|0
-NONE|0
-NONE|0
-NONE|0
+GOOD|0
 GOOD|0
 NONE|0
 NONE|0
@@ -44,9 +45,9 @@ NONE|0
 30
 0
 0
-0
-
-
+60
+Ex
+average
 0
 1
 bite|true|1d4|7|false|true|false|false|false|false|false|false|ce:
@@ -54,12 +55,12 @@ bite|true|1d4|7|false|true|false|false|false|false|false|false|ce:
 false
 mystic
 2
-augury|2|-1|false|false|false
+hold person|2|-1|true|false|false
 mind thrust 2|2|-1|true|false|false
 3
-summon creature 1|1|1|false|false|false
-carnivorous|1|-1|false|false|false
+fear 1|1|-1|true|false|false
 charm person|1|-1|true|false|false
+summon creature 1|1|1|false|false|false
 2
 telekinetic projectile|0|-1|false|true|false
 daze|0|0|true|false|false
