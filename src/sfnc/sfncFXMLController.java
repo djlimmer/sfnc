@@ -2161,7 +2161,6 @@ public class sfncFXMLController implements Initializable {
                 case TWENTYONE:
                 case TWENTY:
                 case NINETEEN:
-                    highSpellLevel = 6;
                     creatureHighSpellsLabel.setText("3/day: 4 6th-level spells");
                     creatureMidSpellsLabel.setText("6/day: 3 5th-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 4th-level spells");
@@ -2169,7 +2168,6 @@ public class sfncFXMLController implements Initializable {
                 case EIGHTEEN:
                 case SEVENTEEN:
                 case SIXTEEN:
-                    highSpellLevel = 6;
                     creatureHighSpellsLabel.setText("3/day: 2 6th-level spells");
                     creatureMidSpellsLabel.setText("6/day: 4 5th-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 4th-level spells");
@@ -2177,7 +2175,6 @@ public class sfncFXMLController implements Initializable {
                 case FIFTEEN:
                 case FOURTEEN:
                 case THIRTEEN:
-                    highSpellLevel = 5;
                     creatureHighSpellsLabel.setText("3/day: 2 5th-level spells");
                     creatureMidSpellsLabel.setText("6/day: 4 4th-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 3rd-level spells");
@@ -2185,7 +2182,6 @@ public class sfncFXMLController implements Initializable {
                 case TWELVE:
                 case ELEVEN:
                 case TEN:
-                    highSpellLevel = 4;
                     creatureHighSpellsLabel.setText("3/day: 2 4th-level spells");
                     creatureMidSpellsLabel.setText("6/day: 4 3rd-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 2nd-level spells");
@@ -2193,7 +2189,6 @@ public class sfncFXMLController implements Initializable {
                 case NINE:
                 case EIGHT:
                 case SEVEN:
-                    highSpellLevel = 3;
                     creatureHighSpellsLabel.setText("3/day: 2 3rd-level spells");
                     creatureMidSpellsLabel.setText("6/day: 4 2nd-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 1st-level spells");
@@ -2201,13 +2196,11 @@ public class sfncFXMLController implements Initializable {
                 case SIX:
                 case FIVE:
                 case FOUR:
-                    highSpellLevel = 2;
                     creatureHighSpellsLabel.setText("3/day: 2 2nd-level spells");
                     creatureMidSpellsLabel.setText("6/day: 3 1st-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 0-level spells");
                     break;
                 default:
-                    highSpellLevel = 1;
                     creatureHighSpellsLabel.setText("3/day: 2 1st-level spells");
                     creatureMidSpellsLabel.setText("at will: 2 0-level spells");
                     creatureLowSpellsLabel.setText("");
@@ -2223,7 +2216,6 @@ public class sfncFXMLController implements Initializable {
                 case TWENTYONE:
                 case TWENTY:
                 case NINETEEN:
-                    highSpellLevel = 6;
                     creatureHighSpellsLabel.setText("1/day: 4 6th-level spells");
                     creatureMidSpellsLabel.setText("3/day: 3 5th-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 4th-level spells");
@@ -2231,7 +2223,6 @@ public class sfncFXMLController implements Initializable {
                 case EIGHTEEN:
                 case SEVENTEEN:
                 case SIXTEEN:
-                    highSpellLevel = 6;
                     creatureHighSpellsLabel.setText("1/day: 2 6th-level spells");
                     creatureMidSpellsLabel.setText("3/day: 4 5th-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 4th-level spells");
@@ -2239,7 +2230,6 @@ public class sfncFXMLController implements Initializable {
                 case FIFTEEN:
                 case FOURTEEN:
                 case THIRTEEN:
-                    highSpellLevel = 5;
                     creatureHighSpellsLabel.setText("1/day: 2 5th-level spells");
                     creatureMidSpellsLabel.setText("3/day: 4 4th-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 3rd-level spells");
@@ -2247,7 +2237,6 @@ public class sfncFXMLController implements Initializable {
                 case TWELVE:
                 case ELEVEN:
                 case TEN:
-                    highSpellLevel = 4;
                     creatureHighSpellsLabel.setText("1/day: 2 4th-level spells");
                     creatureMidSpellsLabel.setText("3/day: 4 3rd-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 2nd-level spells");
@@ -2255,7 +2244,6 @@ public class sfncFXMLController implements Initializable {
                 case NINE:
                 case EIGHT:
                 case SEVEN:
-                    highSpellLevel = 3;
                     creatureHighSpellsLabel.setText("1/day: 2 3rd-level spells");
                     creatureMidSpellsLabel.setText("3/day: 4 2nd-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 1st-level spells");
@@ -2263,13 +2251,11 @@ public class sfncFXMLController implements Initializable {
                 case SIX:
                 case FIVE:
                 case FOUR:
-                    highSpellLevel = 2;
                     creatureHighSpellsLabel.setText("1/day: 2 2nd-level spells");
                     creatureMidSpellsLabel.setText("3/day: 3 1st-level spells");
                     creatureLowSpellsLabel.setText("at will: 2 0-level spells");
                     break;
                 default:
-                    highSpellLevel = 1;
                     creatureHighSpellsLabel.setText("1/day: 2 1st-level spells");
                     creatureMidSpellsLabel.setText("at will: 2 0-level spells");
                     creatureLowSpellsLabel.setText("");
@@ -2680,6 +2666,44 @@ public class sfncFXMLController implements Initializable {
                 array.goodSkillBonus += 1;
                 array.masterSkillBonus += 1;
             }
+            // set highest level of spells
+            switch (creature.getCR()) {
+                case TWENTYFIVE:
+                case TWENTYFOUR:
+                case TWENTYTHREE:
+                case TWENTYTWO:
+                case TWENTYONE:
+                case TWENTY:
+                case NINETEEN:
+                case EIGHTEEN:
+                case SEVENTEEN:
+                case SIXTEEN:
+                    highSpellLevel = 6;
+                    break;
+                case FIFTEEN:
+                case FOURTEEN:
+                case THIRTEEN:
+                    highSpellLevel = 5;
+                    break;
+                case TWELVE:
+                case ELEVEN:
+                case TEN:
+                    highSpellLevel = 4;
+                    break;
+                case NINE:
+                case EIGHT:
+                case SEVEN:
+                    highSpellLevel = 3;
+                    break;
+                case SIX:
+                case FIVE:
+                case FOUR:
+                    highSpellLevel = 2;
+                    break;
+                default:
+                    highSpellLevel = 1;
+            }
+
             // add spellcasting SLAs
             if (creature.usesSLAs()) {
                 for (Spell s : creature.getHighSpells()) {
